@@ -1,0 +1,76 @@
+==============================================
+===            Introduction :               ==
+==============================================
+This directory contains the Generic Trace Generator (GTG) project.
+Authors are : 
+            Francois Rue    ,
+            Francois Trahay ,
+            Johnny   Jazeix ,
+            Kevin    Coulomb,
+            Mathieu  Faverge,
+            Olivier  Lagrasse
+
+==============================================
+===                Files :                  ==
+==============================================
+
+-- Files
+Doxyfile      : The doxygen config file
+Makefile      : Makefile to build the project
+README        : This file, presenting the project
+
+-- Directories
+*config*      : Contains examples of configuration to build the project
+*exm*         : Contains examples of programm using the library
+*inc*         : Contains files to include
+*src/C*       : Contains the C implementation of the API
+*src/FORTRAN* : Contains the Fortran implementation of the API
+
+-- Directories created
+*bin*         : Contains the executables made from the examples
+*doc*         : Contains the documentation (doxygen is necessary)
+*lib*         : Contains the library generated
+*mod*         : Contains the Fortran modules
+*obj*         : Contains the objects generated
+
+
+==============================================
+===               Compile :                 ==
+==============================================
+
+To be able to compile, choose the corresponding file in the config directory.
+Create a symbolic link named config.in in the same level as the Makefile.
+E.g. if you choose the local.in config :
+> ln -nfs config/local.in config.in
+Then you can compile.
+
+The makefile has 4 different rules :
+*all*         : Generate all (doc, lib, examples)
+*lib*         : Generate the library
+*examples*    : Generate the bin examples
+*doc*         : Generate the documentation
+
+
+
+==============================================
+===               Examples :                ==
+==============================================
+
+The examples show code using the library.
+You can compile them with *make examples*.
+Their execution enables the creation of traces :
+cpaje  creates the cpaje.trace using the C API
+cpaje2 creates the cpaje2.trace using the C API
+cvite  creates the cvite_root.ept trace (with cvite_proc*.ept) using the C API
+
+The traces can be viewed using the ViTE tool. This API is used by the eztrace that automatically generate traces for code, without modifying it manually.
+
+
+==============================================
+===               Support :                 ==
+==============================================
+
+If you encounter any problem, please contact the GTG developper
+mailing list (gtg-devel@lists.gforge.inria.fr) so that we can fix the feature as soon as possible.
+You can also give us some feedback to help us improve the API.
+
