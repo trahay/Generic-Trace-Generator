@@ -1,6 +1,6 @@
-#include "../../inc/GTGBasic1.h"
-#include "../../inc/OTF_GTGBasic1.h"
-#include "../../inc/paje_GTGBasic1.h"
+#include "GTGBasic1.h"
+#include "OTF_GTGBasic1.h"
+#include "paje_GTGBasic1.h"
 
 static int traceType;
 

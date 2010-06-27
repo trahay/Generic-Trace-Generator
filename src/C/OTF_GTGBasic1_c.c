@@ -1,6 +1,7 @@
-#include "../../inc/OTF_GTGBasic1.h"
 #include <stdio.h>
 #include <string.h>
+
+#include "OTF_GTGBasic1.h"
 
 /* Root name */
 static char*  filename;

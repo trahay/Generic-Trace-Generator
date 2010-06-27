@@ -1,9 +1,10 @@
 #ifdef BUILD_PAJE
 
-#include "../../inc/paje_GTGBasic1.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
+#include "paje_GTGBasic1.h"
 
 /* File where each proc writes state/event/var/link changes. */
 static FILE*  procFile;
