@@ -19,4 +19,17 @@ AC_PROG_LIBTOOL
 AC_CHECK_HEADERS([stdio.h string.h stdlib.h])
 AC_CHECK_HEADERS([mpi.h])
 
-AC_OUTPUT([Makefile inc/Makefile src/Makefile])
+
+# Checks for programs
+AC_CHECK_PROG(HAVE_DOXYGEN, [doxygen], yes, no)
+
+if test x$HAVE_DOXYGEN = xno ; then
+   AC_MSG_WARN([Cannot find doxygen])
+fi
+
+AC_ARG_VAR([PDFLATEX], [Location of the pdflatex program (required for building the hwloc doxygen documentation)])
+AC_PATH_TOOL([PDFLATEX], [pdflatex])
+
+AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
+
+AC_OUTPUT([Makefile inc/Makefile src/Makefile doc/Makefile])
