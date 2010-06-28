@@ -17,7 +17,41 @@ AC_PROG_LIBTOOL
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdio.h string.h stdlib.h])
-AC_CHECK_HEADERS([mpi.h])
+
+# MPI stuff
+use_mpi=yes
+AC_ARG_WITH(mpi, [AS_HELP_STRING([--with-mpi[=<dir>]], [Use a specific MPI installation])],
+        [
+                if test x$withval != xno; then
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+                                use_mpi_from_system=yes
+                        else
+                                # use specified path
+                                use_mpi_from_system=no
+                                mpidir=$withval
+                                AC_MSG_RESULT(yes using $mpidir)
+                                AC_SUBST(MPIDIR, $mpidir)
+                        fi
+                else
+			# either --without-mpi or --with-mpi=no is set
+                        use_mpi=no
+                fi
+        ])
+
+if test $use_mpi = yes ; then
+   AC_SUBST(USE_MPIDIR_FROM_USER,$use_mpi_from_system)
+   if test x$use_mpi_from_system = xno; then
+        CPPFLAGS="${CPPFLAGS} -I$mpidir/ "
+   fi
+
+   # MPI header
+   AC_CHECK_HEADER([mpi.h],[enable_mpi=yes],AC_MSG_ERROR([cannot find headers for MPI]))
+else
+# todo: we should be able to disable MPI !
+   AC_MSG_ERROR([MPI is required !])
+#  enable_mpi=no
+fi
 
 
 # Checks for programs
