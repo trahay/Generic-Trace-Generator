@@ -12,18 +12,12 @@ static FILE*  procFile;
 static FILE*  headFile;
 /* Root name */
 static char*  filename;
-/* Rank MPI */
-static int    rank;
-/* Size of MPI communiecator */
-static int    size;
-/* MPI communicator */
-static MPI_Comm comm;
 
 int my_open (){
     int ret = PAJE_ERR_OPEN;
     char f[200];
     if (!procFile){
-        sprintf (f, "%s_proc%d.ept", filename, rank);
+        sprintf (f, "%s_proc0.ept", filename);
         procFile = fopen (f, "a+");
         if (!procFile)
             return ret;
@@ -48,14 +42,13 @@ int pajeInitTrace   (char* filenam){
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
     strcpy (filename, filenam);
 
-    if (rank == 0){
-        sprintf (file, "%s_root.ept", filename);
-        headFile = fopen (file, "a+");
-        if (!headFile){
-            fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
-            return ret;
-        }
-        fprintf (headFile,"\
+    sprintf (file, "%s_root.ept", filename);
+    headFile = fopen (file, "a+");
+    if (!headFile){
+      fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
+      return ret;
+    }
+    fprintf (headFile,"\
 %%EventDef PajeDefineContainerType	1 \n\
 %% 	  Alias 	string            \n\
 %% 	  ContainerType string            \n\
@@ -169,8 +162,8 @@ int pajeInitTrace   (char* filenam){
 %% 	  Container 	string            \n\
 %% 	  Value 	double            \n\
 %%EndEventDef \n");
-    }
-    return my_open ();
+
+    return my_open();
 }
 
 int pajeSeqInitTrace   (char* filenam){
@@ -693,13 +686,6 @@ int pajeSubVarNB (varPrec time, char*  type,
         return PAJE_SUCCESS;
     }     
     return PAJE_ERR_WRITE;
-}
-
-int pajeSetComm (MPI_Comm c){
-    comm = c;
-    MPI_Comm_rank (comm, &rank);
-    MPI_Comm_size (comm, &size);
-    return PAJE_SUCCESS;
 }
 
 int pajeEndTrace (){

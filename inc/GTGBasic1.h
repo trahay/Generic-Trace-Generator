@@ -18,7 +18,6 @@
  */
 #ifndef _TRACEGENERATORBASIC_
 #define _TRACEGENERATORBASIC_
-#include <mpi.h>
 #include <stdlib.h>
 #include <string.h>
 #include "types.h"
@@ -57,7 +56,6 @@ void setTraceType (int type);
  */
 int getTraceType ();
 
-
 /** 
  * \defgroup init To init the generated trace file(s)
  */
@@ -78,16 +76,6 @@ int initTrace   (char* filename);
  *         An error code otherwise
  */
 int endTrace   ();
-
-/**
- * \ingroup init
- * \fn setComm (MPI_Comm c)
- * \brief /!\ Call before initTrace for VITE traces. C function.
- * \param c Communicateur MPI
- * \return 0 if success \n
- *         An error code otherwise
- */
-int setComm (MPI_Comm c);
 /**
  * \ingroup init
  * \fn setCompress (int val)

@@ -43,7 +43,7 @@ $(DOX_PDF): $(DOX_TAG)
 EXTRA_DIST = $(DOX_HTML_DIR) $(DOX_PDF)
 
 # Crappy hack: automake cannot copy a directory, so we have to do it by hand.
-install_html:
+install_html: $(DOX_PDF) $(DOX_HTML_DIR)/index.html
 	mkdir -p $(pdfdir)
 	cp -r $(DOX_PDF) $(pdfdir)
 	mkdir -p $(htmldir)

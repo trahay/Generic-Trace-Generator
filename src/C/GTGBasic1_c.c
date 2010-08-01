@@ -49,28 +49,6 @@ int setCompress (int val){
     return TRACE_SUCCESS;
 }
 
-int setComm (MPI_Comm c){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeSetComm (c);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFSetComm (c);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 int addProcType   (char* alias, char* contType, 
                    char* name){
     switch (traceType){

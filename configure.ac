@@ -46,13 +46,12 @@ if test $use_mpi = yes ; then
    fi
 
    # MPI header
-   AC_CHECK_HEADER([mpi.h],[enable_mpi=yes],AC_MSG_ERROR([cannot find headers for MPI]))
+   AC_CHECK_HEADER([mpi.h],[enable_mpi=yes],)	
 else
-# todo: we should be able to disable MPI !
-   AC_MSG_ERROR([MPI is required !])
-#  enable_mpi=no
+  enable_mpi=no
 fi
 
+AM_CONDITIONAL([USE_MPI], [test "x$enable_mpi" = xyes])
 
 # Checks for programs
 AC_CHECK_PROG(HAVE_DOXYGEN, [doxygen], yes, no)

@@ -16,7 +16,6 @@
  */
 #ifndef _OTFTRACEGENERATORBASIC_
 #define _OTFTRACEGENERATORBASIC_
-#include <mpi.h>
 #include "types.h"
 /**
  * \defgroup cotf OTF interface in C of the traceGeneratorBasic API
@@ -606,16 +605,6 @@ int OTFSubVar   (varPrec time, char*  type,
  */
 int OTFSubVarNB (varPrec time, char*  type,
                   char*  cont, varPrec val);
-
-/**
- * \ingroup cotf
- * \fn OTFSetComm (MPI_Comm c)
- * \brief To set the communicator
- * \param c Communicator MPI
- * \return 0 if success \n
- *         An error code otherwise
- */
-int OTFSetComm (MPI_Comm c);
 
 #endif
 

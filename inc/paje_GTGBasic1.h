@@ -16,7 +16,6 @@
  */
 #ifndef _PAJETRACEGENERATORBASIC_
 #define _PAJETRACEGENERATORBASIC_
-#include <mpi.h>
 #include "types.h"
 /**
  * \defgroup cpaje Paje interface in C of the GTGBasic1 API
@@ -669,16 +668,6 @@ int pajeSubVar   (varPrec time, char*  type,
  */
 int pajeSubVarNB (varPrec time, char*  type,
                   char*  cont, varPrec val);
-
-/**
- * \ingroup cpaje
- * \fn pajeSetComm (MPI_Comm c)
- * \brief To set the communicator
- * \param c Communicator MPI
- * \return 0 if success \n
- *         An error code otherwise
- */
-int pajeSetComm (MPI_Comm c);
 
 /**
  * \ingroup cpaje
