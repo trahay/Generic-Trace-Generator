@@ -518,7 +518,7 @@ int pushStateNB (varPrec time, char* type,
 }
 
 int popState   (varPrec time, char* type,
-                char*  cont, char* val){
+                const char*  cont, char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -610,7 +610,7 @@ int addEventNB (varPrec time, char* type,
 }
 
 int startLink   (varPrec time, char* type,
-                 char*  cont, char* src,
+                 const char*  cont, const char* src,
                  char*  dest, char* val,
                  char* key){
     switch (traceType){
@@ -660,8 +660,8 @@ int startLinkNB (varPrec time, char* type,
 }
 
 int endLink   (varPrec time, char* type,
-               char*  cont, char* src,
-               char*  dest, char* val,
+               const char*  cont, const char* src,
+               const char*  dest, char* val,
                char* key){
     switch (traceType){
 #ifdef BUILD_PAJE
