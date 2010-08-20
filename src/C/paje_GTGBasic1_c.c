@@ -35,7 +35,7 @@ int my_close (){
     return ret;
 }
 
-int pajeInitTrace   (char* filenam){
+int pajeInitTrace   (const char* filenam){
     char file[200];
     int ret = PAJE_ERR_OPEN;
     my_close ();
@@ -166,7 +166,7 @@ int pajeInitTrace   (char* filenam){
     return my_open();
 }
 
-int pajeSeqInitTrace   (char* filenam){
+int pajeSeqInitTrace   (const char* filenam){
     char file[200];
     int ret = PAJE_ERR_OPEN;
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
@@ -295,8 +295,8 @@ int pajeSeqInitTrace   (char* filenam){
     return PAJE_SUCCESS;
 }
 
-int pajeAddProcType   (char* alias, char* contType, 
-                       char* name){
+int pajeAddProcType   (const char* alias, const char* contType, 
+                       const char* name){
     if (headFile){
         fprintf (headFile, "1 %s %s '%s' \n", alias, contType, name);
         return PAJE_SUCCESS;
@@ -304,8 +304,8 @@ int pajeAddProcType   (char* alias, char* contType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddProcTypeNB (char* alias, char* contType, 
-                       char* name){
+int pajeAddProcTypeNB (const char* alias, const char* contType, 
+                       const char* name){
     if (headFile){
         fprintf (headFile, "1 %s %s '%s' \n" , alias, contType, name);
         return PAJE_SUCCESS;
@@ -314,8 +314,8 @@ int pajeAddProcTypeNB (char* alias, char* contType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddStateType   (char* alias, char* contType, 
-                        char* name){
+int pajeAddStateType   (const char* alias, const char* contType, 
+                        const char* name){
     if (headFile){
         fprintf (headFile, "3 %s %s '%s' \n", alias, contType, name);
         return PAJE_SUCCESS;
@@ -323,8 +323,8 @@ int pajeAddStateType   (char* alias, char* contType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddStateTypeNB (char* alias, char* contType, 
-                        char* name){
+int pajeAddStateTypeNB (const char* alias, const char* contType, 
+                        const char* name){
     if (headFile){
         fprintf (headFile, "3 %s %s '%s' \n", alias, contType, name);
         return PAJE_SUCCESS;
@@ -333,8 +333,8 @@ int pajeAddStateTypeNB (char* alias, char* contType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddEventType   (char* alias, char* contType, 
-                        char* name){
+int pajeAddEventType   (const char* alias, const char* contType, 
+                        const char* name){
     if (headFile){
         fprintf (headFile, "4 %s %s '%s' \n", alias, contType, name);
         return PAJE_SUCCESS;
@@ -342,8 +342,8 @@ int pajeAddEventType   (char* alias, char* contType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddEventTypeNB (char* alias, char* contType, 
-                        char* name){
+int pajeAddEventTypeNB (const char* alias, const char* contType, 
+                        const char* name){
      
     if (headFile){
         fprintf (headFile, "4 %s %s '%s' \n", alias, contType, name);
@@ -353,9 +353,9 @@ int pajeAddEventTypeNB (char* alias, char* contType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddLinkType   (char* alias   , char* name,
-                       char* contType, char* srcContType,
-                       char* destContType){
+int pajeAddLinkType   (const char* alias   , const char* name,
+                       const char* contType, const char* srcContType,
+                       const char* destContType){
     if (headFile){
         fprintf (headFile, "41 %s %s %s %s %s \n", alias, name, contType, srcContType, destContType);
         return PAJE_SUCCESS;
@@ -363,9 +363,9 @@ int pajeAddLinkType   (char* alias   , char* name,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddLinkTypeNB (char* alias   , char* name,
-                       char* contType, char* srcContType,
-                       char* destContType){
+int pajeAddLinkTypeNB (const char* alias   , const char* name,
+                       const char* contType, const char* srcContType,
+                       const char* destContType){
      
     if (headFile){
         fprintf (headFile, "41 %s %s %s %s %s \n", alias, name, contType, srcContType, destContType);
@@ -375,8 +375,8 @@ int pajeAddLinkTypeNB (char* alias   , char* name,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddVarType   (char* alias   , char* name,
-                      char* contType){
+int pajeAddVarType   (const char* alias   , const char* name,
+                      const char* contType){
     if (headFile){
         fprintf (headFile, "50 %s %s %s \n", alias, contType, name);
         return PAJE_SUCCESS;
@@ -384,8 +384,8 @@ int pajeAddVarType   (char* alias   , char* name,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddVarTypeNB (char* alias   , char* name,
-                      char* contType){
+int pajeAddVarTypeNB (const char* alias   , const char* name,
+                      const char* contType){
      
     if (headFile){
         fprintf (headFile, "50 %s %s %s \n", alias, contType, name);
@@ -395,8 +395,8 @@ int pajeAddVarTypeNB (char* alias   , char* name,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddEntityValue   (char* alias, char* entType, 
-                          char* name , char* color){
+int pajeAddEntityValue   (const char* alias, const char* entType, 
+                          const char* name , const char* color){
     if (headFile){
         fprintf (headFile, "6 %s %s %s '%s'\n", alias, entType, name, color);
         return PAJE_SUCCESS;
@@ -404,8 +404,8 @@ int pajeAddEntityValue   (char* alias, char* entType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddEntityValueNB (char* alias, char* entType, 
-                          char* name , char* color){
+int pajeAddEntityValueNB (const char* alias, const char* entType, 
+                          const char* name , const char* color){
      
     if (headFile){
         fprintf (headFile, "6 %s %s %s '%s'\n", alias, entType, name, color);
@@ -415,9 +415,9 @@ int pajeAddEntityValueNB (char* alias, char* entType,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddContainer   (varPrec time, char* alias    ,
-                        char*  type, char* container,
-                        char*  name, char* file){
+int pajeAddContainer   (varPrec time, const char* alias    ,
+                        const char*  type, const char* container,
+                        const char*  name, const char* file){
     if (headFile){
         fprintf (headFile, "7 %.13e %s %s %s %s %s\n", 
                  time, alias, type, container, name, file);
@@ -426,9 +426,9 @@ int pajeAddContainer   (varPrec time, char* alias    ,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddContainerNB (varPrec time, char* alias    ,
-                        char*  type, char* container,
-                        char*  name, char* file){
+int pajeAddContainerNB (varPrec time, const char* alias    ,
+                        const char*  type, const char* container,
+                        const char*  name, const char* file){
      
     if (headFile){
         fprintf (headFile, "7 %.13e %s %s %s %s %s\n", 
@@ -440,9 +440,9 @@ int pajeAddContainerNB (varPrec time, char* alias    ,
 }
 
 
-int pajeSeqAddContainer   (varPrec time, char* alias    ,
-                           char*  type, char* container,
-                           char*  name){
+int pajeSeqAddContainer   (varPrec time, const char* alias    ,
+                           const char*  type, const char* container,
+                           const char*  name){
     if (headFile){
         fprintf (headFile, "7 %.13e %s %s %s '%s'\n", 
                  time, alias, type, container, name);
@@ -451,9 +451,9 @@ int pajeSeqAddContainer   (varPrec time, char* alias    ,
     return PAJE_ERR_WRITE;
 }
 
-int pajeSeqAddContainerNB (varPrec time, char* alias    ,
-                           char*  type, char* container,
-                           char*  name){
+int pajeSeqAddContainerNB (varPrec time, const char* alias    ,
+                           const char*  type, const char* container,
+                           const char*  name){
      
     if (headFile){
         fprintf (headFile, "7 %.13e %s %s %s '%s' \n", 
@@ -465,8 +465,8 @@ int pajeSeqAddContainerNB (varPrec time, char* alias    ,
 }
 
 
-int pajeDestroyContainer     (varPrec time, char*  name,
-                              char*  type){
+int pajeDestroyContainer     (varPrec time, const char*  name,
+                              const char*  type){
     if (headFile){
         fprintf (headFile, "8 %.13e %s %s \n", 
                  time, name, type);
@@ -475,8 +475,8 @@ int pajeDestroyContainer     (varPrec time, char*  name,
     return PAJE_ERR_WRITE;
 }
 
-int pajeDestroyContainerNB   (varPrec time, char*  name,
-                              char*  type){
+int pajeDestroyContainerNB   (varPrec time, const char*  name,
+                              const char*  type){
      
     if (headFile){
         fprintf (headFile, "8 %.13e %s %s \n", 
@@ -487,8 +487,8 @@ int pajeDestroyContainerNB   (varPrec time, char*  name,
     return PAJE_ERR_WRITE;
 }
 
-int pajeSetState   (varPrec time, char* type,
-                    char*  cont, char* val){
+int pajeSetState   (varPrec time, const char* type,
+                    const char*  cont, const char* val){
     if (procFile){
         fprintf (procFile, "10 %.13e %s %s %s\n", 
                  time, type, cont, val);
@@ -497,8 +497,8 @@ int pajeSetState   (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeSetStateNB (varPrec time, char* type,
-                    char*  cont, char* val){
+int pajeSetStateNB (varPrec time, const char* type,
+                    const char*  cont, const char* val){
      
     if (procFile){
         fprintf (procFile, "10 %.13e %s %s %s\n", 
@@ -509,8 +509,8 @@ int pajeSetStateNB (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajePushState   (varPrec time, char* type,
-                     char*  cont, char* val){
+int pajePushState   (varPrec time, const char* type,
+                     const char*  cont, const char* val){
     if (procFile){
         fprintf (procFile, "11 %.13e %s %s %s\n", 
                  time, type, cont, val);
@@ -519,8 +519,8 @@ int pajePushState   (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajePushStateNB (varPrec time, char* type,
-                     char*  cont, char* val){
+int pajePushStateNB (varPrec time, const char* type,
+                     const char*  cont, const char* val){
      
     if (procFile){
         fprintf (procFile, "11 %.13e %s %s %s\n", 
@@ -531,8 +531,8 @@ int pajePushStateNB (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajePopState   (varPrec time, char* type,
-                    char*  cont, char* val){
+int pajePopState   (varPrec time, const char* type,
+                    const char*  cont, const char* val){
     if (procFile){
         fprintf (procFile, "11 %.13e %s %s %s\n", 
                  time, type, cont, val);
@@ -541,8 +541,8 @@ int pajePopState   (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajePopStateNB (varPrec time, char* type,
-                    char*  cont, char* val){
+int pajePopStateNB (varPrec time, const char* type,
+                    const char*  cont, const char* val){
      
     if (procFile){
         fprintf (procFile, "12 %.13e %s %s %s\n", 
@@ -553,8 +553,8 @@ int pajePopStateNB (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddEvent   (varPrec time, char* type,
-                    char*  cont, char* val){
+int pajeAddEvent   (varPrec time, const char* type,
+                    const char*  cont, const char* val){
     if (procFile){
         fprintf (procFile, "20 %.13e %s %s %s\n", 
                  time, type, cont, val);
@@ -563,8 +563,8 @@ int pajeAddEvent   (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddEventNB (varPrec time, char* type,
-                    char*  cont, char* val){
+int pajeAddEventNB (varPrec time, const char* type,
+                    const char*  cont, const char* val){
      
     if (procFile){
         fprintf (procFile, "20 %.13e %s %s %s\n", 
@@ -575,9 +575,9 @@ int pajeAddEventNB (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeStartLink   (varPrec time, char* type,
-                     char*   cont, char* src,
-                     char*   val , char* key){
+int pajeStartLink   (varPrec time, const char* type,
+                     const char*   cont, const char* src,
+                     const char*   val , const char* key){
     if (procFile){
         fprintf (procFile, "42 %.13e %s %s %s %s %s\n", 
                  time, type, cont, src, val, key);
@@ -586,9 +586,9 @@ int pajeStartLink   (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeStartLinkNB (varPrec time, char* type,
-                     char*   cont, char* src,
-                     char*   val , char* key){
+int pajeStartLinkNB (varPrec time, const char* type,
+                     const char*   cont, const char* src,
+                     const char*   val , const char* key){
      
     if (procFile){
         fprintf (procFile, "42 %.13e %s %s %s %s %s\n", 
@@ -599,9 +599,9 @@ int pajeStartLinkNB (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeEndLink   (varPrec time, char* type,
-                   char*   cont, char* dest,
-                   char*   val , char* key){
+int pajeEndLink   (varPrec time, const char* type,
+                   const char*   cont, const char* dest,
+                   const char*   val , const char* key){
     if (procFile){
         fprintf (procFile, "43 %.13e %s %s %s %s %s\n", 
                  time, type, cont, dest, val, key);
@@ -610,9 +610,9 @@ int pajeEndLink   (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeEndLinkNB (varPrec time, char* type,
-                   char*   cont, char* dest,
-                   char*   val , char* key){
+int pajeEndLinkNB (varPrec time, const char* type,
+                   const char*   cont, const char* dest,
+                   const char*   val , const char* key){
      
     if (procFile){
         fprintf (procFile, "43 %.13e %s %s %s %s %s\n", 
@@ -623,8 +623,8 @@ int pajeEndLinkNB (varPrec time, char* type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeSetVar   (varPrec time, char*  type,
-                  char*  cont, varPrec val){
+int pajeSetVar   (varPrec time, const char*  type,
+                  const char*  cont, varPrec val){
     if (procFile){
         fprintf (procFile, "51 %.13e %s %s %e\n", 
                  time, type, cont, val);
@@ -633,8 +633,8 @@ int pajeSetVar   (varPrec time, char*  type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeSetVarNB (varPrec time, char*  type,
-                  char*  cont, varPrec val){
+int pajeSetVarNB (varPrec time, const char*  type,
+                  const char*  cont, varPrec val){
      
     if (procFile){
         fprintf (procFile, "51 %.13e %s %s %e\n", 
@@ -645,8 +645,8 @@ int pajeSetVarNB (varPrec time, char*  type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddVar   (varPrec time, char*  type,
-                  char*  cont, varPrec val){
+int pajeAddVar   (varPrec time, const char*  type,
+                  const char*  cont, varPrec val){
     if (procFile){
         fprintf (procFile, "52 %.13e %s %s %e\n", 
                  time, type, cont, val);
@@ -655,8 +655,8 @@ int pajeAddVar   (varPrec time, char*  type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeAddVarNB (varPrec time, char*  type,
-                  char*  cont, varPrec val){
+int pajeAddVarNB (varPrec time, const char*  type,
+                  const char*  cont, varPrec val){
      
     if (procFile){
         fprintf (procFile, "52 %.13e %s %s %e\n", 
@@ -667,8 +667,8 @@ int pajeAddVarNB (varPrec time, char*  type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeSubVar   (varPrec time, char*  type,
-                  char*  cont, varPrec val){
+int pajeSubVar   (varPrec time, const char*  type,
+                  const char*  cont, varPrec val){
     if (procFile){
         fprintf (procFile, "53 %.13e %s %s %e\n", 
                  time, type, cont, val);
@@ -677,8 +677,8 @@ int pajeSubVar   (varPrec time, char*  type,
     return PAJE_ERR_WRITE;
 }
 
-int pajeSubVarNB (varPrec time, char*  type,
-                  char*  cont, varPrec val){
+int pajeSubVarNB (varPrec time, const char*  type,
+                  const char*  cont, varPrec val){
      
     if (procFile){
         fprintf (procFile, "53 %.13e %s %s %e\n", 

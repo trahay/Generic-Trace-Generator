@@ -35,28 +35,28 @@ enum pajeReturn{
 
 /**
  * \ingroup cpaje
- * \fn int pajeInitTrace   (char* filename)
+ * \fn int pajeInitTrace   (const char* filename)
  * \brief To init a trace in a VITE format ( *.ept)
  * \param filename Root name of the file to create
  * \return 0 if sucess
  *         An error code otherwise
  */
-int pajeInitTrace   (char* filename);
+int pajeInitTrace   (const char* filename);
 
 /**
  * \ingroup cpaje
- * \fn int pajeSeqInitTrace   (char* filename)
+ * \fn int pajeSeqInitTrace   (const char* filename)
  * \brief To init a trace in a PAJE format (*.trace)
  * \param filename Root name of the file to create
  * \return 0 if sucess
  *         An error code otherwise
  */
-int pajeSeqInitTrace   (char* filename);
+int pajeSeqInitTrace   (const char* filename);
 /**
  * \ingroup cpaje
- * \ fn int pajeAddProcType   (char* alias,
- *                             char* contType, 
- *                             char* name)
+ * \ fn int pajeAddProcType   (const char* alias,
+ *                             const char* contType, 
+ *                             const char* name)
  * \brief To add a container type
  * \param alias Alias on the container
  * \param contType Type of container
@@ -64,14 +64,14 @@ int pajeSeqInitTrace   (char* filename);
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddProcType   (char* alias, char* contType, 
-                       char* name);
+int pajeAddProcType   (const char* alias, const char* contType, 
+                       const char* name);
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddProcTypeNB   (char* alias,
- *                              char* contType, 
- *                              char* name)
+ * \fn int pajeAddProcTypeNB   (const char* alias,
+ *                              const char* contType, 
+ *                              const char* name)
  * \brief To add a container type in a non bufferized mode
  * \param alias Alias on the container
  * \param contType Type of container
@@ -79,13 +79,13 @@ int pajeAddProcType   (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddProcTypeNB (char* alias, char* contType, 
-                       char* name);
+int pajeAddProcTypeNB (const char* alias, const char* contType, 
+                       const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddStateType   (char* alias,
- *                             char* contType, 
- *                             char* name)
+ * \fn int pajeAddStateType   (const char* alias,
+ *                             const char* contType, 
+ *                             const char* name)
  * \brief To add a state type
  * \param alias Alias on the state type
  * \param contType Type of container
@@ -93,13 +93,13 @@ int pajeAddProcTypeNB (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddStateType   (char* alias, char* contType, 
-                        char* name);
+int pajeAddStateType   (const char* alias, const char* contType, 
+                        const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddStateTypeNB   (char* alias,
- *                               char* contType, 
- *                               char* name)
+ * \fn int pajeAddStateTypeNB   (const char* alias,
+ *                               const char* contType, 
+ *                               const char* name)
  * \brief To add a state type in a non bufferized mode
  * \param alias Alias on the state type
  * \param contType Type of container
@@ -107,13 +107,13 @@ int pajeAddStateType   (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddStateTypeNB (char* alias, char* contType, 
-                        char* name);
+int pajeAddStateTypeNB (const char* alias, const char* contType, 
+                        const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddEventType   (char* alias,
- *                             char* contType, 
- *                             char* name)
+ * \fn int pajeAddEventType   (const char* alias,
+ *                             const char* contType, 
+ *                             const char* name)
  * \brief To add an event type
  * \param alias Alias on the event type
  * \param contType Type of container
@@ -121,13 +121,13 @@ int pajeAddStateTypeNB (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEventType   (char* alias, char* contType, 
-                        char* name);
+int pajeAddEventType   (const char* alias, const char* contType, 
+                        const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddEventTypeNB   (char* alias,
- *                               char* contType, 
- *                               char* name)
+ * \fn int pajeAddEventTypeNB   (const char* alias,
+ *                               const char* contType, 
+ *                               const char* name)
  * \brief To add an event type in a bufferized mode
  * \param alias Alias on the event type
  * \param contType Type of container
@@ -135,15 +135,15 @@ int pajeAddEventType   (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEventTypeNB (char* alias, char* contType, 
-                        char* name);
+int pajeAddEventTypeNB (const char* alias, const char* contType, 
+                        const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddLinkType   (char* alias,
- *                            char* name,
- *                            char* contType, 
- *                            char* srcContType,
- *                            char* destContType);
+ * \fn int pajeAddLinkType   (const char* alias,
+ *                            const char* name,
+ *                            const char* contType, 
+ *                            const char* srcContType,
+ *                            const char* destContType);
  * \brief To add a link type
  * \param alias Alias on the link type
  * \param name Name of the link type
@@ -153,16 +153,16 @@ int pajeAddEventTypeNB (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddLinkType   (char* alias   , char* name,
-                       char* contType, char* srcContType,
-                       char* destContType);
+int pajeAddLinkType   (const char* alias   , const char* name,
+                       const char* contType, const char* srcContType,
+                       const char* destContType);
 /**
  * \ingroup cpaje
- * \fn int pajeAddLinkTypeNB   (char* alias,
- *                              char* name,
- *                              char* contType, 
- *                              char* srcContType,
- *                              char* destContType);
+ * \fn int pajeAddLinkTypeNB   (const char* alias,
+ *                              const char* name,
+ *                              const char* contType, 
+ *                              const char* srcContType,
+ *                              const char* destContType);
  * \brief To add a link type in a bufferized mode
  * \param alias Alias on the link type in a non bufferized mode
  * \param name Name of the link type
@@ -172,15 +172,15 @@ int pajeAddLinkType   (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddLinkTypeNB (char* alias   , char* name,
-                       char* contType, char* srcContType,
-                       char* destContType);
+int pajeAddLinkTypeNB (const char* alias   , const char* name,
+                       const char* contType, const char* srcContType,
+                       const char* destContType);
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddVarType   (char* alias,
- *                           char* contType, 
- *                           char* name)
+ * \fn int pajeAddVarType   (const char* alias,
+ *                           const char* contType, 
+ *                           const char* name)
  * \brief To add a variable type
  * \param alias Alias on the variable type
  * \param contType Type of container
@@ -188,13 +188,13 @@ int pajeAddLinkTypeNB (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVarType   (char* alias   , char* name,
-                      char* contType); 
+int pajeAddVarType   (const char* alias   , const char* name,
+                      const char* contType); 
 /**
  * \ingroup cpaje
- * \fn int pajeAddVarTypeNB   (char* alias,
- *                             char* contType, 
- *                             char* name)
+ * \fn int pajeAddVarTypeNB   (const char* alias,
+ *                             const char* contType, 
+ *                             const char* name)
  * \brief To add a variable type in a non bufferized mode
  * \param alias Alias on the variable type
  * \param contType Type of container
@@ -202,16 +202,16 @@ int pajeAddVarType   (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVarTypeNB (char* alias   , char* name,
-                      char* contType);
+int pajeAddVarTypeNB (const char* alias   , const char* name,
+                      const char* contType);
                   
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddEntityValue   (char* alias,
- *                               char* entType, 
- *                               char* name,
- *                               char* color)
+ * \fn int pajeAddEntityValue   (const char* alias,
+ *                               const char* entType, 
+ *                               const char* name,
+ *                               const char* color)
  * \brief To add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -220,14 +220,14 @@ int pajeAddVarTypeNB (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEntityValue   (char* alias, char* entType, 
-                          char* name , char* color);
+int pajeAddEntityValue   (const char* alias, const char* entType, 
+                          const char* name , const char* color);
 /**
  * \ingroup cpaje
- * \fn int pajeAddEntityValueNB (char* alias,
- *                               char* entType, 
- *                               char* name,
- *                               char* color)
+ * \fn int pajeAddEntityValueNB (const char* alias,
+ *                               const char* entType, 
+ *                               const char* name,
+ *                               const char* color)
  * \brief To add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -236,17 +236,17 @@ int pajeAddEntityValue   (char* alias, char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEntityValueNB (char* alias, char* entType, 
-                          char* name , char* color);
+int pajeAddEntityValueNB (const char* alias, const char* entType, 
+                          const char* name , const char* color);
 
 /**
  * \ingroup cpaje
  * \fn int pajeAddContainer (varPrec  time,
- *                           char  * alias,
- *                           char  * type, 
- *                           char  * container,
- *                           char  * name,
- *                           char  * file)
+ *                           const char  * alias,
+ *                           const char  * type, 
+ *                           const char  * container,
+ *                           const char  * name,
+ *                           const char  * file)
  * \brief To add a container in ViTE format
  * \param time Time the proc is added
  * \param alias Alias on the proc added
@@ -257,19 +257,19 @@ int pajeAddEntityValueNB (char* alias, char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddContainer (varPrec time, char* alias    ,
-                      char*  type, char* container,
-                      char*  name, char* file);
+int pajeAddContainer (varPrec time, const char* alias    ,
+                      const char*  type, const char* container,
+                      const char*  name, const char* file);
 
 
 /**
  * \ingroup cpaje
  * \fn int pajeAddContainerNB (varPrec  time,
- *                             char  * alias,
- *                             char  * type, 
- *                             char  * container,
- *                             char  * name,
- *                             char  * file)
+ *                             const char  * alias,
+ *                             const char  * type, 
+ *                             const char  * container,
+ *                             const char  * name,
+ *                             const char  * file)
  * \brief To add a container in a non bufferized mode in ViTE format
  * \param time Time the proc is added
  * \param alias Alias on the proc added
@@ -280,16 +280,16 @@ int pajeAddContainer (varPrec time, char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddContainerNB (varPrec time, char* alias    ,
-                        char*  type, char* container,
-                        char*  name, char* file);
+int pajeAddContainerNB (varPrec time, const char* alias    ,
+                        const char*  type, const char* container,
+                        const char*  name, const char* file);
 /**
  * \ingroup cpaje
  * \fn int pajeSeqAddContainer (varPrec  time,
- *                              char  * alias,
- *                              char  * type, 
- *                              char  * container,
- *                              char  * name)
+ *                              const char  * alias,
+ *                              const char  * type, 
+ *                              const char  * container,
+ *                              const char  * name)
  * \brief To add a container in paje format
  * \param time Time the proc is added
  * \param alias Alias on the proc added
@@ -299,17 +299,17 @@ int pajeAddContainerNB (varPrec time, char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSeqAddContainer (varPrec time, char* alias    ,
-                         char*  type, char* container,
-                         char*  name);
+int pajeSeqAddContainer (varPrec time, const char* alias    ,
+                         const char*  type, const char* container,
+                         const char*  name);
 
 /**
  * \ingroup cpaje
  * \fn int pajeSeqAddContainerNB (varPrec  time,
- *                                char  * alias,
- *                                char  * type, 
- *                                char  * container,
- *                                char  * name)
+ *                                const char  * alias,
+ *                                const char  * type, 
+ *                                const char  * container,
+ *                                const char  * name)
  * \brief To add a container in a non bufferized mode in paje format
  * \param time Time the proc is added
  * \param alias Alias on the proc added
@@ -319,14 +319,14 @@ int pajeSeqAddContainer (varPrec time, char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSeqAddContainerNB (varPrec time, char* alias    ,
-                           char*  type, char* container,
-                           char*  name);
+int pajeSeqAddContainerNB (varPrec time, const char* alias    ,
+                           const char*  type, const char* container,
+                           const char*  name);
 /**
  * \ingroup cpaje
  * \fn int pajeDestroyContainer (varPrec  time,
- *                               char  * name,
- *                               char  * type) 
+ *                               const char  * name,
+ *                               const char  * type) 
  * \brief To destroy a container
  * \param time Time the proc is destroyed
  * \param name Name of the container
@@ -334,13 +334,13 @@ int pajeSeqAddContainerNB (varPrec time, char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeDestroyContainer     (varPrec time, char*  name,
-                              char*  type);
+int pajeDestroyContainer     (varPrec time, const char*  name,
+                              const char*  type);
 /**
  * \ingroup cpaje
  * \fn int pajeDestroyContainerNB (varPrec  time,
- *                                 char  * name,
- *                                 char  * type) 
+ *                                 const char  * name,
+ *                                 const char  * type) 
  * \brief To destroy a container in a bufferized mode
  * \param time Time the proc is destroyed
  * \param name Name of the container
@@ -348,15 +348,15 @@ int pajeDestroyContainer     (varPrec time, char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeDestroyContainerNB   (varPrec time, char*  name,
-                              char*  type);
+int pajeDestroyContainerNB   (varPrec time, const char*  name,
+                              const char*  type);
 
 /**
  * \ingroup cpaje
  * \fn int pajeSetState (varPrec  time,
- *                       char  * type,
- *                       char  * cont,
- *                       char  * val)
+ *                       const char  * type,
+ *                       const char  * cont,
+ *                       const char  * val)
  * \brief To set a proc in a state
  * \param time Time the state is set
  * \param type Type of the state
@@ -365,14 +365,14 @@ int pajeDestroyContainerNB   (varPrec time, char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetState   (varPrec time, char* type,
-                    char*  cont, char* val);
+int pajeSetState   (varPrec time, const char* type,
+                    const char*  cont, const char* val);
 /**
  * \ingroup cpaje
  * \fn int pajeSetStateNB (varPrec  time,
- *                     char  * type,
- *                     char  * cont,
- *                     char  * val)
+ *                     const char  * type,
+ *                     const char  * cont,
+ *                     const char  * val)
  * \brief To set a proc in a state in a bufferized mode
  * \param time Time the state is set
  * \param type Type of the state
@@ -381,15 +381,15 @@ int pajeSetState   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetStateNB (varPrec time, char* type,
-                    char*  cont, char* val);
+int pajeSetStateNB (varPrec time, const char* type,
+                    const char*  cont, const char* val);
 
 /**
  * \ingroup cpaje
  * \fn int pajePushState (varPrec  time,
- *                        char  * type,
- *                        char  * cont,
- *                        char  * val)
+ *                        const char  * type,
+ *                        const char  * cont,
+ *                        const char  * val)
  * \brief To push a state in a proc
  * \param time Time the state is pushed
  * \param type Type of the state
@@ -398,14 +398,14 @@ int pajeSetStateNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePushState   (varPrec time, char* type,
-                     char*  cont, char* val);
+int pajePushState   (varPrec time, const char* type,
+                     const char*  cont, const char* val);
 /**
  * \ingroup cpaje
  * \fn int pajePushStateNB (varPrec  time,
- *                          char  * type,
- *                          char  * cont,
- *                          char  * val)
+ *                          const char  * type,
+ *                          const char  * cont,
+ *                          const char  * val)
  * \brief To push a state in a proc in a bufferized mode
  * \param time Time the state is pushed
  * \param type Type of the state
@@ -414,15 +414,15 @@ int pajePushState   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePushStateNB (varPrec time, char* type,
-                     char*  cont, char* val);
+int pajePushStateNB (varPrec time, const char* type,
+                     const char*  cont, const char* val);
 
 /**
  * \ingroup cpaje
  * \fn int pajePopState (varPrec  time,
- *                       char  * type,
- *                       char  * cont,
- *                       char  * val)
+ *                       const char  * type,
+ *                       const char  * cont,
+ *                       const char  * val)
  * \brief To pop a state in a proc
  * \param time Time the state is poped
  * \param type Type of the state
@@ -431,14 +431,14 @@ int pajePushStateNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePopState   (varPrec time, char* type,
-                    char*  cont, char* val);
+int pajePopState   (varPrec time, const char* type,
+                    const char*  cont, const char* val);
 /**
  * \ingroup cpaje
  * \fn int pajePopStateNB (varPrec  time,
- *                         char  * type,
- *                         char  * cont,
- *                         char  * val)
+ *                         const char  * type,
+ *                         const char  * cont,
+ *                         const char  * val)
  * \brief To pop a state in a proc in a bufferized mode
  * \param time Time the state is poped
  * \param type Type of the state
@@ -447,16 +447,16 @@ int pajePopState   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePopStateNB (varPrec time, char* type,
-                    char*  cont, char* val);
+int pajePopStateNB (varPrec time, const char* type,
+                    const char*  cont, const char* val);
 
 
 /**
  * \ingroup cpaje
  * \fn int pajeAddEvent (varPrec  time,
- *                       char  * type,
- *                       char  * cont,
- *                       char  * val)
+ *                       const char  * type,
+ *                       const char  * cont,
+ *                       const char  * val)
  * \brief To add an event
  * \param time Time the event happens
  * \param type Type of the event
@@ -465,14 +465,14 @@ int pajePopStateNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEvent   (varPrec time, char* type,
-                    char*  cont, char* val);
+int pajeAddEvent   (varPrec time, const char* type,
+                    const char*  cont, const char* val);
 /**
  * \ingroup cpaje
  * \fn int pajeAddEventNB (varPrec  time,
- *                         char  * type,
- *                         char  * cont,
- *                         char  * val)
+ *                         const char  * type,
+ *                         const char  * cont,
+ *                         const char  * val)
  * \brief To add an event in a bufferized mode
  * \param time Time the event happens
  * \param type Type of the event
@@ -481,16 +481,16 @@ int pajeAddEvent   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEventNB (varPrec time, char* type,
-                    char*  cont, char* val);
+int pajeAddEventNB (varPrec time, const char* type,
+                    const char*  cont, const char* val);
 /**
  * \ingroup cpaje
  * \fn int pajeStartLink (varPrec  time,
- *                        char  * type,
- *                        char  * cont,
- *                        char  * src,
- *                        char  * val,
- *                        char  * key)
+ *                        const char  * type,
+ *                        const char  * cont,
+ *                        const char  * src,
+ *                        const char  * val,
+ *                        const char  * key)
  * \brief To start a link
  * \param time Time the comm starts
  * \param type Type of the link
@@ -501,17 +501,17 @@ int pajeAddEventNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeStartLink   (varPrec time, char* type,
-                     char*   cont, char* src,
-                     char*   val , char* key);
+int pajeStartLink   (varPrec time, const char* type,
+                     const char*   cont, const char* src,
+                     const char*   val , const char* key);
 /**
  * \ingroup cpaje
  * \fn int pajeStartLinkNB (varPrec  time,
- *                          char  * type,
- *                          char  * cont,
- *                          char  * src,
- *                          char  * val,
- *                          char  * key)
+ *                          const char  * type,
+ *                          const char  * cont,
+ *                          const char  * src,
+ *                          const char  * val,
+ *                          const char  * key)
  * \brief To start a link in a non bufferized mode
  * \param time Time the comm starts
  * \param type Type of the link
@@ -522,17 +522,17 @@ int pajeStartLink   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeStartLinkNB (varPrec time, char* type,
-                     char*  cont , char* src,
-                     char*  val  , char* key);
+int pajeStartLinkNB (varPrec time, const char* type,
+                     const char*  cont , const char* src,
+                     const char*  val  , const char* key);
 /**
  * \ingroup cpaje
  * \fn int pajeEndLink (varPrec  time,
- *                      char  * type,
- *                      char  * cont,
- *                      char  * dest,
- *                      char  * val,
- *                      char  * key)
+ *                      const char  * type,
+ *                      const char  * cont,
+ *                      const char  * dest,
+ *                      const char  * val,
+ *                      const char  * key)
  * \brief To end a link
  * \param time Time the comm ends
  * \param type Type of the link
@@ -543,17 +543,17 @@ int pajeStartLinkNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeEndLink   (varPrec time, char* type,
-                   char*  cont , char* dest,
-                   char*  val  , char* key);
+int pajeEndLink   (varPrec time, const char* type,
+                   const char*  cont , const char* dest,
+                   const char*  val  , const char* key);
 /**
  * \ingroup cpaje
  * \fn int pajeEndLinkNB (varPrec  time,
- *                        char  * type,
- *                        char  * cont,
- *                        char  * dest,
- *                        char  * val,
- *                        char  * key)
+ *                        const char  * type,
+ *                        const char  * cont,
+ *                        const char  * dest,
+ *                        const char  * val,
+ *                        const char  * key)
  * \brief To end a link in a bufferized mode
  * \param time Time the comm ends
  * \param type Type of the link
@@ -564,16 +564,16 @@ int pajeEndLink   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeEndLinkNB (varPrec time, char* type,
-                   char*   cont, char* dest,
-                   char*   val , char* key);
+int pajeEndLinkNB (varPrec time, const char* type,
+                   const char*   cont, const char* dest,
+                   const char*   val , const char* key);
 
 
 /**
  * \ingroup cpaje
  * \fn int pajeSetVar (varPrec  time,
- *                     char  * type,
- *                     char  * cont,
+ *                     const char  * type,
+ *                     const char  * cont,
  *                     varPrec  val)
  * \brief To set a variable value
  * \param time Time the variable is set
@@ -583,13 +583,13 @@ int pajeEndLinkNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetVar   (varPrec time, char*  type,
-                  char*  cont, varPrec val);
+int pajeSetVar   (varPrec time, const char*  type,
+                  const char*  cont, varPrec val);
 /**
  * \ingroup cpaje
  * \fn int pajeSetVarNB (varPrec  time,
- *                       char  * type,
- *                       char  * cont,
+ *                       const char  * type,
+ *                       const char  * cont,
  *                       varPrec  val)
  * \brief To set a variable value in  a bufferized mode
  * \param time Time the variable is set
@@ -599,14 +599,14 @@ int pajeSetVar   (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetVarNB (varPrec time, char*  type,
-                  char*  cont, varPrec val);
+int pajeSetVarNB (varPrec time, const char*  type,
+                  const char*  cont, varPrec val);
 
 /**
  * \ingroup cpaje
  * \fn int pajeAddVar (varPrec  time,
- *                     char  * type,
- *                     char  * cont,
+ *                     const char  * type,
+ *                     const char  * cont,
  *                     varPrec  val)
  * \brief To add a value to a variable
  * \param time Time the variable is incremented
@@ -616,13 +616,13 @@ int pajeSetVarNB (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVar   (varPrec time, char*  type,
-                  char*  cont, varPrec val);
+int pajeAddVar   (varPrec time, const char*  type,
+                  const char*  cont, varPrec val);
 /**
  * \ingroup cpaje
  * \fn int pajeAddVarNB (varPrec  time,
- *                       char  * type,
- *                       char  * cont,
+ *                       const char  * type,
+ *                       const char  * cont,
  *                       varPrec  val)
  * \brief To add a value to a variable in a non bufferized mode
  * \param time Time the variable is incremented
@@ -632,14 +632,14 @@ int pajeAddVar   (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVarNB (varPrec time, char*  type,
-                  char*  cont, varPrec val);
+int pajeAddVarNB (varPrec time, const char*  type,
+                  const char*  cont, varPrec val);
 
 /**
  * \ingroup cpaje
  * \fn int pajeSubVar (varPrec  time,
- *                     char  * type,
- *                     char  * cont,
+ *                     const char  * type,
+ *                     const char  * cont,
  *                     varPrec  val)
  * \brief To substract a value to a variable
  * \param time Time the variable is incremented
@@ -650,13 +650,13 @@ int pajeAddVarNB (varPrec time, char*  type,
  *         An error code otherwise
  */
 
-int pajeSubVar   (varPrec time, char*  type,
-                  char*  cont, varPrec val);
+int pajeSubVar   (varPrec time, const char*  type,
+                  const char*  cont, varPrec val);
 /**
  * \ingroup cpaje
  * \fn int pajeSubVarNB (varPrec  time,
- *                       char  * type,
- *                       char  * cont,
+ *                       const char  * type,
+ *                       const char  * cont,
  *                       varPrec  val)
  * \brief To substract a value to a variable in a non bufferized mode
  * \param time Time the variable is decremented
@@ -666,8 +666,8 @@ int pajeSubVar   (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSubVarNB (varPrec time, char*  type,
-                  char*  cont, varPrec val);
+int pajeSubVarNB (varPrec time, const char*  type,
+                  const char*  cont, varPrec val);
 
 /**
  * \ingroup cpaje
