@@ -50,3 +50,5 @@ install_html: $(DOX_PDF) $(DOX_HTML_DIR)/index.html
 	cp -r $(DOX_HTML_DIR) $(htmldir)
 
 install-data-am: install_html
+
+include_HEADERS = Doxyfile
