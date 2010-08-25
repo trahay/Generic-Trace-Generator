@@ -23,6 +23,18 @@
 
 /**
  * \ingroup cotf
+ * \enum otfReturn
+ * \brief Return values of the otf functions
+ */
+enum otfReturn{
+    OTF_SUCCESS,   /*!< Success of the otf call. */
+    OTF_ERR_OPEN,  /*!< Call to fopen failed. */
+    OTF_ERR_CLOSE, /*!< Call to fclose failed. */
+    OTF_ERR_WRITE  /*!< Tried to write in a nil stream. (e.g. if call a non bufferized function after a bufferized init)*/
+}otfReturn;
+
+/**
+ * \ingroup cotf
  * \fn int OTFInitTrace   (const char* filename)
  * \brief To init a trace in an OTF format
  * \param filename Root name of the file to create
