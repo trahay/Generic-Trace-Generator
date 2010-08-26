@@ -74,6 +74,16 @@ typedef struct VariableType {
 } VariableType_t;
 static VariableType_t variableTypes[MAX_VARIABLETYPE];
 
+/*! Events/Markers */
+#define MAX_EVENTTYPE 10
+static int current_eventType = 1;
+typedef struct EventType {
+    char *name;
+    char *alias;
+    int   contType;
+} EventType_t;
+static EventType_t eventTypes[MAX_EVENTTYPE];
+
 /*! Global structure storing the states defined */
 static EntityValue_t states[MAX_STATES];
 
@@ -82,7 +92,10 @@ static EntityValue_t states[MAX_STATES];
 /* Root name */
 static char *filename;
 
-trace_return_t getCtContFromName(const char *name) {
+/*
+ * Local methods for OTF only, will be put in an other file after to be cleaner than now...
+ */
+int getCtContFromName(const char *name) {
     int i = 1;
     if(name == NULL) {
         return 0;
@@ -96,7 +109,7 @@ trace_return_t getCtContFromName(const char *name) {
     return 0;
 }
 
-trace_return_t getCtFromName(const char *name) {
+int getCtFromName(const char *name) {
     int i = 1;
     if(name == NULL) {
         return 0;
@@ -110,7 +123,7 @@ trace_return_t getCtFromName(const char *name) {
     return 0;
 }
 
-trace_return_t getStateTypeFromName(const char *type) {
+int getStateTypeFromName(const char *type) {
     int i = 1;
     if(type == NULL) {
         return 0;
@@ -123,7 +136,7 @@ trace_return_t getStateTypeFromName(const char *type) {
     return 0;
 }
 
-trace_return_t getStateFromName(const char *type) {
+int getStateFromName(const char *type) {
     int i = 1;
     if(type == NULL) {
         return 0;
@@ -136,7 +149,7 @@ trace_return_t getStateFromName(const char *type) {
     return 0;
 }
 
-trace_return_t getVariableTypeFromName(const char *type) {
+int getVariableTypeFromName(const char *type) {
     int i = 1;
     if(type == NULL) {
         return 0;
@@ -149,6 +162,20 @@ trace_return_t getVariableTypeFromName(const char *type) {
     return 0;
 }
 
+int getEventTypeFromName(const char *type) {
+    int i = 1;
+    if(type == NULL) {
+        return 0;
+    }
+    for(; i < current_eventType ; i ++) {
+        if(strcmp(type, eventTypes[i].name) == 0 || strcmp(type, eventTypes[i].alias) == 0) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+/* Beginning of the implementation of the interface for OTF */
 trace_return_t OTFInitTrace(const char* filenam) {
     int ret = TRACE_ERR_OPEN;
 
@@ -235,12 +262,25 @@ trace_return_t OTFAddStateTypeNB (const char* alias, const char* contType,
 
 trace_return_t OTFAddEventType (const char* alias, const char* contType, 
                      const char* name){
+    eventTypes[current_eventType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
+    strcpy(eventTypes[current_eventType].name, name);
+    
+    eventTypes[current_eventType].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
+    strcpy(eventTypes[current_eventType].alias, alias);
+    
+    eventTypes[current_eventType].contType = getCtContFromName(contType);
+
+    printf("addEventType : id %d, alias %s, name %s, contType %s\n", current_eventType, alias, name, contType);
+
+    OTF_Writer_writeDefMarker(writer, 0, current_eventType, name, OTF_MARKER_TYPE_UNKNOWN);
+    current_eventType ++;
+
     return TRACE_SUCCESS;
 }
 
 trace_return_t OTFAddEventTypeNB (const char* alias, const char* contType, 
                        const char* name){
-    return TRACE_SUCCESS;
+    return OTFAddEventType(alias, contType, name);
 }
 
 trace_return_t OTFAddLinkType (const char* alias   , const char* name,
@@ -387,14 +427,18 @@ trace_return_t OTFPopStateNB (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddEvent (varPrec time, const char* type,
-                 const char*  cont, const char* val){
+trace_return_t OTFAddEvent (varPrec time    , const char* type,
+                 const char *cont, const char* val){
+    uint32_t process = getCtFromName(cont);
+    uint32_t eventType = getEventTypeFromName(type);
+    OTF_Writer_writeMarker (writer, time, process, eventType, val);
+    printf("AddEvent : parent %d, eventType %d, val %s\n", process, eventType, val);
     return TRACE_SUCCESS;
 }
 
 trace_return_t OTFAddEventNB (varPrec time, const char* type,
                    const char*  cont, const char* val){
-    return TRACE_SUCCESS;
+    return OTFAddEvent(time, type, cont, val);
 }
 
 trace_return_t OTFStartLink (varPrec time, const char* type,
@@ -475,6 +519,11 @@ trace_return_t OTFEndTrace (){
     for(i = 0 ; i < current_variableType ; i ++) {
         free(variableTypes[i].name);
         free(variableTypes[i].alias);
+    }
+
+    for(i = 0 ; i < current_eventType ; i ++) {
+        free(eventTypes[i].name);
+        free(eventTypes[i].alias);
     }
 
     for(i = 1 ; i < current_ct ; i ++) {
