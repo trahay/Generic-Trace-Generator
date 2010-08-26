@@ -36,6 +36,7 @@ typedef enum trace_return_t{
     TRACE_SUCCESS  , /*!< Success of the call.           */
     TRACE_ERR_OPEN , /*!< Failed to open files to write. */
     TRACE_ERR_CLOSE, /*!< Failed to close file.          */
-    TRACE_ERR_WRITE  /*!< Failed to write trace.         */      
+    TRACE_ERR_WRITE,  /*!< Failed to write trace.         */      
+    TRACE_ERR_NOT_IMPL  /*!< Function not impleneted.         */      
 }trace_return_t;
 #endif

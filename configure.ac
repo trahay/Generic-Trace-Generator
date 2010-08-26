@@ -1,0 +1,109 @@
+# Copyright © CNRS, INRIA, Université Bordeaux 1
+# See COPYING in top-level directory.
+
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.63])
+AC_INIT([GTG], [0.1], [gtg-devel@lists.gforge.inria.fr])
+AM_INIT_AUTOMAKE
+
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_FC
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_PROG_LIBTOOL
+
+# Checks for header files.
+AC_CHECK_HEADERS([stdio.h string.h stdlib.h])
+
+# MPI stuff
+use_mpi=yes
+AC_ARG_WITH(mpi, [AS_HELP_STRING([--with-mpi[=<dir>]], [Use a specific MPI installation])],
+        [
+                if test x$withval != xno; then
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+                                use_mpi_from_system=yes
+                        else
+                                # use specified path
+                                use_mpi_from_system=no
+                                mpidir=$withval
+                                AC_MSG_RESULT(yes using $mpidir)
+                                AC_SUBST(MPIDIR, $mpidir)
+                        fi
+                else
+			# either --without-mpi or --with-mpi=no is set
+                        use_mpi=no
+                fi
+        ])
+
+if test $use_mpi = yes ; then
+   AC_SUBST(USE_MPIDIR_FROM_USER,$use_mpi_from_system)
+   if test x$use_mpi_from_system = xno; then
+        CPPFLAGS="${CPPFLAGS} -I$mpidir/ "
+   fi
+
+   # MPI header
+   AC_CHECK_HEADER([mpi.h],[enable_mpi=yes],)	
+else
+  enable_mpi=no
+fi
+
+AM_CONDITIONAL([USE_MPI], [test "x$enable_mpi" = xyes])
+
+
+
+
+# OTF stuff
+use_otf=yes
+AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF installation])],
+        [
+                if test x$withval != xno; then
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+                                use_otf_from_system=yes
+                        else
+                                # use specified path
+                                use_otf_from_system=no
+                                otfdir=$withval
+                                AC_MSG_RESULT(yes using $otfdir)
+                                AC_SUBST(MPIDIR, $otfdir)
+                        fi
+                else
+			# either --without-mpi or --with-mpi=no is set
+                        use_otf=no
+                fi
+        ])
+
+if test $use_otf = yes ; then
+   AC_SUBST(USE_OTFDIR_FROM_USER,$use_otf_from_system)
+   if test x$use_otf_from_system = xno; then
+        CPPFLAGS="${CPPFLAGS} -I$otfdir/include/ "
+	LDFLAGS="${LDFLAGS} -L$otfdir/lib/ "
+   fi
+
+   # MPI header
+   AC_CHECK_HEADER([otf.h],[enable_otf=yes],)	
+else
+  enable_otf=no
+fi
+
+AM_CONDITIONAL([USE_OTF], [test "x$enable_otf" = xyes])
+
+
+
+# Checks for programs
+AC_CHECK_PROG(HAVE_DOXYGEN, [doxygen], yes, no)
+
+if test x$HAVE_DOXYGEN = xno ; then
+   AC_MSG_WARN([Cannot find doxygen])
+fi
+
+AC_ARG_VAR([PDFLATEX], [Location of the pdflatex program (required for building the hwloc doxygen documentation)])
+AC_PATH_TOOL([PDFLATEX], [pdflatex])
+
+AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
+
+AC_OUTPUT([Makefile inc/Makefile src/Makefile doc/Makefile])

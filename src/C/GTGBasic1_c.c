@@ -1,6 +1,6 @@
-#include "../../inc/GTGBasic1.h"
-#include "../../inc/OTF_GTGBasic1.h"
-#include "../../inc/paje_GTGBasic1.h"
+#include "GTGBasic1.h"
+#include "OTF_GTGBasic1.h"
+#include "paje_GTGBasic1.h"
 
 static int traceType;
 
@@ -10,7 +10,7 @@ void setTraceType (int type){
 int getTraceType (){
     return traceType;
 }
-int initTrace   (char* filename){
+int initTrace   (const char* filename){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -49,30 +49,8 @@ int setCompress (int val){
     return TRACE_SUCCESS;
 }
 
-int setComm (MPI_Comm c){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeSetComm (c);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFSetComm (c);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
-int addProcType   (char* alias, char* contType, 
-                   char* name){
+int addProcType   (const char* alias, const char* contType, 
+                   const char* name){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -94,8 +72,8 @@ int addProcType   (char* alias, char* contType,
     return TRACE_SUCCESS;
 }
 
-int addProcTypeNB (char* alias, char* contType, 
-                   char* name){
+int addProcTypeNB (const char* alias, const char* contType, 
+                   const char* name){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -117,8 +95,8 @@ int addProcTypeNB (char* alias, char* contType,
     return TRACE_SUCCESS;
 }
 
-int addStateType   (char* alias, char* contType, 
-                    char* name){
+int addStateType   (const char* alias, const char* contType, 
+                    const char* name){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -140,8 +118,8 @@ int addStateType   (char* alias, char* contType,
     return TRACE_SUCCESS;
 }
 
-int addStateTypeNB (char* alias, char* contType, 
-                    char* name){
+int addStateTypeNB (const char* alias, const char* contType, 
+                    const char* name){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -163,8 +141,8 @@ int addStateTypeNB (char* alias, char* contType,
     return TRACE_SUCCESS;
 }
 
-int addEventType   (char* alias, char* contType, 
-                    char* name){
+int addEventType   (const char* alias, const char* contType, 
+                    const char* name){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -186,8 +164,8 @@ int addEventType   (char* alias, char* contType,
     return TRACE_SUCCESS;
 }
 
-int addEventTypeNB (char* alias, char* contType, 
-                    char* name){
+int addEventTypeNB (const char* alias, const char* contType, 
+                    const char* name){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -209,9 +187,9 @@ int addEventTypeNB (char* alias, char* contType,
     return TRACE_SUCCESS;
 }
 
-int addLinkType   (char* alias   , char* name,
-                   char* contType, char* srcContType,
-                   char* destContType){
+int addLinkType   (const char* alias   , const char* name,
+                   const char* contType, const char* srcContType,
+                   const char* destContType){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -233,9 +211,9 @@ int addLinkType   (char* alias   , char* name,
     return TRACE_SUCCESS;
 }
 
-int addLinkTypeNB (char* alias   , char* name,
-                   char* contType, char* srcContType,
-                   char* destContType){
+int addLinkTypeNB (const char* alias   , const char* name,
+                   const char* contType, const char* srcContType,
+                   const char* destContType){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -257,8 +235,8 @@ int addLinkTypeNB (char* alias   , char* name,
     return TRACE_SUCCESS;
 }
 
-int addVarType   (char* alias   , char* name,
-                  char* contType){
+int addVarType   (const char* alias   , const char* name,
+                  const char* contType){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -280,8 +258,8 @@ int addVarType   (char* alias   , char* name,
     return TRACE_SUCCESS;
 }
 
-int addVarTypeNB (char* alias   , char* name,
-                  char* contType){
+int addVarTypeNB (const char* alias   , const char* name,
+                  const char* contType){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -303,8 +281,8 @@ int addVarTypeNB (char* alias   , char* name,
     return TRACE_SUCCESS;
 }
 
-int addEntityValue   (char* alias, char* entType, 
-                      char* name , char* color){
+int addEntityValue   (const char* alias, const char* entType, 
+                      const char* name , const char* color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -326,8 +304,8 @@ int addEntityValue   (char* alias, char* entType,
     return TRACE_SUCCESS;
 }
 
-int addEntityValueNB (char* alias, char* entType, 
-                      char* name , char* color){
+int addEntityValueNB (const char* alias, const char* entType, 
+                      const char* name , const char* color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -349,9 +327,9 @@ int addEntityValueNB (char* alias, char* entType,
     return TRACE_SUCCESS;
 }
 
-int addContainer   (varPrec time, char* alias    ,
-                    char*  type, char* container,
-                    char*  name, char* file){
+int addContainer   (varPrec time, const char* alias    ,
+                    const char*  type, const char* container,
+                    const char*  name, const char* file){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -375,9 +353,9 @@ int addContainer   (varPrec time, char* alias    ,
     return TRACE_SUCCESS;
 }
 
-int addContainerNB (varPrec time, char* alias    ,
-                    char*  type, char* container,
-                    char*  name, char* file){
+int addContainerNB (varPrec time, const char* alias    ,
+                    const char*  type, const char* container,
+                    const char*  name, const char* file){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -401,8 +379,8 @@ int addContainerNB (varPrec time, char* alias    ,
     return TRACE_SUCCESS;
 }
 
-int destroyContainer     (varPrec time, char*  name,
-                          char*  type){
+int destroyContainer     (varPrec time, const char*  name,
+                          const char*  type){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -424,8 +402,8 @@ int destroyContainer     (varPrec time, char*  name,
     return TRACE_SUCCESS;
 }
 
-int destroyContainerNB   (varPrec time, char*  name,
-                          char*  type){
+int destroyContainerNB   (varPrec time, const char*  name,
+                          const char*  type){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -447,8 +425,8 @@ int destroyContainerNB   (varPrec time, char*  name,
     return TRACE_SUCCESS;
 }
 
-int setState   (varPrec time, char* type,
-                char*  cont, char* val){
+int setState   (varPrec time, const char* type,
+                const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -470,8 +448,8 @@ int setState   (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int setStateNB (varPrec time, char* type,
-                char*  cont, char* val){
+int setStateNB (varPrec time, const char* type,
+                const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -493,8 +471,8 @@ int setStateNB (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int pushState   (varPrec time, char* type,
-                 char*  cont, char* val){
+int pushState   (varPrec time, const char* type,
+                 const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -516,8 +494,8 @@ int pushState   (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int pushStateNB (varPrec time, char* type,
-                 char*  cont, char* val){
+int pushStateNB (varPrec time, const char* type,
+                 const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -539,8 +517,8 @@ int pushStateNB (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int popState   (varPrec time, char* type,
-                char*  cont, char* val){
+int popState   (varPrec time, const char* type,
+                const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -562,8 +540,8 @@ int popState   (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int popStateNB (varPrec time, char* type,
-                char*  cont, char* val){
+int popStateNB (varPrec time, const char* type,
+                const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -585,8 +563,8 @@ int popStateNB (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int addEvent   (varPrec time, char* type,
-                char*  cont, char* val){
+int addEvent   (varPrec time, const char* type,
+                const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -608,8 +586,8 @@ int addEvent   (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int addEventNB (varPrec time, char* type,
-                char*  cont, char* val){
+int addEventNB (varPrec time, const char* type,
+                const char*  cont, const char* val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -631,10 +609,10 @@ int addEventNB (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int startLink   (varPrec time, char* type,
-                 char*  cont, char* src,
-                 char*  dest, char* val,
-                 char* key){
+int startLink   (varPrec time, const char* type,
+                 const char*  cont, const char* src,
+                 const char*  dest, const char* val,
+                 const char* key){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -656,10 +634,10 @@ int startLink   (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int startLinkNB (varPrec time, char* type,
-                 char*  cont, char* src,
-                 char*  dest, char* val,
-                 char* key){
+int startLinkNB (varPrec time, const char* type,
+                 const char*  cont, const char* src,
+                 const char*  dest, const char* val,
+                 const char* key){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -681,10 +659,10 @@ int startLinkNB (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int endLink   (varPrec time, char* type,
-               char*  cont, char* src,
-               char*  dest, char* val,
-               char* key){
+int endLink   (varPrec time, const char* type,
+               const char*  cont, const char* src,
+               const char*  dest, const char* val,
+               const char* key){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -706,10 +684,10 @@ int endLink   (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int endLinkNB (varPrec time, char* type,
-               char*  cont, char* src,
-               char*  dest, char* val,
-               char* key){
+int endLinkNB (varPrec time, const char* type,
+               const char*  cont, const char* src,
+               const char*  dest, const char* val,
+               const char* key){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -731,8 +709,8 @@ int endLinkNB (varPrec time, char* type,
     return TRACE_SUCCESS;
 }
 
-int setVar   (varPrec time, char*  type,
-              char*  cont, varPrec val){
+int setVar   (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -754,8 +732,8 @@ int setVar   (varPrec time, char*  type,
     return TRACE_SUCCESS;
 }
 
-int setVarNB (varPrec time, char*  type,
-              char*  cont, varPrec val){
+int setVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -777,8 +755,8 @@ int setVarNB (varPrec time, char*  type,
     return TRACE_SUCCESS;
 }
 
-int addVar   (varPrec time, char*  type,
-              char*  cont, varPrec val){
+int addVar   (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -800,8 +778,8 @@ int addVar   (varPrec time, char*  type,
     return TRACE_SUCCESS;
 }
 
-int addVarNB (varPrec time, char*  type,
-              char*  cont, varPrec val){
+int addVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -823,8 +801,8 @@ int addVarNB (varPrec time, char*  type,
     return TRACE_SUCCESS;
 }
 
-int subVar   (varPrec time, char*  type,
-              char*  cont, varPrec val){
+int subVar   (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -846,8 +824,8 @@ int subVar   (varPrec time, char*  type,
     return TRACE_SUCCESS;
 }
 
-int subVarNB (varPrec time, char*  type,
-              char*  cont, varPrec val){
+int subVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :

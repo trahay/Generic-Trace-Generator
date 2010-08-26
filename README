@@ -35,21 +35,14 @@ README        : This file, presenting the project
 
 
 ==============================================
-===               Compile :                 ==
+===    Building from the SVN repository:    ==
 ==============================================
 
-To be able to compile, choose the corresponding file in the config directory.
-Create a symbolic link named config.in in the same level as the Makefile.
-E.g. if you choose the local.in config :
-> ln -nfs config/local.in config.in
-Then you can compile.
+First, you need to generate the configure files by running autoreconf:
 
-The makefile has 4 different rules :
-*all*         : Generate all (doc, lib, examples)
-*lib*         : Generate the library
-*examples*    : Generate the bin examples
-*doc*         : Generate the documentation
+$ autoreconf -vfi
 
+Then, simply run configure && make && make install
 
 
 ==============================================

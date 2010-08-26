@@ -1,4 +1,4 @@
-#include "../../inc/GTGBasic1.h"
+#include "GTGBasic1.h"
 
 void setTraceType_i (int* type){
     setTraceType (*type);
@@ -13,10 +13,6 @@ void initTrace_i (char* f, int* len, int* err){
     memcpy (filename, f, *len);
     filename[*len]='\0';
     *err = initTrace (filename);
-}
-
-void setComm_i (MPI_Comm* c, int* err){
-    *err = setComm (*c);
 }
 
 void addProcType_i (char* alias   , int* s1, 
@@ -646,8 +642,6 @@ void settracetype_i_ (int* type, int* err) __attribute__ ((weak, alias ("setTrac
 int gettracetype_i_ ()__attribute__ ((weak, alias ("getTraceType_i")));
 
 void inittrace_i_ (char* f, int* len, int* err)__attribute__ ((weak, alias ("initTrace_i")));
-
-void setcomm_i_ (MPI_Comm* c)__attribute__ ((weak, alias ("setComm_i")));
 
 void addproctype_i_ (char* alias   , int* s1, 
                     char* contType, int* s2,

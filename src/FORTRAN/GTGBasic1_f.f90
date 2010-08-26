@@ -39,12 +39,6 @@ subroutine initTrace_f (filename, ierr)
   call initTrace_i (filename, len (trim (filename)), ierr)
 end subroutine initTrace_f
 
-subroutine setComm_f (c, ierr)
-  integer, intent (in) :: c
-  integer, intent (out) :: ierr
-  call setComm_i (c, ierr)
-end subroutine setComm_f
-
 
 subroutine addProcType_f   (alias, contType, name, ierr)
   character (len=*), intent (in) :: alias

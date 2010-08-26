@@ -18,7 +18,6 @@
  */
 #ifndef _TRACEGENERATORBASIC_
 #define _TRACEGENERATORBASIC_
-#include <mpi.h>
 #include <stdlib.h>
 #include <string.h>
 #include "types.h"
@@ -57,19 +56,18 @@ void setTraceType (int type);
  */
 int getTraceType ();
 
-
 /** 
  * \defgroup init To init the generated trace file(s)
  */
 /**
  * \ingroup init
- * \fn int initTrace   (char* filename)
+ * \fn int initTrace   (const char* filename)
  * \brief C function to init a trace
  * \param filename Root name of the file to create
  * \return 0 if success \n
  *         An error code otherwise
  */
-int initTrace   (char* filename);
+int initTrace   (const char* filename);
 /**
  * \ingroup init
  * \fn int endTrace   ()
@@ -78,16 +76,6 @@ int initTrace   (char* filename);
  *         An error code otherwise
  */
 int endTrace   ();
-
-/**
- * \ingroup init
- * \fn setComm (MPI_Comm c)
- * \brief /!\ Call before initTrace for VITE traces. C function.
- * \param c Communicateur MPI
- * \return 0 if success \n
- *         An error code otherwise
- */
-int setComm (MPI_Comm c);
 /**
  * \ingroup init
  * \fn setCompress (int val)
@@ -103,9 +91,9 @@ int setCompress (int val);
  */
 /**
  * \ingroup procf
- * \ fn int addProcType   (char* alias,
- *                         char* contType, 
- *                         char* name)
+ * \ fn int addProcType   (const char* alias,
+ *                         const char* contType, 
+ *                         const char* name)
  * \brief C function to add a container type
  * \param alias Alias on the container
  * \param contType Type of container
@@ -113,14 +101,14 @@ int setCompress (int val);
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addProcType   (char* alias, char* contType, 
-                   char* name);
+int addProcType   (const char* alias, const char* contType, 
+                   const char* name);
 
 /**
  * \ingroup procf
- * \fn int addProcTypeNB   (char* alias,
- *                          char* contType, 
- *                          char* name)
+ * \fn int addProcTypeNB   (const char* alias,
+ *                          const char* contType, 
+ *                          const char* name)
  * \brief C function to add a container type in a non bufferized mode
  * \param alias Alias on the container
  * \param contType Type of container
@@ -128,16 +116,16 @@ int addProcType   (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addProcTypeNB (char* alias, char* contType, 
-                   char* name);
+int addProcTypeNB (const char* alias, const char* contType, 
+                   const char* name);
 /**
  * \defgroup statef Functions linked to the states
  */
 /**
  * \ingroup statef
- * \fn int addStateType   (char* alias,
- *                         char* contType, 
- *                         char* name)
+ * \fn int addStateType   (const char* alias,
+ *                         const char* contType, 
+ *                         const char* name)
  * \brief C function to add a state type
  * \param alias Alias on the state type
  * \param contType Type of container
@@ -145,14 +133,14 @@ int addProcTypeNB (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addStateType   (char* alias, char* contType, 
-                    char* name);
+int addStateType   (const char* alias, const char* contType, 
+                    const char* name);
 
 /**
  * \ingroup statef
- * \fn int addStateTypeNB   (char* alias,
- *                           char* contType, 
- *                           char* name)
+ * \fn int addStateTypeNB   (const char* alias,
+ *                           const char* contType, 
+ *                           const char* name)
  * \brief C function to add a state type in a non bufferized mode
  * \param alias Alias on the state type
  * \param contType Type of container
@@ -160,17 +148,17 @@ int addStateType   (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addStateTypeNB (char* alias, char* contType, 
-                    char* name);
+int addStateTypeNB (const char* alias, const char* contType, 
+                    const char* name);
 
 /**
  * \defgroup eventf Functions linked to the events
  */
 /**
  * \ingroup eventf
- * \fn int addEventType   (char* alias,
- *                         char* contType, 
- *                         char* name)
+ * \fn int addEventType   (const char* alias,
+ *                         const char* contType, 
+ *                         const char* name)
  * \brief C function to add an event type
  * \param alias Alias on the event type
  * \param contType Type of container
@@ -178,13 +166,13 @@ int addStateTypeNB (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEventType   (char* alias, char* contType, 
-                    char* name);
+int addEventType   (const char* alias, const char* contType, 
+                    const char* name);
 /**
  * \ingroup eventf
- * \fn int addEventTypeNB   (char* alias,
- *                         char* contType, 
- *                         char* name)
+ * \fn int addEventTypeNB   (const char* alias,
+ *                         const char* contType, 
+ *                         const char* name)
  * \brief C function to add an event type in a non bufferized mode
  * \param alias Alias on the event type
  * \param contType Type of container
@@ -192,19 +180,19 @@ int addEventType   (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEventTypeNB (char* alias, char* contType, 
-                    char* name);
+int addEventTypeNB (const char* alias, const char* contType, 
+                    const char* name);
 
 /**
  * \defgroup linkf Functions linked to links
  */
 /**
  * \ingroup linkf
- * \fn int addLinkType   (char* alias,
- *                        char* name,
- *                        char* contType, 
- *                        char* srcContType,
- *                        char* destContType);
+ * \fn int addLinkType   (const char* alias,
+ *                        const char* name,
+ *                        const char* contType, 
+ *                        const char* srcContType,
+ *                        const char* destContType);
  * \brief C function to add a link type
  * \param alias Alias on the link type
  * \param name Name of the link type
@@ -214,16 +202,16 @@ int addEventTypeNB (char* alias, char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addLinkType   (char* alias   , char* name,
-                   char* contType, char* srcContType,
-                   char* destContType);
+int addLinkType   (const char* alias   , const char* name,
+                   const char* contType, const char* srcContType,
+                   const char* destContType);
 /**
  * \ingroup linkf
- * \fn int addLinkTypeNB   (char* alias,
- *                          char* name,
- *                          char* contType, 
- *                          char* srcContType,
- *                          char* destContType);
+ * \fn int addLinkTypeNB   (const char* alias,
+ *                          const char* name,
+ *                          const char* contType, 
+ *                          const char* srcContType,
+ *                          const char* destContType);
  * \brief C function to add a link type in a non bufferized mode
  * \param alias Alias on the link type
  * \param name Name of the link type
@@ -233,18 +221,18 @@ int addLinkType   (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addLinkTypeNB (char* alias   , char* name,
-                   char* contType, char* srcContType,
-                   char* destContType);
+int addLinkTypeNB (const char* alias   , const char* name,
+                   const char* contType, const char* srcContType,
+                   const char* destContType);
 
 /**
  * \defgroup varf Functions linked to variables
  */
 /**
  * \ingroup varf
- * \fn int addVarType   (char* alias,
- *                       char* name,
- *                       char* contType)
+ * \fn int addVarType   (const char* alias,
+ *                       const char* name,
+ *                       const char* contType)
  * \brief C function to add a variable type
  * \param alias Alias on the variable type
  * \param contType Type of container
@@ -252,13 +240,13 @@ int addLinkTypeNB (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVarType   (char* alias   , char* name,
-                  char* contType); 
+int addVarType   (const char* alias   , const char* name,
+                  const char* contType); 
 /**
  * \ingroup varf
- * \fn int addVarTypeNB   (char* alias,
- *                         char* contType, 
- *                         char* name)
+ * \fn int addVarTypeNB   (const char* alias,
+ *                         const char* contType, 
+ *                         const char* name)
  * \brief C function to add a variable type in a non bufferized mode
  * \param alias Alias on the variable type
  * \param contType Type of container
@@ -266,15 +254,15 @@ int addVarType   (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVarTypeNB (char* alias   , char* name,
-                  char* contType);
-                  
+int addVarTypeNB (const char* alias   , const char* name,
+                  const char* contType);
+
 /**
  * \ingroup init
- * \fn int addEntityValue   (char* alias,
- *                           char* entType, 
- *                           char* name,
- *                           char* color)
+ * \fn int addEntityValue   (const char* alias,
+ *                           const char* entType, 
+ *                           const char* name,
+ *                           const char* color)
  * \brief C function to add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -283,14 +271,14 @@ int addVarTypeNB (char* alias   , char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEntityValue   (char* alias, char* entType, 
-                      char* name , char* color);
+int addEntityValue   (const char* alias, const char* entType, 
+                      const char* name , const char* color);
 /**
  * \ingroup init
- * \fn int addEntityValueNB (char* alias,
- *                           char* entType, 
- *                           char* name,
- *                           char* color)
+ * \fn int addEntityValueNB (const char* alias,
+ *                           const char* entType, 
+ *                           const char* name,
+ *                           const char* color)
  * \brief C function to add an entity value in a non bufferized mode
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -299,17 +287,17 @@ int addEntityValue   (char* alias, char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEntityValueNB (char* alias, char* entType, 
-                      char* name , char* color);
+int addEntityValueNB (const char* alias, const char* entType, 
+                      const char* name , const char* color);
 
 /**
  * \ingroup procf
  * \fn int addContainer (varPrec  time,
- *                       char  * alias,
- *                       char  * type, 
- *                       char  * container,
- *                       char  * name,
- *                       char  * file)
+ *                       const char  * alias,
+ *                       const char  * type, 
+ *                       const char  * container,
+ *                       const char  * name,
+ *                       const char  * file)
  * \brief C function to add a container
  * \param time Time the proc is added
  * \param alias Alias on the proc added
@@ -320,17 +308,17 @@ int addEntityValueNB (char* alias, char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addContainer   (varPrec time, char* alias    ,
-                    char*  type, char* container,
-                    char*  name, char* file);
+int addContainer   (varPrec time, const char* alias    ,
+                    const char*  type, const char* container,
+                    const char*  name, const char* file);
 /**
  * \ingroup procf
  * \fn int addContainerNB (varPrec  time,
- *                         char  * alias,
- *                         char  * type, 
- *                         char  * container,
- *                         char  * name,
- *                         char  * file)
+ *                         const char  * alias,
+ *                         const char  * type, 
+ *                         const char  * container,
+ *                         const char  * name,
+ *                         const char  * file)
  * \brief C function to add a container in a non bufferized mode
  * \param time Time the proc is added
  * \param alias Alias on the proc added
@@ -341,15 +329,15 @@ int addContainer   (varPrec time, char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addContainerNB (varPrec time, char* alias    ,
-                    char*  type, char* container,
-                    char*  name, char* file);
+int addContainerNB (varPrec time, const char* alias    ,
+                    const char*  type, const char* container,
+                    const char*  name, const char* file);
 
 /**
  * \ingroup procf
  * \fn int destroyContainer (varPrec  time,
- *                           char  * name,
- *                           char  * type) 
+ *                           const char  * name,
+ *                           const char  * type) 
  * \brief C function to destroy a container
  * \param time Time the proc is destroyed
  * \param name Name of the container
@@ -357,13 +345,13 @@ int addContainerNB (varPrec time, char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int destroyContainer     (varPrec time, char*  name,
-                          char*  type);
+int destroyContainer     (varPrec time, const char*  name,
+                          const char*  type);
 /**
  * \ingroup procf
  * \fn int destroyContainerNB (varPrec  time,
- *                             char  * name,
- *                             char  * type) 
+ *                             const char  * name,
+ *                             const char  * type) 
  * \brief C function to destroy a container in a non bufferized mode
  * \param time Time the proc is destroyed
  * \param name Name of the container
@@ -371,116 +359,116 @@ int destroyContainer     (varPrec time, char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int destroyContainerNB   (varPrec time, char*  name,
-                          char*  type);
+int destroyContainerNB   (varPrec time, const char*  name,
+                          const char*  type);
 
 /**
  * \ingroup statef
  * \fn int setState (varPrec  time,
- *                   char  * type,
- *                   char  * cont,
- *                   char  * val)
+ *                   const char  * type,
+ *                   const char  * cont,
+ *                   const char  * val)
  * \brief C function to set a proc in a state
  * \param time Time the state is set
  * \param type Type of the state
- * \param cont Container in this state                                       
+ * \param cont Container in this state
  * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setState   (varPrec time, char* type,
-                char*  cont, char* val);
+int setState   (varPrec time, const char* type,
+                const char*  cont, const char* val);
 /**
  * \ingroup statef
  * \fn int setStateNB (varPrec  time,
- *                     char  * type,
- *                     char  * cont,
- *                     char  * val)
+ *                     const char  * type,
+ *                     const char  * cont,
+ *                     const char  * val)
  * \brief C function to set a proc in a state in a non bufferized mode
  * \param time Time the state is set
  * \param type Type of the state
- * \param cont Container in this state                                       
+ * \param cont Container in this state
  * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setStateNB (varPrec time, char* type,
-                char*  cont, char* val);
+int setStateNB (varPrec time, const char* type,
+                const char*  cont, const char* val);
 
 /**
  * \ingroup statef
  * \fn int pushState (varPrec  time,
- *                    char  * type,
- *                    char  * cont,
- *                    char  * val)
+ *                    const char  * type,
+ *                    const char  * cont,
+ *                    const char  * val)
  * \brief C function to push a state in a proc
  * \param time Time the state is pushed
  * \param type Type of the state
- * \param cont Container in this state                                       
+ * \param cont Container in this state
  * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pushState   (varPrec time, char* type,
-                 char*  cont, char* val);
+int pushState   (varPrec time, const char* type,
+                 const char*  cont, const char* val);
 
 /**
  * \ingroup statef
  * \fn int pushStateNB (varPrec  time,
- *                      char  * type,
- *                      char  * cont,
- *                      char  * val)
+ *                      const char  * type,
+ *                      const char  * cont,
+ *                      const char  * val)
  * \brief C function to push a state in a proc in a non bufferized mode
  * \param time Time the state is pushed
  * \param type Type of the state
- * \param cont Container in this state                                       
+ * \param cont Container in this state
  * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pushStateNB (varPrec time, char* type,
-                 char*  cont, char* val);
+int pushStateNB (varPrec time, const char* type,
+                 const char*  cont, const char* val);
 
 /**
  * \ingroup statef
  * \fn int popState (varPrec  time,
- *                   char  * type,
- *                   char  * cont,
- *                   char  * val)
+ *                   const char  * type,
+ *                   const char  * cont,
+ *                   const char  * val)
  * \brief C function to pop a state in a proc
  * \param time Time the state is poped
  * \param type Type of the state
- * \param cont Container in this state                                       
+ * \param cont Container in this state
  * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
-int popState   (varPrec time, char* type,
-                char*  cont, char* val);
+int popState   (varPrec time, const char* type,
+                const char*  cont, const char* val);
 
 /**
  * \ingroup statef
  * \fn int popStateNB (varPrec  time,
- *                     char  * type,
- *                     char  * cont,
- *                     char  * val)
+ *                     const char  * type,
+ *                     const char  * cont,
+ *                     const char  * val)
  * \brief C function to pop a state in a proc in a non bufferized mode
  * \param time Time the state is poped
  * \param type Type of the state
- * \param cont Container in this state                                       
+ * \param cont Container in this state
  * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
-int popStateNB (varPrec time, char* type,
-                char*  cont, char* val);
+int popStateNB (varPrec time, const char* type,
+                const char*  cont, const char* val);
 
 /**
  * \ingroup eventf
  * \fn int addEvent (varPrec  time,
- *                   char  * type,
- *                   char  * cont,
- *                   char  * val)
+ *                   const char  * type,
+ *                   const char  * cont,
+ *                   const char  * val)
  * \brief C function to add an event
  * \param time Time the event happens
  * \param type Type of the event
@@ -489,15 +477,15 @@ int popStateNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEvent   (varPrec time, char* type,
-                char*  cont, char* val);
+int addEvent   (varPrec time, const char* type,
+                const char*  cont, const char* val);
 
 /**
  * \ingroup eventf
  * \fn int addEventNB (varPrec  time,
- *                     char  * type,
- *                     char  * cont,
- *                     char  * val)
+ *                     const char  * type,
+ *                     const char  * cont,
+ *                     const char  * val)
  * \brief C function to add an event in a non bufferized mode
  * \param time Time the event happens
  * \param type Type of the event
@@ -506,18 +494,18 @@ int addEvent   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEventNB (varPrec time, char* type,
-                char*  cont, char* val);
+int addEventNB (varPrec time, const char* type,
+                const char*  cont, const char* val);
 
 /**
  * \ingroup linkf
  * \fn int startLink (varPrec  time,
- *                    char  * type,
- *                    char  * cont,
- *                    char  * src,
- *                    char  * dest,
- *                    char  * val,
- *                    char  * key)
+ *                    const char  * type,
+ *                    const char  * cont,
+ *                    const char  * src,
+ *                    const char  * dest,
+ *                    const char  * val,
+ *                    const char  * key)
  * \brief C function to start a link. If creating a paje trace, dest param is useless.
  * \param time Time the comm starts
  * \param type Type of the link
@@ -529,20 +517,20 @@ int addEventNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int startLink   (varPrec time, char* type,
-                 char*  cont, char* src,
-                 char*  dest, char* val,
-                 char* key);
+int startLink   (varPrec time, const char* type,
+                 const char*  cont, const char* src,
+                 const char*  dest, const char* val,
+                 const char* key);
 
 /**
  * \ingroup linkf
  * \fn int startLinkNB (varPrec  time,
- *                      char  * type,
- *                      char  * cont,
- *                      char  * src,
- *                      char  * dest,
- *                      char  * val,
- *                      char  * key)
+ *                      const char  * type,
+ *                      const char  * cont,
+ *                      const char  * src,
+ *                      const char  * dest,
+ *                      const char  * val,
+ *                      const char  * key)
  * \brief C function to start a link in a non bufferized mode. If creating a paje trace, dest param is useless.
  * \param time Time the comm starts
  * \param type Type of the link
@@ -554,20 +542,20 @@ int startLink   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int startLinkNB (varPrec time, char* type,
-                 char*  cont, char* src,
-                 char*  dest, char* val,
-                 char* key);
+int startLinkNB (varPrec time, const char* type,
+                 const char*  cont, const char* src,
+                 const char*  dest, const char* val,
+                 const char* key);
 
 /**
  * \ingroup linkf
  * \fn int endLink (varPrec  time,
- *                  char  * type,
- *                  char  * cont,
- *                  char  * src,
- *                  char  * dest,
- *                  char  * val,
- *                  char  * key)
+ *                  const char  * type,
+ *                  const char  * cont,
+ *                  const char  * src,
+ *                  const char  * dest,
+ *                  const char  * val,
+ *                  const char  * key)
  * \brief C function to end a link. If creating a paje trace, src param is useless.
  * \param time Time the comm ends
  * \param type Type of the link
@@ -579,19 +567,19 @@ int startLinkNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int endLink   (varPrec time, char* type,
-               char*  cont, char* src,
-               char*  dest, char* val,
-               char* key);
+int endLink   (varPrec time, const char* type,
+               const char*  cont, const char* src,
+               const char*  dest, const char* val,
+               const char* key);
 /**
  * \ingroup linkf
  * \fn int endLinkNB (varPrec  time,
- *                    char  * type,
- *                    char  * cont,
- *                    char  * src,
- *                    char  * dest,
- *                    char  * val,
- *                    char  * key)
+ *                    const char  * type,
+ *                    const char  * cont,
+ *                    const char  * src,
+ *                    const char  * dest,
+ *                    const char  * val,
+ *                    const char  * key)
  * \brief C function to end a link in a non bufferized mode. If creating a paje trace, src param is useless.
  * \param time Time the comm ends
  * \param type Type of the link
@@ -603,16 +591,16 @@ int endLink   (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int endLinkNB (varPrec time, char* type,
-               char*  cont, char* src,
-               char*  dest, char* val,
-               char* key);
+int endLinkNB (varPrec time, const char* type,
+               const char*  cont, const char* src,
+               const char*  dest, const char* val,
+               const char* key);
 
 /**
  * \ingroup varf
  * \fn int setVar (varPrec  time,
- *                 char  * type,
- *                 char  * cont,
+ *                 const char  * type,
+ *                 const char  * cont,
  *                 varPrec  val)
  * \brief C function to set a variable value
  * \param time Time the variable is set
@@ -622,13 +610,13 @@ int endLinkNB (varPrec time, char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setVar   (varPrec time, char*  type,
-              char*  cont, varPrec val);
+int setVar   (varPrec time, const char*  type,
+              const char*  cont, varPrec val);
 /**
  * \ingroup varf
  * \fn int setVarNB (varPrec  time,
- *                   char  * type,
- *                   char  * cont,
+ *                   const char  * type,
+ *                   const char  * cont,
  *                   varPrec  val)
  * \brief C function to set a variable value in a non bufferized mode
  * \param time Time the variable is set
@@ -638,14 +626,14 @@ int setVar   (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setVarNB (varPrec time, char*  type,
-              char*  cont, varPrec val);
+int setVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val);
 
 /**
  * \ingroup varf
  * \fn int addVar (varPrec  time,
- *                 char  * type,
- *                 char  * cont,
+ *                 const char  * type,
+ *                 const char  * cont,
  *                 varPrec  val)
  * \brief C function to add a value to a variable
  * \param time Time the variable is incremented
@@ -655,13 +643,13 @@ int setVarNB (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVar   (varPrec time, char*  type,
-              char*  cont, varPrec val);
+int addVar   (varPrec time, const char*  type,
+              const char*  cont, varPrec val);
 /**
  * \ingroup varf
  * \fn int addVarNB (varPrec  time,
- *                   char  * type,
- *                   char  * cont,
+ *                   const char  * type,
+ *                   const char  * cont,
  *                   varPrec  val)
  * \brief C function to add a value to a variable in a non bufferized mode
  * \param time Time the variable is incremented
@@ -671,14 +659,14 @@ int addVar   (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVarNB (varPrec time, char*  type,
-              char*  cont, varPrec val);
+int addVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val);
 
 /**
  * \ingroup varf
  * \fn int subVar (varPrec  time,
- *                 char  * type,
- *                 char  * cont,
+ *                 const char  * type,
+ *                 const char  * cont,
  *                 varPrec  val)
  * \brief C function to substract a value to a variable
  * \param time Time the variable is incremented
@@ -689,13 +677,13 @@ int addVarNB (varPrec time, char*  type,
  *         An error code otherwise
  */
 
-int subVar   (varPrec time, char*  type,
-              char*  cont, varPrec val);
+int subVar   (varPrec time, const char*  type,
+              const char*  cont, varPrec val);
 /**
  * \ingroup varf
  * \fn int subVarNB (varPrec  time,
- *                   char  * type,
- *                   char  * cont,
+ *                   const char  * type,
+ *                   const char  * cont,
  *                   varPrec  val)
  * \brief C function to substract a value to a variable in a non bufferized mode
  * \param time Time the variable is decremented
@@ -705,8 +693,8 @@ int subVar   (varPrec time, char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int subVarNB (varPrec time, char*  type,
-              char*  cont, varPrec val);
+int subVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val);
 
 
 
