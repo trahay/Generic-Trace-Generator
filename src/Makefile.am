@@ -11,19 +11,22 @@
 
 lib_LTLIBRARIES = libgtg.la
 
-# libgtg_la_CPPFLAGS = -I$(FXT_ROOT)/include
 libgtg_la_CPPFLAGS = -I$(srcdir)/../inc/
 libgtg_la_CFLAGS = -Wall -pedantic -DBUILD_PAJE
-libgtg_la_LIBADD = -lmpi
+libgtg_la_LIBADD =
 libgtg_la_LDFLAGS = --no-undefined
-
 
 libgtg_la_SOURCES = \
 	  C/GTGBasic1_c.c     \
 	  FORTRAN/GTGBasic1_f.f90     \
-	  C/paje_GTGBasic1_c.c \
-	  C/interfaceCFortranBasic1.c    \
-	  C/OTF_GTGBasic1_c.c
+          C/interfaceCFortranBasic1.c    \
+	  C/paje_GTGBasic1_c.c
+
+if USE_OTF
+libgtg_la_CFLAGS += -DBUILD_OTF
+libgtg_la_SOURCES += C/OTF_GTGBasic1_c.c
+libgtg_la_LIBADD += -lotf
+endif
 
 
 #noinst_HEADERS =  ev_codes.h

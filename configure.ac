@@ -53,6 +53,47 @@ fi
 
 AM_CONDITIONAL([USE_MPI], [test "x$enable_mpi" = xyes])
 
+
+
+
+# OTF stuff
+use_otf=yes
+AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF installation])],
+        [
+                if test x$withval != xno; then
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+                                use_otf_from_system=yes
+                        else
+                                # use specified path
+                                use_otf_from_system=no
+                                otfdir=$withval
+                                AC_MSG_RESULT(yes using $otfdir)
+                                AC_SUBST(MPIDIR, $otfdir)
+                        fi
+                else
+			# either --without-mpi or --with-mpi=no is set
+                        use_otf=no
+                fi
+        ])
+
+if test $use_otf = yes ; then
+   AC_SUBST(USE_OTFDIR_FROM_USER,$use_otf_from_system)
+   if test x$use_otf_from_system = xno; then
+        CPPFLAGS="${CPPFLAGS} -I$otfdir/include/ "
+	LDFLAGS="${LDFLAGS} -L$otfdir/lib/ "
+   fi
+
+   # MPI header
+   AC_CHECK_HEADER([otf.h],[enable_otf=yes],)	
+else
+  enable_otf=no
+fi
+
+AM_CONDITIONAL([USE_OTF], [test "x$enable_otf" = xyes])
+
+
+
 # Checks for programs
 AC_CHECK_PROG(HAVE_DOXYGEN, [doxygen], yes, no)
 
