@@ -82,7 +82,7 @@ static EntityValue_t states[MAX_STATES];
 /* Root name */
 static char *filename;
 
-int getCtContFromName(const char *name) {
+trace_return_t getCtContFromName(const char *name) {
     int i = 1;
     if(name == NULL) {
         return 0;
@@ -96,7 +96,7 @@ int getCtContFromName(const char *name) {
     return 0;
 }
 
-int getCtFromName(const char *name) {
+trace_return_t getCtFromName(const char *name) {
     int i = 1;
     if(name == NULL) {
         return 0;
@@ -110,7 +110,7 @@ int getCtFromName(const char *name) {
     return 0;
 }
 
-int getStateTypeFromName(const char *type) {
+trace_return_t getStateTypeFromName(const char *type) {
     int i = 1;
     if(type == NULL) {
         return 0;
@@ -123,7 +123,7 @@ int getStateTypeFromName(const char *type) {
     return 0;
 }
 
-int getStateFromName(const char *type) {
+trace_return_t getStateFromName(const char *type) {
     int i = 1;
     if(type == NULL) {
         return 0;
@@ -136,7 +136,7 @@ int getStateFromName(const char *type) {
     return 0;
 }
 
-int getVariableTypeFromName(const char *type) {
+trace_return_t getVariableTypeFromName(const char *type) {
     int i = 1;
     if(type == NULL) {
         return 0;
@@ -149,8 +149,8 @@ int getVariableTypeFromName(const char *type) {
     return 0;
 }
 
-int OTFInitTrace(const char* filenam) {
-    int ret = OTF_ERR_OPEN;
+trace_return_t OTFInitTrace(const char* filenam) {
+    int ret = TRACE_ERR_OPEN;
 
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
     strcpy (filename, filenam);
@@ -174,17 +174,17 @@ int OTFInitTrace(const char* filenam) {
     OTF_Writer_writeDefTimerResolution(writer, 0, 1000);
 
     OTFAddProcType("0", NULL, "0");
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFSetCompress(int val) {
+trace_return_t OTFSetCompress(int val) {
     if(OTF_Writer_setCompression (writer, val))
-        return OTF_SUCCESS;
+        return TRACE_SUCCESS;
     else
-        return OTF_ERR_WRITE;
+        return TRACE_ERR_WRITE;
 }
 
-int OTFAddProcType (const char* alias, const char* contType, 
+trace_return_t OTFAddProcType (const char* alias, const char* contType, 
                     const char* name){
     uint32_t parent = 0;
     
@@ -202,16 +202,16 @@ int OTFAddProcType (const char* alias, const char* contType,
     printf("addCtType : name %s, alias %s, contType %s\n", name, alias, contType);
     current_ctType ++;
 
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
 
-int OTFAddProcTypeNB (const char* alias, const char* contType, 
+trace_return_t OTFAddProcTypeNB (const char* alias, const char* contType, 
                       const char* name){
     return OTFAddProcType(alias, contType, name);
 }
 
-int OTFAddStateType (const char* alias, const char* contType, 
+trace_return_t OTFAddStateType (const char* alias, const char* contType, 
                      const char* name){
     stateTypes[current_stateType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(stateTypes[current_stateType].name, name);
@@ -225,37 +225,37 @@ int OTFAddStateType (const char* alias, const char* contType,
 
     current_stateType ++;
 
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddStateTypeNB (const char* alias, const char* contType, 
+trace_return_t OTFAddStateTypeNB (const char* alias, const char* contType, 
                        const char* name){
     return OTFAddStateType(alias, contType, name);
 }
 
-int OTFAddEventType (const char* alias, const char* contType, 
+trace_return_t OTFAddEventType (const char* alias, const char* contType, 
                      const char* name){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddEventTypeNB (const char* alias, const char* contType, 
+trace_return_t OTFAddEventTypeNB (const char* alias, const char* contType, 
                        const char* name){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddLinkType (const char* alias   , const char* name,
+trace_return_t OTFAddLinkType (const char* alias   , const char* name,
                     const char* contType, const char* srcContType,
                     const char* destContType){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddLinkTypeNB (const char* alias   , const char* name,
+trace_return_t OTFAddLinkTypeNB (const char* alias   , const char* name,
                       const char* contType, const char* srcContType,
                       const char* destContType){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddVarType (const char* alias   , const char* name,
+trace_return_t OTFAddVarType (const char* alias   , const char* name,
                    const char* contType){
     variableTypes[current_variableType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(variableTypes[current_variableType].name, name);
@@ -267,15 +267,15 @@ int OTFAddVarType (const char* alias   , const char* name,
 
     current_variableType ++;
 
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddVarTypeNB (const char* alias   , const char* name,
+trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
                      const char* contType){
     return OTFAddVarType(alias, name, contType);
 }
 
-int OTFAddEntityValue (const char* alias, const char* entType, 
+trace_return_t OTFAddEntityValue (const char* alias, const char* entType, 
                        const char* name , const char* color){
     int type = getStateTypeFromName(entType);
     states[current_state].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
@@ -286,15 +286,15 @@ int OTFAddEntityValue (const char* alias, const char* entType,
     printf("addEntityValue : id %d, alias %s, name %s, type %d\n", current_state, alias, name, type);
     OTF_Writer_writeDefFunction(writer, 0, current_state, name, type, 0);
     current_state ++;
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddEntityValueNB (const char* alias, const char* entType, 
+trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType, 
                          const char* name , const char* color){
     return OTFAddEntityValue(alias, entType, name, color);
 }
 
-int OTFAddContainer (varPrec time, const char* alias    ,
+trace_return_t OTFAddContainer (varPrec time, const char* alias    ,
                      const char*  type, const char* container,
                      const char*  name, const char* file){
     /*int ctType = getCtContFromName(type);*/
@@ -312,43 +312,43 @@ int OTFAddContainer (varPrec time, const char* alias    ,
 
     current_ct ++;
 
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddContainerNB (varPrec time, const char* alias    ,
+trace_return_t OTFAddContainerNB (varPrec time, const char* alias    ,
                        const char*  type, const char* container,
                        const char*  name, const char* file){
     return OTFAddContainer(time, alias, type, container, name, file);
 }
 
 
-int OTFSeqAddContainer (varPrec time, const char* alias    ,
+trace_return_t OTFSeqAddContainer (varPrec time, const char* alias    ,
                         const char*  type, const char* container,
                         const char*  name){
     return OTFAddContainer(time, alias, type, container, name, NULL);
 }
 
-int OTFSeqAddContainerNB (varPrec time, const char* alias    ,
+trace_return_t OTFSeqAddContainerNB (varPrec time, const char* alias    ,
                           const char*  type, const char* container,
                           const char*  name){
     return OTFAddContainer(time, alias, type, container, name, NULL);
 }
 
 
-int OTFDestroyContainer (varPrec time, const char*  name,
+trace_return_t OTFDestroyContainer (varPrec time, const char*  name,
                          const char*  type){
     uint32_t process = getCtFromName(name);
     OTF_Writer_writeEndProcess (writer, time, process);
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
 
-int OTFDestroyContainerNB (varPrec time, const char*  name,
+trace_return_t OTFDestroyContainerNB (varPrec time, const char*  name,
                            const char*  type){
     return OTFDestroyContainer(time, name, type);
 }
 
-int OTFSetState (varPrec time, const char* type,
+trace_return_t OTFSetState (varPrec time, const char* type,
                  const char*  cont, const char* val){
     int parent    = getCtFromName(cont);
     int stateType = getStateTypeFromName(type);
@@ -359,69 +359,69 @@ int OTFSetState (varPrec time, const char* type,
     
     OTF_Writer_writeEnter (writer, time, state, parent, 0);
 
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFSetStateNB (varPrec time, const char* type,
+trace_return_t OTFSetStateNB (varPrec time, const char* type,
                    const char*  cont, const char* val){
     return OTFSetState(time, type, cont, val);
 }
 
-int OTFPushState (varPrec time, const char* type,
+trace_return_t OTFPushState (varPrec time, const char* type,
                   const char*  cont, const char* val){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFPushStateNB (varPrec time, const char* type,
+trace_return_t OTFPushStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFPopState (varPrec time, const char* type,
+trace_return_t OTFPopState (varPrec time, const char* type,
                  const char*  cont, const char* val){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFPopStateNB (varPrec time, const char* type,
+trace_return_t OTFPopStateNB (varPrec time, const char* type,
                    const char*  cont, const char* val){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddEvent (varPrec time, const char* type,
+trace_return_t OTFAddEvent (varPrec time, const char* type,
                  const char*  cont, const char* val){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddEventNB (varPrec time, const char* type,
+trace_return_t OTFAddEventNB (varPrec time, const char* type,
                    const char*  cont, const char* val){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFStartLink (varPrec time, const char* type,
+trace_return_t OTFStartLink (varPrec time, const char* type,
                   const char*   cont, const char* src,
                   const char*   val , const char* key){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFStartLinkNB (varPrec time, const char* type,
+trace_return_t OTFStartLinkNB (varPrec time, const char* type,
                     const char*   cont, const char* src,
                     const char*   val , const char* key){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFEndLink (varPrec time, const char* type,
+trace_return_t OTFEndLink (varPrec time, const char* type,
                 const char*   cont, const char* dest,
                 const char*   val , const char* key){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFEndLinkNB (varPrec time, const char* type,
+trace_return_t OTFEndLinkNB (varPrec time, const char* type,
                   const char*   cont, const char* dest,
                   const char*   val , const char* key){
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFSetVar (varPrec time, const char*  type,
+trace_return_t OTFSetVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
     int parent  = getCtFromName(cont);
     int varType = getVariableTypeFromName(type);
@@ -430,37 +430,37 @@ int OTFSetVar (varPrec time, const char*  type,
     //OTF_Writer_writeCounter (writer, time, parent, varType, val);
     
     printf("setVar : %s %s %f\n", type, cont, val);
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFSetVarNB (varPrec time, const char*  type,
+trace_return_t OTFSetVarNB (varPrec time, const char*  type,
                  const char*  cont, varPrec val){
     return OTFSetVar(time, type, cont, val);
 }
 
-int OTFAddVar (varPrec time, const char*  type,
+trace_return_t OTFAddVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
     printf("addVar : %s %s %f\n", type, cont, val);
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFAddVarNB (varPrec time, const char*  type,
+trace_return_t OTFAddVarNB (varPrec time, const char*  type,
                  const char*  cont, varPrec val){
     return OTFAddVar(time, type, cont, val);
 }
 
-int OTFSubVar (varPrec time, const char*  type,
+trace_return_t OTFSubVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
     printf("subVar : %s %s %f\n", type, cont, val);
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }
 
-int OTFSubVarNB (varPrec time, const char*  type,
+trace_return_t OTFSubVarNB (varPrec time, const char*  type,
                  const char*  cont, varPrec val){
     return OTFSubVar(time, type, cont, val);
 }
 
-int OTFEndTrace (){
+trace_return_t OTFEndTrace (){
     int i = 0;
     for(; i < current_ctType ; i ++) {
         free(ctType[i].name);
@@ -489,7 +489,7 @@ int OTFEndTrace (){
 
     if(!OTF_Writer_close(writer)) {
         fprintf (stderr, "unable to close the file writer");
-        return OTF_ERR_CLOSE;
+        return TRACE_ERR_CLOSE;
     }
     writer = NULL;
 
@@ -500,5 +500,5 @@ int OTFEndTrace (){
         free (filename);
     filename = NULL;
 
-    return OTF_SUCCESS;
+    return TRACE_SUCCESS;
 }

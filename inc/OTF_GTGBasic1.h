@@ -23,28 +23,16 @@
 
 /**
  * \ingroup cotf
- * \enum otfReturn
- * \brief Return values of the otf functions
- */
-enum otfReturn{
-    OTF_SUCCESS,   /*!< Success of the otf call. */
-    OTF_ERR_OPEN,  /*!< Call to fopen failed. */
-    OTF_ERR_CLOSE, /*!< Call to fclose failed. */
-    OTF_ERR_WRITE  /*!< Tried to write in a nil stream. (e.g. if call a non bufferized function after a bufferized init)*/
-}otfReturn;
-
-/**
- * \ingroup cotf
- * \fn int OTFInitTrace   (const char* filename)
+ * \fn trace_return_t OTFInitTrace   (const char* filename)
  * \brief To init a trace in an OTF format
  * \param filename Root name of the file to create
  * \return 0 if sucess
  *         An error code otherwise
  */
-int OTFInitTrace   (const char* filename);
+trace_return_t OTFInitTrace   (const char* filename);
 /**
  * \ingroup cotf
- * \ fn int OTFAddProcType   (const char* alias,
+ * \ fn trace_return_t OTFAddProcType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a container type
@@ -54,12 +42,12 @@ int OTFInitTrace   (const char* filename);
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddProcType   (const char* alias, const char* contType, 
+trace_return_t OTFAddProcType   (const char* alias, const char* contType, 
                        const char* name);
 
 /**
  * \ingroup cotf
- * \fn int OTFAddProcTypeNB   (const char* alias,
+ * \fn trace_return_t OTFAddProcTypeNB   (const char* alias,
  *                              const char* contType, 
  *                              const char* name)
  * \brief To add a container type in a non bufferized mode
@@ -69,11 +57,11 @@ int OTFAddProcType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddProcTypeNB (const char* alias, const char* contType, 
+trace_return_t OTFAddProcTypeNB (const char* alias, const char* contType, 
                        const char* name);
 /**
  * \ingroup cotf
- * \fn int OTFAddStateType   (const char* alias,
+ * \fn trace_return_t OTFAddStateType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a state type
@@ -83,11 +71,11 @@ int OTFAddProcTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddStateType   (const char* alias, const char* contType, 
+trace_return_t OTFAddStateType   (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cotf
- * \fn int OTFAddStateTypeNB   (const char* alias,
+ * \fn trace_return_t OTFAddStateTypeNB   (const char* alias,
  *                               const char* contType, 
  *                               const char* name)
  * \brief To add a state type in a non bufferized mode
@@ -97,11 +85,11 @@ int OTFAddStateType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddStateTypeNB (const char* alias, const char* contType, 
+trace_return_t OTFAddStateTypeNB (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cotf
- * \fn int OTFAddEventType   (const char* alias,
+ * \fn trace_return_t OTFAddEventType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add an event type
@@ -111,11 +99,11 @@ int OTFAddStateTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddEventType   (const char* alias, const char* contType, 
+trace_return_t OTFAddEventType   (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cotf
- * \fn int OTFAddEventTypeNB   (const char* alias,
+ * \fn trace_return_t OTFAddEventTypeNB   (const char* alias,
  *                               const char* contType, 
  *                               const char* name)
  * \brief To add an event type in a bufferized mode
@@ -125,11 +113,11 @@ int OTFAddEventType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddEventTypeNB (const char* alias, const char* contType, 
+trace_return_t OTFAddEventTypeNB (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cotf
- * \fn int OTFAddLinkType   (const char* alias,
+ * \fn trace_return_t OTFAddLinkType   (const char* alias,
  *                            const char* name,
  *                            const char* contType, 
  *                            const char* srcContType,
@@ -143,12 +131,12 @@ int OTFAddEventTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddLinkType   (const char* alias   , const char* name,
+trace_return_t OTFAddLinkType   (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType);
 /**
  * \ingroup cotf
- * \fn int OTFAddLinkTypeNB   (const char* alias,
+ * \fn trace_return_t OTFAddLinkTypeNB   (const char* alias,
  *                              const char* name,
  *                              const char* contType, 
  *                              const char* srcContType,
@@ -162,13 +150,13 @@ int OTFAddLinkType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddLinkTypeNB (const char* alias   , const char* name,
+trace_return_t OTFAddLinkTypeNB (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType);
 
 /**
  * \ingroup cotf
- * \fn int OTFAddVarType   (const char* alias,
+ * \fn trace_return_t OTFAddVarType   (const char* alias,
  *                           const char* contType, 
  *                           const char* name)
  * \brief To add a variable type
@@ -178,11 +166,11 @@ int OTFAddLinkTypeNB (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddVarType   (const char* alias   , const char* name,
+trace_return_t OTFAddVarType   (const char* alias   , const char* name,
                       const char* contType); 
 /**
  * \ingroup cotf
- * \fn int OTFAddVarTypeNB   (const char* alias,
+ * \fn trace_return_t OTFAddVarTypeNB   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a variable type in a non bufferized mode
@@ -192,13 +180,13 @@ int OTFAddVarType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddVarTypeNB (const char* alias   , const char* name,
+trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
                       const char* contType);
                   
 
 /**
  * \ingroup cotf
- * \fn int OTFAddEntityValue   (const char* alias,
+ * \fn trace_return_t OTFAddEntityValue   (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
  *                               const char* color)
@@ -210,11 +198,11 @@ int OTFAddVarTypeNB (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddEntityValue   (const char* alias, const char* entType, 
+trace_return_t OTFAddEntityValue   (const char* alias, const char* entType, 
                           const char* name , const char* color);
 /**
  * \ingroup cotf
- * \fn int OTFAddEntityValueNB (const char* alias,
+ * \fn trace_return_t OTFAddEntityValueNB (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
  *                               const char* color)
@@ -226,12 +214,12 @@ int OTFAddEntityValue   (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddEntityValueNB (const char* alias, const char* entType, 
+trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType, 
                           const char* name , const char* color);
 
 /**
  * \ingroup cotf
- * \fn int OTFAddContainer (varPrec  time,
+ * \fn trace_return_t OTFAddContainer (varPrec  time,
  *                           const char  * alias,
  *                           const char  * type, 
  *                           const char  * container,
@@ -247,12 +235,12 @@ int OTFAddEntityValueNB (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddContainer (varPrec time, const char* alias    ,
+trace_return_t OTFAddContainer (varPrec time, const char* alias    ,
                       const char*  type, const char* container,
                       const char*  name, const char* file);
 /**
  * \ingroup cotf
- * \fn int OTFAddContainerNB (varPrec  time,
+ * \fn trace_return_t OTFAddContainerNB (varPrec  time,
  *                             const char  * alias,
  *                             const char  * type, 
  *                             const char  * container,
@@ -268,12 +256,12 @@ int OTFAddContainer (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddContainerNB (varPrec time, const char* alias    ,
+trace_return_t OTFAddContainerNB (varPrec time, const char* alias    ,
                         const char*  type, const char* container,
                         const char*  name, const char* file);
 /**
  * \ingroup cotf
- * \fn int OTFDestroyContainer (varPrec  time,
+ * \fn trace_return_t OTFDestroyContainer (varPrec  time,
  *                               const char  * name,
  *                               const char  * type) 
  * \brief To destroy a container
@@ -283,11 +271,11 @@ int OTFAddContainerNB (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFDestroyContainer     (varPrec time, const char*  name,
+trace_return_t OTFDestroyContainer     (varPrec time, const char*  name,
                               const char*  type);
 /**
  * \ingroup cotf
- * \fn int OTFDestroyContainerNB (varPrec  time,
+ * \fn trace_return_t OTFDestroyContainerNB (varPrec  time,
  *                                 const char  * name,
  *                                 const char  * type) 
  * \brief To destroy a container in a bufferized mode
@@ -297,12 +285,12 @@ int OTFDestroyContainer     (varPrec time, const char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFDestroyContainerNB   (varPrec time, const char*  name,
+trace_return_t OTFDestroyContainerNB   (varPrec time, const char*  name,
                               const char*  type);
 
 /**
  * \ingroup cotf
- * \fn int OTFSetState (varPrec  time,
+ * \fn trace_return_t OTFSetState (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -314,11 +302,11 @@ int OTFDestroyContainerNB   (varPrec time, const char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFSetState   (varPrec time, const char* type,
+trace_return_t OTFSetState   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cotf
- * \fn int OTFSetStateNB (varPrec  time,
+ * \fn trace_return_t OTFSetStateNB (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * val)
@@ -330,12 +318,12 @@ int OTFSetState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFSetStateNB (varPrec time, const char* type,
+trace_return_t OTFSetStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val);
 
 /**
  * \ingroup cotf
- * \fn int OTFPushState (varPrec  time,
+ * \fn trace_return_t OTFPushState (varPrec  time,
  *                        const char  * type,
  *                        const char  * cont,
  *                        const char  * val)
@@ -347,11 +335,11 @@ int OTFSetStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFPushState   (varPrec time, const char* type,
+trace_return_t OTFPushState   (varPrec time, const char* type,
                      const char*  cont, const char* val);
 /**
  * \ingroup cotf
- * \fn int OTFPushStateNB (varPrec  time,
+ * \fn trace_return_t OTFPushStateNB (varPrec  time,
  *                          const char  * type,
  *                          const char  * cont,
  *                          const char  * val)
@@ -363,12 +351,12 @@ int OTFPushState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFPushStateNB (varPrec time, const char* type,
+trace_return_t OTFPushStateNB (varPrec time, const char* type,
                      const char*  cont, const char* val);
 
 /**
  * \ingroup cotf
- * \fn int OTFPopState (varPrec  time,
+ * \fn trace_return_t OTFPopState (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -380,11 +368,11 @@ int OTFPushStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFPopState   (varPrec time, const char* type,
+trace_return_t OTFPopState   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cotf
- * \fn int OTFPopStateNB (varPrec  time,
+ * \fn trace_return_t OTFPopStateNB (varPrec  time,
  *                         const char  * type,
  *                         const char  * cont,
  *                         const char  * val)
@@ -396,13 +384,13 @@ int OTFPopState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFPopStateNB (varPrec time, const char* type,
+trace_return_t OTFPopStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val);
 
 
 /**
  * \ingroup cotf
- * \fn int OTFAddEvent (varPrec  time,
+ * \fn trace_return_t OTFAddEvent (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -414,11 +402,11 @@ int OTFPopStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddEvent   (varPrec time, const char* type,
+trace_return_t OTFAddEvent   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cotf
- * \fn int OTFAddEventNB (varPrec  time,
+ * \fn trace_return_t OTFAddEventNB (varPrec  time,
  *                         const char  * type,
  *                         const char  * cont,
  *                         const char  * val)
@@ -430,11 +418,11 @@ int OTFAddEvent   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddEventNB (varPrec time, const char* type,
+trace_return_t OTFAddEventNB (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cotf
- * \fn int OTFStartLink (varPrec  time,
+ * \fn trace_return_t OTFStartLink (varPrec  time,
  *                        const char  * type,
  *                        const char  * cont,
  *                        const char  * src,
@@ -450,12 +438,12 @@ int OTFAddEventNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFStartLink   (varPrec time, const char* type,
+trace_return_t OTFStartLink   (varPrec time, const char* type,
                      const char*   cont, const char* src,
                      const char*   val , const char* key);
 /**
  * \ingroup cotf
- * \fn int OTFStartLinkNB (varPrec  time,
+ * \fn trace_return_t OTFStartLinkNB (varPrec  time,
  *                          const char  * type,
  *                          const char  * cont,
  *                          const char  * src,
@@ -471,12 +459,12 @@ int OTFStartLink   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFStartLinkNB (varPrec time, const char* type,
+trace_return_t OTFStartLinkNB (varPrec time, const char* type,
                      const char*  cont , const char* src,
                      const char*  val  , const char* key);
 /**
  * \ingroup cotf
- * \fn int OTFEndLink (varPrec  time,
+ * \fn trace_return_t OTFEndLink (varPrec  time,
  *                      const char  * type,
  *                      const char  * cont,
  *                      const char  * dest,
@@ -492,12 +480,12 @@ int OTFStartLinkNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFEndLink   (varPrec time, const char* type,
+trace_return_t OTFEndLink   (varPrec time, const char* type,
                    const char*  cont , const char* dest,
                    const char*  val  , const char* key);
 /**
  * \ingroup cotf
- * \fn int OTFEndLinkNB (varPrec  time,
+ * \fn trace_return_t OTFEndLinkNB (varPrec  time,
  *                        const char  * type,
  *                        const char  * cont,
  *                        const char  * dest,
@@ -513,14 +501,14 @@ int OTFEndLink   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFEndLinkNB (varPrec time, const char* type,
+trace_return_t OTFEndLinkNB (varPrec time, const char* type,
                    const char*   cont, const char* dest,
                    const char*   val , const char* key);
 
 
 /**
  * \ingroup cotf
- * \fn int OTFSetVar (varPrec  time,
+ * \fn trace_return_t OTFSetVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
@@ -532,11 +520,11 @@ int OTFEndLinkNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFSetVar   (varPrec time, const char*  type,
+trace_return_t OTFSetVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 /**
  * \ingroup cotf
- * \fn int OTFSetVarNB (varPrec  time,
+ * \fn trace_return_t OTFSetVarNB (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       varPrec  val)
@@ -548,12 +536,12 @@ int OTFSetVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFSetVarNB (varPrec time, const char*  type,
+trace_return_t OTFSetVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
  * \ingroup cotf
- * \fn int OTFAddVar (varPrec  time,
+ * \fn trace_return_t OTFAddVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
@@ -565,11 +553,11 @@ int OTFSetVarNB (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddVar   (varPrec time, const char*  type,
+trace_return_t OTFAddVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 /**
  * \ingroup cotf
- * \fn int OTFAddVarNB (varPrec  time,
+ * \fn trace_return_t OTFAddVarNB (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       varPrec  val)
@@ -581,12 +569,12 @@ int OTFAddVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFAddVarNB (varPrec time, const char*  type,
+trace_return_t OTFAddVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
  * \ingroup cotf
- * \fn int OTFSubVar (varPrec  time,
+ * \fn trace_return_t OTFSubVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
@@ -599,11 +587,11 @@ int OTFAddVarNB (varPrec time, const char*  type,
  *         An error code otherwise
  */
 
-int OTFSubVar   (varPrec time, const char*  type,
+trace_return_t OTFSubVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 /**
  * \ingroup cotf
- * \fn int OTFSubVarNB (varPrec  time,
+ * \fn trace_return_t OTFSubVarNB (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       varPrec  val)
@@ -615,7 +603,7 @@ int OTFSubVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int OTFSubVarNB (varPrec time, const char*  type,
+trace_return_t OTFSubVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 #endif

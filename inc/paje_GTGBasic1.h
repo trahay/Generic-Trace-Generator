@@ -23,38 +23,26 @@
 
 /**
  * \ingroup cpaje
- * \enum pajeReturn
- * \brief Return values of the paje functions
- */
-enum pajeReturn{
-    PAJE_SUCCESS,   /*!< Success of the paje call. */
-    PAJE_ERR_OPEN,  /*!< Call to fopen failed. */
-    PAJE_ERR_CLOSE, /*!< Call to fclose failed. */
-    PAJE_ERR_WRITE  /*!< Tried to write in a nil stream. (e.g. if call a non bufferized function after a bufferized init)*/
-}pajeReturn;
-
-/**
- * \ingroup cpaje
- * \fn int pajeInitTrace   (const char* filename)
+ * \fn trace_return_t pajeInitTrace   (const char* filename)
  * \brief To init a trace in a VITE format ( *.ept)
  * \param filename Root name of the file to create
  * \return 0 if sucess
  *         An error code otherwise
  */
-int pajeInitTrace   (const char* filename);
+trace_return_t pajeInitTrace   (const char* filename);
 
 /**
  * \ingroup cpaje
- * \fn int pajeSeqInitTrace   (const char* filename)
+ * \fn trace_return_t pajeSeqInitTrace   (const char* filename)
  * \brief To init a trace in a PAJE format (*.trace)
  * \param filename Root name of the file to create
  * \return 0 if sucess
  *         An error code otherwise
  */
-int pajeSeqInitTrace   (const char* filename);
+trace_return_t pajeSeqInitTrace   (const char* filename);
 /**
  * \ingroup cpaje
- * \ fn int pajeAddProcType   (const char* alias,
+ * \ fn trace_return_t pajeAddProcType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a container type
@@ -64,12 +52,12 @@ int pajeSeqInitTrace   (const char* filename);
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddProcType   (const char* alias, const char* contType, 
+trace_return_t pajeAddProcType   (const char* alias, const char* contType, 
                        const char* name);
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddProcTypeNB   (const char* alias,
+ * \fn trace_return_t pajeAddProcTypeNB   (const char* alias,
  *                              const char* contType, 
  *                              const char* name)
  * \brief To add a container type in a non bufferized mode
@@ -79,11 +67,11 @@ int pajeAddProcType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddProcTypeNB (const char* alias, const char* contType, 
+trace_return_t pajeAddProcTypeNB (const char* alias, const char* contType, 
                        const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddStateType   (const char* alias,
+ * \fn trace_return_t pajeAddStateType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a state type
@@ -93,11 +81,11 @@ int pajeAddProcTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddStateType   (const char* alias, const char* contType, 
+trace_return_t pajeAddStateType   (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddStateTypeNB   (const char* alias,
+ * \fn trace_return_t pajeAddStateTypeNB   (const char* alias,
  *                               const char* contType, 
  *                               const char* name)
  * \brief To add a state type in a non bufferized mode
@@ -107,11 +95,11 @@ int pajeAddStateType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddStateTypeNB (const char* alias, const char* contType, 
+trace_return_t pajeAddStateTypeNB (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddEventType   (const char* alias,
+ * \fn trace_return_t pajeAddEventType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add an event type
@@ -121,11 +109,11 @@ int pajeAddStateTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEventType   (const char* alias, const char* contType, 
+trace_return_t pajeAddEventType   (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddEventTypeNB   (const char* alias,
+ * \fn trace_return_t pajeAddEventTypeNB   (const char* alias,
  *                               const char* contType, 
  *                               const char* name)
  * \brief To add an event type in a bufferized mode
@@ -135,11 +123,11 @@ int pajeAddEventType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEventTypeNB (const char* alias, const char* contType, 
+trace_return_t pajeAddEventTypeNB (const char* alias, const char* contType, 
                         const char* name);
 /**
  * \ingroup cpaje
- * \fn int pajeAddLinkType   (const char* alias,
+ * \fn trace_return_t pajeAddLinkType   (const char* alias,
  *                            const char* name,
  *                            const char* contType, 
  *                            const char* srcContType,
@@ -153,12 +141,12 @@ int pajeAddEventTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddLinkType   (const char* alias   , const char* name,
+trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType);
 /**
  * \ingroup cpaje
- * \fn int pajeAddLinkTypeNB   (const char* alias,
+ * \fn trace_return_t pajeAddLinkTypeNB   (const char* alias,
  *                              const char* name,
  *                              const char* contType, 
  *                              const char* srcContType,
@@ -172,13 +160,13 @@ int pajeAddLinkType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddLinkTypeNB (const char* alias   , const char* name,
+trace_return_t pajeAddLinkTypeNB (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType);
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddVarType   (const char* alias,
+ * \fn trace_return_t pajeAddVarType   (const char* alias,
  *                           const char* contType, 
  *                           const char* name)
  * \brief To add a variable type
@@ -188,11 +176,11 @@ int pajeAddLinkTypeNB (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVarType   (const char* alias   , const char* name,
+trace_return_t pajeAddVarType   (const char* alias   , const char* name,
                       const char* contType); 
 /**
  * \ingroup cpaje
- * \fn int pajeAddVarTypeNB   (const char* alias,
+ * \fn trace_return_t pajeAddVarTypeNB   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a variable type in a non bufferized mode
@@ -202,13 +190,13 @@ int pajeAddVarType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVarTypeNB (const char* alias   , const char* name,
+trace_return_t pajeAddVarTypeNB (const char* alias   , const char* name,
                       const char* contType);
                   
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddEntityValue   (const char* alias,
+ * \fn trace_return_t pajeAddEntityValue   (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
  *                               const char* color)
@@ -220,11 +208,11 @@ int pajeAddVarTypeNB (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEntityValue   (const char* alias, const char* entType, 
+trace_return_t pajeAddEntityValue   (const char* alias, const char* entType, 
                           const char* name , const char* color);
 /**
  * \ingroup cpaje
- * \fn int pajeAddEntityValueNB (const char* alias,
+ * \fn trace_return_t pajeAddEntityValueNB (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
  *                               const char* color)
@@ -236,12 +224,12 @@ int pajeAddEntityValue   (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEntityValueNB (const char* alias, const char* entType, 
+trace_return_t pajeAddEntityValueNB (const char* alias, const char* entType, 
                           const char* name , const char* color);
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddContainer (varPrec  time,
+ * \fn trace_return_t pajeAddContainer (varPrec  time,
  *                           const char  * alias,
  *                           const char  * type, 
  *                           const char  * container,
@@ -257,14 +245,14 @@ int pajeAddEntityValueNB (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddContainer (varPrec time, const char* alias    ,
+trace_return_t pajeAddContainer (varPrec time, const char* alias    ,
                       const char*  type, const char* container,
                       const char*  name, const char* file);
 
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddContainerNB (varPrec  time,
+ * \fn trace_return_t pajeAddContainerNB (varPrec  time,
  *                             const char  * alias,
  *                             const char  * type, 
  *                             const char  * container,
@@ -280,12 +268,12 @@ int pajeAddContainer (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddContainerNB (varPrec time, const char* alias    ,
+trace_return_t pajeAddContainerNB (varPrec time, const char* alias    ,
                         const char*  type, const char* container,
                         const char*  name, const char* file);
 /**
  * \ingroup cpaje
- * \fn int pajeSeqAddContainer (varPrec  time,
+ * \fn trace_return_t pajeSeqAddContainer (varPrec  time,
  *                              const char  * alias,
  *                              const char  * type, 
  *                              const char  * container,
@@ -299,13 +287,13 @@ int pajeAddContainerNB (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSeqAddContainer (varPrec time, const char* alias    ,
+trace_return_t pajeSeqAddContainer (varPrec time, const char* alias    ,
                          const char*  type, const char* container,
                          const char*  name);
 
 /**
  * \ingroup cpaje
- * \fn int pajeSeqAddContainerNB (varPrec  time,
+ * \fn trace_return_t pajeSeqAddContainerNB (varPrec  time,
  *                                const char  * alias,
  *                                const char  * type, 
  *                                const char  * container,
@@ -319,12 +307,12 @@ int pajeSeqAddContainer (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSeqAddContainerNB (varPrec time, const char* alias    ,
+trace_return_t pajeSeqAddContainerNB (varPrec time, const char* alias    ,
                            const char*  type, const char* container,
                            const char*  name);
 /**
  * \ingroup cpaje
- * \fn int pajeDestroyContainer (varPrec  time,
+ * \fn trace_return_t pajeDestroyContainer (varPrec  time,
  *                               const char  * name,
  *                               const char  * type) 
  * \brief To destroy a container
@@ -334,11 +322,11 @@ int pajeSeqAddContainerNB (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeDestroyContainer     (varPrec time, const char*  name,
+trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
                               const char*  type);
 /**
  * \ingroup cpaje
- * \fn int pajeDestroyContainerNB (varPrec  time,
+ * \fn trace_return_t pajeDestroyContainerNB (varPrec  time,
  *                                 const char  * name,
  *                                 const char  * type) 
  * \brief To destroy a container in a bufferized mode
@@ -348,12 +336,12 @@ int pajeDestroyContainer     (varPrec time, const char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeDestroyContainerNB   (varPrec time, const char*  name,
+trace_return_t pajeDestroyContainerNB   (varPrec time, const char*  name,
                               const char*  type);
 
 /**
  * \ingroup cpaje
- * \fn int pajeSetState (varPrec  time,
+ * \fn trace_return_t pajeSetState (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -365,11 +353,11 @@ int pajeDestroyContainerNB   (varPrec time, const char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetState   (varPrec time, const char* type,
+trace_return_t pajeSetState   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cpaje
- * \fn int pajeSetStateNB (varPrec  time,
+ * \fn trace_return_t pajeSetStateNB (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * val)
@@ -381,12 +369,12 @@ int pajeSetState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetStateNB (varPrec time, const char* type,
+trace_return_t pajeSetStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val);
 
 /**
  * \ingroup cpaje
- * \fn int pajePushState (varPrec  time,
+ * \fn trace_return_t pajePushState (varPrec  time,
  *                        const char  * type,
  *                        const char  * cont,
  *                        const char  * val)
@@ -398,11 +386,11 @@ int pajeSetStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePushState   (varPrec time, const char* type,
+trace_return_t pajePushState   (varPrec time, const char* type,
                      const char*  cont, const char* val);
 /**
  * \ingroup cpaje
- * \fn int pajePushStateNB (varPrec  time,
+ * \fn trace_return_t pajePushStateNB (varPrec  time,
  *                          const char  * type,
  *                          const char  * cont,
  *                          const char  * val)
@@ -414,12 +402,12 @@ int pajePushState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePushStateNB (varPrec time, const char* type,
+trace_return_t pajePushStateNB (varPrec time, const char* type,
                      const char*  cont, const char* val);
 
 /**
  * \ingroup cpaje
- * \fn int pajePopState (varPrec  time,
+ * \fn trace_return_t pajePopState (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -431,11 +419,11 @@ int pajePushStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePopState   (varPrec time, const char* type,
+trace_return_t pajePopState   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cpaje
- * \fn int pajePopStateNB (varPrec  time,
+ * \fn trace_return_t pajePopStateNB (varPrec  time,
  *                         const char  * type,
  *                         const char  * cont,
  *                         const char  * val)
@@ -447,13 +435,13 @@ int pajePopState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajePopStateNB (varPrec time, const char* type,
+trace_return_t pajePopStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val);
 
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddEvent (varPrec  time,
+ * \fn trace_return_t pajeAddEvent (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -465,11 +453,11 @@ int pajePopStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEvent   (varPrec time, const char* type,
+trace_return_t pajeAddEvent   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cpaje
- * \fn int pajeAddEventNB (varPrec  time,
+ * \fn trace_return_t pajeAddEventNB (varPrec  time,
  *                         const char  * type,
  *                         const char  * cont,
  *                         const char  * val)
@@ -481,11 +469,11 @@ int pajeAddEvent   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddEventNB (varPrec time, const char* type,
+trace_return_t pajeAddEventNB (varPrec time, const char* type,
                     const char*  cont, const char* val);
 /**
  * \ingroup cpaje
- * \fn int pajeStartLink (varPrec  time,
+ * \fn trace_return_t pajeStartLink (varPrec  time,
  *                        const char  * type,
  *                        const char  * cont,
  *                        const char  * src,
@@ -501,12 +489,12 @@ int pajeAddEventNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeStartLink   (varPrec time, const char* type,
+trace_return_t pajeStartLink   (varPrec time, const char* type,
                      const char*   cont, const char* src,
                      const char*   val , const char* key);
 /**
  * \ingroup cpaje
- * \fn int pajeStartLinkNB (varPrec  time,
+ * \fn trace_return_t pajeStartLinkNB (varPrec  time,
  *                          const char  * type,
  *                          const char  * cont,
  *                          const char  * src,
@@ -522,12 +510,12 @@ int pajeStartLink   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeStartLinkNB (varPrec time, const char* type,
+trace_return_t pajeStartLinkNB (varPrec time, const char* type,
                      const char*  cont , const char* src,
                      const char*  val  , const char* key);
 /**
  * \ingroup cpaje
- * \fn int pajeEndLink (varPrec  time,
+ * \fn trace_return_t pajeEndLink (varPrec  time,
  *                      const char  * type,
  *                      const char  * cont,
  *                      const char  * dest,
@@ -543,12 +531,12 @@ int pajeStartLinkNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeEndLink   (varPrec time, const char* type,
+trace_return_t pajeEndLink   (varPrec time, const char* type,
                    const char*  cont , const char* dest,
                    const char*  val  , const char* key);
 /**
  * \ingroup cpaje
- * \fn int pajeEndLinkNB (varPrec  time,
+ * \fn trace_return_t pajeEndLinkNB (varPrec  time,
  *                        const char  * type,
  *                        const char  * cont,
  *                        const char  * dest,
@@ -564,14 +552,14 @@ int pajeEndLink   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeEndLinkNB (varPrec time, const char* type,
+trace_return_t pajeEndLinkNB (varPrec time, const char* type,
                    const char*   cont, const char* dest,
                    const char*   val , const char* key);
 
 
 /**
  * \ingroup cpaje
- * \fn int pajeSetVar (varPrec  time,
+ * \fn trace_return_t pajeSetVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
@@ -583,11 +571,11 @@ int pajeEndLinkNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetVar   (varPrec time, const char*  type,
+trace_return_t pajeSetVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 /**
  * \ingroup cpaje
- * \fn int pajeSetVarNB (varPrec  time,
+ * \fn trace_return_t pajeSetVarNB (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       varPrec  val)
@@ -599,12 +587,12 @@ int pajeSetVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSetVarNB (varPrec time, const char*  type,
+trace_return_t pajeSetVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
  * \ingroup cpaje
- * \fn int pajeAddVar (varPrec  time,
+ * \fn trace_return_t pajeAddVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
@@ -616,11 +604,11 @@ int pajeSetVarNB (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVar   (varPrec time, const char*  type,
+trace_return_t pajeAddVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 /**
  * \ingroup cpaje
- * \fn int pajeAddVarNB (varPrec  time,
+ * \fn trace_return_t pajeAddVarNB (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       varPrec  val)
@@ -632,12 +620,12 @@ int pajeAddVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeAddVarNB (varPrec time, const char*  type,
+trace_return_t pajeAddVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
  * \ingroup cpaje
- * \fn int pajeSubVar (varPrec  time,
+ * \fn trace_return_t pajeSubVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
@@ -650,11 +638,11 @@ int pajeAddVarNB (varPrec time, const char*  type,
  *         An error code otherwise
  */
 
-int pajeSubVar   (varPrec time, const char*  type,
+trace_return_t pajeSubVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 /**
  * \ingroup cpaje
- * \fn int pajeSubVarNB (varPrec  time,
+ * \fn trace_return_t pajeSubVarNB (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       varPrec  val)
@@ -666,7 +654,7 @@ int pajeSubVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeSubVarNB (varPrec time, const char*  type,
+trace_return_t pajeSubVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
@@ -676,7 +664,7 @@ int pajeSubVarNB (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pajeEndTrace ();
+trace_return_t pajeEndTrace ();
 
 #endif
 

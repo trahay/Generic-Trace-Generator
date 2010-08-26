@@ -42,19 +42,19 @@ typedef enum traceType{
 
 /**
  * \ingroup traceType
- * \fn void setTraceType (int type)
+ * \fn void setTraceType (traceType_t type)
  * \brief C function to set the type of the trace to be generated
  * \param type Type of trace to generate
  */
-void setTraceType (int type);
+void setTraceType (traceType_t type);
 
 /**
  * \ingroup traceType
- * \fn int getTraceType ()
+ * \fn traceType_t getTraceType ()
  * \brief C function to get the type of the trace to be generated
  * \return The type of the trace
  */
-int getTraceType ();
+traceType_t getTraceType ();
 
 /** 
  * \defgroup init To init the generated trace file(s)
@@ -67,31 +67,31 @@ int getTraceType ();
  * \return 0 if success \n
  *         An error code otherwise
  */
-int initTrace   (const char* filename);
+trace_return_t initTrace   (const char* filename);
 /**
  * \ingroup init
- * \fn int endTrace   ()
+ * \fn trace_return_t endTrace   ()
  * \brief C function to end writting the trace
  * \return 0 if success \n
  *         An error code otherwise
  */
-int endTrace   ();
+trace_return_t endTrace   ();
 /**
  * \ingroup init
- * \fn setCompress (int val)
+ * \fn trace_return_t setCompress (int val)
  * \brief Usefull for OTF traces only.
  * \param val 0 means no compression, otherwize the output files will be compressed
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setCompress (int val);
+trace_return_t setCompress (int val);
 
 /**
  * \defgroup procf Functions linked to the containers
  */
 /**
  * \ingroup procf
- * \ fn int addProcType   (const char* alias,
+ * \ fn trace_return_t addProcType   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
  * \brief C function to add a container type
@@ -101,12 +101,12 @@ int setCompress (int val);
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addProcType   (const char* alias, const char* contType, 
+trace_return_t addProcType   (const char* alias, const char* contType, 
                    const char* name);
 
 /**
  * \ingroup procf
- * \fn int addProcTypeNB   (const char* alias,
+ * \fn trace_return_t addProcTypeNB   (const char* alias,
  *                          const char* contType, 
  *                          const char* name)
  * \brief C function to add a container type in a non bufferized mode
@@ -116,14 +116,14 @@ int addProcType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addProcTypeNB (const char* alias, const char* contType, 
+trace_return_t addProcTypeNB (const char* alias, const char* contType, 
                    const char* name);
 /**
  * \defgroup statef Functions linked to the states
  */
 /**
  * \ingroup statef
- * \fn int addStateType   (const char* alias,
+ * \fn trace_return_t addStateType   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
  * \brief C function to add a state type
@@ -133,12 +133,12 @@ int addProcTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addStateType   (const char* alias, const char* contType, 
+trace_return_t addStateType   (const char* alias, const char* contType, 
                     const char* name);
 
 /**
  * \ingroup statef
- * \fn int addStateTypeNB   (const char* alias,
+ * \fn trace_return_t addStateTypeNB   (const char* alias,
  *                           const char* contType, 
  *                           const char* name)
  * \brief C function to add a state type in a non bufferized mode
@@ -148,7 +148,7 @@ int addStateType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addStateTypeNB (const char* alias, const char* contType, 
+trace_return_t addStateTypeNB (const char* alias, const char* contType, 
                     const char* name);
 
 /**
@@ -156,7 +156,7 @@ int addStateTypeNB (const char* alias, const char* contType,
  */
 /**
  * \ingroup eventf
- * \fn int addEventType   (const char* alias,
+ * \fn trace_return_t addEventType   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
  * \brief C function to add an event type
@@ -166,11 +166,11 @@ int addStateTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEventType   (const char* alias, const char* contType, 
+trace_return_t addEventType   (const char* alias, const char* contType, 
                     const char* name);
 /**
  * \ingroup eventf
- * \fn int addEventTypeNB   (const char* alias,
+ * \fn trace_return_t addEventTypeNB   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
  * \brief C function to add an event type in a non bufferized mode
@@ -180,7 +180,7 @@ int addEventType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEventTypeNB (const char* alias, const char* contType, 
+trace_return_t addEventTypeNB (const char* alias, const char* contType, 
                     const char* name);
 
 /**
@@ -188,7 +188,7 @@ int addEventTypeNB (const char* alias, const char* contType,
  */
 /**
  * \ingroup linkf
- * \fn int addLinkType   (const char* alias,
+ * \fn trace_return_t addLinkType   (const char* alias,
  *                        const char* name,
  *                        const char* contType, 
  *                        const char* srcContType,
@@ -202,12 +202,12 @@ int addEventTypeNB (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addLinkType   (const char* alias   , const char* name,
+trace_return_t addLinkType   (const char* alias   , const char* name,
                    const char* contType, const char* srcContType,
                    const char* destContType);
 /**
  * \ingroup linkf
- * \fn int addLinkTypeNB   (const char* alias,
+ * \fn trace_return_t addLinkTypeNB   (const char* alias,
  *                          const char* name,
  *                          const char* contType, 
  *                          const char* srcContType,
@@ -221,7 +221,7 @@ int addLinkType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addLinkTypeNB (const char* alias   , const char* name,
+trace_return_t addLinkTypeNB (const char* alias   , const char* name,
                    const char* contType, const char* srcContType,
                    const char* destContType);
 
@@ -230,7 +230,7 @@ int addLinkTypeNB (const char* alias   , const char* name,
  */
 /**
  * \ingroup varf
- * \fn int addVarType   (const char* alias,
+ * \fn trace_return_t addVarType   (const char* alias,
  *                       const char* name,
  *                       const char* contType)
  * \brief C function to add a variable type
@@ -240,11 +240,11 @@ int addLinkTypeNB (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVarType   (const char* alias   , const char* name,
+trace_return_t addVarType   (const char* alias   , const char* name,
                   const char* contType); 
 /**
  * \ingroup varf
- * \fn int addVarTypeNB   (const char* alias,
+ * \fn trace_return_t addVarTypeNB   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
  * \brief C function to add a variable type in a non bufferized mode
@@ -254,12 +254,12 @@ int addVarType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVarTypeNB (const char* alias   , const char* name,
+trace_return_t addVarTypeNB (const char* alias   , const char* name,
                   const char* contType);
 
 /**
  * \ingroup init
- * \fn int addEntityValue   (const char* alias,
+ * \fn trace_return_t addEntityValue   (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
  *                           const char* color)
@@ -271,11 +271,11 @@ int addVarTypeNB (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEntityValue   (const char* alias, const char* entType, 
+trace_return_t addEntityValue   (const char* alias, const char* entType, 
                       const char* name , const char* color);
 /**
  * \ingroup init
- * \fn int addEntityValueNB (const char* alias,
+ * \fn trace_return_t addEntityValueNB (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
  *                           const char* color)
@@ -287,12 +287,12 @@ int addEntityValue   (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEntityValueNB (const char* alias, const char* entType, 
+trace_return_t addEntityValueNB (const char* alias, const char* entType, 
                       const char* name , const char* color);
 
 /**
  * \ingroup procf
- * \fn int addContainer (varPrec  time,
+ * \fn trace_return_t addContainer (varPrec  time,
  *                       const char  * alias,
  *                       const char  * type, 
  *                       const char  * container,
@@ -308,12 +308,12 @@ int addEntityValueNB (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addContainer   (varPrec time, const char* alias    ,
+trace_return_t addContainer   (varPrec time, const char* alias    ,
                     const char*  type, const char* container,
                     const char*  name, const char* file);
 /**
  * \ingroup procf
- * \fn int addContainerNB (varPrec  time,
+ * \fn trace_return_t addContainerNB (varPrec  time,
  *                         const char  * alias,
  *                         const char  * type, 
  *                         const char  * container,
@@ -329,13 +329,13 @@ int addContainer   (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addContainerNB (varPrec time, const char* alias    ,
+trace_return_t addContainerNB (varPrec time, const char* alias    ,
                     const char*  type, const char* container,
                     const char*  name, const char* file);
 
 /**
  * \ingroup procf
- * \fn int destroyContainer (varPrec  time,
+ * \fn trace_return_t destroyContainer (varPrec  time,
  *                           const char  * name,
  *                           const char  * type) 
  * \brief C function to destroy a container
@@ -345,11 +345,11 @@ int addContainerNB (varPrec time, const char* alias    ,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int destroyContainer     (varPrec time, const char*  name,
+trace_return_t destroyContainer     (varPrec time, const char*  name,
                           const char*  type);
 /**
  * \ingroup procf
- * \fn int destroyContainerNB (varPrec  time,
+ * \fn trace_return_t destroyContainerNB (varPrec  time,
  *                             const char  * name,
  *                             const char  * type) 
  * \brief C function to destroy a container in a non bufferized mode
@@ -359,12 +359,12 @@ int destroyContainer     (varPrec time, const char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int destroyContainerNB   (varPrec time, const char*  name,
+trace_return_t destroyContainerNB   (varPrec time, const char*  name,
                           const char*  type);
 
 /**
  * \ingroup statef
- * \fn int setState (varPrec  time,
+ * \fn trace_return_t setState (varPrec  time,
  *                   const char  * type,
  *                   const char  * cont,
  *                   const char  * val)
@@ -376,11 +376,11 @@ int destroyContainerNB   (varPrec time, const char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setState   (varPrec time, const char* type,
+trace_return_t setState   (varPrec time, const char* type,
                 const char*  cont, const char* val);
 /**
  * \ingroup statef
- * \fn int setStateNB (varPrec  time,
+ * \fn trace_return_t setStateNB (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * val)
@@ -392,12 +392,12 @@ int setState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setStateNB (varPrec time, const char* type,
+trace_return_t setStateNB (varPrec time, const char* type,
                 const char*  cont, const char* val);
 
 /**
  * \ingroup statef
- * \fn int pushState (varPrec  time,
+ * \fn trace_return_t pushState (varPrec  time,
  *                    const char  * type,
  *                    const char  * cont,
  *                    const char  * val)
@@ -409,12 +409,12 @@ int setStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pushState   (varPrec time, const char* type,
+trace_return_t pushState   (varPrec time, const char* type,
                  const char*  cont, const char* val);
 
 /**
  * \ingroup statef
- * \fn int pushStateNB (varPrec  time,
+ * \fn trace_return_t pushStateNB (varPrec  time,
  *                      const char  * type,
  *                      const char  * cont,
  *                      const char  * val)
@@ -426,12 +426,12 @@ int pushState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int pushStateNB (varPrec time, const char* type,
+trace_return_t pushStateNB (varPrec time, const char* type,
                  const char*  cont, const char* val);
 
 /**
  * \ingroup statef
- * \fn int popState (varPrec  time,
+ * \fn trace_return_t popState (varPrec  time,
  *                   const char  * type,
  *                   const char  * cont,
  *                   const char  * val)
@@ -443,12 +443,12 @@ int pushStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int popState   (varPrec time, const char* type,
+trace_return_t popState   (varPrec time, const char* type,
                 const char*  cont, const char* val);
 
 /**
  * \ingroup statef
- * \fn int popStateNB (varPrec  time,
+ * \fn trace_return_t popStateNB (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * val)
@@ -460,12 +460,12 @@ int popState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int popStateNB (varPrec time, const char* type,
+trace_return_t popStateNB (varPrec time, const char* type,
                 const char*  cont, const char* val);
 
 /**
  * \ingroup eventf
- * \fn int addEvent (varPrec  time,
+ * \fn trace_return_t addEvent (varPrec  time,
  *                   const char  * type,
  *                   const char  * cont,
  *                   const char  * val)
@@ -477,12 +477,12 @@ int popStateNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEvent   (varPrec time, const char* type,
+trace_return_t addEvent   (varPrec time, const char* type,
                 const char*  cont, const char* val);
 
 /**
  * \ingroup eventf
- * \fn int addEventNB (varPrec  time,
+ * \fn trace_return_t addEventNB (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * val)
@@ -494,12 +494,12 @@ int addEvent   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addEventNB (varPrec time, const char* type,
+trace_return_t addEventNB (varPrec time, const char* type,
                 const char*  cont, const char* val);
 
 /**
  * \ingroup linkf
- * \fn int startLink (varPrec  time,
+ * \fn trace_return_t startLink (varPrec  time,
  *                    const char  * type,
  *                    const char  * cont,
  *                    const char  * src,
@@ -517,14 +517,14 @@ int addEventNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int startLink   (varPrec time, const char* type,
+trace_return_t startLink   (varPrec time, const char* type,
                  const char*  cont, const char* src,
                  const char*  dest, const char* val,
                  const char* key);
 
 /**
  * \ingroup linkf
- * \fn int startLinkNB (varPrec  time,
+ * \fn trace_return_t startLinkNB (varPrec  time,
  *                      const char  * type,
  *                      const char  * cont,
  *                      const char  * src,
@@ -542,14 +542,14 @@ int startLink   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int startLinkNB (varPrec time, const char* type,
+trace_return_t startLinkNB (varPrec time, const char* type,
                  const char*  cont, const char* src,
                  const char*  dest, const char* val,
                  const char* key);
 
 /**
  * \ingroup linkf
- * \fn int endLink (varPrec  time,
+ * \fn trace_return_t endLink (varPrec  time,
  *                  const char  * type,
  *                  const char  * cont,
  *                  const char  * src,
@@ -567,13 +567,13 @@ int startLinkNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int endLink   (varPrec time, const char* type,
+trace_return_t endLink   (varPrec time, const char* type,
                const char*  cont, const char* src,
                const char*  dest, const char* val,
                const char* key);
 /**
  * \ingroup linkf
- * \fn int endLinkNB (varPrec  time,
+ * \fn trace_return_t endLinkNB (varPrec  time,
  *                    const char  * type,
  *                    const char  * cont,
  *                    const char  * src,
@@ -591,14 +591,14 @@ int endLink   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int endLinkNB (varPrec time, const char* type,
+trace_return_t endLinkNB (varPrec time, const char* type,
                const char*  cont, const char* src,
                const char*  dest, const char* val,
                const char* key);
 
 /**
  * \ingroup varf
- * \fn int setVar (varPrec  time,
+ * \fn trace_return_t setVar (varPrec  time,
  *                 const char  * type,
  *                 const char  * cont,
  *                 varPrec  val)
@@ -610,11 +610,11 @@ int endLinkNB (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setVar   (varPrec time, const char*  type,
+trace_return_t setVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val);
 /**
  * \ingroup varf
- * \fn int setVarNB (varPrec  time,
+ * \fn trace_return_t setVarNB (varPrec  time,
  *                   const char  * type,
  *                   const char  * cont,
  *                   varPrec  val)
@@ -626,12 +626,12 @@ int setVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int setVarNB (varPrec time, const char*  type,
+trace_return_t setVarNB (varPrec time, const char*  type,
               const char*  cont, varPrec val);
 
 /**
  * \ingroup varf
- * \fn int addVar (varPrec  time,
+ * \fn trace_return_t addVar (varPrec  time,
  *                 const char  * type,
  *                 const char  * cont,
  *                 varPrec  val)
@@ -643,11 +643,11 @@ int setVarNB (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVar   (varPrec time, const char*  type,
+trace_return_t addVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val);
 /**
  * \ingroup varf
- * \fn int addVarNB (varPrec  time,
+ * \fn trace_return_t addVarNB (varPrec  time,
  *                   const char  * type,
  *                   const char  * cont,
  *                   varPrec  val)
@@ -659,12 +659,12 @@ int addVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int addVarNB (varPrec time, const char*  type,
+trace_return_t addVarNB (varPrec time, const char*  type,
               const char*  cont, varPrec val);
 
 /**
  * \ingroup varf
- * \fn int subVar (varPrec  time,
+ * \fn trace_return_t subVar (varPrec  time,
  *                 const char  * type,
  *                 const char  * cont,
  *                 varPrec  val)
@@ -677,11 +677,11 @@ int addVarNB (varPrec time, const char*  type,
  *         An error code otherwise
  */
 
-int subVar   (varPrec time, const char*  type,
+trace_return_t subVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val);
 /**
  * \ingroup varf
- * \fn int subVarNB (varPrec  time,
+ * \fn trace_return_t subVarNB (varPrec  time,
  *                   const char  * type,
  *                   const char  * cont,
  *                   varPrec  val)
@@ -693,7 +693,7 @@ int subVar   (varPrec time, const char*  type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-int subVarNB (varPrec time, const char*  type,
+trace_return_t subVarNB (varPrec time, const char*  type,
               const char*  cont, varPrec val);
 
 
