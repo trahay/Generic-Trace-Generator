@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "OTF_Structs.h"
 #include "OTF_GTGBasic1.h"
 #include <otf.h>
 
@@ -8,89 +9,45 @@
 static OTF_FileManager* manager = NULL;
 static OTF_Writer* writer = NULL;
 
-/* OTF processes */
-#define MAX_PROCESSTYPE 100
-
+/* ContainerTypes */
 static int current_ctType = 0;
-
-typedef struct ContainerType {
-    char *name;
-    char *alias;
-} ContainerType_t;
-
-/*! Global structure storing the ctType defined */
 static ContainerType_t ctType[MAX_PROCESSTYPE];
 
 /*! Containers */
-typedef struct Container {
-    char *name;
-    char *alias;
-    int ctType;
-} Container_t;
-
 static int current_ct = 1;
-
-/*! Global structure storing the containers defined */
-#define MAX_PROCESS 1000
 static Container_t conts[MAX_PROCESS];
 
-
-/* OTF states */
-#define MAX_STATESTYPE 100
-
+/* stateType */
 static int current_stateType = 1;
-
-typedef struct StateType { /* Func group */
-    char *name;
-    char *alias;
-    int   groupId;
-} StateType_t;
-
-/*! Global structure storing the stateTypes defined */
 static StateType_t stateTypes[MAX_STATESTYPE];
 
-typedef struct State {
-    char *value;
-    int   stateType;
-} State_t;
-
-#define MAX_STATES 1000
+/*! States */
 static int current_state = 0;
+static EntityValue_t states[MAX_STATES];
 
-/*! EntityValue, contains the name of the functions/states */
-typedef struct EntityValue {
-    char *name;
-    char *alias;
-    int   groupId;
-} EntityValue_t;
 
 /*! Variables/Counters */
-#define MAX_VARIABLETYPE 10
 static int current_variableType = 1;
-typedef struct VariableType {
-    char *name;
-    char *alias;
-    int   contType;
-} VariableType_t;
 static VariableType_t variableTypes[MAX_VARIABLETYPE];
 
 /*! Events/Markers */
-#define MAX_EVENTTYPE 10
 static int current_eventType = 1;
-typedef struct EventType {
-    char *name;
-    char *alias;
-    int   contType;
-} EventType_t;
 static EventType_t eventTypes[MAX_EVENTTYPE];
-
-/*! Global structure storing the states defined */
-static EntityValue_t states[MAX_STATES];
-
 
 
 /* Root name */
 static char *filename;
+
+#define TIMER_RES 100000.
+
+#define STACK_MAX_SIZE 10000
+typedef struct StateStack {
+    State_t values[STACK_MAX_SIZE];
+    int current_id;
+} StateStack_t;
+
+static StateStack_t states_saved[MAX_PROCESS];
+static State_t last_state[MAX_PROCESS];
 
 /*
  * Local methods for OTF only, will be put in an other file after to be cleaner than now...
@@ -178,7 +135,7 @@ int getEventTypeFromName(const char *type) {
 /* Beginning of the implementation of the interface for OTF */
 trace_return_t OTFInitTrace(const char* filenam) {
     int ret = TRACE_ERR_OPEN;
-
+    int i;
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
     strcpy (filename, filenam);
 
@@ -198,9 +155,13 @@ trace_return_t OTFInitTrace(const char* filenam) {
         return ret;
     }
 
-    OTF_Writer_writeDefTimerResolution(writer, 0, 1000);
+    OTF_Writer_writeDefTimerResolution(writer, 0, TIMER_RES);
 
     OTFAddProcType("0", NULL, "0");
+
+    for(i = 0 ; i < MAX_PROCESS ; i ++) {
+        states_saved[i].current_id = 0;
+    }
     return TRACE_SUCCESS;
 }
 
@@ -334,7 +295,7 @@ trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType,
     return OTFAddEntityValue(alias, entType, name, color);
 }
 
-trace_return_t OTFAddContainer (varPrec time, const char* alias    ,
+trace_return_t OTFAddContainer (varPrec time, const char* alias,
                      const char*  type, const char* container,
                      const char*  name, const char* file){
     /*int ctType = getCtContFromName(type);*/
@@ -348,27 +309,27 @@ trace_return_t OTFAddContainer (varPrec time, const char* alias    ,
     strcpy(conts[current_ct].alias, alias);
     
     OTF_Writer_writeDefProcess(writer, 1, current_ct, name, parent);
-    OTF_Writer_writeBeginProcess (writer, time,	current_ct);
+    OTF_Writer_writeBeginProcess (writer, time*TIMER_RES, current_ct);
 
     current_ct ++;
 
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddContainerNB (varPrec time, const char* alias    ,
+trace_return_t OTFAddContainerNB (varPrec time, const char* alias,
                        const char*  type, const char* container,
                        const char*  name, const char* file){
     return OTFAddContainer(time, alias, type, container, name, file);
 }
 
 
-trace_return_t OTFSeqAddContainer (varPrec time, const char* alias    ,
+trace_return_t OTFSeqAddContainer (varPrec time, const char* alias,
                         const char*  type, const char* container,
                         const char*  name){
     return OTFAddContainer(time, alias, type, container, name, NULL);
 }
 
-trace_return_t OTFSeqAddContainerNB (varPrec time, const char* alias    ,
+trace_return_t OTFSeqAddContainerNB (varPrec time, const char* alias,
                           const char*  type, const char* container,
                           const char*  name){
     return OTFAddContainer(time, alias, type, container, name, NULL);
@@ -378,7 +339,7 @@ trace_return_t OTFSeqAddContainerNB (varPrec time, const char* alias    ,
 trace_return_t OTFDestroyContainer (varPrec time, const char*  name,
                          const char*  type){
     uint32_t process = getCtFromName(name);
-    OTF_Writer_writeEndProcess (writer, time, process);
+    OTF_Writer_writeEndProcess (writer, time*TIMER_RES, process);
     return TRACE_SUCCESS;
 }
 
@@ -389,49 +350,81 @@ trace_return_t OTFDestroyContainerNB (varPrec time, const char*  name,
 }
 
 trace_return_t OTFSetState (varPrec time, const char* type,
-                 const char*  cont, const char* val){
+                            const char*  cont, const char* val){
     int parent    = getCtFromName(cont);
     int stateType = getStateTypeFromName(type);
     int state     = getStateFromName(val);
 
-    printf("SetState : parent %d, stateType %d, val %d\n", parent, stateType, state);
-    
-    
-    OTF_Writer_writeEnter (writer, time, state, parent, 0);
+    last_state[parent].value     = state;
+    last_state[parent].cont      = parent;
+    last_state[parent].stateType = stateType;
 
+    printf("SetState : parent %d, stateType %d, val %d\n", parent, stateType, state);
+
+    OTF_Writer_writeEnter (writer, time*TIMER_RES, state, parent, 0);
+    
     return TRACE_SUCCESS;
 }
 
 trace_return_t OTFSetStateNB (varPrec time, const char* type,
-                   const char*  cont, const char* val){
+                              const char*  cont, const char* val){
     return OTFSetState(time, type, cont, val);
 }
 
 trace_return_t OTFPushState (varPrec time, const char* type,
-                  const char*  cont, const char* val){
+                             const char*  cont, const char* val){
+    int parent    = getCtFromName(cont);
+    int stateType = getStateTypeFromName(type);
+    int state     = getStateFromName(val);
+
+    int current_id = states_saved[parent].current_id;
+    // Push previous and set the new
+    states_saved[parent].values[current_id].value = last_state[parent].value;
+    states_saved[parent].values[current_id].cont = last_state[parent].cont;
+    states_saved[last_state[parent].cont].values[current_id].stateType = last_state[parent].stateType;
+
+    states_saved[parent].current_id ++;
+
+    printf("PushState : parent %d, stateType %d, val %d\n", parent, stateType, state);
+    
+    OTF_Writer_writeEnter (writer, time*TIMER_RES, state, parent, 0);
     return TRACE_SUCCESS;
 }
 
 trace_return_t OTFPushStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val){
-    return TRACE_SUCCESS;
+    return OTFPushState(time, type, cont, val);
 }
 
 trace_return_t OTFPopState (varPrec time, const char* type,
                  const char*  cont, const char* val){
+    // Pop and set
+    int parent     = getCtFromName(cont);
+    int current_id = states_saved[last_state[parent].cont].current_id - 1;
+    State_t st;
+    st.value = states_saved[last_state[parent].cont].values[current_id].value;
+    st.cont = states_saved[last_state[parent].cont].values[current_id].cont;
+    st.stateType = states_saved[last_state[parent].cont].values[current_id].stateType;
+
+    states_saved[last_state[parent].cont].current_id --;
+
+    printf("PopState : parent %d, stateType %d, val %d\n", st.cont, st.stateType, st.value);
+    
+    OTF_Writer_writeEnter (writer, time*TIMER_RES, st.value, st.cont, 0);
+
     return TRACE_SUCCESS;
 }
 
 trace_return_t OTFPopStateNB (varPrec time, const char* type,
                    const char*  cont, const char* val){
-    return TRACE_SUCCESS;
+    return OTFPopState(time, type, cont, val);
 }
 
 trace_return_t OTFAddEvent (varPrec time    , const char* type,
                  const char *cont, const char* val){
     uint32_t process = getCtFromName(cont);
     uint32_t eventType = getEventTypeFromName(type);
-    OTF_Writer_writeMarker (writer, time, process, eventType, val);
+    OTF_Writer_writeMarker (writer, time*TIMER_RES, process, eventType, val);
     printf("AddEvent : parent %d, eventType %d, val %s\n", process, eventType, val);
     return TRACE_SUCCESS;
 }
