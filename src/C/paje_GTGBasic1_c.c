@@ -18,7 +18,7 @@ trace_return_t my_open (){
     char f[200];
     if (!procFile){
         sprintf (f, "%s_proc0.ept", filename);
-        procFile = fopen (f, "a+");
+        procFile = fopen (f, "w");
         if (!procFile)
             return ret;
         ret = TRACE_SUCCESS;
@@ -43,7 +43,7 @@ trace_return_t pajeInitTrace   (const char* filenam){
     strcpy (filename, filenam);
 
     sprintf (file, "%s_root.ept", filename);
-    headFile = fopen (file, "a+");
+    headFile = fopen (file, "w");
     if (!headFile){
       fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
       return ret;
@@ -173,7 +173,7 @@ trace_return_t pajeSeqInitTrace   (const char* filenam){
     strcpy (filename, filenam);
 
     sprintf (file, "%s.trace", filename);
-    procFile = fopen (file, "a+");
+    procFile = fopen (file, "w");
     headFile = procFile;
     if (!procFile){
         fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
@@ -419,7 +419,7 @@ trace_return_t pajeAddContainer   (varPrec time, const char* alias    ,
                         const char*  type, const char* container,
                         const char*  name, const char* file){
     if (headFile){
-        fprintf (headFile, "7 %.13e %s %s %s %s %s\n", 
+        fprintf (headFile, "7 %.13e %s %s %s '%s' %s\n", 
                  time, alias, type, container, name, file);
         return TRACE_SUCCESS;
     }
@@ -431,7 +431,7 @@ trace_return_t pajeAddContainerNB (varPrec time, const char* alias    ,
                         const char*  name, const char* file){
      
     if (headFile){
-        fprintf (headFile, "7 %.13e %s %s %s %s %s\n", 
+        fprintf (headFile, "7 %.13e %s %s %s '%s' %s\n", 
                  time, alias, type, container, name, file);
         return TRACE_SUCCESS;
     }
