@@ -534,7 +534,7 @@ trace_return_t pajePushStateNB (varPrec time, const char* type,
 trace_return_t pajePopState   (varPrec time, const char* type,
                     const char*  cont, const char* val){
     if (procFile){
-        fprintf (procFile, "11 %.13e %s %s %s\n", 
+        fprintf (procFile, "12 %.13e %s %s %s\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
