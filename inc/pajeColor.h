@@ -10,7 +10,7 @@
  *        Francois Rue      - francois.rue@labri.fr \n
  *        Francois Trahay   - francois.trahay@labri.fr \n
  *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
- *        Kevin    Coulomb  - coulomb@enseirb-matmeca.fr \n
+ *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  *
@@ -134,5 +134,30 @@
  */
 #define P_LIGHTPINK  "1.0 0.5 1.0"
 
+#define NB_COLOR_PAJE 22
+
+const char* paje_color[NB_COLOR_PAJE] = {P_BLACK,
+                                         P_RED,
+                                         P_GREEN,
+                                         P_BLUE,
+                                         P_WHITE,
+                                         P_TEAL,
+                                         P_DARKGREY,
+                                         P_YELLOW,
+                                         P_PURPLE,
+                                         P_LIGHTBROWN,
+                                         P_LIGHTGREY,
+                                         P_DARKBLUE,
+                                         P_PINK,
+                                         P_DARKPINK,
+                                         P_SEABLUE,
+                                         P_KAKI,
+                                         P_REDBLOOD,
+                                         P_BROWN,
+                                         P_GRENAT,
+                                         P_ORANGE,
+                                         P_MAUVE,
+                                         P_LIGHTPINK
+};
 
 #endif

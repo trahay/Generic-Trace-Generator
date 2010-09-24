@@ -13,11 +13,12 @@ static FILE*  headFile;
 /* Root name */
 static char*  filename;
 
-trace_return_t my_open (){
+trace_return_t my_open (int rank){
     trace_return_t ret = TRACE_ERR_OPEN;
     char f[200];
+
     if (!procFile){
-        sprintf (f, "%s_proc0.ept", filename);
+        sprintf (f, "%s_proc%d.ept", filename, rank);
         procFile = fopen (f, "w");
         if (!procFile)
             return ret;
@@ -35,135 +36,138 @@ trace_return_t my_close (){
     return ret;
 }
 
-trace_return_t pajeInitTrace   (const char* filenam){
+trace_return_t pajeInitTrace   (const char* filenam, int rank){
     char file[200];
     trace_return_t ret = TRACE_ERR_OPEN;
+
     my_close ();
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
     strcpy (filename, filenam);
+    procFile = NULL;
 
-    sprintf (file, "%s_root.ept", filename);
-    headFile = fopen (file, "w");
-    if (!headFile){
-      fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
-      return ret;
-    }
-    fprintf (headFile,"\
+    if (rank==0){
+        sprintf (file, "%s_root.ept", filename);
+        headFile = fopen (file, "w");
+        if (!headFile){
+            fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
+            return ret;
+        }
+        fprintf (headFile,"\
 %%EventDef PajeDefineContainerType	1 \n\
-%% 	  Alias 	string            \n\
-%% 	  ContainerType string            \n\
-%% 	  Name 		string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeDefineStateType		3 \n\
-%% 	  Alias 	string            \n\
-%% 	  ContainerType string            \n\
-%% 	  Name 		string            \n\
+%% 	  Alias 	string            \n    \
+%% 	  ContainerType string            \n    \
+%% 	  Name 		string            \n    \
+%%EndEventDef                             \n    \
+%%EventDef PajeDefineStateType		3 \n    \
+%% 	  Alias 	string            \n    \
+%% 	  ContainerType string            \n    \
+%% 	  Name 		string            \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeDefineEventType		4 \n\
-%% 	  Alias 	string            \n\
-%% 	  ContainerType string            \n\
-%% 	  Name 		string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeDefineEntityValue	6 \n\
-%% 	  Alias         string            \n\
-%% 	  EntityType 	string            \n\
-%% 	  Name 		string            \n\
-%% 	  Color 	color             \n\
+%%EventDef PajeDefineEventType		4 \n    \
+%% 	  Alias 	string            \n    \
+%% 	  ContainerType string            \n    \
+%% 	  Name 		string            \n    \
+%%EndEventDef                             \n    \
+%%EventDef PajeDefineEntityValue	6 \n    \
+%% 	  Alias         string            \n    \
+%% 	  EntityType 	string            \n    \
+%% 	  Name 		string            \n    \
+%% 	  Color 	color             \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeCreateContainer		7 \n\
-%% 	  Time          date              \n\
-%% 	  Alias 	string            \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Name 		string            \n\
-%% 	  Filename	string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeDestroyContainer		8 \n\
-%% 	  Time          date              \n\
-%% 	  Name 		string            \n\
-%% 	  Type 		string            \n\
+%%EventDef PajeCreateContainer		7 \n    \
+%% 	  Time          date              \n    \
+%% 	  Alias 	string            \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Name 		string            \n    \
+%% 	  Filename	string            \n    \
+%%EndEventDef                             \n    \
+%%EventDef PajeDestroyContainer		8 \n    \
+%% 	  Time          date              \n    \
+%% 	  Name 		string            \n    \
+%% 	  Type 		string            \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeSetState			10\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value         string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajePushState	      	11\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value         string            \n\
+%%EventDef PajeSetState			10\n    \
+%% 	  Time          date              \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Value         string            \n    \
+%%EndEventDef                             \n    \
+%%EventDef PajePushState	      	11\n    \
+%% 	  Time          date              \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Value         string            \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajePopState			12\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value         string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeNewEvent			20\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value         string            \n\
+%%EventDef PajePopState			12\n    \
+%% 	  Time          date              \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Value         string            \n    \
+%%EndEventDef                             \n    \
+%%EventDef PajeNewEvent			20\n    \
+%% 	  Time          date              \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Value         string            \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeDefineLinkType		41\n\
-%% 	  Alias               string      \n\
-%% 	  Name 		      string      \n\
-%% 	  ContainerType	      string      \n\
-%% 	  SourceContainerType string      \n\
-%% 	  DestContainerType   string      \n\
+%%EventDef PajeDefineLinkType		41\n    \
+%% 	  Alias               string      \n    \
+%% 	  Name 		      string      \n    \
+%% 	  ContainerType	      string      \n    \
+%% 	  SourceContainerType string      \n    \
+%% 	  DestContainerType   string      \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeStartLink	       	42\n\
-%%	  Time 		  date            \n\
-%%	  Type 		  string          \n\
-%%	  Container 	  string          \n\
-%%	  SourceContainer string          \n\
-%%	  Value 	  string          \n\
-%%	  Key 		  string          \n\
+%%EventDef PajeStartLink	       	42\n    \
+%%	  Time 		  date            \n    \
+%%	  Type 		  string          \n    \
+%%	  Container 	  string          \n    \
+%%	  SourceContainer string          \n    \
+%%	  Value 	  string          \n    \
+%%	  Key 		  string          \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeEndLink			43\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  DestContainer string            \n\
-%% 	  Value 	string            \n\
-%% 	  Key 		string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeDefineVariableType	50\n\
-%%	  Alias         string            \n\
-%% 	  Name  	string            \n\
-%% 	  ContainerType string            \n\
+%%EventDef PajeEndLink			43\n    \
+%% 	  Time          date              \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  DestContainer string            \n    \
+%% 	  Value 	string            \n    \
+%% 	  Key 		string            \n    \
+%%EndEventDef                             \n    \
+%%EventDef PajeDefineVariableType	50\n    \
+%%	  Alias         string            \n    \
+%% 	  Name  	string            \n    \
+%% 	  ContainerType string            \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeSetVariable		51\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value 	double            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeAddVariable		52\n\
-%% 	  Time          date              \n\
-%%	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value 	double            \n\
+%%EventDef PajeSetVariable		51\n    \
+%% 	  Time          date              \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Value 	double            \n    \
+%%EndEventDef                             \n    \
+%%EventDef PajeAddVariable		52\n    \
+%% 	  Time          date              \n    \
+%%	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Value 	double            \n    \
 %%EndEventDef                             \n");
         fprintf (headFile,"\
-%%EventDef PajeSubVariable		53\n\
-%% 	  Time 		date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value 	double            \n\
+%%EventDef PajeSubVariable		53\n    \
+%% 	  Time 		date              \n    \
+%% 	  Type 		string            \n    \
+%% 	  Container 	string            \n    \
+%% 	  Value 	double            \n    \
 %%EndEventDef \n");
-
-    return my_open();
+    }
+    return my_open(rank);
 }
 
 trace_return_t pajeSeqInitTrace   (const char* filenam){

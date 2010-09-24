@@ -8,11 +8,11 @@ int getTraceType_i (){
     return getTraceType ();
 }
 
-void initTrace_i (char* f, int* len, int* err){
+void initTrace_i (char* f, int* len, int* rank, int* err){
     char* filename = (char *)malloc (sizeof (char)*(*len+1));
     memcpy (filename, f, *len);
     filename[*len]='\0';
-    *err = initTrace (filename);
+    *err = initTrace (filename, *rank);
 }
 
 void addProcType_i (char* alias   , int* s1, 

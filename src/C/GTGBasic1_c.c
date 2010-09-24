@@ -1,6 +1,9 @@
 #include "GTGBasic1.h"
 #include "OTF_GTGBasic1.h"
 #include "paje_GTGBasic1.h"
+#include "pajeColor.h"
+
+extern const char* paje_color[NB_COLOR_PAJE];
 
 static traceType_t traceType;
 
@@ -12,14 +15,14 @@ traceType_t getTraceType (){
     return traceType;
 }
 
-trace_return_t initTrace   (const char* filename){
+trace_return_t initTrace   (const char* filename, int rank){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
         return pajeSeqInitTrace (filename);
         break;
     case VITE :
-        return pajeInitTrace (filename);
+        return pajeInitTrace (filename, rank);
         break;
 #endif	/* BUILD_PAJE */
 #ifdef BUILD_OTF
@@ -284,12 +287,12 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
 }
 
 trace_return_t addEntityValue   (const char* alias, const char* entType, 
-                      const char* name , const char* color){
+                      const char* name , int color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
     case VITE :
-        return pajeAddEntityValue (alias, entType, name, color);
+        return pajeAddEntityValue (alias, entType, name, paje_color[color]);
         break;
 #endif
 #ifdef BUILD_OTF
@@ -307,7 +310,7 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
 }
 
 trace_return_t addEntityValueNB (const char* alias, const char* entType, 
-                      const char* name , const char* color){
+                      const char* name , int color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :

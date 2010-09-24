@@ -33,10 +33,11 @@ function  getTraceType_f ()
   getTraceType_f = getTraceType_i ()
 end function getTraceType_f
 
-subroutine initTrace_f (filename, ierr)
+subroutine initTrace_f (filename, rank, ierr)
   character (len=*), intent (in) :: filename
   integer, intent (out) :: ierr
-  call initTrace_i (filename, len (trim (filename)), ierr)
+  integer, intent (in) :: rank
+  call initTrace_i (filename, len (trim (filename)), rank, ierr)
 end subroutine initTrace_f
 
 

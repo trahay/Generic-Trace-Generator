@@ -11,7 +11,7 @@
  *        Francois Rue      - francois.rue@labri.fr \n
  *        Francois Trahay   - francois.trahay@labri.fr \n
  *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
- *        Kevin    Coulomb  - coulomb@enseirb-matmeca.fr \n
+ *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  *
@@ -67,7 +67,7 @@ traceType_t getTraceType ();
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t initTrace   (const char* filename);
+trace_return_t initTrace   (const char* filename, int rank);
 /**
  * \ingroup init
  * \fn trace_return_t endTrace   ()
@@ -262,7 +262,7 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
  * \fn trace_return_t addEntityValue   (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
- *                           const char* color)
+ *                           int color)
  * \brief C function to add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -272,13 +272,13 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
  *         An error code otherwise
  */
 trace_return_t addEntityValue   (const char* alias, const char* entType, 
-                      const char* name , const char* color);
+                      const char* name , int color);
 /**
  * \ingroup init
  * \fn trace_return_t addEntityValueNB (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
- *                           const char* color)
+ *                           int color)
  * \brief C function to add an entity value in a non bufferized mode
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -288,7 +288,7 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
  *         An error code otherwise
  */
 trace_return_t addEntityValueNB (const char* alias, const char* entType, 
-                      const char* name , const char* color);
+                      const char* name , int color);
 
 /**
  * \ingroup procf

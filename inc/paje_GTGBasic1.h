@@ -9,7 +9,7 @@
  *        Francois Rue      - francois.rue@labri.fr \n
  *        Francois Trahay   - francois.trahay@labri.fr \n
  *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
- *        Kevin    Coulomb  - coulomb@enseirb-matmeca.fr \n
+ *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  *
@@ -26,10 +26,11 @@
  * \fn trace_return_t pajeInitTrace   (const char* filename)
  * \brief To init a trace in a VITE format ( *.ept)
  * \param filename Root name of the file to create
+ * \param rank Rank of the processor
  * \return 0 if sucess
  *         An error code otherwise
  */
-trace_return_t pajeInitTrace   (const char* filename);
+trace_return_t pajeInitTrace   (const char* filename, int rank);
 
 /**
  * \ingroup cpaje

@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "../inc/GTGBasic1.h"
-#include "../inc/pajeColor.h"
+#include "../inc/GTGColor.h"
 
 /* Size of the buffer used */
 #define TXTSIZE 200
@@ -55,21 +55,21 @@ int main (int argc, char** argv){
 
     /* Initialisation */
     setTraceType (traceT);
-    CHECK_RETURN (initTrace ("testLink"));
+    CHECK_RETURN (initTrace ("testLink", 0));
     /* Creating types used */
     CHECK_RETURN (addProcType ("CT_NET", "0", "Network"));
     CHECK_RETURN (addProcType ("CT_NODE", "CT_NET", "Node"));
     CHECK_RETURN (addProcType ("CT_PROC", "CT_NODE", "Proc"));
     CHECK_RETURN (addStateType ("ST_NodeState", "CT_NODE", "Node state"));
     CHECK_RETURN (addStateType ("ST_ProcState", "CT_PROC", "Procstate"));
-    CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", P_RED));
-    CHECK_RETURN (addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", P_PINK));
-    CHECK_RETURN (addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", P_BLACK));
-    CHECK_RETURN (addEntityValue ("SP_3", "ST_ProcState", "Produit", P_ORANGE));
-    CHECK_RETURN (addEntityValue ("SP_4", "ST_ProcState", "Somme", P_GREEN));
-    CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", P_BLUE));
-    CHECK_RETURN (addEntityValue ("SP_6", "ST_ProcState", "Division", P_TEAL));
-    CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", P_PURPLE));
+    CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_RED));
+    CHECK_RETURN (addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", GTG_PINK));
+    CHECK_RETURN (addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", GTG_BLACK));
+    CHECK_RETURN (addEntityValue ("SP_3", "ST_ProcState", "Produit", GTG_ORANGE));
+    CHECK_RETURN (addEntityValue ("SP_4", "ST_ProcState", "Somme", GTG_GREEN));
+    CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", GTG_BLUE));
+    CHECK_RETURN (addEntityValue ("SP_6", "ST_ProcState", "Division", GTG_TEAL));
+    CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", GTG_PURPLE));
     /* Creating comm types */
     CHECK_RETURN (addLinkType ("L_0", "Fanin", "CT_NET", "CT_PROC", "CT_PROC"));
     CHECK_RETURN (addLinkType ("L_1", "Bloc", "CT_NET", "CT_PROC", "CT_PROC"));
