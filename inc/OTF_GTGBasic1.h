@@ -16,10 +16,30 @@
  */
 #ifndef _OTFTRACEGENERATORBASIC_
 #define _OTFTRACEGENERATORBASIC_
+
 #include "types.h"
+#include "OTF_Structs.h"
 /**
  * \defgroup cotf OTF interface in C of the traceGeneratorBasic API
  */
+/* todo: fix C90 compilation error */
+static const otf_color_t otf_color_null = {.colorID = "",
+					   .red     = 0,
+					   .green   = 0,
+					   .blue    = 0};
+
+/**
+ * \ingroup cotf
+ * \fn const char* OTF_get_color(int color)
+ * \brief Converts a GTG color into a OTF color
+ * \param color GTG color to convert
+ * \return The OTF color
+ */
+static inline
+const otf_color_t* OTF_get_color(int color) {
+	/* todo */
+	return &otf_color_null;
+}
 
 /**
  * \ingroup cotf
@@ -30,6 +50,10 @@
  *         An error code otherwise
  */
 trace_return_t OTFInitTrace   (const char* filename);
+
+/* todo: comments */
+trace_return_t OTFSetCompress(int val);
+
 /**
  * \ingroup cotf
  * \ fn trace_return_t OTFAddProcType   (const char* alias,
@@ -189,7 +213,7 @@ trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
  * \fn trace_return_t OTFAddEntityValue   (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
- *                               const char* color)
+ *                               const otf_color_t* color)
  * \brief To add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -199,13 +223,13 @@ trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
  *         An error code otherwise
  */
 trace_return_t OTFAddEntityValue   (const char* alias, const char* entType, 
-                          const char* name , const char* color);
+                          const char* name , const otf_color_t* color);
 /**
  * \ingroup cotf
  * \fn trace_return_t OTFAddEntityValueNB (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
- *                               const char* color)
+ *                               const otf_color_t* color)
  * \brief To add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -215,7 +239,7 @@ trace_return_t OTFAddEntityValue   (const char* alias, const char* entType,
  *         An error code otherwise
  */
 trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType, 
-                          const char* name , const char* color);
+                          const char* name , const otf_color_t* color);
 
 /**
  * \ingroup cotf
@@ -605,6 +629,16 @@ trace_return_t OTFSubVar   (varPrec time, const char*  type,
  */
 trace_return_t OTFSubVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
+
+
+/**
+ * \ingroup cpaje
+ * \fn OTFEndTrace ()
+ * \brief To end writting the trace and clean data
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t OTFEndTrace ();
 
 #endif
 

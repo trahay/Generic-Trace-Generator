@@ -277,7 +277,7 @@ trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
 }
 
 trace_return_t OTFAddEntityValue (const char* alias, const char* entType, 
-                       const char* name , const char* color){
+                       const char* name , const otf_color_t* color){
     int type = getStateTypeFromName(entType);
     states[current_state].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(states[current_state].name, name);
@@ -291,7 +291,7 @@ trace_return_t OTFAddEntityValue (const char* alias, const char* entType,
 }
 
 trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType, 
-                         const char* name , const char* color){
+                         const char* name , const otf_color_t* color){
     return OTFAddEntityValue(alias, entType, name, color);
 }
 

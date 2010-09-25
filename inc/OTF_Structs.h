@@ -17,6 +17,8 @@
 #ifndef _OTFSTRUCTS_
 #define _OTFSTRUCTS_
 
+#include <stdint.h>
+
 /* ContainerTypes */
 #define MAX_PROCESSTYPE 100
 
@@ -74,5 +76,12 @@ typedef struct VariableType {
     char *alias;
     int   contType;
 } VariableType_t;
+
+typedef struct otf_color {
+    char *colorID;
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
+} otf_color_t;
 
 #endif

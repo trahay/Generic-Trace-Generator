@@ -297,7 +297,7 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFAddEntityValue (alias, entType, name, color);
+        return OTFAddEntityValue (alias, entType, name, OTF_get_color(color));
         break;
 #endif
 #ifdef BUILD_TAU
@@ -315,12 +315,12 @@ trace_return_t addEntityValueNB (const char* alias, const char* entType,
 #ifdef BUILD_PAJE
     case PAJE :
     case VITE :
-        return pajeAddEntityValueNB (alias, entType, name, color);
+        return pajeAddEntityValueNB (alias, entType, name, paje_color[color]);
         break;
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFAddEntityValueNB (alias, entType, name, color);
+	return OTFAddEntityValueNB (alias, entType, name, OTF_get_color(color));
         break;
 #endif
 #ifdef BUILD_TAU
