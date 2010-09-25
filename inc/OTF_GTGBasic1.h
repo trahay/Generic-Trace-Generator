@@ -18,7 +18,9 @@
 #define _OTFTRACEGENERATORBASIC_
 
 #include "types.h"
+#include "GTGBasic1.h"
 #include "OTF_Structs.h"
+
 /**
  * \defgroup cotf OTF interface in C of the traceGeneratorBasic API
  */
@@ -36,7 +38,7 @@ static const otf_color_t otf_color_null = {.colorID = "",
  * \return The OTF color
  */
 static inline
-const otf_color_t* OTF_get_color(int color) {
+const otf_color_t* OTF_get_color(gtg_color_t* color) {
 	/* todo */
 	return &otf_color_null;
 }

@@ -287,17 +287,17 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
 }
 
 trace_return_t addEntityValue   (const char* alias, const char* entType, 
-                      const char* name , int color){
+                      const char* name , gtg_color_t* p_color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
     case VITE :
-        return pajeAddEntityValue (alias, entType, name, paje_color[color]);
+	    return pajeAddEntityValue (alias, entType, name, Paje_get_color(p_color));
         break;
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFAddEntityValue (alias, entType, name, OTF_get_color(color));
+        return OTFAddEntityValue (alias, entType, name, OTF_get_color(p_color));
         break;
 #endif
 #ifdef BUILD_TAU
@@ -310,17 +310,17 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
 }
 
 trace_return_t addEntityValueNB (const char* alias, const char* entType, 
-                      const char* name , int color){
+                      const char* name , gtg_color_t* p_color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
     case VITE :
-        return pajeAddEntityValueNB (alias, entType, name, paje_color[color]);
+        return pajeAddEntityValueNB (alias, entType, name, Paje_get_color(p_color));
         break;
 #endif
 #ifdef BUILD_OTF
     case OTF :
-	return OTFAddEntityValueNB (alias, entType, name, OTF_get_color(color));
+	return OTFAddEntityValueNB (alias, entType, name, OTF_get_color(p_color));
         break;
 #endif
 #ifdef BUILD_TAU

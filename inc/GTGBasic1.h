@@ -262,33 +262,33 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
  * \fn trace_return_t addEntityValue   (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
- *                           int color)
+ *                           gtg_rgb_color_t* p_color)
  * \brief C function to add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
  * \param name Name of the variable type
- * \param color Color of the entity
+ * \param p_color Color of the entity
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t addEntityValue   (const char* alias, const char* entType, 
-                      const char* name , int color);
+                      const char* name , gtg_color_t* p_color);
 /**
  * \ingroup init
  * \fn trace_return_t addEntityValueNB (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
- *                           int color)
+ *                           gtg_rgb_color_t* p_color)
  * \brief C function to add an entity value in a non bufferized mode
  * \param alias Alias on the entity value
  * \param entType Type of the entity
  * \param name Name of the variable type
- * \param color Color of the entity
+ * \param p_color Color of the entity
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t addEntityValueNB (const char* alias, const char* entType, 
-                      const char* name , int color);
+                      const char* name , gtg_color_t* p_color);
 
 /**
  * \ingroup procf
