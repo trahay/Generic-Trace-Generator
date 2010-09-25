@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "types.h"
-
+#include "GTGColor.h"
 
 /**
  * \defgroup traceType Trace type handler
