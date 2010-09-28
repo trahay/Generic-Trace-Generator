@@ -16,6 +16,9 @@ traceType_t getTraceType (){
 }
 
 trace_return_t initTrace   (const char* filename, int rank){
+	/* first, let's initialize gtg */
+	gtg_color_init();
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :

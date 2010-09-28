@@ -30,7 +30,7 @@ trace_return_t my_open (int rank){
 trace_return_t my_close (){
     trace_return_t ret = TRACE_ERR_CLOSE;
     if (procFile){
-        ret = fclose (procFile);
+	ret = (trace_return_t) fclose (procFile);
         procFile = NULL;
     }
     return ret;

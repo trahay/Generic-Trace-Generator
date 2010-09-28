@@ -24,11 +24,6 @@
 /**
  * \defgroup cotf OTF interface in C of the traceGeneratorBasic API
  */
-/* todo: fix C90 compilation error */
-static const otf_color_t otf_color_null = {.colorID = "",
-					   .red     = 0,
-					   .green   = 0,
-					   .blue    = 0};
 
 /**
  * \ingroup cotf
@@ -37,11 +32,7 @@ static const otf_color_t otf_color_null = {.colorID = "",
  * \param color GTG color to convert
  * \return The OTF color
  */
-static inline
-const otf_color_t* OTF_get_color(gtg_color_t* color) {
-	/* todo */
-	return &otf_color_null;
-}
+const otf_color_t* OTF_get_color(gtg_color_t* color);
 
 /**
  * \ingroup cotf

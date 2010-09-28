@@ -18,6 +18,7 @@ libgtg_la_LDFLAGS = --no-undefined
 
 libgtg_la_SOURCES = \
 	  C/GTGBasic1_c.c     \
+	  C/GTGColor.c     \
 	  FORTRAN/GTGBasic1_f.f90     \
           C/interfaceCFortranBasic1.c    \
 	  C/paje_GTGBasic1_c.c

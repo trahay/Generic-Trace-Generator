@@ -49,6 +49,14 @@ typedef struct StateStack {
 static StateStack_t states_saved[MAX_PROCESS];
 static State_t last_state[MAX_PROCESS];
 
+
+otf_color_t otf_color_null;
+
+const otf_color_t* OTF_get_color(gtg_color_t* color) {
+	/* todo */
+	return &otf_color_null;
+}
+
 /*
  * Local methods for OTF only, will be put in an other file after to be cleaner than now...
  */
@@ -132,10 +140,24 @@ int getEventTypeFromName(const char *type) {
     return 0;
 }
 
+/* Initialize all the OTF-specific variables */
+static void __OTF_init()
+{
+	/* initialize otf_color_null */
+	asprintf(&otf_color_null.colorID, "");
+	otf_color_null.red = 0;
+	otf_color_null.green = 0;
+	otf_color_null.blue = 0;
+}
+
 /* Beginning of the implementation of the interface for OTF */
 trace_return_t OTFInitTrace(const char* filenam) {
     int ret = TRACE_ERR_OPEN;
     int i;
+
+    /* first, let's initialize all the OTF-specific variables */
+    __OTF_init();
+
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
     strcpy (filename, filenam);
 
@@ -144,7 +166,7 @@ trace_return_t OTFInitTrace(const char* filenam) {
 
     if(manager == NULL) {
         fprintf (stderr, "Failed to open a manager for OTF. \n Leaving \n");
-        return ret;
+        return (trace_return_t) ret;
     }
 
     writer = OTF_Writer_open(filename, 0, manager);
@@ -152,7 +174,7 @@ trace_return_t OTFInitTrace(const char* filenam) {
         OTF_FileManager_close(manager);
         manager = NULL;
         fprintf (stderr, "Failed to open a writer for OTF. \n Leaving \n");
-        return ret;
+        return (trace_return_t) ret;
     }
 
     OTF_Writer_writeDefTimerResolution(writer, 0, TIMER_RES);

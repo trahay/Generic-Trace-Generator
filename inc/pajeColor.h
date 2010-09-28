@@ -19,6 +19,10 @@
 #ifndef _PAJECOLOR_
 #define _PAJECOLOR_
 
+#define _GNU_SOURCE
+#include <stdio.h>
+
+
 /**
  * \defgroup color Defined colors for Paje
  */
