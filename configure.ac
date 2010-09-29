@@ -10,13 +10,20 @@ AM_INIT_AUTOMAKE
 
 # Checks for programs.
 AC_PROG_CC
-AC_PROG_FC
+AC_PROG_FC([],90)
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdio.h string.h stdlib.h])
+
+# crappy hack: of the macros AC_PROG_{CC,CXX,F77,FC}, only the
+# first expanded one will check for object file extension etc,
+# and fail if that doesn't work.
+if test x$FC = x; then
+AC_MSG_ERROR(A Fortran compiler is required)
+fi
 
 # MPI stuff
 use_mpi=yes
