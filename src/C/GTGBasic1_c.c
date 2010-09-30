@@ -3,8 +3,6 @@
 #include "paje_GTGBasic1.h"
 #include "pajeColor.h"
 
-extern const char* paje_color[NB_COLOR_PAJE];
-
 static traceType_t traceType;
 
 void setTraceType (traceType_t type){
