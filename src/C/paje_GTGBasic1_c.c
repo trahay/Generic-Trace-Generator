@@ -302,7 +302,7 @@ trace_return_t pajeSeqInitTrace   (const char* filenam){
 trace_return_t pajeAddProcType   (const char* alias, const char* contType, 
                        const char* name){
     if (headFile){
-        fprintf (headFile, "1 %s %s '%s' \n", alias, contType, name);
+        fprintf (headFile, "1 '%s' '%s' '%s' \n", alias, contType, name);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -311,7 +311,7 @@ trace_return_t pajeAddProcType   (const char* alias, const char* contType,
 trace_return_t pajeAddProcTypeNB (const char* alias, const char* contType, 
                        const char* name){
     if (headFile){
-        fprintf (headFile, "1 %s %s '%s' \n" , alias, contType, name);
+        fprintf (headFile, "1 '%s' '%s' '%s' \n" , alias, contType, name);
         return TRACE_SUCCESS;
     }
     fflush (headFile);
@@ -321,7 +321,7 @@ trace_return_t pajeAddProcTypeNB (const char* alias, const char* contType,
 trace_return_t pajeAddStateType   (const char* alias, const char* contType, 
                         const char* name){
     if (headFile){
-        fprintf (headFile, "3 %s %s '%s' \n", alias, contType, name);
+        fprintf (headFile, "3 '%s' '%s' '%s' \n", alias, contType, name);
         return TRACE_SUCCESS;
     }    
     return TRACE_ERR_WRITE;
@@ -330,7 +330,7 @@ trace_return_t pajeAddStateType   (const char* alias, const char* contType,
 trace_return_t pajeAddStateTypeNB (const char* alias, const char* contType, 
                         const char* name){
     if (headFile){
-        fprintf (headFile, "3 %s %s '%s' \n", alias, contType, name);
+        fprintf (headFile, "3 '%s' '%s' '%s' \n", alias, contType, name);
         return TRACE_SUCCESS;
     }
     fflush (headFile);
@@ -340,7 +340,7 @@ trace_return_t pajeAddStateTypeNB (const char* alias, const char* contType,
 trace_return_t pajeAddEventType   (const char* alias, const char* contType, 
                         const char* name){
     if (headFile){
-        fprintf (headFile, "4 %s %s '%s' \n", alias, contType, name);
+        fprintf (headFile, "4 '%s' '%s' '%s' \n", alias, contType, name);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -350,7 +350,7 @@ trace_return_t pajeAddEventTypeNB (const char* alias, const char* contType,
                         const char* name){
      
     if (headFile){
-        fprintf (headFile, "4 %s %s '%s' \n", alias, contType, name);
+        fprintf (headFile, "4 '%s' '%s' '%s' \n", alias, contType, name);
         return TRACE_SUCCESS;
     }
     fflush (headFile);
@@ -361,7 +361,7 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType){
     if (headFile){
-        fprintf (headFile, "41 %s %s %s %s %s \n", alias, name, contType, srcContType, destContType);
+        fprintf (headFile, "41 '%s' '%s' '%s' '%s' '%s' \n", alias, name, contType, srcContType, destContType);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -372,7 +372,7 @@ trace_return_t pajeAddLinkTypeNB (const char* alias   , const char* name,
                        const char* destContType){
      
     if (headFile){
-        fprintf (headFile, "41 %s %s %s %s %s \n", alias, name, contType, srcContType, destContType);
+        fprintf (headFile, "41 '%s' '%s' '%s' '%s' '%s' \n", alias, name, contType, srcContType, destContType);
         return TRACE_SUCCESS;
     }
     fflush (headFile);
@@ -382,7 +382,7 @@ trace_return_t pajeAddLinkTypeNB (const char* alias   , const char* name,
 trace_return_t pajeAddVarType   (const char* alias   , const char* name,
                       const char* contType){
     if (headFile){
-        fprintf (headFile, "50 %s %s %s \n", alias, contType, name);
+        fprintf (headFile, "50 '%s' '%s' '%s' \n", alias, contType, name);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -392,7 +392,7 @@ trace_return_t pajeAddVarTypeNB (const char* alias   , const char* name,
                       const char* contType){
      
     if (headFile){
-        fprintf (headFile, "50 %s %s %s \n", alias, contType, name);
+        fprintf (headFile, "50 '%s' '%s' '%s' \n", alias, contType, name);
         return TRACE_SUCCESS;
     }
     fflush (headFile);
@@ -402,7 +402,7 @@ trace_return_t pajeAddVarTypeNB (const char* alias   , const char* name,
 trace_return_t pajeAddEntityValue   (const char* alias, const char* entType, 
                           const char* name , const char* color){
     if (headFile){
-        fprintf (headFile, "6 %s %s %s '%s'\n", alias, entType, name, color);
+        fprintf (headFile, "6 '%s' '%s' '%s' '%s'\n", alias, entType, name, color);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -412,7 +412,7 @@ trace_return_t pajeAddEntityValueNB (const char* alias, const char* entType,
                           const char* name , const char* color){
      
     if (headFile){
-        fprintf (headFile, "6 %s %s %s '%s'\n", alias, entType, name, color);
+        fprintf (headFile, "6 '%s' '%s' '%s' '%s'\n", alias, entType, name, color);
         return TRACE_SUCCESS;
     }
     fflush (headFile);     
@@ -423,7 +423,7 @@ trace_return_t pajeAddContainer   (varPrec time, const char* alias    ,
                         const char*  type, const char* container,
                         const char*  name, const char* file){
     if (headFile){
-        fprintf (headFile, "7 %.13e %s %s %s '%s' %s\n", 
+        fprintf (headFile, "7 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
                  time, alias, type, container, name, file);
         return TRACE_SUCCESS;
     }
@@ -435,7 +435,7 @@ trace_return_t pajeAddContainerNB (varPrec time, const char* alias    ,
                         const char*  name, const char* file){
      
     if (headFile){
-        fprintf (headFile, "7 %.13e %s %s %s '%s' %s\n", 
+        fprintf (headFile, "7 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
                  time, alias, type, container, name, file);
         return TRACE_SUCCESS;
     }
@@ -448,7 +448,7 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
                            const char*  type, const char* container,
                            const char*  name){
     if (headFile){
-        fprintf (headFile, "7 %.13e %s %s %s '%s'\n", 
+        fprintf (headFile, "7 %.13e '%s' '%s' '%s' '%s'\n", 
                  time, alias, type, container, name);
         return TRACE_SUCCESS;
     }
@@ -460,7 +460,7 @@ trace_return_t pajeSeqAddContainerNB (varPrec time, const char* alias    ,
                            const char*  name){
      
     if (headFile){
-        fprintf (headFile, "7 %.13e %s %s %s '%s' \n", 
+        fprintf (headFile, "7 %.13e '%s' '%s' '%s' '%s' \n", 
                  time, alias, type, container, name);
         return TRACE_SUCCESS;
     }
@@ -472,7 +472,7 @@ trace_return_t pajeSeqAddContainerNB (varPrec time, const char* alias    ,
 trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
                               const char*  type){
     if (headFile){
-        fprintf (headFile, "8 %.13e %s %s \n", 
+        fprintf (headFile, "8 %.13e '%s' '%s' \n", 
                  time, name, type);
         return TRACE_SUCCESS;
     }
@@ -483,7 +483,7 @@ trace_return_t pajeDestroyContainerNB   (varPrec time, const char*  name,
                               const char*  type){
      
     if (headFile){
-        fprintf (headFile, "8 %.13e %s %s \n", 
+        fprintf (headFile, "8 %.13e '%s' '%s' \n", 
                  time, name, type);
         return TRACE_SUCCESS;
     }
@@ -494,7 +494,7 @@ trace_return_t pajeDestroyContainerNB   (varPrec time, const char*  name,
 trace_return_t pajeSetState   (varPrec time, const char* type,
                     const char*  cont, const char* val){
     if (procFile){
-        fprintf (procFile, "10 %.13e %s %s %s\n", 
+        fprintf (procFile, "10 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -505,7 +505,7 @@ trace_return_t pajeSetStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val){
      
     if (procFile){
-        fprintf (procFile, "10 %.13e %s %s %s\n", 
+        fprintf (procFile, "10 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -516,7 +516,7 @@ trace_return_t pajeSetStateNB (varPrec time, const char* type,
 trace_return_t pajePushState   (varPrec time, const char* type,
                      const char*  cont, const char* val){
     if (procFile){
-        fprintf (procFile, "11 %.13e %s %s %s\n", 
+        fprintf (procFile, "11 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -527,7 +527,7 @@ trace_return_t pajePushStateNB (varPrec time, const char* type,
                      const char*  cont, const char* val){
      
     if (procFile){
-        fprintf (procFile, "11 %.13e %s %s %s\n", 
+        fprintf (procFile, "11 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -538,7 +538,7 @@ trace_return_t pajePushStateNB (varPrec time, const char* type,
 trace_return_t pajePopState   (varPrec time, const char* type,
                     const char*  cont, const char* val){
     if (procFile){
-        fprintf (procFile, "12 %.13e %s %s %s\n", 
+        fprintf (procFile, "12 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -549,7 +549,7 @@ trace_return_t pajePopStateNB (varPrec time, const char* type,
                     const char*  cont, const char* val){
      
     if (procFile){
-        fprintf (procFile, "12 %.13e %s %s %s\n", 
+        fprintf (procFile, "12 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -560,7 +560,7 @@ trace_return_t pajePopStateNB (varPrec time, const char* type,
 trace_return_t pajeAddEvent   (varPrec time, const char* type,
                     const char*  cont, const char* val){
     if (procFile){
-        fprintf (procFile, "20 %.13e %s %s %s\n", 
+        fprintf (procFile, "20 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -571,7 +571,7 @@ trace_return_t pajeAddEventNB (varPrec time, const char* type,
                     const char*  cont, const char* val){
      
     if (procFile){
-        fprintf (procFile, "20 %.13e %s %s %s\n", 
+        fprintf (procFile, "20 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -583,7 +583,7 @@ trace_return_t pajeStartLink   (varPrec time, const char* type,
                      const char*   cont, const char* src,
                      const char*   val , const char* key){
     if (procFile){
-        fprintf (procFile, "42 %.13e %s %s %s %s %s\n", 
+        fprintf (procFile, "42 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
                  time, type, cont, src, val, key);
         return TRACE_SUCCESS;
     }
@@ -595,7 +595,7 @@ trace_return_t pajeStartLinkNB (varPrec time, const char* type,
                      const char*   val , const char* key){
      
     if (procFile){
-        fprintf (procFile, "42 %.13e %s %s %s %s %s\n", 
+        fprintf (procFile, "42 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
                  time, type, cont, src, val, key);
         return TRACE_SUCCESS;
     }
@@ -607,7 +607,7 @@ trace_return_t pajeEndLink   (varPrec time, const char* type,
                    const char*   cont, const char* dest,
                    const char*   val , const char* key){
     if (procFile){
-        fprintf (procFile, "43 %.13e %s %s %s %s %s\n", 
+        fprintf (procFile, "43 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
                  time, type, cont, dest, val, key);
         return TRACE_SUCCESS;
     }
@@ -619,7 +619,7 @@ trace_return_t pajeEndLinkNB (varPrec time, const char* type,
                    const char*   val , const char* key){
      
     if (procFile){
-        fprintf (procFile, "43 %.13e %s %s %s %s %s\n", 
+        fprintf (procFile, "43 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
                  time, type, cont, dest, val, key);
         return TRACE_SUCCESS;
     }
@@ -630,7 +630,7 @@ trace_return_t pajeEndLinkNB (varPrec time, const char* type,
 trace_return_t pajeSetVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
     if (procFile){
-        fprintf (procFile, "51 %.13e %s %s %e\n", 
+        fprintf (procFile, "51 %.13e '%s' '%s' %e\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -641,7 +641,7 @@ trace_return_t pajeSetVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
      
     if (procFile){
-        fprintf (procFile, "51 %.13e %s %s %e\n", 
+        fprintf (procFile, "51 %.13e '%s' '%s' %e\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -652,7 +652,7 @@ trace_return_t pajeSetVarNB (varPrec time, const char*  type,
 trace_return_t pajeAddVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
     if (procFile){
-        fprintf (procFile, "52 %.13e %s %s %e\n", 
+        fprintf (procFile, "52 %.13e '%s' '%s' %e\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -663,7 +663,7 @@ trace_return_t pajeAddVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
      
     if (procFile){
-        fprintf (procFile, "52 %.13e %s %s %e\n", 
+        fprintf (procFile, "52 %.13e '%s' '%s' %e\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -674,7 +674,7 @@ trace_return_t pajeAddVarNB (varPrec time, const char*  type,
 trace_return_t pajeSubVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
     if (procFile){
-        fprintf (procFile, "53 %.13e %s %s %e\n", 
+        fprintf (procFile, "53 %.13e '%s' '%s' %e\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }
@@ -685,7 +685,7 @@ trace_return_t pajeSubVarNB (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
      
     if (procFile){
-        fprintf (procFile, "53 %.13e %s %s %e\n", 
+        fprintf (procFile, "53 %.13e '%s' '%s' %e\n", 
                  time, type, cont, val);
         return TRACE_SUCCESS;
     }     
