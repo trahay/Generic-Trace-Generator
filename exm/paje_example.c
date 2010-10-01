@@ -11,12 +11,12 @@ int main (int argc, char** argv){
     addProcType ("CT_PROC", "CT_NODE", "Proc");
     addStateType ("ST_NodeState", "CT_NODE", "Node state");
     addStateType ("ST_ProcState", "CT_PROC", "Procstate");
-    addEntityValue ("SN_0", "ST_NodeState", "Sleep", &GTG_LIGHTPINK);
-    addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", &GTG_PINK);
-    addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", &GTG_BLUE);
-    addEntityValue ("SP_3", "ST_ProcState", "Produit", &GTG_ORANGE);
-    addEntityValue ("SP_4", "ST_ProcState", "Somme", &GTG_GREEN);
-    addEntityValue ("SP_5", "ST_ProcState", "Difference", &GTG_BLACK);
+    addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_LIGHTPINK);
+    addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", GTG_PINK);
+    addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", GTG_BLUE);
+    addEntityValue ("SP_3", "ST_ProcState", "Produit", GTG_ORANGE);
+    addEntityValue ("SP_4", "ST_ProcState", "Somme", GTG_GREEN);
+    addEntityValue ("SP_5", "ST_ProcState", "Difference", GTG_BLACK);
     addLinkType ("L_0", "Fanin", "CT_NET", "CT_PROC", "CT_PROC");
     addLinkType ("L_1", "Bloc", "CT_NET", "CT_PROC", "CT_PROC");
     addVarType ("V_Mem", "Memoire", "CT_NODE");

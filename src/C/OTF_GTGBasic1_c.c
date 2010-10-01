@@ -50,9 +50,9 @@ static StateStack_t states_saved[MAX_PROCESS];
 static State_t last_state[MAX_PROCESS];
 
 
-otf_color_t otf_color_null;
+struct otf_color otf_color_null;
 
-const otf_color_t* OTF_get_color(gtg_color_t* color) {
+const otf_color_t OTF_get_color(gtg_color_t color) {
 	/* todo */
 	return &otf_color_null;
 }

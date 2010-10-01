@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+struct gtg_color __gtg_colors[22];
 gtg_color_t GTG_BLACK;
 gtg_color_t GTG_RED;
 gtg_color_t GTG_GREEN;
@@ -161,7 +162,7 @@ gtg_color_t GTG_LIGHTPINK;
 #define GTG_LIGHTPINK_RGB      (gtg_rgb_color_t) GTG_COLOR_SET_COLOR(255, 128, 255)
 
 
-void __init_color(gtg_color_t *p_color, const char* name, gtg_rgb_color_t rgb)
+void __init_color(gtg_color_t p_color, const char* name, gtg_rgb_color_t rgb)
 {
 	p_color->color_name = (char*)malloc((strlen(name)+1)*sizeof(char));
 	strncpy(p_color->color_name, name, strlen(name)+1);
@@ -177,27 +178,50 @@ void gtg_color_init()
 	__gtg_color_initialized = 1;
 
 	/* fill the default color structures */
-	__init_color(&GTG_BLACK     , "BLACK"     , GTG_BLACK_RGB);
-	__init_color(&GTG_RED       , "RED"       , GTG_RED_RGB);
-	__init_color(&GTG_GREEN     , "GREEN"     , GTG_GREEN_RGB);
-	__init_color(&GTG_BLUE      , "BLUE"      , GTG_BLUE_RGB);
-	__init_color(&GTG_WHITE     , "WHITE"     , GTG_WHITE_RGB);
-	__init_color(&GTG_TEAL      , "TEAL"      , GTG_TEAL_RGB);
-	__init_color(&GTG_DARKGREY  , "DARKGREY"  , GTG_DARKGREY_RGB);
-	__init_color(&GTG_YELLOW    , "YELLOW"    , GTG_YELLOW_RGB);
-	__init_color(&GTG_PURPLE    , "PURPLE"    , GTG_PURPLE_RGB);
-	__init_color(&GTG_LIGHTBROWN, "LIGHTBROWN", GTG_LIGHTBROWN_RGB);
-	__init_color(&GTG_LIGHTGREY , "LIGHTGREY" , GTG_LIGHTGREY_RGB);
-	__init_color(&GTG_DARKBLUE  , "DARKBLUE"  , GTG_DARKBLUE_RGB);
-	__init_color(&GTG_PINK      , "PINK"      , GTG_PINK_RGB);
-	__init_color(&GTG_DARKPINK  , "DARKPINK"  , GTG_DARKPINK_RGB);
-	__init_color(&GTG_SEABLUE   , "SEABLUE"   , GTG_SEABLUE_RGB);
-	__init_color(&GTG_KAKI      , "KAKI"      , GTG_KAKI_RGB);
-	__init_color(&GTG_REDBLOOD  , "REDBLOOD"  , GTG_REDBLOOD_RGB);
-	__init_color(&GTG_BROWN     , "BROWN"     , GTG_BROWN_RGB);
-	__init_color(&GTG_GRENAT    , "GRENAT"    , GTG_GRENAT_RGB);
-	__init_color(&GTG_ORANGE    , "ORANGE"    , GTG_ORANGE_RGB);
-	__init_color(&GTG_MAUVE     , "MAUVE"     , GTG_MAUVE_RGB);
-	__init_color(&GTG_LIGHTPINK , "LIGHTPINK" ,  GTG_LIGHTPINK_RGB);
+	GTG_BLACK      = &__gtg_colors[0];
+	GTG_RED        = &__gtg_colors[1];
+	GTG_GREEN      = &__gtg_colors[2];
+	GTG_BLUE       = &__gtg_colors[3];
+	GTG_WHITE      = &__gtg_colors[4];
+	GTG_TEAL       = &__gtg_colors[5];
+	GTG_DARKGREY   = &__gtg_colors[6];
+	GTG_YELLOW     = &__gtg_colors[7];
+	GTG_PURPLE     = &__gtg_colors[8];
+	GTG_LIGHTBROWN = &__gtg_colors[9];
+	GTG_LIGHTGREY  = &__gtg_colors[10];
+	GTG_DARKBLUE   = &__gtg_colors[11];
+	GTG_PINK       = &__gtg_colors[12];
+	GTG_DARKPINK   = &__gtg_colors[13];
+	GTG_SEABLUE    = &__gtg_colors[14];
+	GTG_KAKI       = &__gtg_colors[15];
+	GTG_REDBLOOD   = &__gtg_colors[16];
+	GTG_BROWN      = &__gtg_colors[17];
+	GTG_GRENAT     = &__gtg_colors[18];
+	GTG_ORANGE     = &__gtg_colors[19];
+	GTG_MAUVE      = &__gtg_colors[20];
+	GTG_LIGHTPINK  = &__gtg_colors[21];
+
+	__init_color(GTG_BLACK     , "BLACK"     , GTG_BLACK_RGB);
+	__init_color(GTG_RED       , "RED"       , GTG_RED_RGB);
+	__init_color(GTG_GREEN     , "GREEN"     , GTG_GREEN_RGB);
+	__init_color(GTG_BLUE      , "BLUE"      , GTG_BLUE_RGB);
+	__init_color(GTG_WHITE     , "WHITE"     , GTG_WHITE_RGB);
+	__init_color(GTG_TEAL      , "TEAL"      , GTG_TEAL_RGB);
+	__init_color(GTG_DARKGREY  , "DARKGREY"  , GTG_DARKGREY_RGB);
+	__init_color(GTG_YELLOW    , "YELLOW"    , GTG_YELLOW_RGB);
+	__init_color(GTG_PURPLE    , "PURPLE"    , GTG_PURPLE_RGB);
+	__init_color(GTG_LIGHTBROWN, "LIGHTBROWN", GTG_LIGHTBROWN_RGB);
+	__init_color(GTG_LIGHTGREY , "LIGHTGREY" , GTG_LIGHTGREY_RGB);
+	__init_color(GTG_DARKBLUE  , "DARKBLUE"  , GTG_DARKBLUE_RGB);
+	__init_color(GTG_PINK      , "PINK"      , GTG_PINK_RGB);
+	__init_color(GTG_DARKPINK  , "DARKPINK"  , GTG_DARKPINK_RGB);
+	__init_color(GTG_SEABLUE   , "SEABLUE"   , GTG_SEABLUE_RGB);
+	__init_color(GTG_KAKI      , "KAKI"      , GTG_KAKI_RGB);
+	__init_color(GTG_REDBLOOD  , "REDBLOOD"  , GTG_REDBLOOD_RGB);
+	__init_color(GTG_BROWN     , "BROWN"     , GTG_BROWN_RGB);
+	__init_color(GTG_GRENAT    , "GRENAT"    , GTG_GRENAT_RGB);
+	__init_color(GTG_ORANGE    , "ORANGE"    , GTG_ORANGE_RGB);
+	__init_color(GTG_MAUVE     , "MAUVE"     , GTG_MAUVE_RGB);
+	__init_color(GTG_LIGHTPINK , "LIGHTPINK" ,  GTG_LIGHTPINK_RGB);
 
 }

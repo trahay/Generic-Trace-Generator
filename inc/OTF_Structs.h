@@ -77,11 +77,13 @@ typedef struct VariableType {
     int   contType;
 } VariableType_t;
 
-typedef struct otf_color {
+struct otf_color {
     char *colorID;
     uint8_t red;
     uint8_t green;
     uint8_t blue;
-} otf_color_t;
+};
+
+typedef struct otf_color* otf_color_t;
 
 #endif

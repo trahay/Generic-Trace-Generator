@@ -9,10 +9,11 @@
 
 typedef uint32_t gtg_rgb_color_t;
 
-typedef struct gtg_color {
+struct gtg_color {
 	char* color_name;
 	gtg_rgb_color_t rgb;
-} gtg_color_t;
+};
+typedef struct gtg_color* gtg_color_t;
 
 /* In a 4-byte value, the first byte corresponds to blue,
  * the second to green, the third to red. The 4th byte is 

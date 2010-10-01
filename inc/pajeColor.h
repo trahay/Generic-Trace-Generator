@@ -141,7 +141,7 @@
 typedef char* paje_color_t;
 
 static inline
-const paje_color_t Paje_get_color(gtg_color_t* p_color) {
+const paje_color_t Paje_get_color(gtg_color_t p_color) {
 	/* todo */
 	paje_color_t res = NULL;
 	asprintf(&res, "%1.1f %1.1f %1.1f", 

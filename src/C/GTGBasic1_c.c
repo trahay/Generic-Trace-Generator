@@ -288,7 +288,7 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
 }
 
 trace_return_t addEntityValue   (const char* alias, const char* entType, 
-                      const char* name , gtg_color_t* p_color){
+                      const char* name , gtg_color_t p_color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -311,7 +311,7 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
 }
 
 trace_return_t addEntityValueNB (const char* alias, const char* entType, 
-                      const char* name , gtg_color_t* p_color){
+                      const char* name , gtg_color_t p_color){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :

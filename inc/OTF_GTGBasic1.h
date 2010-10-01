@@ -32,7 +32,7 @@
  * \param color GTG color to convert
  * \return The OTF color
  */
-const otf_color_t* OTF_get_color(gtg_color_t* color);
+const otf_color_t OTF_get_color(gtg_color_t color);
 
 /**
  * \ingroup cotf
