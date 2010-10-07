@@ -2,7 +2,8 @@ LIB=$(LDFLAGS) -lgtg
 #INC=$(CFLAGS)
 BIN=bin
 CC =mpicc
-LDFLAGS += -L../src/.libs -Wl,-rpath=/home/glaurt7/Bureau/export_gtg/trunk/src/.libs
+LDFLAGS += -L../src/.libs 
+#-Wl,-rpath=/home/glaurt7/Bureau/export_gtg/trunk/src/.libs
 
 .phony	: bin obj
 

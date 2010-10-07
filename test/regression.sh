@@ -1,18 +1,18 @@
 #!/bin/sh
 
-##########################################################################
+########################################
 #   Script to test if the results in the traces generated are the same   #
-##########################################################################
+########################################
 
 
 ### Recompiling the GTG library
-cd ..
-autoreconf -vfi
-./configure
-make
+#cd ..
+#autoreconf -vfi
+#./configure
+#make
 
 ### Compiling the tests
-cd test
+#cd test
 make
 
 ### Generation Of the traces
@@ -41,5 +41,6 @@ echo " For the counter :"
 diff bin/testVar.trace rootTraces/testVar.trace
 echo " DONE "
 
+echo " Cleaning ... "
 make clean
 
