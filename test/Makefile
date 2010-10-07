@@ -1,12 +1,12 @@
-LIB=../src/.libs/libgtg.a 
-INC=
+LIB=$(LDFLAGS) -lgtg
+INC=$(CFLAGS)
 BIN=bin
 CC =mpicc
 
 
 .phony	: bin obj
 
-all	: dir testState testEvent testLink testVar testAll testState_parall
+all	: dir testState testEvent testLink testVar testAll
 
 dir	:
 		mkdir -p $(BIN)
