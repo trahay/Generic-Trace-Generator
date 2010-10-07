@@ -1,6 +1,8 @@
 # Copyright © CNRS, INRIA, Université Bordeaux 1
 # See COPYING in top-level directory.
 
+if USE_DOXYGEN
+
 DOX_DIR = $(srcdir)
 DOC_DIR = $(builddir)
 PDFLATEX= @PDFLATEX@
@@ -52,3 +54,4 @@ install_html: $(DOX_PDF) $(DOX_HTML_DIR)/index.html
 install-data-am: install_html
 
 include_HEADERS = Doxyfile
+endif
