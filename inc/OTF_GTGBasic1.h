@@ -206,7 +206,7 @@ trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
  * \fn trace_return_t OTFAddEntityValue   (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
- *                               const otf_color_t* color)
+ *                               const otf_color_t color)
  * \brief To add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -216,13 +216,14 @@ trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
  *         An error code otherwise
  */
 trace_return_t OTFAddEntityValue   (const char* alias, const char* entType, 
-                          const char* name , const otf_color_t* color);
+				    const char* name , const otf_color_t color);
+
 /**
  * \ingroup cotf
  * \fn trace_return_t OTFAddEntityValueNB (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
- *                               const otf_color_t* color)
+ *                               const otf_color_t color)
  * \brief To add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -232,7 +233,7 @@ trace_return_t OTFAddEntityValue   (const char* alias, const char* entType,
  *         An error code otherwise
  */
 trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType, 
-                          const char* name , const otf_color_t* color);
+				    const char* name , const otf_color_t color);
 
 /**
  * \ingroup cotf

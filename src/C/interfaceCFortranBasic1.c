@@ -210,7 +210,7 @@ addVarTypeNB_i (char *alias, int *s1,
 void
 addEntityValue_i (char *alias, int *s1,
 		  char *entType, int *s2,
-		  char *name, int *s3, gtg_color_t * color, int *s4, int *err)
+		  char *name, int *s3, gtg_color_t color, int *s4, int *err)
 {
 
   char *a = (char *) malloc (sizeof (char) * (*s1 + 1));
@@ -229,7 +229,7 @@ void
 addEntityValueNB_i (char *alias, int *s1,
 		    char *entType, int *s2,
 		    char *name, int *s3,
-		    gtg_color_t * color, int *s4, int *err)
+		    gtg_color_t color, int *s4, int *err)
 {
 
   char *a = (char *) malloc (sizeof (char) * (*s1 + 1));
@@ -754,7 +754,7 @@ addvartypenb_i_ (char *alias, int *s1,
 void
 addentityvalue_i_ (char *alias, int *s1,
 		   char *entType, int *s2,
-		   char *name, int *s3, gtg_color_t *color, int *s4, int *err)
+		   char *name, int *s3, gtg_color_t color, int *s4, int *err)
 {
   addEntityValue_i (alias, s1, entType, s2, name, s3, color, s4, err);
 }
@@ -762,7 +762,7 @@ addentityvalue_i_ (char *alias, int *s1,
 void
 addentityvaluenb_i_ (char *alias, int *s1,
 		     char *entType, int *s2,
-		     char *name, int *s3, gtg_color_t *color, int *s4, int *err)
+		     char *name, int *s3, gtg_color_t color, int *s4, int *err)
 {
   addEntityValueNB_i (alias, s1, entType, s2, name, s3, color, s4, err);
 }
