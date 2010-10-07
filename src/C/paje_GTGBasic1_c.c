@@ -107,7 +107,6 @@ trace_return_t pajeInitTrace   (const char* filenam, int rank){
 %% 	  Time          date              \n    \
 %% 	  Type 		string            \n    \
 %% 	  Container 	string            \n    \
-%% 	  Value         string            \n    \
 %%EndEventDef                             \n    \
 %%EventDef PajeNewEvent			20\n    \
 %% 	  Time          date              \n    \
@@ -237,7 +236,6 @@ trace_return_t pajeSeqInitTrace   (const char* filenam){
 %% 	  Time          date              \n\
 %% 	  Type 		string            \n\
 %% 	  Container 	string            \n\
-%% 	  Value         string            \n\
 %%EndEventDef                             \n\
 %%EventDef PajeNewEvent			20\n\
 %% 	  Time          date              \n\
@@ -536,24 +534,24 @@ trace_return_t pajePushStateNB (varPrec time, const char* type,
 }
 
 trace_return_t pajePopState   (varPrec time, const char* type,
-                    const char*  cont, const char* val){
+                    const char*  cont){
     if (procFile){
-        fprintf (procFile, "12 %.13e '%s' '%s' '%s'\n", 
-                 time, type, cont, val);
+        fprintf (procFile, "12 %.13e '%s' '%s'\n", 
+                 time, type, cont);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
 }
 
 trace_return_t pajePopStateNB (varPrec time, const char* type,
-                    const char*  cont, const char* val){
-     
+                    const char*  cont){
+
     if (procFile){
-        fprintf (procFile, "12 %.13e '%s' '%s' '%s'\n", 
-                 time, type, cont, val);
+        fprintf (procFile, "12 %.13e '%s' '%s'\n", 
+                 time, type, cont);
         return TRACE_SUCCESS;
     }
-    fflush (procFile);     
+    fflush (procFile);
     return TRACE_ERR_WRITE;
 }
 

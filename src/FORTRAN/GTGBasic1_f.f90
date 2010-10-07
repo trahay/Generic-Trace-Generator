@@ -279,28 +279,26 @@ subroutine pushStateNB_f (time, type, cont, val, ierr)
        &           val , len (trim (val)), ierr)
 end subroutine pushStateNB_f
 
-subroutine popState_f (time, type, cont, val, ierr)
+subroutine popState_f (time, type, cont, ierr)
   real(8), intent (in) :: time
   character (len=*), intent (in) :: type
   character (len=*), intent (in) :: cont
-  character (len=*), intent (in) :: val
   integer, intent (out) :: ierr
   call popState_i(time,&
        &           type, len (trim (type)),&
        &           cont, len (trim (cont)),&
-       &           val , len (trim (val)), ierr)
+       &           ierr)
 end subroutine popState_f
 
-subroutine popStateNB_f (time, type, cont, val, ierr)
+subroutine popStateNB_f (time, type, cont, ierr)
   real(8), intent (in) :: time
   character (len=*), intent (in) :: type
   character (len=*), intent (in) :: cont
-  character (len=*), intent (in) :: val
   integer, intent (out) :: ierr
   call popStateNB_i (time,&
        &           type, len (trim (type)),&
        &           cont, len (trim (cont)),&
-       &           val , len (trim (val)), ierr)
+       &           ierr)
 end subroutine popStateNB_f
 
 

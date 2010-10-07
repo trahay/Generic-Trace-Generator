@@ -410,34 +410,30 @@ trace_return_t pajePushStateNB (varPrec time, const char* type,
  * \ingroup cpaje
  * \fn trace_return_t pajePopState (varPrec  time,
  *                       const char  * type,
- *                       const char  * cont,
- *                       const char  * val)
+ *                       const char  * cont)
  * \brief To pop a state in a proc
  * \param time Time the state is poped
  * \param type Type of the state
- * \param cont Container in this state                                       
- * \param val Entity value of the state of the container
+ * \param cont Container in this state
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t pajePopState   (varPrec time, const char* type,
-                    const char*  cont, const char* val);
+                    const char*  cont);
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajePopStateNB (varPrec  time,
  *                         const char  * type,
- *                         const char  * cont,
- *                         const char  * val)
+ *                         const char  * cont)
  * \brief To pop a state in a proc in a bufferized mode
  * \param time Time the state is poped
  * \param type Type of the state
- * \param cont Container in this state                                       
- * \param val Entity value of the state of the container
+ * \param cont Container in this state
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t pajePopStateNB (varPrec time, const char* type,
-                    const char*  cont, const char* val);
+                    const char*  cont);
 
 
 /**

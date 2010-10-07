@@ -419,7 +419,7 @@ trace_return_t OTFPushStateNB (varPrec time, const char* type,
 }
 
 trace_return_t OTFPopState (varPrec time, const char* type,
-                 const char*  cont, const char* val){
+                 const char*  cont){
     // Pop and set
     int parent     = getCtFromName(cont);
     int current_id = states_saved[last_state[parent].cont].current_id - 1;
@@ -438,8 +438,8 @@ trace_return_t OTFPopState (varPrec time, const char* type,
 }
 
 trace_return_t OTFPopStateNB (varPrec time, const char* type,
-                   const char*  cont, const char* val){
-    return OTFPopState(time, type, cont, val);
+                   const char*  cont){
+    return OTFPopState(time, type, cont);
 }
 
 trace_return_t OTFAddEvent (varPrec time    , const char* type,

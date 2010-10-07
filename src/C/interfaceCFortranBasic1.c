@@ -391,35 +391,29 @@ pushStateNB_i (varPrec * time,
 void
 popState_i (varPrec * time,
 	    char *type, int *s2,
-	    char *cont, int *s1, char *val, int *s3, int *err)
+	    char *cont, int *s1, int *s3, int *err)
 {
   char *t = (char *) malloc (sizeof (char) * (*s2 + 1));
-  char *v = (char *) malloc (sizeof (char) * (*s3 + 1));
   char *c = (char *) malloc (sizeof (char) * (*s1 + 1));
   memcpy (t, type, *s2);
   t[*s2] = '\0';
   memcpy (c, cont, *s1);
   c[*s1] = '\0';
-  memcpy (v, val, *s3);
-  v[*s3] = '\0';
-  *err = popState (*time, t, c, v);
+  *err = popState (*time, t, c);
 }
 
 void
 popStateNB_i (varPrec * time,
 	      char *type, int *s2,
-	      char *cont, int *s1, char *val, int *s3, int *err)
+	      char *cont, int *s1, int *s3, int *err)
 {
   char *t = (char *) malloc (sizeof (char) * (*s2 + 1));
-  char *v = (char *) malloc (sizeof (char) * (*s3 + 1));
   char *c = (char *) malloc (sizeof (char) * (*s1 + 1));
   memcpy (t, type, *s2);
   t[*s2] = '\0';
   memcpy (c, cont, *s1);
   c[*s1] = '\0';
-  memcpy (v, val, *s3);
-  v[*s3] = '\0';
-  *err = popStateNB (*time, t, c, v);
+  *err = popStateNB (*time, t, c);
 }
 
 void
@@ -848,17 +842,17 @@ pushstatenb_i_ (varPrec * time,
 void
 popstate_i_ (varPrec * time,
 	     char *type, int *s2,
-	     char *cont, int *s1, char *val, int *s3, int *err)
+	     char *cont, int *s1, int *s3, int *err)
 {
-  popState_i (time, type, s2, cont, s1, val, s3, err);
+  popState_i (time, type, s2, cont, s1, s3, err);
 }
 
 void
 popstatenb_i_ (varPrec * time,
 	       char *type, int *s2,
-	       char *cont, int *s1, char *val, int *s3, int *err)
+	       char *cont, int *s1, int *s3, int *err)
 {
-  popStateNB_i (time, type, s2, cont, s1, val, s3, err);
+  popStateNB_i (time, type, s2, cont, s1, s3, err);
 }
 
 void

@@ -524,17 +524,17 @@ trace_return_t pushStateNB (varPrec time, const char* type,
 }
 
 trace_return_t popState   (varPrec time, const char* type,
-                const char*  cont, const char* val){
+                const char*  cont){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
     case VITE :
-        return pajePopState (time, type, cont, val);
+        return pajePopState (time, type, cont);
         break;
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFPopState (time, type, cont, val);
+        return OTFPopState (time, type, cont);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -547,17 +547,17 @@ trace_return_t popState   (varPrec time, const char* type,
 }
 
 trace_return_t popStateNB (varPrec time, const char* type,
-                const char*  cont, const char* val){
+                const char*  cont){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
     case VITE :
-        return pajePopStateNB (time, type, cont, val);
+        return pajePopStateNB (time, type, cont);
         break;
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFPopStateNB (time, type, cont, val);
+        return OTFPopStateNB (time, type, cont);
         break;
 #endif
 #ifdef BUILD_TAU

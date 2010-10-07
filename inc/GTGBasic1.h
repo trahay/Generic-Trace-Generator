@@ -433,35 +433,31 @@ trace_return_t pushStateNB (varPrec time, const char* type,
  * \ingroup statef
  * \fn trace_return_t popState (varPrec  time,
  *                   const char  * type,
- *                   const char  * cont,
- *                   const char  * val)
+ *                   const char  * cont)
  * \brief C function to pop a state in a proc
  * \param time Time the state is poped
  * \param type Type of the state
  * \param cont Container in this state
- * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t popState   (varPrec time, const char* type,
-                const char*  cont, const char* val);
+                const char*  cont);
 
 /**
  * \ingroup statef
  * \fn trace_return_t popStateNB (varPrec  time,
  *                     const char  * type,
- *                     const char  * cont,
- *                     const char  * val)
+ *                     const char  * cont)
  * \brief C function to pop a state in a proc in a non bufferized mode
  * \param time Time the state is poped
  * \param type Type of the state
  * \param cont Container in this state
- * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t popStateNB (varPrec time, const char* type,
-                const char*  cont, const char* val);
+                const char*  cont);
 
 /**
  * \ingroup eventf

@@ -363,7 +363,7 @@ trace_return_t OTFPushState   (varPrec time, const char* type,
  * \brief To push a state in a proc in a bufferized mode
  * \param time Time the state is pushed
  * \param type Type of the state
- * \param cont Container in this state                                       
+ * \param cont Container in this state
  * \param val Entity value of the state of the container
  * \return 0 if success \n
  *         An error code otherwise
@@ -375,34 +375,30 @@ trace_return_t OTFPushStateNB (varPrec time, const char* type,
  * \ingroup cotf
  * \fn trace_return_t OTFPopState (varPrec  time,
  *                       const char  * type,
- *                       const char  * cont,
- *                       const char  * val)
+ *                       const char  * cont)
  * \brief To pop a state in a proc
  * \param time Time the state is poped
  * \param type Type of the state
- * \param cont Container in this state                                       
- * \param val Entity value of the state of the container
+ * \param cont Container in this state
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t OTFPopState   (varPrec time, const char* type,
-                    const char*  cont, const char* val);
+                    const char*  cont);
 /**
  * \ingroup cotf
  * \fn trace_return_t OTFPopStateNB (varPrec  time,
  *                         const char  * type,
- *                         const char  * cont,
- *                         const char  * val)
+ *                         const char  * cont)
  * \brief To pop a state in a proc in a bufferized mode
  * \param time Time the state is poped
  * \param type Type of the state
- * \param cont Container in this state                                       
- * \param val Entity value of the state of the container
+ * \param cont Container in this state
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t OTFPopStateNB (varPrec time, const char* type,
-                    const char*  cont, const char* val);
+                    const char*  cont);
 
 
 /**
