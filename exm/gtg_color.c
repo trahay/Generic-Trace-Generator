@@ -5,7 +5,7 @@
 
 int main (int argc, char** argv){
     setTraceType (PAJE);
-    initTrace ("cpaje", 0);
+    initTrace ("gtg_color", 0);
     addProcType ("CT_NET", "0", "Network");
     addProcType ("CT_NODE", "CT_NET", "Node");
     addProcType ("CT_PROC", "CT_NODE", "Proc");

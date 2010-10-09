@@ -51,7 +51,9 @@ of `autoconf'.
    The simplest way to compile this package is:
 
   1. `cd' to the directory containing the package's source code and type
-     `./configure' to configure the package for your system.
+     `./configure' to configure the package for your system. 
+	 Warning, if the configure file does not exist, you must make 
+	 'autoreconf -vfi' to (re)generate it.
 
      Running `configure' might take a while.  While running, it prints
      some messages telling which features it is checking for.

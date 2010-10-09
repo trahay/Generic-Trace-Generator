@@ -15,23 +15,23 @@ Authors are :
 ==============================================
 
 -- Files
-Doxyfile      : The doxygen config file
-Makefile      : Makefile to build the project
 README        : This file, presenting the project
+AUTHORS		  : The authors of the project
+ChangeLog     : The list of the changes by version
+configure.ac  : Used to create the configure file with autoreconf
+COPYING		  : The copying rule
+COPYRIGHT	  : The licence of the library
+INSTALL		  : How to install the GTG library
+Makefile.am	  : Some hints to generate the Makefile throught configure
+NEWS		  : News about the project
 
 -- Directories
-*config*      : Contains examples of configuration to build the project
 *exm*         : Contains examples of programm using the library
 *inc*         : Contains files to include
 *src/C*       : Contains the C implementation of the API
 *src/FORTRAN* : Contains the Fortran implementation of the API
+*test*		  : Regular developers test
 
--- Directories created
-*bin*         : Contains the executables made from the examples
-*doc*         : Contains the documentation (doxygen is necessary)
-*lib*         : Contains the library generated
-*mod*         : Contains the Fortran modules
-*obj*         : Contains the objects generated
 
 
 ==============================================
@@ -52,11 +52,14 @@ Then, simply run configure && make && make install
 The examples show code using the library.
 You can compile them with *make examples*.
 Their execution enables the creation of traces :
-cpaje  creates the cpaje.trace using the C API
-cpaje2 creates the cpaje2.trace using the C API
-cvite  creates the cvite_root.ept trace (with cvite_proc*.ept) using the C API
+gtg_color creates the gtg_color.trace trace
+cpaje     creates the cpaje.trace using the C API
+fpaje     creates the fpaje.trace using the Fortran API
+cpaje2    creates the cpaje2.trace using the C API
+cvite     creates the cvite_root.ept trace (with cvite_proc*.ept) using the C API <DO NOT USE YET>
 
-The traces can be viewed using the ViTE tool. This API is used by the eztrace that automatically generate traces for code, without modifying it manually.
+The traces can be viewed using the ViTE tool. This API is used by the eztrace
+ that automatically generate traces for code, without modifying it manually.
 
 
 ==============================================
