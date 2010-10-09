@@ -3,8 +3,8 @@
  *  \version 0.1
  *  \brief
  *
- *  GTGBasic is a basic interface to generate trace in various formats. \n
- *  It has been initiated in 2010 by *eztrace* and *ViTE* projects that both needs a good library to generate traces.
+ *  GTGBasic is a basic interface to generate trace in various formats.
+ *
  *
  *  \authors
  *    Developpers are : \n
@@ -14,6 +14,8 @@
  *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
+ *
+ *  It has been initiated in 2010 by *eztrace* and *ViTE* projects that both needs a good library to generate traces.
  *
  */
 #ifndef _TRACEGENERATORBASIC_
@@ -61,9 +63,10 @@ traceType_t getTraceType ();
  */
 /**
  * \ingroup init
- * \fn int initTrace   (const char* filename)
+ * \fn int initTrace   (const char* filename, int rank)
  * \brief C function to init a trace
  * \param filename Root name of the file to create
+ * \param rank Process number of the file to create
  * \return 0 if success \n
  *         An error code otherwise
  */
@@ -87,11 +90,11 @@ trace_return_t endTrace   ();
 trace_return_t setCompress (int val);
 
 /**
- * \defgroup procf Functions linked to the containers
+ * \defgroup procf Functions related to the containers
  */
 /**
  * \ingroup procf
- * \ fn trace_return_t addProcType   (const char* alias,
+ * \fn trace_return_t addProcType   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
  * \brief C function to add a container type
@@ -119,7 +122,7 @@ trace_return_t addProcType   (const char* alias, const char* contType,
 trace_return_t addProcTypeNB (const char* alias, const char* contType, 
                    const char* name);
 /**
- * \defgroup statef Functions linked to the states
+ * \defgroup statef Functions related to the states
  */
 /**
  * \ingroup statef
@@ -152,7 +155,7 @@ trace_return_t addStateTypeNB (const char* alias, const char* contType,
                     const char* name);
 
 /**
- * \defgroup eventf Functions linked to the events
+ * \defgroup eventf Functions related to the events
  */
 /**
  * \ingroup eventf
@@ -184,7 +187,7 @@ trace_return_t addEventTypeNB (const char* alias, const char* contType,
                     const char* name);
 
 /**
- * \defgroup linkf Functions linked to links
+ * \defgroup linkf Functions related to links
  */
 /**
  * \ingroup linkf
@@ -226,7 +229,7 @@ trace_return_t addLinkTypeNB (const char* alias   , const char* name,
                    const char* destContType);
 
 /**
- * \defgroup varf Functions linked to variables
+ * \defgroup varf Functions related to variables
  */
 /**
  * \ingroup varf
@@ -262,7 +265,7 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
  * \fn trace_return_t addEntityValue   (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
- *                           gtg_rgb_color_t p_color)
+ *                           gtg_color_t p_color)
  * \brief C function to add an entity value
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -278,7 +281,7 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
  * \fn trace_return_t addEntityValueNB (const char* alias,
  *                           const char* entType, 
  *                           const char* name,
- *                           gtg_rgb_color_t p_color)
+ *                           gtg_color_t p_color)
  * \brief C function to add an entity value in a non bufferized mode
  * \param alias Alias on the entity value
  * \param entType Type of the entity

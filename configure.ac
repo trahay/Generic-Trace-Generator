@@ -113,4 +113,8 @@ AC_PATH_TOOL([PDFLATEX], [pdflatex])
 
 AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
 
-AC_OUTPUT([Makefile inc/Makefile src/Makefile doc/Makefile])
+AC_OUTPUT([Makefile \
+          inc/Makefile \
+	  src/Makefile \
+	  doc/Makefile \
+	  doc/Doxyfile])

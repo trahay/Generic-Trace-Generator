@@ -3,9 +3,8 @@
 
 if USE_DOXYGEN
 
-DOX_DIR = $(srcdir)
+DOX_DIR = .
 DOC_DIR = $(builddir)
-PDFLATEX= @PDFLATEX@
 DOX_CONFIG = $(DOX_DIR)/Doxyfile
 
 DOX_MAN_DIR = $(DOC_DIR)/man

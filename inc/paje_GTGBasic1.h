@@ -2,7 +2,7 @@
  *  \file paje_GTGBasic1.h
  *  \version 0.1
  *  \brief
- *  paje_GTGBasic1 is the Paje implementation of the basic interface to generate traces (GTGBasic1). \n
+ *  paje_GTGBasic1 is the Paje implementation of the basic interface to generate traces (GTGBasic1).
  *
  *  \authors
  *    Developpers are : \n
@@ -23,7 +23,7 @@
 
 /**
  * \ingroup cpaje
- * \fn trace_return_t pajeInitTrace   (const char* filename)
+ * \fn trace_return_t pajeInitTrace   (const char* filename, int rank)
  * \brief To init a trace in a VITE format ( *.ept)
  * \param filename Root name of the file to create
  * \param rank Rank of the processor
@@ -43,7 +43,7 @@ trace_return_t pajeInitTrace   (const char* filename, int rank);
 trace_return_t pajeSeqInitTrace   (const char* filename);
 /**
  * \ingroup cpaje
- * \ fn trace_return_t pajeAddProcType   (const char* alias,
+ * \fn trace_return_t pajeAddProcType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a container type

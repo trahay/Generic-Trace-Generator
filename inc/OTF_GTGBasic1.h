@@ -2,7 +2,7 @@
  *  \file OTF_GTGBasic1.h
  *  \version 0.1
  *  \brief
- *  OTF_GTGBasic1 is the OTF implementation of the basic interface to generate traces (GTGBasic). \n
+ *  OTF_GTGBasic1 is the OTF implementation of the basic interface to generate traces (GTGBasic).
  *
  *  \authors
  *    Developpers are : \n
@@ -27,7 +27,7 @@
 
 /**
  * \ingroup cotf
- * \fn const char* OTF_get_color(int color)
+ * \fn const char* OTF_get_color(gtg_color_t color)
  * \brief Converts a GTG color into a OTF color
  * \param color GTG color to convert
  * \return The OTF color
@@ -49,7 +49,7 @@ trace_return_t OTFSetCompress(int val);
 
 /**
  * \ingroup cotf
- * \ fn trace_return_t OTFAddProcType   (const char* alias,
+ * \fn trace_return_t OTFAddProcType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief To add a container type

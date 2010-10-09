@@ -1,10 +1,28 @@
+/**
+ *  \file GTGColor.h
+ *  \version 0.1
+ *  \brief
+ *
+ *  GTG is a file that defines some usefull color to use in entity value for GTG.
+ *
+ *  \authors
+ *    Developpers are : \n
+ *        Francois Rue      - francois.rue@labri.fr \n
+ *        Francois Trahay   - francois.trahay@labri.fr \n
+ *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
+ *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
+ *        Mathieu  Faverge  - faverge@labri.fr \n
+ *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
+ *
+ */
+
 #ifndef _GTGCOLOR_
 #define _GTGCOLOR_
 
 #include <stdint.h>
 
 /**
- * \defgroup color Defined colors for GTG
+ * \defgroup GTGColor Defined colors for GTG
  */
 
 typedef uint32_t gtg_rgb_color_t;

@@ -2,7 +2,7 @@
  *  \file OTF_Structs.h
  *  \version 0.1
  *  \brief
- *  OTF_Structs gives the global types and functions needed to have the OTF implementation. \n
+ *  OTF_Structs gives the global types and functions needed to have the OTF implementation.
  *
  *  \authors
  *    Developers are : \n

@@ -3,7 +3,7 @@
  *  \version 0.1
  *  \brief
  *
- *  pajeColor is a file that defines some usefull color to use in entity value for Paje. They are define in a RGB style. \n
+ *  pajeColor is a file that defines some usefull color to use in entity value for Paje. They are define in a RGB style.
  *
  *  \authors
  *    Developpers are : \n
@@ -24,7 +24,7 @@
 
 
 /**
- * \defgroup color Defined colors for Paje
+ * \defgroup PajeColor Defined colors for Paje
  */
 
 /**
