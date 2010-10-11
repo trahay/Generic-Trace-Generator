@@ -1,0 +1,20 @@
+\section{Using the GTG library}
+The GTG library provides a generic interface to writedown traces. Users are 
+advised to use the generic calls (in the GTGBasic file) instead of using the
+specifics one (OTF\_*, PAJE\_*). There are some steps that must be followed
+to use the library :
+\begin{itemize}
+\item First, one sould choose the kind of trace to create
+\item Then, the init function has to be called
+\item \textcolor{red}{Warning, Changing the kind of trace to generate after
+the initialisation is to result in an undefined behavior (mostly segfault)}
+\item Call all the trace writting functions
+\item You must end with the finalize call to clean the internal memory
+\end{itemize}
+
+Another usefull interface is the color one, to customize the states 
+information, one can set color to the states. The color API defines
+colors, but the user can create his own color using a RGB format.
+
+Some examples of using the API are provided within the \textit{exm} directory
+in the package.
