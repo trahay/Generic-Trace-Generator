@@ -3,17 +3,9 @@
  *  \version 0.1
  *  \brief
  *
- *  pajeColor is a file that defines some usefull color to use in entity value for Paje. They are define in a RGB style.
+ *  pajeColor is a file that defines function that manipulate colors.
  *
- *  \authors
- *    Developpers are : \n
- *        Francois Rue      - francois.rue@labri.fr \n
- *        Francois Trahay   - francois.trahay@labri.fr \n
- *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
- *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
- *        Mathieu  Faverge  - faverge@labri.fr \n
- *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
- *
+
  */
 
 #ifndef _PAJECOLOR_
@@ -22,14 +14,15 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 
-
-/**
- * \defgroup PajeColor Defined colors for Paje
- */
-
-
 typedef char* paje_color_t;
 
+/**
+ * \ingroup cpaje
+ * \fn const paje_color_t Paje_get_color(gtg_color_t color)
+ * \brief Converts a GTG color into a PAJE color.
+ * \param color GTG color to convert
+ * \return The PAJE color
+ */
 static inline
 const paje_color_t Paje_get_color(gtg_color_t p_color) {
 	/* todo */

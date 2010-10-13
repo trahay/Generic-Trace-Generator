@@ -32,7 +32,7 @@
 /**
  * \ingroup traceType
  * \enum traceType
- * \brief The type of trace generated
+ * \brief The type of the output trace.
  *
  */
 typedef enum traceType{
@@ -45,7 +45,7 @@ typedef enum traceType{
 /**
  * \ingroup traceType
  * \fn void setTraceType (traceType_t type)
- * \brief C function to set the type of the trace to be generated
+ * \brief Set the type of output trace.
  * \param type Type of trace to generate
  */
 void setTraceType (traceType_t type);
@@ -53,7 +53,7 @@ void setTraceType (traceType_t type);
 /**
  * \ingroup traceType
  * \fn traceType_t getTraceType ()
- * \brief C function to get the type of the trace to be generated
+ * \brief Get the type of the output trace.
  * \return The type of the trace
  */
 traceType_t getTraceType ();
@@ -74,7 +74,7 @@ trace_return_t initTrace   (const char* filename, int rank);
 /**
  * \ingroup init
  * \fn trace_return_t endTrace   ()
- * \brief C function to end writting the trace
+ * \brief Finalize a trace.
  * \return 0 if success \n
  *         An error code otherwise
  */
@@ -97,7 +97,7 @@ trace_return_t setCompress (int val);
  * \fn trace_return_t addProcType   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
- * \brief C function to add a container type
+ * \brief Add a Container Type.
  * \param alias Alias on the container
  * \param contType Type of container
  * \param name Name of the container type
@@ -112,7 +112,7 @@ trace_return_t addProcType   (const char* alias, const char* contType,
  * \fn trace_return_t addProcTypeNB   (const char* alias,
  *                          const char* contType, 
  *                          const char* name)
- * \brief C function to add a container type in a non bufferized mode
+ * \brief Add a Container Type in a non-bufferized mode.
  * \param alias Alias on the container
  * \param contType Type of container
  * \param name Name of the container type
@@ -129,7 +129,7 @@ trace_return_t addProcTypeNB (const char* alias, const char* contType,
  * \fn trace_return_t addStateType   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
- * \brief C function to add a state type
+ * \brief Add a State Type.
  * \param alias Alias on the state type
  * \param contType Type of container
  * \param name Name of the state type
@@ -144,7 +144,7 @@ trace_return_t addStateType   (const char* alias, const char* contType,
  * \fn trace_return_t addStateTypeNB   (const char* alias,
  *                           const char* contType, 
  *                           const char* name)
- * \brief C function to add a state type in a non bufferized mode
+ * \brief Add a State Type in a non-bufferized mode.
  * \param alias Alias on the state type
  * \param contType Type of container
  * \param name Name of the state type
@@ -162,7 +162,7 @@ trace_return_t addStateTypeNB (const char* alias, const char* contType,
  * \fn trace_return_t addEventType   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
- * \brief C function to add an event type
+ * \brief Add an Event Type.
  * \param alias Alias on the event type
  * \param contType Type of container
  * \param name Name of the event type
@@ -176,7 +176,7 @@ trace_return_t addEventType   (const char* alias, const char* contType,
  * \fn trace_return_t addEventTypeNB   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
- * \brief C function to add an event type in a non bufferized mode
+ * \brief Add an Event Type in a non-bufferized mode.
  * \param alias Alias on the event type
  * \param contType Type of container
  * \param name Name of the event type
@@ -196,7 +196,7 @@ trace_return_t addEventTypeNB (const char* alias, const char* contType,
  *                        const char* contType, 
  *                        const char* srcContType,
  *                        const char* destContType);
- * \brief C function to add a link type
+ * \brief Add a Link Type.
  * \param alias Alias on the link type
  * \param name Name of the link type
  * \param contType Type of container
@@ -215,7 +215,7 @@ trace_return_t addLinkType   (const char* alias   , const char* name,
  *                          const char* contType, 
  *                          const char* srcContType,
  *                          const char* destContType);
- * \brief C function to add a link type in a non bufferized mode
+ * \brief Add a Link Type in a non-bufferized mode.
  * \param alias Alias on the link type
  * \param name Name of the link type
  * \param contType Type of container
@@ -236,7 +236,7 @@ trace_return_t addLinkTypeNB (const char* alias   , const char* name,
  * \fn trace_return_t addVarType   (const char* alias,
  *                       const char* name,
  *                       const char* contType)
- * \brief C function to add a variable type
+ * \brief Add a Variable Type.
  * \param alias Alias on the variable type
  * \param contType Type of container
  * \param name Name of the variable type
@@ -250,7 +250,7 @@ trace_return_t addVarType   (const char* alias   , const char* name,
  * \fn trace_return_t addVarTypeNB   (const char* alias,
  *                         const char* contType, 
  *                         const char* name)
- * \brief C function to add a variable type in a non bufferized mode
+ * \brief Add a Variable Type in a non-bufferized mode.
  * \param alias Alias on the variable type
  * \param contType Type of container
  * \param name Name of the variable type
@@ -266,7 +266,7 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
  *                           const char* entType, 
  *                           const char* name,
  *                           gtg_color_t p_color)
- * \brief C function to add an entity value
+ * \brief Add an Entity Value.
  * \param alias Alias on the entity value
  * \param entType Type of the entity
  * \param name Name of the variable type
@@ -282,7 +282,7 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
  *                           const char* entType, 
  *                           const char* name,
  *                           gtg_color_t p_color)
- * \brief C function to add an entity value in a non bufferized mode
+ * \brief Add an Entity Value in a non-bufferized mode.
  * \param alias Alias on the entity value
  * \param entType Type of the entity
  * \param name Name of the variable type
@@ -301,9 +301,9 @@ trace_return_t addEntityValueNB (const char* alias, const char* entType,
  *                       const char  * container,
  *                       const char  * name,
  *                       const char  * file)
- * \brief C function to add a container
- * \param time Time the proc is added
- * \param alias Alias on the proc added
+ * \brief Add a Container.
+ * \param time Time at which the container is added
+ * \param alias Alias of the new container
  * \param type Type of the container
  * \param container Container parent
  * \param name Name of the variable type
@@ -322,9 +322,9 @@ trace_return_t addContainer   (varPrec time, const char* alias    ,
  *                         const char  * container,
  *                         const char  * name,
  *                         const char  * file)
- * \brief C function to add a container in a non bufferized mode
- * \param time Time the proc is added
- * \param alias Alias on the proc added
+ * \brief Add a Container in a non-bufferized mode.
+ * \param time Time at which the container is added
+ * \param alias Alias of the new container
  * \param type Type of the container
  * \param container Container parent
  * \param name Name of the variable type
@@ -341,8 +341,8 @@ trace_return_t addContainerNB (varPrec time, const char* alias    ,
  * \fn trace_return_t destroyContainer (varPrec  time,
  *                           const char  * name,
  *                           const char  * type) 
- * \brief C function to destroy a container
- * \param time Time the proc is destroyed
+ * \brief Destroy a Container.
+ * \param time Time at which the container is destroyed
  * \param name Name of the container
  * \param type Type of the container
  * \return 0 if success \n
@@ -355,8 +355,8 @@ trace_return_t destroyContainer     (varPrec time, const char*  name,
  * \fn trace_return_t destroyContainerNB (varPrec  time,
  *                             const char  * name,
  *                             const char  * type) 
- * \brief C function to destroy a container in a non bufferized mode
- * \param time Time the proc is destroyed
+ * \brief Destroy a Container in a non-bufferized mode.
+ * \param time Time at which the container is destroyed
  * \param name Name of the container
  * \param type Type of the container
  * \return 0 if success \n
@@ -371,8 +371,8 @@ trace_return_t destroyContainerNB   (varPrec time, const char*  name,
  *                   const char  * type,
  *                   const char  * cont,
  *                   const char  * val)
- * \brief C function to set a proc in a state
- * \param time Time the state is set
+ * \brief Set the State of a Container.
+ * \param time Time at which the state is set
  * \param type Type of the state
  * \param cont Container in this state
  * \param val Entity value of the state of the container
@@ -387,8 +387,8 @@ trace_return_t setState   (varPrec time, const char* type,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * val)
- * \brief C function to set a proc in a state in a non bufferized mode
- * \param time Time the state is set
+ * \brief Set the State of a Container in a state in a non-bufferized mode.
+ * \param time Time at which the state is set
  * \param type Type of the state
  * \param cont Container in this state
  * \param val Entity value of the state of the container
@@ -404,8 +404,8 @@ trace_return_t setStateNB (varPrec time, const char* type,
  *                    const char  * type,
  *                    const char  * cont,
  *                    const char  * val)
- * \brief C function to push a state in a proc
- * \param time Time the state is pushed
+ * \brief Save the current State on a stack and change the State of a Container.
+ * \param time Time at which the state is pushed
  * \param type Type of the state
  * \param cont Container in this state
  * \param val Entity value of the state of the container
@@ -421,8 +421,8 @@ trace_return_t pushState   (varPrec time, const char* type,
  *                      const char  * type,
  *                      const char  * cont,
  *                      const char  * val)
- * \brief C function to push a state in a proc in a non bufferized mode
- * \param time Time the state is pushed
+ * \brief Save the current State on a stack and change the State of a Container in a non-bufferized mode.
+ * \param time Time at which the state is pushed
  * \param type Type of the state
  * \param cont Container in this state
  * \param val Entity value of the state of the container
@@ -437,8 +437,8 @@ trace_return_t pushStateNB (varPrec time, const char* type,
  * \fn trace_return_t popState (varPrec  time,
  *                   const char  * type,
  *                   const char  * cont)
- * \brief C function to pop a state in a proc
- * \param time Time the state is poped
+ * \brief Revert the State of a Container to its previous value.
+ * \param time Time at which the state is poped
  * \param type Type of the state
  * \param cont Container in this state
  * \return 0 if success \n
@@ -452,8 +452,8 @@ trace_return_t popState   (varPrec time, const char* type,
  * \fn trace_return_t popStateNB (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont)
- * \brief C function to pop a state in a proc in a non bufferized mode
- * \param time Time the state is poped
+ * \brief Revert the State of a Container to its previous value in a non-bufferized mode.
+ * \param time Time at which the state is poped
  * \param type Type of the state
  * \param cont Container in this state
  * \return 0 if success \n
@@ -468,8 +468,8 @@ trace_return_t popStateNB (varPrec time, const char* type,
  *                   const char  * type,
  *                   const char  * cont,
  *                   const char  * val)
- * \brief C function to add an event
- * \param time Time the event happens
+ * \brief Add an Event.
+ * \param time Time at which the event happens
  * \param type Type of the event
  * \param cont Container in this event
  * \param val Entity value of the event of the container
@@ -485,8 +485,8 @@ trace_return_t addEvent   (varPrec time, const char* type,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * val)
- * \brief C function to add an event in a non bufferized mode
- * \param time Time the event happens
+ * \brief Add an Event in a non-bufferized mode.
+ * \param time Time at which the event happens
  * \param type Type of the event
  * \param cont Container in this event
  * \param val Entity value of the event of the container
@@ -505,12 +505,12 @@ trace_return_t addEventNB (varPrec time, const char* type,
  *                    const char  * dest,
  *                    const char  * val,
  *                    const char  * key)
- * \brief C function to start a link. If creating a paje trace, dest param is useless.
- * \param time Time the comm starts
+ * \brief Start a Link.
+ * \param time Time at which the link starts
  * \param type Type of the link
- * \param cont Container containning the link
- * \param src  Container source
- * \param dest Container destination
+ * \param cont Container containing the link
+ * \param src  Source container
+ * \param dest Destination container
  * \param val  Entity value of the link
  * \param key  Key to identify the link
  * \return 0 if success \n
@@ -530,12 +530,12 @@ trace_return_t startLink   (varPrec time, const char* type,
  *                      const char  * dest,
  *                      const char  * val,
  *                      const char  * key)
- * \brief C function to start a link in a non bufferized mode. If creating a paje trace, dest param is useless.
- * \param time Time the comm starts
+ * \brief Start a Link in a non-bufferized mode.
+ * \param time Time at which the link starts
  * \param type Type of the link
- * \param cont Container containning the link
- * \param src  Container source
- * \param dest Container destination
+ * \param cont Container containing the link
+ * \param src  Source container
+ * \param dest Destination container
  * \param val  Entity value of the link
  * \param key  Key to identify the link
  * \return 0 if success \n
@@ -555,12 +555,12 @@ trace_return_t startLinkNB (varPrec time, const char* type,
  *                  const char  * dest,
  *                  const char  * val,
  *                  const char  * key)
- * \brief C function to end a link. If creating a paje trace, src param is useless.
- * \param time Time the comm ends
+ * \brief End a Link.
+ * \param time Time at which the link ends
  * \param type Type of the link
- * \param cont Container containning the link
- * \param src  Container source
- * \param dest Container destination
+ * \param cont Container containing the link
+ * \param src  Source container
+ * \param dest Destination container
  * \param val  Entity value of the link
  * \param key  Key to identify the link
  * \return 0 if success \n
@@ -579,12 +579,12 @@ trace_return_t endLink   (varPrec time, const char* type,
  *                    const char  * dest,
  *                    const char  * val,
  *                    const char  * key)
- * \brief C function to end a link in a non bufferized mode. If creating a paje trace, src param is useless.
- * \param time Time the comm ends
+ * \brief End a Link in a non-bufferized mode.
+ * \param time Time at which the link ends
  * \param type Type of the link
- * \param cont Container containning the link
- * \param src  Container source
- * \param dest Container destination
+ * \param cont Container containing the link
+ * \param src  Source container
+ * \param dest Destination container
  * \param val  Entity value of the link
  * \param key  Key to identify the link
  * \return 0 if success \n
@@ -601,10 +601,10 @@ trace_return_t endLinkNB (varPrec time, const char* type,
  *                 const char  * type,
  *                 const char  * cont,
  *                 varPrec  val)
- * \brief C function to set a variable value
- * \param time Time the variable is set
+ * \brief Set a Variable value.
+ * \param time Time at which the variable is set
  * \param type Type of the variable
- * \param cont Container containning the variable
+ * \param cont Container containing the variable
  * \param val  Value of the variable
  * \return 0 if success \n
  *         An error code otherwise
@@ -617,10 +617,10 @@ trace_return_t setVar   (varPrec time, const char*  type,
  *                   const char  * type,
  *                   const char  * cont,
  *                   varPrec  val)
- * \brief C function to set a variable value in a non bufferized mode
- * \param time Time the variable is set
+ * \brief Set a Variable value in a non-bufferized mode.
+ * \param time Time at which the variable is set
  * \param type Type of the variable
- * \param cont Container containning the variable
+ * \param cont Container containing the variable
  * \param val  Value of the variable
  * \return 0 if success \n
  *         An error code otherwise
@@ -634,10 +634,10 @@ trace_return_t setVarNB (varPrec time, const char*  type,
  *                 const char  * type,
  *                 const char  * cont,
  *                 varPrec  val)
- * \brief C function to add a value to a variable
- * \param time Time the variable is incremented
+ * \brief Add a value to a Variable.
+ * \param time Time at which the variable is incremented
  * \param type Type of the variable
- * \param cont Container containning the variable
+ * \param cont Container containing the variable
  * \param val  Value added
  * \return 0 if success \n
  *         An error code otherwise
@@ -650,10 +650,10 @@ trace_return_t addVar   (varPrec time, const char*  type,
  *                   const char  * type,
  *                   const char  * cont,
  *                   varPrec  val)
- * \brief C function to add a value to a variable in a non bufferized mode
- * \param time Time the variable is incremented
+ * \brief Add a value to a Variable in a non-bufferized mode.
+ * \param time Time at which the variable is incremented
  * \param type Type of the variable
- * \param cont Container containning the variable
+ * \param cont Container containing the variable
  * \param val  Value added
  * \return 0 if success \n
  *         An error code otherwise
@@ -667,10 +667,10 @@ trace_return_t addVarNB (varPrec time, const char*  type,
  *                 const char  * type,
  *                 const char  * cont,
  *                 varPrec  val)
- * \brief C function to substract a value to a variable
- * \param time Time the variable is incremented
+ * \brief Substract a value from a Variable.
+ * \param time Time at which the variable is incremented
  * \param type Type of the variable
- * \param cont Container containning the variable
+ * \param cont Container containing the variable
  * \param val  Value substracted
  * \return 0 if success \n
  *         An error code otherwise
@@ -684,10 +684,10 @@ trace_return_t subVar   (varPrec time, const char*  type,
  *                   const char  * type,
  *                   const char  * cont,
  *                   varPrec  val)
- * \brief C function to substract a value to a variable in a non bufferized mode
- * \param time Time the variable is decremented
+ * \brief Substract a value from a Variable in a non-bufferized mode.
+ * \param time Time at which the variable is decremented
  * \param type Type of the variable
- * \param cont Container containning the variable
+ * \param cont Container containing the variable
  * \param val  Value substracted
  * \return 0 if success \n
  *         An error code otherwise

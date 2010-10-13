@@ -30,7 +30,8 @@ typedef double varPrec;
 
 /**
  * \ingroup type Return values of functions
- * \brief Enum defining various return values
+ * \enum trace_return_t
+ * \brief Define various return values
  */
 typedef enum trace_return_t{
     TRACE_SUCCESS  , /*!< Success of the call.           */
