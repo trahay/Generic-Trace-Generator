@@ -36,10 +36,10 @@
  *
  */
 typedef enum traceType{
-    PAJE, /*!< Trace format of Paje. */
-    VITE, /*!< Trace format of ViTE. */
-    OTF,  /*!< Trace format of OTF.  */
-    TAU   /*!< Trace format of TAU.  */
+    PAJE, /*!< Paje trace format. */
+    VITE, /*!< ViTE-specific trace format. */
+    OTF,  /*!< OTF trace format.  */
+    TAU   /*!< TAU Trace format.  */
 }traceType_t;
 
 /**
@@ -64,7 +64,7 @@ traceType_t getTraceType ();
 /**
  * \ingroup init
  * \fn int initTrace   (const char* filename, int rank)
- * \brief C function to init a trace
+ * \brief Initialize a trace.
  * \param filename Root name of the file to create
  * \param rank Process number of the file to create
  * \return 0 if success \n
@@ -82,7 +82,7 @@ trace_return_t endTrace   ();
 /**
  * \ingroup init
  * \fn trace_return_t setCompress (int val)
- * \brief Usefull for OTF traces only.
+ * \brief Enable trace compression (only available for OTF traces).
  * \param val 0 means no compression, otherwize the output files will be compressed
  * \return 0 if success \n
  *         An error code otherwise
