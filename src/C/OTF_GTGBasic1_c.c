@@ -36,7 +36,7 @@ static EventType_t eventTypes[MAX_EVENTTYPE];
 
 
 /* Root name */
-static char *filename;
+static char *filename = NULL;
 
 #define TIMER_RES 100000.
 
@@ -196,6 +196,11 @@ trace_return_t OTFSetCompress(int val) {
 
 trace_return_t OTFAddProcType (const char* alias, const char* contType, 
                     const char* name){
+    if(current_ctType >= MAX_PROCESSTYPE) {
+        fprintf(stderr, "Too many Container types (%d)!\n", MAX_PROCESSTYPE);
+	return TRACE_ERR_WRITE;
+    }
+
     uint32_t parent = 0;
     
     if(contType != NULL && strcmp(contType, "0") != 0) {
@@ -223,6 +228,11 @@ trace_return_t OTFAddProcTypeNB (const char* alias, const char* contType,
 
 trace_return_t OTFAddStateType (const char* alias, const char* contType, 
                      const char* name){
+    if(current_stateType >= MAX_STATESTYPE) {
+        fprintf(stderr, "Too many State types (%d)!\n", MAX_STATESTYPE);
+	return TRACE_ERR_WRITE;
+    }
+
     stateTypes[current_stateType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(stateTypes[current_stateType].name, name);
     
@@ -245,6 +255,10 @@ trace_return_t OTFAddStateTypeNB (const char* alias, const char* contType,
 
 trace_return_t OTFAddEventType (const char* alias, const char* contType, 
                      const char* name){
+    if(current_eventType >= MAX_EVENTTYPE) {
+	    fprintf(stderr, "Too many Event types (%d)!\n", MAX_EVENTTYPE);
+	    return TRACE_ERR_WRITE;
+    }
     eventTypes[current_eventType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(eventTypes[current_eventType].name, name);
     
@@ -280,6 +294,11 @@ trace_return_t OTFAddLinkTypeNB (const char* alias   , const char* name,
 
 trace_return_t OTFAddVarType (const char* alias   , const char* name,
                    const char* contType){
+    if(current_variableType >= MAX_VARIABLETYPE) {
+        fprintf(stderr, "Too many Variable types (%d)!\n", MAX_VARIABLETYPE);
+	return TRACE_ERR_WRITE;
+    }
+
     variableTypes[current_variableType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(variableTypes[current_variableType].name, name);
     
@@ -300,6 +319,11 @@ trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
 
 trace_return_t OTFAddEntityValue (const char* alias, const char* entType, 
 				  const char* name , const otf_color_t color){
+    if(current_state >= MAX_STATES) {
+        fprintf(stderr, "Too many Entity values (%d)!\n", MAX_STATES);
+	return TRACE_ERR_WRITE;
+    }
+
     int type = getStateTypeFromName(entType);
     states[current_state].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(states[current_state].name, name);
@@ -320,6 +344,11 @@ trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType,
 trace_return_t OTFAddContainer (varPrec time, const char* alias,
                      const char*  type, const char* container,
                      const char*  name, const char* file){
+    if(current_ct >= MAX_PROCESS) {
+        fprintf(stderr, "Too many Containers (%d)!\n", MAX_PROCESS);
+	return TRACE_ERR_WRITE;
+    }
+
     /*int ctType = getCtContFromName(type);*/
 
     int parent = getCtFromName(container);

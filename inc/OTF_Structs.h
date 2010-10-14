@@ -61,7 +61,7 @@ typedef struct EntityValue {
 } EntityValue_t;
 
 /*! Events/Markers */
-#define MAX_EVENTTYPE 10
+#define MAX_EVENTTYPE 100
 typedef struct EventType {
     char *name;
     char *alias;
@@ -70,7 +70,7 @@ typedef struct EventType {
 
 
 /*! Variables/Counters */
-#define MAX_VARIABLETYPE 10
+#define MAX_VARIABLETYPE 100
 typedef struct VariableType {
     char *name;
     char *alias;
