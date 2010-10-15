@@ -5,6 +5,11 @@
 #include "OTF_GTGBasic1.h"
 #include <otf.h>
 
+/* set in GTGBasic1_c.c
+ * verbose !=0 means debugging mode
+ */
+extern int verbose;
+
 /* OTF data */
 static OTF_FileManager* manager = NULL;
 static OTF_Writer* writer = NULL;
@@ -213,8 +218,9 @@ trace_return_t OTFAddProcType (const char* alias, const char* contType,
     
     ctType[current_ctType].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
     strcpy(ctType[current_ctType].alias, alias);
-    
-    printf("addCtType : name %s, alias %s, contType %s\n", name, alias, contType);
+
+    if(verbose)
+	    printf("addCtType : name %s, alias %s, contType %s\n", name, alias, contType);
     current_ctType ++;
 
     return TRACE_SUCCESS;
@@ -238,8 +244,9 @@ trace_return_t OTFAddStateType (const char* alias, const char* contType,
     
     stateTypes[current_stateType].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
     strcpy(stateTypes[current_stateType].alias, alias);
-    
-    printf("addStateType : id %d, alias %s, name %s, contType %s\n", current_stateType, alias, name, contType);
+
+    if(verbose)
+	    printf("addStateType : id %d, alias %s, name %s, contType %s\n", current_stateType, alias, name, contType);
 
     OTF_Writer_writeDefFunctionGroup(writer, getCtContFromName(contType), current_stateType, name);
 
@@ -261,13 +268,14 @@ trace_return_t OTFAddEventType (const char* alias, const char* contType,
     }
     eventTypes[current_eventType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(eventTypes[current_eventType].name, name);
-    
+
     eventTypes[current_eventType].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
     strcpy(eventTypes[current_eventType].alias, alias);
-    
+
     eventTypes[current_eventType].contType = getCtContFromName(contType);
 
-    printf("addEventType : id %d, alias %s, name %s, contType %s\n", current_eventType, alias, name, contType);
+    if(verbose)
+	    printf("addEventType : id %d, alias %s, name %s, contType %s\n", current_eventType, alias, name, contType);
 
     OTF_Writer_writeDefMarker(writer, 0, current_eventType, name, OTF_MARKER_TYPE_UNKNOWN);
     current_eventType ++;
@@ -301,11 +309,12 @@ trace_return_t OTFAddVarType (const char* alias   , const char* name,
 
     variableTypes[current_variableType].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(variableTypes[current_variableType].name, name);
-    
+
     variableTypes[current_variableType].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
     strcpy(variableTypes[current_variableType].alias, alias);
-    
-    printf("addVarType : id %d, alias %s, name %s, contType %s\n", current_variableType, alias, name, contType);
+
+    if(verbose)
+	    printf("addVarType : id %d, alias %s, name %s, contType %s\n", current_variableType, alias, name, contType);
 
     current_variableType ++;
 
@@ -327,10 +336,13 @@ trace_return_t OTFAddEntityValue (const char* alias, const char* entType,
     int type = getStateTypeFromName(entType);
     states[current_state].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(states[current_state].name, name);
-    
+
     states[current_state].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
     strcpy(states[current_state].alias, alias);
-    printf("addEntityValue : id %d, alias %s, name %s, type %d\n", current_state, alias, name, type);
+
+    if(verbose)
+	    printf("addEntityValue : id %d, alias %s, name %s, type %d\n", current_state, alias, name, type);
+
     OTF_Writer_writeDefFunction(writer, 0, current_state, name, type, 0);
     current_state ++;
     return TRACE_SUCCESS;
@@ -352,13 +364,14 @@ trace_return_t OTFAddContainer (varPrec time, const char* alias,
     /*int ctType = getCtContFromName(type);*/
 
     int parent = getCtFromName(container);
-    printf("addCont : parent %d, id %d, name %s, alias %s, type %s, parent %s\n", parent, current_ct, name, alias, type, container);
+    if(verbose)
+	    printf("addCont : parent %d, id %d, name %s, alias %s, type %s, parent %s\n", parent, current_ct, name, alias, type, container);
     conts[current_ct].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(conts[current_ct].name, name);
-    
+
     conts[current_ct].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
     strcpy(conts[current_ct].alias, alias);
-    
+
     OTF_Writer_writeDefProcess(writer, 1, current_ct, name, parent);
     OTF_Writer_writeBeginProcess (writer, time*TIMER_RES, current_ct);
 
@@ -410,10 +423,11 @@ trace_return_t OTFSetState (varPrec time, const char* type,
     last_state[parent].cont      = parent;
     last_state[parent].stateType = stateType;
 
-    printf("SetState : parent %d, stateType %d, val %d\n", parent, stateType, state);
+    if(verbose)
+	    printf("SetState : parent %d, stateType %d, val %d\n", parent, stateType, state);
 
     OTF_Writer_writeEnter (writer, time*TIMER_RES, state, parent, 0);
-    
+
     return TRACE_SUCCESS;
 }
 
@@ -436,8 +450,9 @@ trace_return_t OTFPushState (varPrec time, const char* type,
 
     states_saved[parent].current_id ++;
 
-    printf("PushState : parent %d, stateType %d, val %d\n", parent, stateType, state);
-    
+    if(verbose)
+	    printf("PushState : parent %d, stateType %d, val %d\n", parent, stateType, state);
+
     OTF_Writer_writeEnter (writer, time*TIMER_RES, state, parent, 0);
     return TRACE_SUCCESS;
 }
@@ -459,8 +474,9 @@ trace_return_t OTFPopState (varPrec time, const char* type,
 
     states_saved[last_state[parent].cont].current_id --;
 
-    printf("PopState : parent %d, stateType %d, val %d\n", st.cont, st.stateType, st.value);
-    
+    if(verbose)
+	    printf("PopState : parent %d, stateType %d, val %d\n", st.cont, st.stateType, st.value);
+
     OTF_Writer_writeEnter (writer, time*TIMER_RES, st.value, st.cont, 0);
 
     return TRACE_SUCCESS;
@@ -476,7 +492,10 @@ trace_return_t OTFAddEvent (varPrec time    , const char* type,
     uint32_t process = getCtFromName(cont);
     uint32_t eventType = getEventTypeFromName(type);
     OTF_Writer_writeMarker (writer, time*TIMER_RES, process, eventType, val);
-    printf("AddEvent : parent %d, eventType %d, val %s\n", process, eventType, val);
+
+    if(verbose)
+	    printf("AddEvent : parent %d, eventType %d, val %s\n", process, eventType, val);
+
     return TRACE_SUCCESS;
 }
 
@@ -516,8 +535,9 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
     
     //OTF_Writer_writeDefCounter(writer, 0, 0, type, 0, 0, NULL);
     //OTF_Writer_writeCounter (writer, time, parent, varType, val);
-    
-    printf("setVar : %s %s %f\n", type, cont, val);
+
+    if(verbose)
+	    printf("setVar : %s %s %f\n", type, cont, val);
     return TRACE_SUCCESS;
 }
 
@@ -528,7 +548,8 @@ trace_return_t OTFSetVarNB (varPrec time, const char*  type,
 
 trace_return_t OTFAddVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
-    printf("addVar : %s %s %f\n", type, cont, val);
+    if(verbose)
+	    printf("addVar : %s %s %f\n", type, cont, val);
     return TRACE_SUCCESS;
 }
 
@@ -539,7 +560,8 @@ trace_return_t OTFAddVarNB (varPrec time, const char*  type,
 
 trace_return_t OTFSubVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
-    printf("subVar : %s %s %f\n", type, cont, val);
+    if(verbose)
+	    printf("subVar : %s %s %f\n", type, cont, val);
     return TRACE_SUCCESS;
 }
 

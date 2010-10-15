@@ -6,6 +6,11 @@
 
 #include "paje_GTGBasic1.h"
 
+/* set in GTGBasic1_c.c
+ * verbose !=0 means debugging mode
+ */
+extern int verbose;
+
 /* File where each proc writes state/event/var/link changes. */
 static FILE*  procFile;
 /* File where each proc writes the header and the definitions of the data. */ 
