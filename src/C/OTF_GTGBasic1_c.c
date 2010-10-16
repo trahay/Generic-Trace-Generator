@@ -615,5 +615,7 @@ trace_return_t OTFEndTrace (){
         free (filename);
     filename = NULL;
 
+    free(otf_color_null.colorID);
+
     return TRACE_SUCCESS;
 }

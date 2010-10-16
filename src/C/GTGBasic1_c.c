@@ -859,16 +859,18 @@ trace_return_t subVarNB (varPrec time, const char*  type,
 }
 
 trace_return_t endTrace (){
+    int ret = TRACE_ERR_CLOSE;
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
     case VITE :
-        return pajeEndTrace ();
+        ret = pajeEndTrace ();
         break;
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFEndTrace ();
+        ret = OTFEndTrace ();
         break;
 #endif
 #ifdef BUILD_TAU
@@ -877,6 +879,9 @@ trace_return_t endTrace (){
     default :
         break;
     }
+
+    gtg_color_exit();
+
     return TRACE_SUCCESS;
 }
 

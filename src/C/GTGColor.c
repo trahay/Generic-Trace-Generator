@@ -2,7 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-struct gtg_color __gtg_colors[22];
+#define NB_DEFAULT_COLOR 22
+struct gtg_color __gtg_colors[NB_DEFAULT_COLOR];
+
 gtg_color_t GTG_BLACK;
 gtg_color_t GTG_RED;
 gtg_color_t GTG_GREEN;
@@ -224,4 +226,11 @@ void gtg_color_init()
 	__init_color(GTG_MAUVE     , "MAUVE"     , GTG_MAUVE_RGB);
 	__init_color(GTG_LIGHTPINK , "LIGHTPINK" ,  GTG_LIGHTPINK_RGB);
 
+}
+
+void gtg_color_exit()
+{
+	int i;
+	for (i=0; i<NB_DEFAULT_COLOR; i++)
+		free(__gtg_colors[i].color_name);
 }
