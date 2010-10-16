@@ -249,5 +249,6 @@ extern gtg_color_t GTG_LIGHTPINK;
 
 
 void gtg_color_init();
+void gtg_color_exit();
 
 #endif

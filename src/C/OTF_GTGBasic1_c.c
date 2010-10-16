@@ -1,3 +1,5 @@
+
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
 
@@ -149,7 +151,7 @@ int getEventTypeFromName(const char *type) {
 static void __OTF_init()
 {
 	/* initialize otf_color_null */
-	asprintf(&otf_color_null.colorID, "");
+	asprintf(&otf_color_null.colorID, "NO COLOR");
 	otf_color_null.red = 0;
 	otf_color_null.green = 0;
 	otf_color_null.blue = 0;
@@ -201,13 +203,12 @@ trace_return_t OTFSetCompress(int val) {
 
 trace_return_t OTFAddProcType (const char* alias, const char* contType, 
                     const char* name){
+    uint32_t parent = 0;
     if(current_ctType >= MAX_PROCESSTYPE) {
         fprintf(stderr, "Too many Container types (%d)!\n", MAX_PROCESSTYPE);
 	return TRACE_ERR_WRITE;
     }
 
-    uint32_t parent = 0;
-    
     if(contType != NULL && strcmp(contType, "0") != 0) {
         /* get its parent id */
         parent = getCtContFromName(contType);
@@ -328,12 +329,13 @@ trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
 
 trace_return_t OTFAddEntityValue (const char* alias, const char* entType, 
 				  const char* name , const otf_color_t color){
+    int type = -1;
     if(current_state >= MAX_STATES) {
         fprintf(stderr, "Too many Entity values (%d)!\n", MAX_STATES);
 	return TRACE_ERR_WRITE;
     }
 
-    int type = getStateTypeFromName(entType);
+    type = getStateTypeFromName(entType);
     states[current_state].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(states[current_state].name, name);
 
@@ -356,16 +358,18 @@ trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType,
 trace_return_t OTFAddContainer (varPrec time, const char* alias,
                      const char*  type, const char* container,
                      const char*  name, const char* file){
+    int parent;
     if(current_ct >= MAX_PROCESS) {
         fprintf(stderr, "Too many Containers (%d)!\n", MAX_PROCESS);
 	return TRACE_ERR_WRITE;
     }
 
     /*int ctType = getCtContFromName(type);*/
+    parent = getCtFromName(container);
 
-    int parent = getCtFromName(container);
     if(verbose)
 	    printf("addCont : parent %d, id %d, name %s, alias %s, type %s, parent %s\n", parent, current_ct, name, alias, type, container);
+
     conts[current_ct].name = (char *)malloc(sizeof(char)*(strlen(name)+1));
     strcpy(conts[current_ct].name, name);
 
@@ -443,7 +447,7 @@ trace_return_t OTFPushState (varPrec time, const char* type,
     int state     = getStateFromName(val);
 
     int current_id = states_saved[parent].current_id;
-    // Push previous and set the new
+    /* Push previous and set the new */
     states_saved[parent].values[current_id].value = last_state[parent].value;
     states_saved[parent].values[current_id].cont = last_state[parent].cont;
     states_saved[last_state[parent].cont].values[current_id].stateType = last_state[parent].stateType;
@@ -464,7 +468,7 @@ trace_return_t OTFPushStateNB (varPrec time, const char* type,
 
 trace_return_t OTFPopState (varPrec time, const char* type,
                  const char*  cont){
-    // Pop and set
+    /* Pop and set */
     int parent     = getCtFromName(cont);
     int current_id = states_saved[last_state[parent].cont].current_id - 1;
     State_t st;
@@ -532,10 +536,10 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
     int parent  = getCtFromName(cont);
     int varType = getVariableTypeFromName(type);
-    
-    //OTF_Writer_writeDefCounter(writer, 0, 0, type, 0, 0, NULL);
-    //OTF_Writer_writeCounter (writer, time, parent, varType, val);
 
+    /* OTF_Writer_writeDefCounter(writer, 0, 0, type, 0, 0, NULL);
+     * OTF_Writer_writeCounter (writer, time, parent, varType, val);
+     */
     if(verbose)
 	    printf("setVar : %s %s %f\n", type, cont, val);
     return TRACE_SUCCESS;

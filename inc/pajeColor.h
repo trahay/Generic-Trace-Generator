@@ -13,6 +13,7 @@
 
 #define _GNU_SOURCE
 #include <stdio.h>
+#include "GTGBasic1.h"
 
 typedef char* paje_color_t;
 

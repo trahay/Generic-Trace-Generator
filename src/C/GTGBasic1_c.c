@@ -1,15 +1,16 @@
+#include "pajeColor.h"
 #include "GTGBasic1.h"
 #include "OTF_GTGBasic1.h"
 #include "paje_GTGBasic1.h"
-#include "pajeColor.h"
 
 /* verbose !=0 means debugging mode */
 int verbose = 0;
 static traceType_t traceType;
 
 void setTraceType (traceType_t type){
+    char* res;
     traceType = type;
-    char* res= getenv("GTG_VERBOSE");
+    res = getenv("GTG_VERBOSE");
     if(res)
 	    verbose = 1;
 }
