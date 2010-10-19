@@ -21,9 +21,27 @@ AC_CHECK_HEADERS([stdio.h string.h stdlib.h])
 # crappy hack: of the macros AC_PROG_{CC,CXX,F77,FC}, only the
 # first expanded one will check for object file extension etc,
 # and fail if that doesn't work.
-if test x$FC = x; then
-AC_MSG_ERROR(A Fortran compiler is required)
-fi
+
+### No fortran by default.
+# use --with-fortran to build fortran interface
+use_fortran=yes
+AC_ARG_WITH(fortran,
+            [AS_HELP_STRING([--with-fortran[=<bool>]], [Enable fortran])],
+            [
+                if test x$withval != xno; then
+                  if test x$FC = x; then
+                      use_fortran=no 
+                      AC_MSG_ERROR(A Fortran compiler is required)
+                   else
+                      use_fortran=yes
+                  fi
+                else
+                  use_fortran=no
+                fi
+            ])
+
+
+AM_CONDITIONAL([FORTRAN], [test "x$use_fortran" = xyes])
 
 # MPI stuff
 use_mpi=yes
