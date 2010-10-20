@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../inc/GTGBasic1.h"
+#include "../inc/GTG.h"
 
 int main (int argc, char** argv){
     int rk;
     MPI_Init (&argc, &argv);
     MPI_Comm_rank (MPI_COMM_WORLD, &rk);
 
-    setTraceType (VITE);
+    setTraceType (VITE, BUFF);
     setComm (MPI_COMM_WORLD);
     initTrace ("cvite");
     if (rk==0){

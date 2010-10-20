@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "GTGBasic1.h"
-#include "pajeColor.h"
+#include "GTG.h"
 
 int main (int argc, char** argv){
-    setTraceType (PAJE);
+    setTraceType (PAJE, BUFF);
     initTrace ("gtg_color", 0);
     addProcType ("CT_NET", "0", "Network");
     addProcType ("CT_NODE", "CT_NET", "Node");

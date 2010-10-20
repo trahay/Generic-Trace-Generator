@@ -26,6 +26,16 @@
 #include "GTGColor.h"
 
 /**
+ * \brief For drawing the traces in a non bufferized mode
+ */
+#define NOTBUF 1
+/**
+ * \brief For drawing the traces in a bufferized mode
+ */
+#define BUFF   0
+
+
+/**
  * \defgroup traceType Trace type handler
  */
 
@@ -44,11 +54,12 @@ typedef enum traceType{
 
 /**
  * \ingroup traceType
- * \fn void setTraceType (traceType_t type)
+ * \fn void setTraceType (traceType_t type, int mode)
  * \brief Set the type of output trace.
  * \param type Type of trace to generate
+ * \param mode Bufferized or non bufferized mode to write the trace
  */
-void setTraceType (traceType_t type);
+void setTraceType (traceType_t type, int mode);
 
 /**
  * \ingroup traceType
@@ -107,20 +118,21 @@ trace_return_t setCompress (int val);
 trace_return_t addProcType   (const char* alias, const char* contType, 
                    const char* name);
 
-/**
- * \ingroup procf
- * \fn trace_return_t addProcTypeNB   (const char* alias,
- *                          const char* contType, 
- *                          const char* name)
- * \brief Add a Container Type in a non-bufferized mode.
- * \param alias Alias on the container
- * \param contType Type of container
- * \param name Name of the container type
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addProcTypeNB (const char* alias, const char* contType, 
-                   const char* name);
+///**
+// * \ingroup procf
+// * \fn trace_return_t addProcTypeNB   (const char* alias,
+// *                          const char* contType, 
+// *                          const char* name)
+// * \brief Add a Container Type in a non-bufferized mode.
+// * \param alias Alias on the container
+// * \param contType Type of container
+// * \param name Name of the container type
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addProcTypeNB (const char* alias, const char* contType, 
+//                   const char* name);
+
 /**
  * \defgroup statef Functions related to the states
  */
@@ -139,20 +151,20 @@ trace_return_t addProcTypeNB (const char* alias, const char* contType,
 trace_return_t addStateType   (const char* alias, const char* contType, 
                     const char* name);
 
-/**
- * \ingroup statef
- * \fn trace_return_t addStateTypeNB   (const char* alias,
- *                           const char* contType, 
- *                           const char* name)
- * \brief Add a State Type in a non-bufferized mode.
- * \param alias Alias on the state type
- * \param contType Type of container
- * \param name Name of the state type
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addStateTypeNB (const char* alias, const char* contType, 
-                    const char* name);
+///**
+// * \ingroup statef
+// * \fn trace_return_t addStateTypeNB   (const char* alias,
+// *                           const char* contType, 
+// *                           const char* name)
+// * \brief Add a State Type in a non-bufferized mode.
+// * \param alias Alias on the state type
+// * \param contType Type of container
+// * \param name Name of the state type
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addStateTypeNB (const char* alias, const char* contType, 
+//                    const char* name);
 
 /**
  * \defgroup eventf Functions related to the events
@@ -171,20 +183,20 @@ trace_return_t addStateTypeNB (const char* alias, const char* contType,
  */
 trace_return_t addEventType   (const char* alias, const char* contType, 
                     const char* name);
-/**
- * \ingroup eventf
- * \fn trace_return_t addEventTypeNB   (const char* alias,
- *                         const char* contType, 
- *                         const char* name)
- * \brief Add an Event Type in a non-bufferized mode.
- * \param alias Alias on the event type
- * \param contType Type of container
- * \param name Name of the event type
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addEventTypeNB (const char* alias, const char* contType, 
-                    const char* name);
+///**
+// * \ingroup eventf
+// * \fn trace_return_t addEventTypeNB   (const char* alias,
+// *                         const char* contType, 
+// *                         const char* name)
+// * \brief Add an Event Type in a non-bufferized mode.
+// * \param alias Alias on the event type
+// * \param contType Type of container
+// * \param name Name of the event type
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addEventTypeNB (const char* alias, const char* contType, 
+//                    const char* name);
 
 /**
  * \defgroup linkf Functions related to links
@@ -208,25 +220,25 @@ trace_return_t addEventTypeNB (const char* alias, const char* contType,
 trace_return_t addLinkType   (const char* alias   , const char* name,
                    const char* contType, const char* srcContType,
                    const char* destContType);
-/**
- * \ingroup linkf
- * \fn trace_return_t addLinkTypeNB   (const char* alias,
- *                          const char* name,
- *                          const char* contType, 
- *                          const char* srcContType,
- *                          const char* destContType);
- * \brief Add a Link Type in a non-bufferized mode.
- * \param alias Alias on the link type
- * \param name Name of the link type
- * \param contType Type of container
- * \param srcContType Type of the source container
- * \param destContType Type of the destination container
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addLinkTypeNB (const char* alias   , const char* name,
-                   const char* contType, const char* srcContType,
-                   const char* destContType);
+///**
+// * \ingroup linkf
+// * \fn trace_return_t addLinkTypeNB   (const char* alias,
+// *                          const char* name,
+// *                          const char* contType, 
+// *                          const char* srcContType,
+// *                          const char* destContType);
+// * \brief Add a Link Type in a non-bufferized mode.
+// * \param alias Alias on the link type
+// * \param name Name of the link type
+// * \param contType Type of container
+// * \param srcContType Type of the source container
+// * \param destContType Type of the destination container
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addLinkTypeNB (const char* alias   , const char* name,
+//                   const char* contType, const char* srcContType,
+//                   const char* destContType);
 
 /**
  * \defgroup varf Functions related to variables
@@ -245,20 +257,20 @@ trace_return_t addLinkTypeNB (const char* alias   , const char* name,
  */
 trace_return_t addVarType   (const char* alias   , const char* name,
                   const char* contType); 
-/**
- * \ingroup varf
- * \fn trace_return_t addVarTypeNB   (const char* alias,
- *                         const char* contType, 
- *                         const char* name)
- * \brief Add a Variable Type in a non-bufferized mode.
- * \param alias Alias on the variable type
- * \param contType Type of container
- * \param name Name of the variable type
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addVarTypeNB (const char* alias   , const char* name,
-                  const char* contType);
+///**
+// * \ingroup varf
+// * \fn trace_return_t addVarTypeNB   (const char* alias,
+// *                         const char* contType, 
+// *                         const char* name)
+// * \brief Add a Variable Type in a non-bufferized mode.
+// * \param alias Alias on the variable type
+// * \param contType Type of container
+// * \param name Name of the variable type
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addVarTypeNB (const char* alias   , const char* name,
+//                  const char* contType);
 
 /**
  * \ingroup init
@@ -276,22 +288,22 @@ trace_return_t addVarTypeNB (const char* alias   , const char* name,
  */
 trace_return_t addEntityValue   (const char* alias, const char* entType, 
                       const char* name , gtg_color_t p_color);
-/**
- * \ingroup init
- * \fn trace_return_t addEntityValueNB (const char* alias,
- *                           const char* entType, 
- *                           const char* name,
- *                           gtg_color_t p_color)
- * \brief Add an Entity Value in a non-bufferized mode.
- * \param alias Alias on the entity value
- * \param entType Type of the entity
- * \param name Name of the variable type
- * \param p_color Color of the entity
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addEntityValueNB (const char* alias, const char* entType, 
-                      const char* name , gtg_color_t p_color);
+///**
+// * \ingroup init
+// * \fn trace_return_t addEntityValueNB (const char* alias,
+// *                           const char* entType, 
+// *                           const char* name,
+// *                           gtg_color_t p_color)
+// * \brief Add an Entity Value in a non-bufferized mode.
+// * \param alias Alias on the entity value
+// * \param entType Type of the entity
+// * \param name Name of the variable type
+// * \param p_color Color of the entity
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addEntityValueNB (const char* alias, const char* entType, 
+//                      const char* name , gtg_color_t p_color);
 
 /**
  * \ingroup procf
@@ -314,27 +326,27 @@ trace_return_t addEntityValueNB (const char* alias, const char* entType,
 trace_return_t addContainer   (varPrec time, const char* alias    ,
                     const char*  type, const char* container,
                     const char*  name, const char* file);
-/**
- * \ingroup procf
- * \fn trace_return_t addContainerNB (varPrec  time,
- *                         const char  * alias,
- *                         const char  * type, 
- *                         const char  * container,
- *                         const char  * name,
- *                         const char  * file)
- * \brief Add a Container in a non-bufferized mode.
- * \param time Time at which the container is added
- * \param alias Alias of the new container
- * \param type Type of the container
- * \param container Container parent
- * \param name Name of the variable type
- * \param file File containing the container
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addContainerNB (varPrec time, const char* alias    ,
-                    const char*  type, const char* container,
-                    const char*  name, const char* file);
+///**
+// * \ingroup procf
+// * \fn trace_return_t addContainerNB (varPrec  time,
+// *                         const char  * alias,
+// *                         const char  * type, 
+// *                         const char  * container,
+// *                         const char  * name,
+// *                         const char  * file)
+// * \brief Add a Container in a non-bufferized mode.
+// * \param time Time at which the container is added
+// * \param alias Alias of the new container
+// * \param type Type of the container
+// * \param container Container parent
+// * \param name Name of the variable type
+// * \param file File containing the container
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addContainerNB (varPrec time, const char* alias    ,
+//                    const char*  type, const char* container,
+//                    const char*  name, const char* file);
 
 /**
  * \ingroup procf
@@ -350,20 +362,20 @@ trace_return_t addContainerNB (varPrec time, const char* alias    ,
  */
 trace_return_t destroyContainer     (varPrec time, const char*  name,
                           const char*  type);
-/**
- * \ingroup procf
- * \fn trace_return_t destroyContainerNB (varPrec  time,
- *                             const char  * name,
- *                             const char  * type) 
- * \brief Destroy a Container in a non-bufferized mode.
- * \param time Time at which the container is destroyed
- * \param name Name of the container
- * \param type Type of the container
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t destroyContainerNB   (varPrec time, const char*  name,
-                          const char*  type);
+///**
+// * \ingroup procf
+// * \fn trace_return_t destroyContainerNB (varPrec  time,
+// *                             const char  * name,
+// *                             const char  * type) 
+// * \brief Destroy a Container in a non-bufferized mode.
+// * \param time Time at which the container is destroyed
+// * \param name Name of the container
+// * \param type Type of the container
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t destroyContainerNB   (varPrec time, const char*  name,
+//                          const char*  type);
 
 /**
  * \ingroup statef
@@ -381,22 +393,22 @@ trace_return_t destroyContainerNB   (varPrec time, const char*  name,
  */
 trace_return_t setState   (varPrec time, const char* type,
                 const char*  cont, const char* val);
-/**
- * \ingroup statef
- * \fn trace_return_t setStateNB (varPrec  time,
- *                     const char  * type,
- *                     const char  * cont,
- *                     const char  * val)
- * \brief Set the State of a Container in a state in a non-bufferized mode.
- * \param time Time at which the state is set
- * \param type Type of the state
- * \param cont Container in this state
- * \param val Entity value of the state of the container
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t setStateNB (varPrec time, const char* type,
-                const char*  cont, const char* val);
+///**
+// * \ingroup statef
+// * \fn trace_return_t setStateNB (varPrec  time,
+// *                     const char  * type,
+// *                     const char  * cont,
+// *                     const char  * val)
+// * \brief Set the State of a Container in a state in a non-bufferized mode.
+// * \param time Time at which the state is set
+// * \param type Type of the state
+// * \param cont Container in this state
+// * \param val Entity value of the state of the container
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t setStateNB (varPrec time, const char* type,
+//                const char*  cont, const char* val);
 
 /**
  * \ingroup statef
@@ -415,22 +427,22 @@ trace_return_t setStateNB (varPrec time, const char* type,
 trace_return_t pushState   (varPrec time, const char* type,
                  const char*  cont, const char* val);
 
-/**
- * \ingroup statef
- * \fn trace_return_t pushStateNB (varPrec  time,
- *                      const char  * type,
- *                      const char  * cont,
- *                      const char  * val)
- * \brief Save the current State on a stack and change the State of a Container in a non-bufferized mode.
- * \param time Time at which the state is pushed
- * \param type Type of the state
- * \param cont Container in this state
- * \param val Entity value of the state of the container
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t pushStateNB (varPrec time, const char* type,
-                 const char*  cont, const char* val);
+///**
+// * \ingroup statef
+// * \fn trace_return_t pushStateNB (varPrec  time,
+// *                      const char  * type,
+// *                      const char  * cont,
+// *                      const char  * val)
+// * \brief Save the current State on a stack and change the State of a Container in a non-bufferized mode.
+// * \param time Time at which the state is pushed
+// * \param type Type of the state
+// * \param cont Container in this state
+// * \param val Entity value of the state of the container
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t pushStateNB (varPrec time, const char* type,
+//                 const char*  cont, const char* val);
 
 /**
  * \ingroup statef
@@ -447,20 +459,20 @@ trace_return_t pushStateNB (varPrec time, const char* type,
 trace_return_t popState   (varPrec time, const char* type,
                 const char*  cont);
 
-/**
- * \ingroup statef
- * \fn trace_return_t popStateNB (varPrec  time,
- *                     const char  * type,
- *                     const char  * cont)
- * \brief Revert the State of a Container to its previous value in a non-bufferized mode.
- * \param time Time at which the state is poped
- * \param type Type of the state
- * \param cont Container in this state
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t popStateNB (varPrec time, const char* type,
-                const char*  cont);
+///**
+// * \ingroup statef
+// * \fn trace_return_t popStateNB (varPrec  time,
+// *                     const char  * type,
+// *                     const char  * cont)
+// * \brief Revert the State of a Container to its previous value in a non-bufferized mode.
+// * \param time Time at which the state is poped
+// * \param type Type of the state
+// * \param cont Container in this state
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t popStateNB (varPrec time, const char* type,
+//                const char*  cont);
 
 /**
  * \ingroup eventf
@@ -479,22 +491,22 @@ trace_return_t popStateNB (varPrec time, const char* type,
 trace_return_t addEvent   (varPrec time, const char* type,
                 const char*  cont, const char* val);
 
-/**
- * \ingroup eventf
- * \fn trace_return_t addEventNB (varPrec  time,
- *                     const char  * type,
- *                     const char  * cont,
- *                     const char  * val)
- * \brief Add an Event in a non-bufferized mode.
- * \param time Time at which the event happens
- * \param type Type of the event
- * \param cont Container in this event
- * \param val Entity value of the event of the container
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addEventNB (varPrec time, const char* type,
-                const char*  cont, const char* val);
+///**
+// * \ingroup eventf
+// * \fn trace_return_t addEventNB (varPrec  time,
+// *                     const char  * type,
+// *                     const char  * cont,
+// *                     const char  * val)
+// * \brief Add an Event in a non-bufferized mode.
+// * \param time Time at which the event happens
+// * \param type Type of the event
+// * \param cont Container in this event
+// * \param val Entity value of the event of the container
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addEventNB (varPrec time, const char* type,
+//                const char*  cont, const char* val);
 
 /**
  * \ingroup linkf
@@ -521,30 +533,30 @@ trace_return_t startLink   (varPrec time, const char* type,
                  const char*  dest, const char* val,
                  const char* key);
 
-/**
- * \ingroup linkf
- * \fn trace_return_t startLinkNB (varPrec  time,
- *                      const char  * type,
- *                      const char  * cont,
- *                      const char  * src,
- *                      const char  * dest,
- *                      const char  * val,
- *                      const char  * key)
- * \brief Start a Link in a non-bufferized mode.
- * \param time Time at which the link starts
- * \param type Type of the link
- * \param cont Container containing the link
- * \param src  Source container
- * \param dest Destination container
- * \param val  Entity value of the link
- * \param key  Key to identify the link
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t startLinkNB (varPrec time, const char* type,
-                 const char*  cont, const char* src,
-                 const char*  dest, const char* val,
-                 const char* key);
+///**
+// * \ingroup linkf
+// * \fn trace_return_t startLinkNB (varPrec  time,
+// *                      const char  * type,
+// *                      const char  * cont,
+// *                      const char  * src,
+// *                      const char  * dest,
+// *                      const char  * val,
+// *                      const char  * key)
+// * \brief Start a Link in a non-bufferized mode.
+// * \param time Time at which the link starts
+// * \param type Type of the link
+// * \param cont Container containing the link
+// * \param src  Source container
+// * \param dest Destination container
+// * \param val  Entity value of the link
+// * \param key  Key to identify the link
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t startLinkNB (varPrec time, const char* type,
+//                 const char*  cont, const char* src,
+//                 const char*  dest, const char* val,
+//                 const char* key);
 
 /**
  * \ingroup linkf
@@ -570,30 +582,30 @@ trace_return_t endLink   (varPrec time, const char* type,
                const char*  cont, const char* src,
                const char*  dest, const char* val,
                const char* key);
-/**
- * \ingroup linkf
- * \fn trace_return_t endLinkNB (varPrec  time,
- *                    const char  * type,
- *                    const char  * cont,
- *                    const char  * src,
- *                    const char  * dest,
- *                    const char  * val,
- *                    const char  * key)
- * \brief End a Link in a non-bufferized mode.
- * \param time Time at which the link ends
- * \param type Type of the link
- * \param cont Container containing the link
- * \param src  Source container
- * \param dest Destination container
- * \param val  Entity value of the link
- * \param key  Key to identify the link
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t endLinkNB (varPrec time, const char* type,
-               const char*  cont, const char* src,
-               const char*  dest, const char* val,
-               const char* key);
+///**
+// * \ingroup linkf
+// * \fn trace_return_t endLinkNB (varPrec  time,
+// *                    const char  * type,
+// *                    const char  * cont,
+// *                    const char  * src,
+// *                    const char  * dest,
+// *                    const char  * val,
+// *                    const char  * key)
+// * \brief End a Link in a non-bufferized mode.
+// * \param time Time at which the link ends
+// * \param type Type of the link
+// * \param cont Container containing the link
+// * \param src  Source container
+// * \param dest Destination container
+// * \param val  Entity value of the link
+// * \param key  Key to identify the link
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t endLinkNB (varPrec time, const char* type,
+//               const char*  cont, const char* src,
+//               const char*  dest, const char* val,
+//               const char* key);
 
 /**
  * \ingroup varf
@@ -611,22 +623,22 @@ trace_return_t endLinkNB (varPrec time, const char* type,
  */
 trace_return_t setVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val);
-/**
- * \ingroup varf
- * \fn trace_return_t setVarNB (varPrec  time,
- *                   const char  * type,
- *                   const char  * cont,
- *                   varPrec  val)
- * \brief Set a Variable value in a non-bufferized mode.
- * \param time Time at which the variable is set
- * \param type Type of the variable
- * \param cont Container containing the variable
- * \param val  Value of the variable
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t setVarNB (varPrec time, const char*  type,
-              const char*  cont, varPrec val);
+///**
+// * \ingroup varf
+// * \fn trace_return_t setVarNB (varPrec  time,
+// *                   const char  * type,
+// *                   const char  * cont,
+// *                   varPrec  val)
+// * \brief Set a Variable value in a non-bufferized mode.
+// * \param time Time at which the variable is set
+// * \param type Type of the variable
+// * \param cont Container containing the variable
+// * \param val  Value of the variable
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t setVarNB (varPrec time, const char*  type,
+//              const char*  cont, varPrec val);
 
 /**
  * \ingroup varf
@@ -644,22 +656,22 @@ trace_return_t setVarNB (varPrec time, const char*  type,
  */
 trace_return_t addVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val);
-/**
- * \ingroup varf
- * \fn trace_return_t addVarNB (varPrec  time,
- *                   const char  * type,
- *                   const char  * cont,
- *                   varPrec  val)
- * \brief Add a value to a Variable in a non-bufferized mode.
- * \param time Time at which the variable is incremented
- * \param type Type of the variable
- * \param cont Container containing the variable
- * \param val  Value added
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t addVarNB (varPrec time, const char*  type,
-              const char*  cont, varPrec val);
+///**
+// * \ingroup varf
+// * \fn trace_return_t addVarNB (varPrec  time,
+// *                   const char  * type,
+// *                   const char  * cont,
+// *                   varPrec  val)
+// * \brief Add a value to a Variable in a non-bufferized mode.
+// * \param time Time at which the variable is incremented
+// * \param type Type of the variable
+// * \param cont Container containing the variable
+// * \param val  Value added
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t addVarNB (varPrec time, const char*  type,
+//              const char*  cont, varPrec val);
 
 /**
  * \ingroup varf
@@ -678,22 +690,22 @@ trace_return_t addVarNB (varPrec time, const char*  type,
 
 trace_return_t subVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val);
-/**
- * \ingroup varf
- * \fn trace_return_t subVarNB (varPrec  time,
- *                   const char  * type,
- *                   const char  * cont,
- *                   varPrec  val)
- * \brief Substract a value from a Variable in a non-bufferized mode.
- * \param time Time at which the variable is decremented
- * \param type Type of the variable
- * \param cont Container containing the variable
- * \param val  Value substracted
- * \return 0 if success \n
- *         An error code otherwise
- */
-trace_return_t subVarNB (varPrec time, const char*  type,
-              const char*  cont, varPrec val);
+///**
+// * \ingroup varf
+// * \fn trace_return_t subVarNB (varPrec  time,
+// *                   const char  * type,
+// *                   const char  * cont,
+// *                   varPrec  val)
+// * \brief Substract a value from a Variable in a non-bufferized mode.
+// * \param time Time at which the variable is decremented
+// * \param type Type of the variable
+// * \param cont Container containing the variable
+// * \param val  Value substracted
+// * \return 0 if success \n
+// *         An error code otherwise
+// */
+//trace_return_t subVarNB (varPrec time, const char*  type,
+//              const char*  cont, varPrec val);
 
 
 

@@ -6,18 +6,427 @@
 /* verbose !=0 means debugging mode */
 int verbose = 0;
 static traceType_t traceType;
+/* Bufferized or not bufferized */
+static int mode;
 
-void setTraceType (traceType_t type){
+
+trace_return_t addProcTypeNB (const char* alias, const char* contType, 
+                              const char* name){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddProcTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddProcTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+
+trace_return_t addStateTypeNB (const char* alias, const char* contType, 
+                    const char* name){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddStateTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddStateTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t addEventTypeNB (const char* alias, const char* contType, 
+                    const char* name){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddEventTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddEventTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t addLinkTypeNB (const char* alias   , const char* name,
+                   const char* contType, const char* srcContType,
+                   const char* destContType){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddLinkTypeNB (alias, name, contType, srcContType, destContType);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddLinkTypeNB (alias, name, contType, srcContType, destContType);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t addVarTypeNB (const char* alias   , const char* name,
+                  const char* contType){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddVarTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddVarTypeNB (alias, contType, name);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t addEntityValueNB (const char* alias, const char* entType, 
+                      const char* name , gtg_color_t p_color){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddEntityValueNB (alias, entType, name, Paje_get_color(p_color));
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+	return OTFAddEntityValueNB (alias, entType, name, OTF_get_color(p_color));
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t addContainerNB (varPrec time, const char* alias    ,
+                    const char*  type, const char* container,
+                    const char*  name, const char* file){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+        return pajeSeqAddContainerNB (time, alias, type, container, name);
+        break;
+    case VITE :
+        return pajeAddContainerNB (time, alias, type, container, name, file);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddContainerNB (time, alias, type, container, name, file);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t destroyContainerNB   (varPrec time, const char*  name,
+                          const char*  type){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeDestroyContainerNB (time, name, type);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFDestroyContainerNB (time, name, type);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t setStateNB (varPrec time, const char* type,
+                const char*  cont, const char* val){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeSetStateNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFSetStateNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t pushStateNB (varPrec time, const char* type,
+                 const char*  cont, const char* val){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajePushStateNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFPushStateNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t popStateNB (varPrec time, const char* type,
+                const char*  cont){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajePopStateNB (time, type, cont);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFPopStateNB (time, type, cont);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t addEventNB (varPrec time, const char* type,
+                const char*  cont, const char* val){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddEventNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddEventNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t startLinkNB (varPrec time, const char* type,
+                 const char*  cont, const char* src,
+                 const char*  dest, const char* val,
+                 const char* key){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeStartLinkNB (time, type, cont, src, val, key);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFStartLinkNB (time, type, cont, src, val, key);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t endLinkNB (varPrec time, const char* type,
+               const char*  cont, const char* src,
+               const char*  dest, const char* val,
+               const char* key){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeEndLinkNB (time, type, cont, dest, val, key);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFEndLinkNB (time, type, cont, dest, val, key);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t setVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeSetVarNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFSetVarNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t addVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddVarNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddVarNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+trace_return_t subVarNB (varPrec time, const char*  type,
+              const char*  cont, varPrec val){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeSubVarNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFSubVarNB (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+void setTraceType (traceType_t type, int bufMode){
     char* res;
     traceType = type;
     res = getenv("GTG_VERBOSE");
+    // Initialising the buff mode to a valid value
+    if (bufMode==BUFF || bufMode==NOTBUF)
+        mode = bufMode;
+    else
+        mode=BUFF;
     if(res)
-	    verbose = 1;
+        verbose = 1;
 }
 
 traceType_t getTraceType (){
     return traceType;
 }
+
 
 trace_return_t initTrace   (const char* filename, int rank){
 	/* first, let's initialize gtg */
@@ -62,146 +471,90 @@ trace_return_t setCompress (int val){
 }
 
 trace_return_t addProcType   (const char* alias, const char* contType, 
-                   const char* name){
-    switch (traceType){
+                              const char* name){
+    if (mode==NOTBUF)
+        return addProcTypeNB (alias, contType, name);
+    else
+        switch (traceType){
 #ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddProcType (alias, contType, name);
-        break;
+        case PAJE :
+        case VITE :
+            return pajeAddProcType (alias, contType, name);
+            break;
 #endif
 #ifdef BUILD_OTF
-    case OTF :
-        return OTFAddProcType (alias, contType, name);
-        break;
+        case OTF :
+            return OTFAddProcType (alias, contType, name);
+            break;
 #endif
 #ifdef BUILD_TAU
-    case TAU :
+        case TAU :
 #endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
-trace_return_t addProcTypeNB (const char* alias, const char* contType, 
-                   const char* name){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddProcTypeNB (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddProcTypeNB (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
+        default :
+            break;
+        }
     return TRACE_SUCCESS;
 }
 
 trace_return_t addStateType   (const char* alias, const char* contType, 
                     const char* name){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddStateType (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddStateType (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
 
-trace_return_t addStateTypeNB (const char* alias, const char* contType, 
-                    const char* name){
-    switch (traceType){
+    if (mode==NOTBUF)
+        return addStateTypeNB (alias, contType, name);
+    else
+        switch (traceType){
 #ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddStateTypeNB (alias, contType, name);
-        break;
+        case PAJE :
+        case VITE :
+            return pajeAddStateType (alias, contType, name);
+            break;
 #endif
 #ifdef BUILD_OTF
-    case OTF :
-        return OTFAddStateTypeNB (alias, contType, name);
-        break;
+        case OTF :
+            return OTFAddStateType (alias, contType, name);
+            break;
 #endif
 #ifdef BUILD_TAU
-    case TAU :
+        case TAU :
 #endif
-    default :
-        break;
-    }
+        default :
+            break;
+        }
     return TRACE_SUCCESS;
 }
 
 trace_return_t addEventType   (const char* alias, const char* contType, 
                     const char* name){
-    switch (traceType){
+    if (mode==NOTBUF)
+        return addEventTypeNB (alias, contType, name);
+    else
+        switch (traceType){
 #ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddEventType (alias, contType, name);
-        break;
+        case PAJE :
+        case VITE :
+            return pajeAddEventType (alias, contType, name);
+            break;
 #endif
 #ifdef BUILD_OTF
-    case OTF :
-        return OTFAddEventType (alias, contType, name);
-        break;
+        case OTF :
+            return OTFAddEventType (alias, contType, name);
+            break;
 #endif
 #ifdef BUILD_TAU
-    case TAU :
+        case TAU :
 #endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
-trace_return_t addEventTypeNB (const char* alias, const char* contType, 
-                    const char* name){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddEventTypeNB (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddEventTypeNB (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
+        default :
+            break;
+        }
     return TRACE_SUCCESS;
 }
 
 trace_return_t addLinkType   (const char* alias   , const char* name,
                    const char* contType, const char* srcContType,
                    const char* destContType){
+    if (mode==NOTBUF)
+        return addLinkTypeNB (alias, name, contType, srcContType, destContType);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -223,32 +576,11 @@ trace_return_t addLinkType   (const char* alias   , const char* name,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addLinkTypeNB (const char* alias   , const char* name,
-                   const char* contType, const char* srcContType,
-                   const char* destContType){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddLinkTypeNB (alias, name, contType, srcContType, destContType);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddLinkTypeNB (alias, name, contType, srcContType, destContType);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t addVarType   (const char* alias   , const char* name,
                   const char* contType){
+    if (mode==NOTBUF)
+        return addVarTypeNB (alias, name, contType);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -270,31 +602,11 @@ trace_return_t addVarType   (const char* alias   , const char* name,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addVarTypeNB (const char* alias   , const char* name,
-                  const char* contType){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddVarTypeNB (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddVarTypeNB (alias, contType, name);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t addEntityValue   (const char* alias, const char* entType, 
                       const char* name , gtg_color_t p_color){
+    if (mode==NOTBUF)
+        return addEntityValueNB (alias, entType, name, p_color);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -316,32 +628,12 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addEntityValueNB (const char* alias, const char* entType, 
-                      const char* name , gtg_color_t p_color){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddEntityValueNB (alias, entType, name, Paje_get_color(p_color));
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-	return OTFAddEntityValueNB (alias, entType, name, OTF_get_color(p_color));
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t addContainer   (varPrec time, const char* alias    ,
                     const char*  type, const char* container,
                     const char*  name, const char* file){
+    if (mode==NOTBUF)
+        return addContainerNB (time, alias, type, container, name, file);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -365,34 +657,11 @@ trace_return_t addContainer   (varPrec time, const char* alias    ,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addContainerNB (varPrec time, const char* alias    ,
-                    const char*  type, const char* container,
-                    const char*  name, const char* file){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-        return pajeSeqAddContainerNB (time, alias, type, container, name);
-        break;
-    case VITE :
-        return pajeAddContainerNB (time, alias, type, container, name, file);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddContainerNB (time, alias, type, container, name, file);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t destroyContainer     (varPrec time, const char*  name,
                           const char*  type){
+    if (mode==NOTBUF)
+        return destroyContainerNB (time, name, type);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -414,31 +683,11 @@ trace_return_t destroyContainer     (varPrec time, const char*  name,
     return TRACE_SUCCESS;
 }
 
-trace_return_t destroyContainerNB   (varPrec time, const char*  name,
-                          const char*  type){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeDestroyContainerNB (time, name, type);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFDestroyContainerNB (time, name, type);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t setState   (varPrec time, const char* type,
                 const char*  cont, const char* val){
+    if (mode==NOTBUF)
+        return setStateNB (time, type, cont, val);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -460,31 +709,11 @@ trace_return_t setState   (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t setStateNB (varPrec time, const char* type,
-                const char*  cont, const char* val){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeSetStateNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFSetStateNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t pushState   (varPrec time, const char* type,
                  const char*  cont, const char* val){
+    if (mode==NOTBUF)
+        return pushStateNB (time, type, cont, val);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -506,31 +735,11 @@ trace_return_t pushState   (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t pushStateNB (varPrec time, const char* type,
-                 const char*  cont, const char* val){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajePushStateNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFPushStateNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t popState   (varPrec time, const char* type,
                 const char*  cont){
+    if (mode==NOTBUF)
+        return popStateNB (time, type, cont);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -552,31 +761,11 @@ trace_return_t popState   (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t popStateNB (varPrec time, const char* type,
-                const char*  cont){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajePopStateNB (time, type, cont);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFPopStateNB (time, type, cont);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t addEvent   (varPrec time, const char* type,
                 const char*  cont, const char* val){
+    if (mode==NOTBUF)
+        return addEventNB (time, type, cont, val);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -598,33 +787,13 @@ trace_return_t addEvent   (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addEventNB (varPrec time, const char* type,
-                const char*  cont, const char* val){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddEventNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddEventNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t startLink   (varPrec time, const char* type,
                  const char*  cont, const char* src,
                  const char*  dest, const char* val,
                  const char* key){
+    if (mode==NOTBUF)
+        return startLinkNB (time, type, cont, src, dest, val, key);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -646,35 +815,13 @@ trace_return_t startLink   (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t startLinkNB (varPrec time, const char* type,
-                 const char*  cont, const char* src,
-                 const char*  dest, const char* val,
-                 const char* key){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeStartLinkNB (time, type, cont, src, val, key);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFStartLinkNB (time, type, cont, src, val, key);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t endLink   (varPrec time, const char* type,
                const char*  cont, const char* src,
                const char*  dest, const char* val,
                const char* key){
+    if (mode==NOTBUF)
+        return endLinkNB (time, type, cont, src, dest, val, key);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -696,33 +843,11 @@ trace_return_t endLink   (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t endLinkNB (varPrec time, const char* type,
-               const char*  cont, const char* src,
-               const char*  dest, const char* val,
-               const char* key){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeEndLinkNB (time, type, cont, dest, val, key);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFEndLinkNB (time, type, cont, dest, val, key);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t setVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val){
+    if (mode==NOTBUF)
+        return setVarNB (time, type, cont, val);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -744,31 +869,11 @@ trace_return_t setVar   (varPrec time, const char*  type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t setVarNB (varPrec time, const char*  type,
-              const char*  cont, varPrec val){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeSetVarNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFSetVarNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t addVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val){
+    if (mode==NOTBUF)
+        return addVarNB (time, type, cont, val);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -790,31 +895,11 @@ trace_return_t addVar   (varPrec time, const char*  type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addVarNB (varPrec time, const char*  type,
-              const char*  cont, varPrec val){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeAddVarNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFAddVarNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
 trace_return_t subVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val){
+    if (mode==NOTBUF)
+        return subVarNB (time, type, cont, val);
+    else
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -825,29 +910,6 @@ trace_return_t subVar   (varPrec time, const char*  type,
 #ifdef BUILD_OTF
     case OTF :
         return OTFSubVar (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_TAU
-    case TAU :
-#endif
-    default :
-        break;
-    }
-    return TRACE_SUCCESS;
-}
-
-trace_return_t subVarNB (varPrec time, const char*  type,
-              const char*  cont, varPrec val){
-    switch (traceType){
-#ifdef BUILD_PAJE
-    case PAJE :
-    case VITE :
-        return pajeSubVarNB (time, type, cont, val);
-        break;
-#endif
-#ifdef BUILD_OTF
-    case OTF :
-        return OTFSubVarNB (time, type, cont, val);
         break;
 #endif
 #ifdef BUILD_TAU

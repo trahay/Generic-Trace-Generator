@@ -6,8 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "../inc/GTGBasic1.h"
-#include "../inc/GTGColor.h"
+#include "../inc/GTG.h"
 
 /* Size of the buffer used */
 #define TXTSIZE 200
@@ -35,7 +34,7 @@ int main (int argc, char** argv){
     char   key [TXTSIZE];
 
     /* Initialisation */
-    setTraceType (PAJE);
+    setTraceType (PAJE, BUFF);
     CHECK_RETURN (initTrace ("testAll", 0));
     /* Creating types used */
     CHECK_RETURN (addProcType ("CT_NET", "0", "Network"));

@@ -13,9 +13,11 @@ program main
   real (8) :: time
   real (8) :: val
   integer :: ierr
+  integer :: buf = 0
 
 !! Init  
-  call setTraceType_f (PAJE) 
+   
+  call setTraceType_f (PAJE, buf) 
   call initTrace_f ("fpaje", ierr) 
 !! Creating proc types
   call addProcType_f ("CT_NET", "0", "Network", ierr) 

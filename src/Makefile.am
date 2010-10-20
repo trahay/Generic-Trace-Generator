@@ -19,11 +19,11 @@ libgtg_la_LDFLAGS = --no-undefined
 libgtg_la_SOURCES = \
 	  C/GTGBasic1_c.c     \
 	  C/GTGColor.c     \
-          C/interfaceCFortranBasic1.c    \
 	  C/paje_GTGBasic1_c.c
 
 if FORTRAN
-libgtg_la_SOURCES +=	  FORTRAN/GTGBasic1_f.f90
+libgtg_la_SOURCES += C/interfaceCFortranBasic1.c    \
+		  FORTRAN/GTGBasic1_f.f90
 endif
 
 if USE_OTF
