@@ -13,15 +13,17 @@ integer, parameter :: VITE = 1
 integer, parameter :: OTF  = 2
 integer, parameter :: TAU  = 3
 
-interface C_CALL
+interface
    function  getTraceType_i ()
      integer :: getTraceType_i
    end function getTraceType_i   
+
+   function  getMode_i ()
+     integer :: getMode_i
+   end function getMode_i   
 end interface
 
-
 contains 
-
 
 subroutine setTraceType_f (type, mode)
   integer, intent (in) :: type
@@ -42,15 +44,15 @@ subroutine initTrace_f (filename, rank, ierr)
 end subroutine initTrace_f
 
 
-subroutine addProcType_f   (alias, contType, name, ierr)
+subroutine addContType_f   (alias, contType, name, ierr)
   character (len=*), intent (in) :: alias
   character (len=*), intent (in) :: contType
   character (len=*), intent (in) :: name
   integer, intent (out) :: ierr
-  call addProcType_i (alias   , len (trim (alias))   ,&
+  call addContType_i (alias   , len (trim (alias))   ,&
        &              contType, len (trim (contType)),&
        &              name    , len (trim (name)), ierr)
-end subroutine addProcType_f
+end subroutine addContType_f
 
 !!subroutine addProcTypeNB_f  (alias, contType, name, ierr)
 !!  character (len=*), intent (in) :: alias

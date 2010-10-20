@@ -3,14 +3,19 @@
 void
 setTraceType_i (int *type, int* mode)
 {
-    setTraceType ((traceType_t) * type, *mode);
-    return;
+  setTraceType ((traceType_t) * type, *mode);
 }
 
 int
 getTraceType_i ()
 {
   return getTraceType ();
+}
+
+int
+getMode_i ()
+{
+  return getMode ();
 }
 
 void
@@ -23,7 +28,7 @@ initTrace_i (char *f, int *len, int *rank, int *err)
 }
 
 void
-addProcType_i (char *alias, int *s1,
+addContType_i (char *alias, int *s1,
 	       char *contType, int *s2, char *name, int *s3, int *err)
 {
   char *a = (char *) malloc (sizeof (char) * (*s1 + 1));
@@ -35,7 +40,7 @@ addProcType_i (char *alias, int *s1,
   c[*s2] = '\0';
   memcpy (n, name, *s3);
   n[*s3] = '\0';
-  *err = addProcType (a, c, n);
+  *err = addContType (a, c, n);
 }
 
 
@@ -671,6 +676,11 @@ gettracetype_i_ ()
 {
   return getTraceType_i ();
 }
+int
+getmode_i_ ()
+{
+  return getMode_i ();
+}
 
 void
 inittrace_i_ (char *f, int *len, int*rank, int *err)
@@ -679,10 +689,10 @@ inittrace_i_ (char *f, int *len, int*rank, int *err)
 }
 
 void
-addproctype_i_ (char *alias, int *s1,
+addconttype_i_ (char *alias, int *s1,
 		char *contType, int *s2, char *name, int *s3, int *err)
 {
-  addProcType_i (alias, s1, contType, s2, name, s3, err);
+  addContType_i (alias, s1, contType, s2, name, s3, err);
 }
 
 //void

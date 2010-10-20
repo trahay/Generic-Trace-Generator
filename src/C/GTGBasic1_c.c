@@ -10,7 +10,7 @@ static traceType_t traceType;
 static int mode;
 
 
-trace_return_t addProcTypeNB (const char* alias, const char* contType, 
+trace_return_t addContTypeNB (const char* alias, const char* contType, 
                               const char* name){
     switch (traceType){
 #ifdef BUILD_PAJE
@@ -427,6 +427,9 @@ traceType_t getTraceType (){
     return traceType;
 }
 
+int getMode (){
+    return mode;
+}
 
 trace_return_t initTrace   (const char* filename, int rank){
 	/* first, let's initialize gtg */
@@ -470,10 +473,10 @@ trace_return_t setCompress (int val){
     return TRACE_SUCCESS;
 }
 
-trace_return_t addProcType   (const char* alias, const char* contType, 
+trace_return_t addContType   (const char* alias, const char* contType, 
                               const char* name){
     if (mode==NOTBUF)
-        return addProcTypeNB (alias, contType, name);
+        return addContTypeNB (alias, contType, name);
     else
         switch (traceType){
 #ifdef BUILD_PAJE
