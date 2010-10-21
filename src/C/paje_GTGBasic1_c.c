@@ -117,7 +117,7 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, int fmt){
 %% 	  Name 		string            \n");
         if(fmt==FMT_VITE)
             fprintf (headFile,"\
-%% 	  Filename	string            \n");
+%% 	  FileName	string            \n");
             fprintf (headFile,"\
 %%EndEventDef                             \n\
 %%EventDef PajeDestroyContainer		8 \n\

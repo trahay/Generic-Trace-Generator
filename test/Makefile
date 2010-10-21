@@ -7,7 +7,7 @@ LDFLAGS += -L../src/.libs
 
 .phony	: bin obj
 
-all	: dir testState testEvent testLink testVar testAll
+all	: dir testState testEvent testLink testVar testAll testState_parall
 
 dir	:
 		mkdir -p $(BIN)
