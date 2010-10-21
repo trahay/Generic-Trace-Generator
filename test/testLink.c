@@ -56,9 +56,9 @@ int main (int argc, char** argv){
     setTraceType (traceT,BUFF);
     CHECK_RETURN (initTrace ("testLink", 0));
     /* Creating types used */
-    CHECK_RETURN (addProcType ("CT_NET", "0", "Network"));
-    CHECK_RETURN (addProcType ("CT_NODE", "CT_NET", "Node"));
-    CHECK_RETURN (addProcType ("CT_PROC", "CT_NODE", "Proc"));
+    CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
+    CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));
+    CHECK_RETURN (addContType ("CT_PROC", "CT_NODE", "Proc"));
     CHECK_RETURN (addStateType ("ST_NodeState", "CT_NODE", "Node state"));
     CHECK_RETURN (addStateType ("ST_ProcState", "CT_PROC", "Procstate"));
     CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_RED));

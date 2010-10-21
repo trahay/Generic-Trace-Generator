@@ -71,6 +71,15 @@ traceType_t getTraceType ();
 
 /**
  * \ingroup traceType
+ * \fn traceType_t getName (int procRk)
+ * \param procRk Rank of the proc to get the file containing it
+ * \brief To get the name of the file to give to the addCont function for processors
+ * \return The name of the file to give for a proc
+ */
+char* getName (int procRk);
+
+/**
+ * \ingroup traceType
  * \fn int getMode ()
  * \brief To get the mode used to write the trace (bufferized or not)
  * \return The mode used

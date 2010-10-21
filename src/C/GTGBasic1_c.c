@@ -410,6 +410,28 @@ trace_return_t subVarNB (varPrec time, const char*  type,
     return TRACE_SUCCESS;
 }
 
+char* getName (int procNbr){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeGetName (procNbr);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return "0";    
+}
+
+
 void setTraceType (traceType_t type, int bufMode){
     char* res;
     traceType = type;
@@ -438,10 +460,10 @@ trace_return_t initTrace   (const char* filename, int rank){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
-        return pajeSeqInitTrace (filename);
+        return pajeInitTrace (filename, rank, FMT_PAJE);
         break;
     case VITE :
-        return pajeInitTrace (filename, rank);
+        return pajeInitTrace (filename, rank, FMT_VITE);
         break;
 #endif	/* BUILD_PAJE */
 #ifdef BUILD_OTF
@@ -930,8 +952,10 @@ trace_return_t endTrace (){
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
-    case VITE :
         ret = pajeEndTrace ();
+        break;
+    case VITE :
+        ret = viteEndTrace ();
         break;
 #endif
 #ifdef BUILD_OTF

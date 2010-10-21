@@ -17,6 +17,16 @@
 #ifndef _PAJETRACEGENERATORBASIC_
 #define _PAJETRACEGENERATORBASIC_
 #include "types.h"
+
+/**
+ * \brief Constant to create a paje trace
+ */
+#define FMT_PAJE 0
+/**
+ * \brief Constant to create a vite trace
+ */
+#define FMT_VITE 1
+
 /**
  * \defgroup cpaje Paje interface in C of the GTGBasic1 API
  */
@@ -27,20 +37,30 @@
  * \brief Initialize a VITE trace ( *.ept)
  * \param filename Root name of the file to create
  * \param rank Rank of the processor
+ * \param fmt Format, paje or vite
  * \return 0 if sucess
  *         An error code otherwise
  */
-trace_return_t pajeInitTrace   (const char* filename, int rank);
+trace_return_t pajeInitTrace   (const char* filename, int rank, int fmt);
 
 /**
  * \ingroup cpaje
- * \fn trace_return_t pajeSeqInitTrace   (const char* filename)
- * \brief Initialize a PAJE trace (*.trace)
- * \param filename Root name of the file to create
- * \return 0 if sucess
- *         An error code otherwise
+ * \fn char* pajeGetName (int rk)
+ * \param rk Rank of the proc you want the filename containing it
+ * \brief Function to get the name of the file containing all the data for the proc of rank rk
+ * \return Name of the file. 
  */
-trace_return_t pajeSeqInitTrace   (const char* filename);
+char* pajeGetName (int rk);
+///**
+// * \ingroup cpaje
+// * \fn trace_return_t pajeSeqInitTrace   (const char* filename)
+// * \brief Initialize a PAJE trace (*.trace)
+// * \param filename Root name of the file to create
+// * \param rank Rank of mpi process if any
+// * \return 0 if sucess
+// *         An error code otherwise
+// */
+//trace_return_t pajeSeqInitTrace   (const char* filename, int rank);
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddProcType   (const char* alias,
@@ -665,11 +685,20 @@ trace_return_t pajeSubVarNB (varPrec time, const char*  type,
 /**
  * \ingroup cpaje
  * \fn pajeEndTrace ()
- * \brief Finalize a PAJE or VITE trace.
+ * \brief Finalize a PAJE trace.
  * \return 0 if success \n
  *         An error code otherwise
  */
 trace_return_t pajeEndTrace ();
+
+/**
+ * \ingroup cpaje
+ * \fn viteEndTrace ()
+ * \brief Finalize a VITE trace.
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t viteEndTrace ();
 
 #endif
 
