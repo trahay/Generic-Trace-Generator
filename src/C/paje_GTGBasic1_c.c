@@ -808,6 +808,9 @@ trace_return_t pajeEndTrace (){
     MPI_Comm_rank (MPI_COMM_WORLD, &size);
     if (rank==0)
         merge (filename, size);
+    if (nameTmp)
+        free (nameTmp);
+    nameTmp = NULL;
     if (filename)
         free (filename);
     filename = NULL;
@@ -818,7 +821,10 @@ trace_return_t viteEndTrace (){
     my_close ();
     if (filename)
         free (filename);
+    if (nameTmp)
+        free (nameTmp);
     filename = NULL;
+    nameTmp = NULL;
     return TRACE_SUCCESS;
 }
 
