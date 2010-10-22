@@ -12,6 +12,9 @@
  */
 extern int verbose;
 
+/* Flags that should be used. */
+static gtg_flag_t otf_flags;
+
 /* OTF data */
 static OTF_FileManager* manager = NULL;
 static OTF_Writer* writer = NULL;
@@ -158,10 +161,11 @@ static void __OTF_init()
 }
 
 /* Beginning of the implementation of the interface for OTF */
-trace_return_t OTFInitTrace(const char* filenam) {
+trace_return_t OTFInitTrace(const char* filenam, gtg_flag_t flags) {
     int ret = TRACE_ERR_OPEN;
     int i;
 
+    otf_flags = flags;
     /* first, let's initialize all the OTF-specific variables */
     __OTF_init();
 
@@ -228,11 +232,6 @@ trace_return_t OTFAddProcType (const char* alias, const char* contType,
 }
 
 
-trace_return_t OTFAddProcTypeNB (const char* alias, const char* contType, 
-                      const char* name){
-    return OTFAddProcType(alias, contType, name);
-}
-
 trace_return_t OTFAddStateType (const char* alias, const char* contType, 
                      const char* name){
     if(current_stateType >= MAX_STATESTYPE) {
@@ -254,11 +253,6 @@ trace_return_t OTFAddStateType (const char* alias, const char* contType,
     current_stateType ++;
 
     return TRACE_SUCCESS;
-}
-
-trace_return_t OTFAddStateTypeNB (const char* alias, const char* contType, 
-                       const char* name){
-    return OTFAddStateType(alias, contType, name);
 }
 
 trace_return_t OTFAddEventType (const char* alias, const char* contType, 
@@ -284,20 +278,9 @@ trace_return_t OTFAddEventType (const char* alias, const char* contType,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddEventTypeNB (const char* alias, const char* contType, 
-                       const char* name){
-    return OTFAddEventType(alias, contType, name);
-}
-
 trace_return_t OTFAddLinkType (const char* alias   , const char* name,
                     const char* contType, const char* srcContType,
                     const char* destContType){
-    return TRACE_SUCCESS;
-}
-
-trace_return_t OTFAddLinkTypeNB (const char* alias   , const char* name,
-                      const char* contType, const char* srcContType,
-                      const char* destContType){
     return TRACE_SUCCESS;
 }
 
@@ -322,11 +305,6 @@ trace_return_t OTFAddVarType (const char* alias   , const char* name,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddVarTypeNB (const char* alias   , const char* name,
-                     const char* contType){
-    return OTFAddVarType(alias, name, contType);
-}
-
 trace_return_t OTFAddEntityValue (const char* alias, const char* entType, 
 				  const char* name , const otf_color_t color){
     int type = -1;
@@ -348,11 +326,6 @@ trace_return_t OTFAddEntityValue (const char* alias, const char* entType,
     OTF_Writer_writeDefFunction(writer, 0, current_state, name, type, 0);
     current_state ++;
     return TRACE_SUCCESS;
-}
-
-trace_return_t OTFAddEntityValueNB (const char* alias, const char* entType, 
-                         const char* name , const otf_color_t color){
-    return OTFAddEntityValue(alias, entType, name, color);
 }
 
 trace_return_t OTFAddContainer (varPrec time, const char* alias,
@@ -384,25 +357,11 @@ trace_return_t OTFAddContainer (varPrec time, const char* alias,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddContainerNB (varPrec time, const char* alias,
-                       const char*  type, const char* container,
-                       const char*  name, const char* file){
-    return OTFAddContainer(time, alias, type, container, name, file);
-}
-
-
 trace_return_t OTFSeqAddContainer (varPrec time, const char* alias,
                         const char*  type, const char* container,
                         const char*  name){
     return OTFAddContainer(time, alias, type, container, name, NULL);
 }
-
-trace_return_t OTFSeqAddContainerNB (varPrec time, const char* alias,
-                          const char*  type, const char* container,
-                          const char*  name){
-    return OTFAddContainer(time, alias, type, container, name, NULL);
-}
-
 
 trace_return_t OTFDestroyContainer (varPrec time, const char*  name,
                          const char*  type){
@@ -411,11 +370,6 @@ trace_return_t OTFDestroyContainer (varPrec time, const char*  name,
     return TRACE_SUCCESS;
 }
 
-
-trace_return_t OTFDestroyContainerNB (varPrec time, const char*  name,
-                           const char*  type){
-    return OTFDestroyContainer(time, name, type);
-}
 
 trace_return_t OTFSetState (varPrec time, const char* type,
                             const char*  cont, const char* val){
@@ -433,11 +387,6 @@ trace_return_t OTFSetState (varPrec time, const char* type,
     OTF_Writer_writeEnter (writer, time*TIMER_RES, state, parent, 0);
 
     return TRACE_SUCCESS;
-}
-
-trace_return_t OTFSetStateNB (varPrec time, const char* type,
-                              const char*  cont, const char* val){
-    return OTFSetState(time, type, cont, val);
 }
 
 trace_return_t OTFPushState (varPrec time, const char* type,
@@ -461,11 +410,6 @@ trace_return_t OTFPushState (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFPushStateNB (varPrec time, const char* type,
-                    const char*  cont, const char* val){
-    return OTFPushState(time, type, cont, val);
-}
-
 trace_return_t OTFPopState (varPrec time, const char* type,
                  const char*  cont){
     /* Pop and set */
@@ -486,11 +430,6 @@ trace_return_t OTFPopState (varPrec time, const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFPopStateNB (varPrec time, const char* type,
-                   const char*  cont){
-    return OTFPopState(time, type, cont);
-}
-
 trace_return_t OTFAddEvent (varPrec time    , const char* type,
                  const char *cont, const char* val){
     uint32_t process = getCtFromName(cont);
@@ -503,32 +442,15 @@ trace_return_t OTFAddEvent (varPrec time    , const char* type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddEventNB (varPrec time, const char* type,
-                   const char*  cont, const char* val){
-    return OTFAddEvent(time, type, cont, val);
-}
-
 trace_return_t OTFStartLink (varPrec time, const char* type,
                   const char*   cont, const char* src,
                   const char*   val , const char* key){
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFStartLinkNB (varPrec time, const char* type,
-                    const char*   cont, const char* src,
-                    const char*   val , const char* key){
-    return TRACE_SUCCESS;
-}
-
 trace_return_t OTFEndLink (varPrec time, const char* type,
                 const char*   cont, const char* dest,
                 const char*   val , const char* key){
-    return TRACE_SUCCESS;
-}
-
-trace_return_t OTFEndLinkNB (varPrec time, const char* type,
-                  const char*   cont, const char* dest,
-                  const char*   val , const char* key){
     return TRACE_SUCCESS;
 }
 
@@ -545,11 +467,6 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFSetVarNB (varPrec time, const char*  type,
-                 const char*  cont, varPrec val){
-    return OTFSetVar(time, type, cont, val);
-}
-
 trace_return_t OTFAddVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
     if(verbose)
@@ -557,21 +474,11 @@ trace_return_t OTFAddVar (varPrec time, const char*  type,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddVarNB (varPrec time, const char*  type,
-                 const char*  cont, varPrec val){
-    return OTFAddVar(time, type, cont, val);
-}
-
 trace_return_t OTFSubVar (varPrec time, const char*  type,
                const char*  cont, varPrec val){
     if(verbose)
 	    printf("subVar : %s %s %f\n", type, cont, val);
     return TRACE_SUCCESS;
-}
-
-trace_return_t OTFSubVarNB (varPrec time, const char*  type,
-                 const char*  cont, varPrec val){
-    return OTFSubVar(time, type, cont, val);
 }
 
 trace_return_t OTFEndTrace (){

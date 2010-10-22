@@ -1,9 +1,9 @@
 #include "GTGBasic1.h"
 
 void
-setTraceType_i (int *type, int* mode)
+setTraceType_i (int *type)
 {
-  setTraceType ((traceType_t) * type, *mode);
+  setTraceType ((traceType_t) * type);
 }
 
 int
@@ -12,19 +12,18 @@ getTraceType_i ()
   return getTraceType ();
 }
 
-int
-getMode_i ()
+int bufferedModeActivated_i()
 {
-  return getMode ();
+  return bufferedModeActivated_i();
 }
 
 void
-initTrace_i (char *f, int *len, int *rank, int *err)
+initTrace_i (char *f, int *len, int *rank, gtg_flag_t* flags, int *err)
 {
   char *filename = (char *) malloc (sizeof (char) * (*len + 1));
   memcpy (filename, f, *len);
   filename[*len] = '\0';
-  *err = initTrace (filename, *rank);
+  *err = initTrace (filename, *rank, *flags);
 }
 
 void
@@ -666,9 +665,9 @@ endTrace_i (int *err)
 
 /* manual aliasing of function, in order to avoid using GCC specific __attribute__ keyword */
 void
-settracetype_i_ (int *type, int* mode)
+settracetype_i_ (int *type)
 {
-    setTraceType_i (type, mode);
+    setTraceType_i (type);
 }
 
 int
@@ -676,16 +675,16 @@ gettracetype_i_ ()
 {
   return getTraceType_i ();
 }
-int
-getmode_i_ ()
+
+int bufferedmodeactivated_i_()
 {
-  return getMode_i ();
+  return bufferedModeActivated_i();
 }
 
 void
-inittrace_i_ (char *f, int *len, int*rank, int *err)
+inittrace_i_ (char *f, int *len, int*rank, gtg_flag_t* flags, int *err)
 {
-  initTrace_i (f, len, rank, err);
+  initTrace_i (f, len, rank, flags, err);
 }
 
 void
