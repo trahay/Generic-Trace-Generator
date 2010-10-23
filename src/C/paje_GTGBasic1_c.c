@@ -47,7 +47,7 @@ pajeGetName (int procNb){
         free (nameTmp);
     nameTmp = (char *)malloc (sizeof (char)*BUFFSIZE);
     if (filename){
-        sprintf (nameTmp, "%s_proc%d.ept", filename, procNb);
+        sprintf (nameTmp, "%s_proc%d.trace", filename, procNb);
         fprintf (stderr, "Name built : %s \n", nameTmp);
         return nameTmp;
     }
@@ -59,8 +59,12 @@ trace_return_t my_open (int rk){
     char f[BUFFSIZE];
 
     if (!procFile){
-        sprintf (f, "%s_proc%d.ept", filename, rk);
-        procFile = fopen (f, "w");
+	    if(!paje_flags & GTG_FLAG_USE_MPI) {
+		    procFile = headFile;
+	    } else {
+		    sprintf (f, "%s_proc%d.trace", filename, rk);
+		    procFile = fopen (f, "w");
+	    }
         if (!procFile)
             return ret;
         ret = TRACE_SUCCESS;
@@ -92,7 +96,7 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
     if( rank==0 ||
 	! (flags & GTG_FLAG_USE_MPI)) {
 
-        sprintf (file, "%s_root.ept", filename);
+        sprintf (file, "%s_root.trace", filename);
         headFile = fopen (file, "w");
         if (!headFile){
             fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
