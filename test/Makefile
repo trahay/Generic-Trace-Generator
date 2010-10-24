@@ -2,7 +2,7 @@ LIB=$(LDFLAGS) -lgtg
 INC= -I../inc/
 BIN=bin
 CC =mpicc
-LDFLAGS += -L../src/.libs -Wl,-rpath=/home/glaurt7/Bureau/carriere/projets_perso/GTG/gtg/trunk/src/.libs
+LDFLAGS += -L../src/.libs #-Wl,-rpath=/home/glaurt7/Bureau/carriere/projets_perso/GTG/gtg/trunk/src/.libs
 
 .phony	: bin obj
 
