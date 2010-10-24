@@ -28,7 +28,7 @@ endif
 
 if USE_MPI
 libgtg_la_CFLAGS += -DUSE_MPI
-libgtg_la_LIBADD += -lmpi
+#libgtg_la_LIBADD += -lmpi
 endif
 
 if USE_OTF

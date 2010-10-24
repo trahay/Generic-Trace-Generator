@@ -40,10 +40,11 @@ static gtg_flag_t paje_flags;
 
 // Structure containing the info of a current line
 typedef struct line_t{
-    FILE*   file;  // File
-    char*   value; // The value of the line
-    int     size;  // Size of the value buffer
-    varPrec time;  // Time (second element of the line)
+    FILE*   file;   // File
+    char*   value;  // The value of the line
+    int     size;   // Size of the value buffer
+    varPrec time;   // Time (second element of the line)
+    int     status; // If EOF reached
 }line_t;
 
 typedef struct doubleLinkList_t{
@@ -68,7 +69,7 @@ void insert (doubleLinkList_t** first, doubleLinkList_t* item){
         item->next = NULL;
         return;
     }
-    if (time<iter->current.time){
+    if (time<=iter->current.time){
         item->prev = NULL;
         item->next = *first;
         *first = item;
@@ -78,10 +79,12 @@ void insert (doubleLinkList_t** first, doubleLinkList_t* item){
         iter = iter->next;
 
     if (time<iter->current.time){
-        iter->prev = iter->prev;
+        item->prev = iter->prev;
         item->next = iter;
+        iter->prev = item;
     }
     else{
+        iter->next = item;
         item->prev = iter;
         item->next=NULL;
     }
@@ -98,6 +101,7 @@ void initMerge (char* file, int rk, doubleLinkList_t* li){
     }
     rewind (li->current.file);
     li->current.value = NULL;
+    li->current.status = 1;
 }
 
 void myGetLine (doubleLinkList_t* li){
@@ -107,9 +111,14 @@ void myGetLine (doubleLinkList_t* li){
         free (li->current.value);
     li->current.value = NULL;
     ret = getline (&(li->current.value), &(li->current.size), li->current.file);
-    if (ret != -1)
-        sscanf (li->current.value, "%d %13e", &toto, &(li->current.time));
 
+    if (li->current.size==0 || ret ==-1)
+        li->current.status=0;
+    
+    if ((li->current.size)>0)
+        sscanf (li->current.value, "%d %lf", &toto, &(li->current.time));
+    else
+        fprintf (stderr, "failed to read \n");
 }
 
 void clean_files (char* fileName, int nbFile){
@@ -156,17 +165,23 @@ void merge (char* filename, int nbFile){
         myGetLine (list+i);
         insert (&first, list+i);
     }
-    while (first){
+
+    while (first && first->current.status != 0){
         fprintf (res, "%s", first->current.value);
         myGetLine (first);
-        iter = first;
-        first = first->next;
-        if (first)
-            first->prev = NULL;
-        if (iter->current.value[0] != '\0')
-            insert (&first, iter);
-//        if (first->current.file==EOF)
-//            break;
+        if (first->current.status==0){
+            first=first->next;
+            if (first)
+                first->prev = NULL;
+        }
+        else{
+            iter = first;
+            first = first->next;
+            if (first)
+                first->prev = NULL;
+            if (first && iter->current.value[0] != '\0')
+                insert (&first, iter);
+        }
     }
     fclose (res);
     clean_files (filename, nbFile);
@@ -741,10 +756,10 @@ trace_return_t pajeEndTrace (){
     // Wait for all proc to finish writing their trace
 #ifdef USE_MPI
     if(paje_flags & GTG_FLAG_USE_MPI) {
-	    MPI_Barrier (MPI_COMM_WORLD);
-	    MPI_Comm_rank (MPI_COMM_WORLD, &size);
-	    if(verbose)
-		    fprintf (stderr, "USING MPI \n");
+        MPI_Barrier (MPI_COMM_WORLD);
+        MPI_Comm_size (MPI_COMM_WORLD, &size);
+        if(verbose)
+            fprintf (stderr, "USING MPI \n");
     }
     if (rank==0)
 #endif	/* USE_MPI */
