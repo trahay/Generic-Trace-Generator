@@ -26,6 +26,11 @@ libgtg_la_SOURCES += C/interfaceCFortranBasic1.c    \
 		  FORTRAN/GTGBasic1_f.f90
 endif
 
+if USE_MPI
+libgtg_la_CFLAGS += -DUSE_MPI
+libgtg_la_LIBADD += -lmpi
+endif
+
 if USE_OTF
 libgtg_la_CFLAGS += -DBUILD_OTF
 libgtg_la_SOURCES += C/OTF_GTGBasic1_c.c
