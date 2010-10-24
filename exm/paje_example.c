@@ -3,11 +3,11 @@
 #include "../inc/GTG.h"
 
 int main (int argc, char** argv){
-    setTraceType (PAJE, BUFF);
-    initTrace ("cpaje", 0);
-    addProcType ("CT_NET", "0", "Network");
-    addProcType ("CT_NODE", "CT_NET", "Node");
-    addProcType ("CT_PROC", "CT_NODE", "Proc");
+    setTraceType (PAJE);
+    initTrace ("cpaje", 0, GTG_FLAG_NONE);
+    addContType ("CT_NET", "0", "Network");
+    addContType ("CT_NODE", "CT_NET", "Node");
+    addContType ("CT_PROC", "CT_NODE", "Proc");
     addStateType ("ST_NodeState", "CT_NODE", "Node state");
     addStateType ("ST_ProcState", "CT_PROC", "Procstate");
     addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_LIGHTPINK);
