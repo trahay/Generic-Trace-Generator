@@ -57,6 +57,9 @@ int main (int argc, char** argv){
     case 2 :
         traceT = OTF;
         break;
+    case 3 :
+        traceT = PAJE;
+        break;
     default :
         traceT = VITE;
         break;

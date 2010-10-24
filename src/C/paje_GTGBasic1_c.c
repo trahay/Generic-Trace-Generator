@@ -140,12 +140,12 @@ void merge (char* filename, int nbFile){
         exit (-1);
     }
     rewind (oldF);
-    while (buf[0] != EOF){
+    do{
         i = getline (&buf, &size, oldF);
         if (size==0 || i==-1)
             break;
         fprintf (res, "%s", buf);
-    }
+    }while (buf[0] != EOF);
     fclose (oldF);
     // Initialising the parallel merge
     list = (doubleLinkList_t *)malloc (sizeof (doubleLinkList_t)*nbFile);
@@ -179,7 +179,8 @@ pajeGetName (int procNb){
     nameTmp = (char *)malloc (sizeof (char)*BUFFSIZE);
     if (filename){
         sprintf (nameTmp, "%s_proc%d.ept", filename, procNb);
-        fprintf (stderr, "Name built : %s \n", nameTmp);
+        if(verbose)
+            fprintf (stderr, "Name built : %s \n", nameTmp);
         return nameTmp;
     }
     return "0";
@@ -741,9 +742,13 @@ trace_return_t pajeEndTrace (){
 #ifdef USE_MPI
     MPI_Barrier (MPI_COMM_WORLD);
     MPI_Comm_rank (MPI_COMM_WORLD, &size);
+    if(verbose)
+        fprintf (stderr, "USING MPI \n");
     if (rank==0)
         merge (filename, size);
 #else
+    if(verbose)
+        fprintf (stderr, "NOT USING MPI \n");
     merge (filename, 1);
 #endif	/* USE_MPI */
     if (nameTmp)
