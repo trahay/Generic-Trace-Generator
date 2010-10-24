@@ -736,21 +736,20 @@ trace_return_t pajeSubVar   (varPrec time, const char*  type,
 }
 
 trace_return_t pajeEndTrace (){
-    int size;
+    int size = 1;
     my_close ();
     // Wait for all proc to finish writing their trace
 #ifdef USE_MPI
-    MPI_Barrier (MPI_COMM_WORLD);
-    MPI_Comm_rank (MPI_COMM_WORLD, &size);
-    if(verbose)
-        fprintf (stderr, "USING MPI \n");
+    if(paje_flags & GTG_FLAG_USE_MPI) {
+	    MPI_Barrier (MPI_COMM_WORLD);
+	    MPI_Comm_rank (MPI_COMM_WORLD, &size);
+	    if(verbose)
+		    fprintf (stderr, "USING MPI \n");
+    }
     if (rank==0)
-        merge (filename, size);
-#else
-    if(verbose)
-        fprintf (stderr, "NOT USING MPI \n");
-    merge (filename, 1);
 #endif	/* USE_MPI */
+    merge (filename, size);
+
     if (nameTmp)
         free (nameTmp);
     nameTmp = NULL;
