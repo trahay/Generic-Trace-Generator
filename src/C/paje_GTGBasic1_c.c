@@ -124,7 +124,7 @@ void merge (char* filename, int nbFile){
     doubleLinkList_t* iter;
     FILE            * res;
     FILE            * oldF;
-    char            * buf;
+    char            * buf = NULL;
     char              tmp[BUFFSIZE];
     char              tmp2[BUFFSIZE];
     int               size;
