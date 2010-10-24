@@ -26,20 +26,20 @@ errors=0
 echo " "
 echo " Diff of the traces "
 echo " For the whole trace :"
-diff bin/testAll_root.trace rootTraces/testAll.trace || errors=1
+diff bin/testAll.trace rootTraces/testAll.trace || errors=1
 
 echo " DONE "
 echo " For the events :"
-diff bin/testEvent_root.trace rootTraces/testEvent.trace  || errors=1
+diff bin/testEvent.trace rootTraces/testEvent.trace  || errors=1
 echo " DONE "
 echo " For the links :"
-diff bin/testLink_root.trace rootTraces/testLink.trace  || errors=1
+diff bin/testLink.trace rootTraces/testLink.trace  || errors=1
 echo " DONE "
 echo " For the states :"
-diff bin/testState_root.trace rootTraces/testState.trace || errors=1
+diff bin/testState.trace rootTraces/testState.trace || errors=1
 echo " DONE "
 echo " For the counter :"
-diff bin/testVar_root.trace rootTraces/testVar.trace || errors=1
+diff bin/testVar.trace rootTraces/testVar.trace || errors=1
 echo " DONE "
 
 if [ $errors -eq 0 ]; then

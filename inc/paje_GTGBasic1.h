@@ -78,6 +78,8 @@ char* pajeGetName (int rk);
 trace_return_t pajeAddProcType   (const char* alias, const char* contType, 
                        const char* name);
 
+
+
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddStateType   (const char* alias,
@@ -182,6 +184,40 @@ trace_return_t pajeAddContainer (varPrec time, const char* alias    ,
                       const char*  type, const char* container,
                       const char*  name, const char* file);
 
+
+/**
+ * \ingroup cpaje
+ * \fn trace_return_t pajeSeqAddContainer (varPrec  time,
+ *                                         const char  * alias,
+ *                                         const char  * type, 
+ *                                         const char  * container,
+ *                                         const char  * name)
+ * \brief Add a Container (PAJE format).
+ * \param time Time at which the container is added
+ * \param alias Alias on the new container
+ * \param type Type of the container
+ * \param container Container parent
+ * \param name Name of the variable type
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
+                                      const char*  type, const char* container,
+                                      const char*  name);
+
+/**
+ * \ingroup cpaje
+ * \fn trace_return_t pajeDestroyContainer (varPrec  time,
+ *                           const char  * alias,
+ *                           const char  * type, 
+ * \brief Destroy a Container.
+ * \param time Time at which the container is destroyed
+ * \param name Name on the container to destroy
+ * \param type Type of the container
+ */
+trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
+                                         const char*  type);
+
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeSetState (varPrec  time,
@@ -247,6 +283,52 @@ trace_return_t pajePopState   (varPrec time, const char* type,
 trace_return_t pajeAddEvent   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 
+
+
+/**
+ * \ingroup cpaje
+ * \fn trace_return_t pajeStartLink (varPrec  time,
+ *                     const char  * type,
+ *                     const char  * cont,
+ *                     const char  * src,
+ *                     const char  * val,
+ *                     const char  * key)
+ * \brief Start a link
+ * \param time Time at which the link starts
+ * \param type Type of the link
+ * \param cont Container parent of the source and destination containers containing the link
+ * \param src  Source container
+ * \param val  Value of the link
+ * \param key  Key used to match start link with end link
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t pajeStartLink   (varPrec time, const char* type,
+                                const char*   cont, const char* src,
+                                const char*   val , const char* key);
+
+/**
+ * \ingroup cpaje
+ * \fn trace_return_t pajeStartLink (varPrec  time,
+ *                     const char  * type,
+ *                     const char  * cont,
+ *                     const char  * dest,
+ *                     const char  * val,
+ *                     const char  * key)
+ * \brief Start a link
+ * \param time Time at which the link starts
+ * \param type Type of the link
+ * \param cont Container parent of the source and destination containers containing the link
+ * \param dest Source container
+ * \param val  Value of the link
+ * \param key  Key used to match start link with end link
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t pajeEndLink   (varPrec time, const char* type,
+                              const char*   cont, const char* dest,
+                              const char*   val , const char* key);
+
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeSetVar (varPrec  time,
@@ -261,6 +343,7 @@ trace_return_t pajeAddEvent   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
+
 trace_return_t pajeSetVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
