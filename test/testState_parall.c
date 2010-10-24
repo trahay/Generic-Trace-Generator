@@ -64,9 +64,9 @@ int main (int argc, char** argv){
     }
 
     /* Initialisation */
-    setTraceType (traceT, BUFF);
+    setTraceType (traceT);
     fprintf (stderr, "Mon rang est %d \n", rank);
-    CHECK_RETURN (initTrace ("testState_parall", rank));
+    CHECK_RETURN (initTrace ("testState_parall", rank, GTG_FLAG_USE_MPI|GTG_FLAG_NOTBUF));
     if (rank==0){
         /* Creating types used */
         CHECK_RETURN (addContType ("CT_NET", "0", "Network"));

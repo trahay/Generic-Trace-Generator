@@ -34,8 +34,8 @@ int main (int argc, char** argv){
     char   key [TXTSIZE];
 
     /* Initialisation */
-    setTraceType (PAJE, BUFF);
-    CHECK_RETURN (initTrace ("testAll", 0));
+    setTraceType (PAJE);
+    CHECK_RETURN (initTrace ("testAll", 0, GTG_FLAG_NONE));
     /* Creating types used */
     CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
     CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));

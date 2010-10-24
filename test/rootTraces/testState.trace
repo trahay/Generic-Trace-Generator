@@ -1,6 +1,6 @@
 %EventDef PajeDefineContainerType	1 
-    % 	  Alias 	string            
-    % 	  ContainerType string            
+% 	  Alias 	string            
+% 	  ContainerType string            
 % 	  Name 		string            
 %EndEventDef                             
 %EventDef PajeDefineStateType		3 

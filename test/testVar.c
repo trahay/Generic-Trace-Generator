@@ -53,8 +53,8 @@ int main (int argc, char** argv){
     }
 
     /* Initialisation */
-    setTraceType (traceT, BUFF);
-    CHECK_RETURN (initTrace ("testVar", 0));
+    setTraceType (traceT);
+    CHECK_RETURN (initTrace ("testVar", 0, GTG_FLAG_NONE));
     /* Creating types used */
     CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
     CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));
