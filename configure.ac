@@ -67,11 +67,12 @@ AC_ARG_WITH(mpi, [AS_HELP_STRING([--with-mpi[=<dir>]], [Use a specific MPI insta
 if test $use_mpi = yes ; then
    AC_SUBST(USE_MPIDIR_FROM_USER,$use_mpi_from_system)
    if test x$use_mpi_from_system = xno; then
-        CPPFLAGS="${CPPFLAGS} -I$mpidir/ "
+        CPPFLAGS="${CPPFLAGS} -I$mpidir/include "
+        LDFLAGS="${LDFLAGS} -L$mpidir/lib "
    fi
 
    # MPI header
-   AC_CHECK_HEADER([mpi.h],[enable_mpi=yes],)	
+   AC_CHECK_HEADER([mpi.h],[enable_mpi=yes],)
 else
   enable_mpi=no
 fi
