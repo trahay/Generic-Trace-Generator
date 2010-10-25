@@ -12,6 +12,11 @@
  */
 extern int verbose;
 
+/* set to 'val' if the initialization should invoke set_compression
+ * This may happen when setCompress is called before initTrace
+ */
+int use_compress = 0;
+
 /* Flags that should be used. */
 static gtg_flag_t otf_flags;
 
@@ -190,18 +195,26 @@ trace_return_t OTFInitTrace(const char* filenam, gtg_flag_t flags) {
 
     OTF_Writer_writeDefTimerResolution(writer, 0, TIMER_RES);
 
+    if(use_compress)
+	    OTF_Writer_setCompression (writer, use_compress);
+
     OTFAddProcType("0", NULL, "0");
 
     for(i = 0 ; i < MAX_PROCESS ; i ++) {
         states_saved[i].current_id = 0;
     }
+
     return TRACE_SUCCESS;
 }
 
 trace_return_t OTFSetCompress(int val) {
-    if(OTF_Writer_setCompression (writer, val))
-        return TRACE_SUCCESS;
-    else
+	if(writer) {
+		if(OTF_Writer_setCompression (writer, val))
+			return TRACE_SUCCESS;
+	} else {
+		/* postpone the invocation of setCompression */
+		use_compress=val;
+	}
         return TRACE_ERR_WRITE;
 }
 
