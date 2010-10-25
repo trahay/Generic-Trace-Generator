@@ -67,21 +67,28 @@ void insert (doubleLinkList_t** first, doubleLinkList_t* item){
         *first=item;
         item->prev = NULL;
         item->next = NULL;
+        //        printf (stderr, "Nil list \n");
         return;
     }
+    // If to insert in first pos
     if (time<=iter->current.time){
         item->prev = NULL;
         item->next = *first;
+        if (item->next)
+            (item->next)->prev = item;
         *first = item;
+        return;
     }
     // Positionning iterator to insert in a sorted list
     while (time>iter->current.time && iter->next)
         iter = iter->next;
 
-    if (time<iter->current.time){
+    if (time<=iter->current.time){///!\
         item->prev = iter->prev;
         item->next = iter;
         iter->prev = item;
+        if (item->prev)
+            (item->prev)->next = item;
     }
     else{
         iter->next = item;
@@ -112,8 +119,10 @@ void myGetLine (doubleLinkList_t* li){
     li->current.value = NULL;
     ret = getline (&(li->current.value), &(li->current.size), li->current.file);
 
-    if (li->current.size==0 || ret ==-1)
+    if (li->current.size==0 || ret ==-1){
         li->current.status=0;
+        //        fprintf (stderr, "Invalid read \n");
+    }
     
     if ((li->current.size)>0)
         sscanf (li->current.value, "%d %lf", &toto, &(li->current.time));
@@ -166,6 +175,10 @@ void merge (char* filename, int nbFile){
         insert (&first, list+i);
     }
 
+    //    fprintf (stderr, "Nb file = %d \n La liste : \n", nbFile);
+    //    for (i=0;i<nbFile;i++)
+    //        fprintf (stderr, "L1 = %s \n", list[i].current.value);
+
     while (first && first->current.status != 0){
         fprintf (res, "%s", first->current.value);
         myGetLine (first);
@@ -179,9 +192,12 @@ void merge (char* filename, int nbFile){
             first = first->next;
             if (first)
                 first->prev = NULL;
-            if (first && iter->current.value[0] != '\0')
+            if (first && iter->current.status != 0)
                 insert (&first, iter);
         }
+        //        for (i=0;i<nbFile;i++)
+        //            fprintf (stderr, "L1 = %s, st=%d \n", list[i].current.value,list[i].current.status);
+        //        fprintf (stderr, "<---------------------------->\n\n");
     }
     fclose (res);
     clean_files (filename, nbFile);

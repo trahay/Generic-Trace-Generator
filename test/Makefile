@@ -7,7 +7,7 @@ LDFLAGS += -L../src/.libs
 
 .phony	: bin obj
 
-all	: dir testState testEvent testLink testVar testAll testState_parall
+all	: dir testState testEvent testLink testVar testAll testState_parall testEvent_parall
 
 dir	:
 		mkdir -p $(BIN)
@@ -19,6 +19,9 @@ testState	: testState.c
 		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
 
 testState_parall	: testState_parall.c
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+
+testEvent_parall	: testEvent_parall.c
 		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
 
 testEvent	: testEvent.c

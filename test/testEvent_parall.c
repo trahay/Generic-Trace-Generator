@@ -1,5 +1,5 @@
 /*
- * Small test of the state generation in parallel (for ViTE, Paje and OTF format)
+ * Small test of the events generation in parallel (for VITE,Paje and OTF formats)
  * Author Kevin Coulomb
  */
 
@@ -22,7 +22,7 @@ void clear (char* buf, int size){
 /* Small macro to test the return value */
 #define CHECK_RETURN(val) {if (val!=TRACE_SUCCESS){fprintf (stderr, "Function failed line %d. Leaving \n", __LINE__);exit (-1);}}
 
-/* Main function to generate a trace containing some container and only states. Output format is otf if argv(1)=2, vite otherwise */
+/* Main function to generate a trace containing some container and only states and events. Output format is otf if argv(1)=2, paje otherwise */
 int main (int argc, char** argv){
     double time;
     double timer;
@@ -38,7 +38,7 @@ int main (int argc, char** argv){
     int    size;
 
     if (argc<2){
-        fprintf (stderr, "Usage : mpirun -n 6 ./testState_paral <trace type>. \n 1 for vite, 2 for otf 3 for paje. \n");
+        fprintf (stderr, "Usage : mpirun -n 6 ./testEvent_parall <trace type>. \n 1 for vite, 2 for otf, 3 for paje. \n");
         exit (-1);
     }
     MPI_Init (&argc, &argv);
@@ -67,8 +67,8 @@ int main (int argc, char** argv){
 
     /* Initialisation */
     setTraceType (traceT);
-    //    fprintf (stderr, "Mon rang est %d \n", rank);
-    CHECK_RETURN (initTrace ("testState_parall", rank, GTG_FLAG_USE_MPI|GTG_FLAG_NOTBUF));
+    fprintf (stderr, "Rank : %d \n", rank);
+    CHECK_RETURN (initTrace ("testEvent_parall", rank, GTG_FLAG_USE_MPI|GTG_FLAG_NOTBUF));
     if (rank==0){
         /* Creating types used */
         CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
@@ -84,6 +84,9 @@ int main (int argc, char** argv){
         CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", GTG_BLUE));
         CHECK_RETURN (addEntityValue ("SP_6", "ST_ProcState", "Division", GTG_TEAL));
         CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", GTG_PURPLE));
+        /* Adding event types */
+        CHECK_RETURN (addEventType ("E_0", "CT_PROC", "Rabbit"));
+        CHECK_RETURN (addEventType ("E_1", "CT_PROC", "Chocolate"));
         /* Building containers tree */
         CHECK_RETURN (addContainer (0.00000, "C_Net0", "CT_NET", "0", "Ensemble0", ""));
         CHECK_RETURN (addContainer (0.00000, "C_N0", "CT_NODE", "C_Net0", "Node0", ""));
@@ -95,10 +98,13 @@ int main (int argc, char** argv){
         CHECK_RETURN (addContainer (0.00000, "C_P4", "CT_PROC", "C_N1", "Proc4", getName (4)));
         CHECK_RETURN (addContainer (0.00000, "C_P5", "CT_PROC", "C_N1", "Proc5", getName (5)));
     }
-    MPI_Barrier (MPI_COMM_WORLD);        
+    MPI_Barrier (MPI_COMM_WORLD);
+
     clear (txt, TXTSIZE);
     time = 1.00000000;
     for (i=0; i<200; i++){
+        clear (name, TXTSIZE);
+        clear (proc, TXTSIZE);
         if (i%10 == 0){
             sprintf (txt , "ST_NodeState");
             sprintf (proc, "C_N%d", (i%20)?0:1);
@@ -109,9 +115,17 @@ int main (int argc, char** argv){
             sprintf (proc, "C_P%d", i%6);
             sprintf (name, "SP_%d", i%5+3);
         }
-        if (i%6==rank){
+        if (i%6==rank)
             CHECK_RETURN (setState (time, txt, proc, name));  
+        clear (name, TXTSIZE);
+        clear (proc, TXTSIZE);
+        if (i%6==rank){
+            sprintf (name, "E_%d", i%2);
+            sprintf (proc, "C_P%d", i%6);
+            sprintf (key , "%d", i%13);
+            CHECK_RETURN (addEvent (time+0.125, name, proc, key));    /* Adding events */
         }
+
         time += 0.25;
     }
 
