@@ -18,6 +18,7 @@
 #define _OTFSTRUCTS_
 
 #include <stdint.h>
+#include "types.h"
 
 /* ContainerTypes */
 #define MAX_PROCESSTYPE 100
@@ -69,6 +70,22 @@ typedef struct EventType {
 } EventType_t;
 
 
+/*! Links/Messages */
+#define MAX_LINKTYPE 100
+typedef struct LinkType {
+    char *name;
+    char *alias;
+    int   contType;
+    int srcType;
+    int destType;
+} LinkType_t;
+
+typedef struct Link {
+    varPrec time;
+    int src;
+} Link_t;
+
+
 /*! Variables/Counters */
 #define MAX_VARIABLETYPE 100
 typedef struct VariableType {
@@ -76,6 +93,12 @@ typedef struct VariableType {
     char *alias;
     int   contType;
 } VariableType_t;
+
+#define MAX_VARIABLE 1000
+typedef struct Variable {
+    int parent;
+    int type;
+} Variable_t;
 
 struct otf_color {
     char *colorID;

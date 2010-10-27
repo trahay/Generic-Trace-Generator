@@ -3,6 +3,7 @@
  * Author Kevin Coulomb and Johnny Jazeix
  */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -22,11 +23,10 @@ void clear (char* buf, int size){
 /* Small macro to test the return value */
 #define CHECK_RETURN(val) {if (val!=TRACE_SUCCESS){fprintf (stderr, "Function failed line %d. Leaving \n", __LINE__);exit (-1);}}
 
-/* Main function to generate a trace in the otf format called cotf.trace */
+/* Main function to generate a trace in the Paje format called cpaje2.trace */
 int main (int argc, char** argv){
     double time;
     double timer;
-    double var;
     int    i;
     char   txt [TXTSIZE];
     char   proc[TXTSIZE];
@@ -37,21 +37,21 @@ int main (int argc, char** argv){
 
     /* Initialisation */
     setTraceType (OTF);
-    CHECK_RETURN (initTrace ("cotf"));
+    CHECK_RETURN (initTrace ("cotf", 0, GTG_FLAG_NONE));
     /* Creating types used */
-    CHECK_RETURN (addProcType ("CT_NET", "0", "Network"));
-    CHECK_RETURN (addProcType ("CT_NODE", "CT_NET", "Node"));
-    CHECK_RETURN (addProcType ("CT_PROC", "CT_NODE", "Proc"));
+    CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
+    CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));
+    CHECK_RETURN (addContType ("CT_PROC", "CT_NODE", "Proc"));
     CHECK_RETURN (addStateType ("ST_NodeState", "CT_NODE", "Node state"));
     CHECK_RETURN (addStateType ("ST_ProcState", "CT_PROC", "Procstate"));
-    CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", P_RED));
-    CHECK_RETURN (addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", P_PINK));
-    CHECK_RETURN (addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", P_BLACK));
-    CHECK_RETURN (addEntityValue ("SP_3", "ST_ProcState", "Produit", P_ORANGE));
-    CHECK_RETURN (addEntityValue ("SP_4", "ST_ProcState", "Somme", P_GREEN));
-    CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", P_BLUE));
-    CHECK_RETURN (addEntityValue ("SP_6", "ST_ProcState", "Division", P_TEAL));
-    CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", P_PURPLE));
+    CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_RED));
+    CHECK_RETURN (addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", GTG_PINK));
+    CHECK_RETURN (addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", GTG_BLACK));
+    CHECK_RETURN (addEntityValue ("SP_3", "ST_ProcState", "Produit", GTG_ORANGE));
+    CHECK_RETURN (addEntityValue ("SP_4", "ST_ProcState", "Somme", GTG_GREEN));
+    CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", GTG_BLUE));
+    CHECK_RETURN (addEntityValue ("SP_6", "ST_ProcState", "Division", GTG_TEAL));
+    CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", GTG_PURPLE));
     CHECK_RETURN (addLinkType ("L_0", "Fanin", "CT_NET", "CT_PROC", "CT_PROC"));
     CHECK_RETURN (addLinkType ("L_1", "Bloc", "CT_NET", "CT_PROC", "CT_PROC"));
     CHECK_RETURN (addVarType ("V_Mem", "Memoire", "CT_NODE"));
@@ -68,15 +68,6 @@ int main (int argc, char** argv){
     CHECK_RETURN (addContainer (0.00000, "C_P4", "CT_PROC", "C_N1", "Proc4", "0"));
     CHECK_RETURN (addContainer (0.00000, "C_P5", "CT_PROC", "C_N1", "Proc5", "0"));
 
-
-    clear (txt, TXTSIZE);
-    time = 1.00000000;
-    for (i=0;i<50;i++){
-        sprintf (txt, "C_N%d", i%2);
-        CHECK_RETURN (setVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
-        time += 1.0;
-    }
-
     clear (txt, TXTSIZE);
     time = 1.00000000;
     for (i=0; i<200; i++){
@@ -90,16 +81,10 @@ int main (int argc, char** argv){
             sprintf (proc, "C_P%d", i%6);
             sprintf (name, "SP_%d", i%5+3);
         }
-        CHECK_RETURN (setState (time, txt, proc, name));        /* State changes modifications */
-        time += 0.25;
-    }
 
-    clear (txt , TXTSIZE);
-    clear (proc, TXTSIZE);
-    clear (name, TXTSIZE);
-    time  = 1.00000000;
-    timer = 1.50000000;
-    for (i=0;i<30;i++){
+        CHECK_RETURN (setState (time, txt, proc, name));        /* State changes modifications */
+
+        /* Links */
         sprintf (name, "L_%d", i%2);
         sprintf (txt , "C_Net0");
         sprintf (src , "C_P%d", (i+2)%6);
@@ -107,13 +92,37 @@ int main (int argc, char** argv){
         sprintf (proc, "%d", i);
         sprintf (key , "%d", i);
 
-        /* Adding some communications */
         CHECK_RETURN (startLink (time, name, txt, src, dest, proc, key));
-        CHECK_RETURN (endLink (timer, name, txt, src, dest, proc, key));
+        time += 0.12;
 
-        time  += 1.22000000;
-        timer += 1.53000000;
+        CHECK_RETURN (endLink (time, name, txt, src, dest, proc, key));
+
+        sprintf (txt, "C_N%d", i%2);
+        CHECK_RETURN (setVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
+        time += 0.13;
+
     }
+
+    /* clear (txt , TXTSIZE); */
+    /* clear (proc, TXTSIZE); */
+    /* clear (name, TXTSIZE); */
+    /* time  = 1.00000000; */
+    /* timer = 1.50000000; */
+    /* for (i=0;i<30;i++){ */
+    /*     sprintf (name, "L_%d", i%2); */
+    /*     sprintf (txt , "C_Net0"); */
+    /*     sprintf (src , "C_P%d", (i+2)%6); */
+    /*     sprintf (dest, "C_P%d", (i+5)%6); */
+    /*     sprintf (proc, "%d", i); */
+    /*     sprintf (key , "%d", i); */
+
+    /*     /\* Adding some communications *\/ */
+    /*     CHECK_RETURN (startLink (time, name, txt, src, dest, proc, key)); */
+    /*     CHECK_RETURN (endLink (timer, name, txt, src, dest, proc, key)); */
+
+    /*     time  += 1.22000000; */
+    /*     timer += 1.53000000; */
+    /* } */
 
     clear (name, TXTSIZE);
     clear (proc, TXTSIZE);

@@ -387,7 +387,7 @@ trace_return_t startLink   (varPrec time, const char* type,
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFStartLink (time, type, cont, src, val, key);
+        return OTFStartLink (time, type, src, dest, val, key);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -412,7 +412,7 @@ trace_return_t endLink   (varPrec time, const char* type,
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFEndLink (time, type, cont, dest, val, key);
+        return OTFEndLink (time, type, src, dest, val, key);
         break;
 #endif
 #ifdef BUILD_TAU

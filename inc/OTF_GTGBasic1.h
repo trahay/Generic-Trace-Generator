@@ -264,7 +264,7 @@ trace_return_t OTFAddEvent   (varPrec time, const char* type,
  *         An error code otherwise
  */
 trace_return_t OTFStartLink   (varPrec time, const char* type,
-                     const char*   cont, const char* src,
+                     const char*   src, const char* dest,
                      const char*   val , const char* key);
 
 /**
@@ -286,8 +286,8 @@ trace_return_t OTFStartLink   (varPrec time, const char* type,
  *         An error code otherwise
  */
 trace_return_t OTFEndLink   (varPrec time, const char* type,
-                   const char*  cont , const char* dest,
-                   const char*  val  , const char* key);
+                   const char*  src, const char* dest,
+                   const char*  val, const char* key);
 
 /**
  * \ingroup cotf

@@ -17,7 +17,7 @@ make
 
 ### Generation Of the traces
 echo " "
-echo " Genration of traces "
+echo " Generation of traces "
 cd bin && ./testAll && ./testEvent 1 && ./testLink 1 && ./testState 1 && ./testVar 1 
 cd ..
 

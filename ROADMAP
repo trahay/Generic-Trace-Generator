@@ -1,0 +1,17 @@
+Here are listed all the ideas that people can have (bearing with GTG if possible).
+
+- Support other formats : TAU, CLOG (and derivated) (maybe ideas here : http://www.netlib.org/utk/people/JackDongarra/PAPERS/perftools-review2.pdf)
+
+- Clean OTF code :D. Use dynamic allocation instead of static with #define.
+
+- Do an error interface.
+
+- Test with g++.
+
+- Make tests.
+
+- Add a rabbit logo.
+
+- Add a higher level interface.
+
+- Is GTG thread safe ?
