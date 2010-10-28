@@ -128,8 +128,9 @@ if test x$HAVE_DOXYGEN = xno ; then
 fi
 
 AC_ARG_VAR([PDFLATEX], [Location of the pdflatex program (required for building the hwloc doxygen documentation)])
-AC_PATH_TOOL([PDFLATEX], [pdflatex])
+AC_PATH_TOOL([PDFLATEX], [pdflatex], no)
 
+AM_CONDITIONAL([USE_PDFLATEX], [test "x$PDFLATEX" != xno])
 AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
 
 AC_OUTPUT([Makefile \

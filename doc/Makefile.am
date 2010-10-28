@@ -41,16 +41,26 @@ $(DOX_PDF): $(DOX_TAG)
 	cd -; \
         mv $(DOX_LATEX_DIR)/refman.pdf $(DOX_PDF)
 
-EXTRA_DIST = $(DOX_HTML_DIR) $(DOX_PDF)
+EXTRA_DIST = $(DOX_HTML_DIR)
+
+if USE_PDFLATEX
+EXTRA_DIST += $(DOX_PDF)
+endif
 
 # Crappy hack: automake cannot copy a directory, so we have to do it by hand.
-install_html: $(DOX_PDF) $(DOX_HTML_DIR)/index.html
-	mkdir -p $(pdfdir)
-	cp -r $(DOX_PDF) $(pdfdir)
+install_html: $(DOX_TAG) $(DOX_HTML_DIR)/index.html
 	mkdir -p $(htmldir)
 	cp -r $(DOX_HTML_DIR) $(htmldir)
 
+install_pdf: $(DOX_PDF)
+	mkdir -p $(pdfdir)
+	cp -r $(DOX_PDF) $(pdfdir)
+
+if USE_PDFLATEX
+install-data-am: install_pdf install_html
+else
 install-data-am: install_html
+endif
 
 include_HEADERS = Doxyfile
 endif
