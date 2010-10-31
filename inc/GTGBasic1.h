@@ -7,7 +7,7 @@
  *
  *
  *  \authors
- *    Developpers are : \n
+ *    Developers are : \n
  *        Francois Rue      - francois.rue@labri.fr \n
  *        Francois Trahay   - francois.trahay@labri.fr \n
  *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
@@ -103,14 +103,16 @@ int bufferedModeActivated();
  */
 /**
  * \ingroup init
- * \fn int initTrace   (const char* filename, int rank)
+ * \fn int initTrace   (const char* filename, int rank, gtg_flag_t flags)
  * \brief Initialize a trace.
  * \param filename Root name of the file to create
  * \param rank Process number of the file to create
+ * \param flags One of GTG_FLAG_NONE, GTG_FLAG_USE_MPI, GTG_FLAG_NOTBUF.
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
 trace_return_t initTrace   (const char* filename, int rank, gtg_flag_t flags);
+
 /**
  * \ingroup init
  * \fn trace_return_t endTrace   ()

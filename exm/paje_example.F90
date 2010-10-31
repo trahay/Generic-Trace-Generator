@@ -20,9 +20,9 @@ program main
   call setTraceType_f (PAJE, buf) 
   call initTrace_f ("fpaje", ierr) 
 !! Creating proc types
-  call addProcType_f ("CT_NET", "0", "Network", ierr) 
-  call addProcType_f ("CT_NODE", "CT_NET", "Node", ierr) 
-  call addProcType_f ("CT_PROC", "CT_NODE", "Proc", ierr) 
+  call addContType_f ("CT_NET", "0", "Network", ierr) 
+  call addContType_f ("CT_NODE", "CT_NET", "Node", ierr) 
+  call addContType_f ("CT_PROC", "CT_NODE", "Proc", ierr) 
 !! Creating state types
   call addStateType_f ("ST_NodeState", "CT_NODE", "Node state", ierr) 
   call addStateType_f ("ST_ProcState", "CT_PROC", "Procstate", ierr) 

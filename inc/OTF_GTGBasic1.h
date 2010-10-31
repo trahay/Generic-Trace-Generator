@@ -2,8 +2,16 @@
  *  \file OTF_GTGBasic1.h
  *  \version 0.1
  *  \brief
- *  OTF_GTGBasic1 is the OTF implementation of the basic interface to generate traces (GTGBasic).
+ *  OTF_GTGBasic1 is the OTF implementation of the basic interface to generate traces (GTGBasic1).
  *
+ *  \authors
+ *    Developers are : \n
+ *        Francois Rue      - francois.rue@labri.fr \n
+ *        Francois Trahay   - francois.trahay@labri.fr \n
+ *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
+ *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
+ *        Mathieu  Faverge  - faverge@labri.fr \n
+ *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  */
 #ifndef _OTFTRACEGENERATORBASIC_
 #define _OTFTRACEGENERATORBASIC_
@@ -27,10 +35,11 @@ const otf_color_t OTF_get_color(gtg_color_t color);
 
 /**
  * \ingroup cotf
- * \fn trace_return_t OTFInitTrace   (const char* filename)
+ * \fn trace_return_t OTFInitTrace   (const char* filename, gtg_flag_t flags)
  * \brief Initialize an OTF trace.
  * \param filename Root name of the file to create
- * \return 0 if sucess
+ * \param flags One of GTG_FLAG_NONE, GTG_FLAG_USE_MPI, GTG_FLAG_NOTBUF.
+ * \return 0 if success
  *         An error code otherwise
  */
 trace_return_t OTFInitTrace   (const char* filename, gtg_flag_t flags);
@@ -47,7 +56,7 @@ trace_return_t OTFSetCompress(int val);
 
 /**
  * \ingroup cotf
- * \fn trace_return_t OTFAddProcType   (const char* alias,
+ * \fn trace_return_t OTFAddContType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief Add a Container Type.
@@ -57,7 +66,7 @@ trace_return_t OTFSetCompress(int val);
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t OTFAddProcType   (const char* alias, const char* contType, 
+trace_return_t OTFAddContType   (const char* alias, const char* contType, 
                        const char* name);
 
 /**

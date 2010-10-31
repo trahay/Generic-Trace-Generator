@@ -5,7 +5,7 @@
  *  paje_GTGBasic1 is the Paje implementation of the basic interface to generate traces (GTGBasic1).
  *
  *  \authors
- *    Developpers are : \n
+ *    Developers are : \n
  *        Francois Rue      - francois.rue@labri.fr \n
  *        Francois Trahay   - francois.trahay@labri.fr \n
  *        Johnny   Jazeix   - jazeix@enseirb-matmeca.fr \n
@@ -35,12 +35,13 @@
 
 /**
  * \ingroup cpaje
- * \fn trace_return_t pajeInitTrace   (const char* filename, int rank)
+ * \fn trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags, int fmt)
  * \brief Initialize a VITE trace ( *.ept)
  * \param filename Root name of the file to create
  * \param rank Rank of the processor
+ * \param flags One of GTG_FLAG_NONE, GTG_FLAG_USE_MPI, GTG_FLAG_NOTBUF.
  * \param fmt Format, paje or vite
- * \return 0 if sucess
+ * \return 0 if success
  *         An error code otherwise
  */
 trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags, int fmt);
@@ -53,19 +54,10 @@ trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags
  * \return Name of the file. 
  */
 char* pajeGetName (int rk);
-///**
-// * \ingroup cpaje
-// * \fn trace_return_t pajeSeqInitTrace   (const char* filename)
-// * \brief Initialize a PAJE trace (*.trace)
-// * \param filename Root name of the file to create
-// * \param rank Rank of mpi process if any
-// * \return 0 if sucess
-// *         An error code otherwise
-// */
-//trace_return_t pajeSeqInitTrace   (const char* filename, int rank);
+
 /**
  * \ingroup cpaje
- * \fn trace_return_t pajeAddProcType   (const char* alias,
+ * \fn trace_return_t pajeAddContType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief Add a Container Type.
@@ -75,10 +67,8 @@ char* pajeGetName (int rk);
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddProcType   (const char* alias, const char* contType, 
+trace_return_t pajeAddContType   (const char* alias, const char* contType, 
                        const char* name);
-
-
 
 /**
  * \ingroup cpaje
@@ -208,12 +198,14 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeDestroyContainer (varPrec  time,
- *                           const char  * alias,
- *                           const char  * type, 
+ *                                          const char  * name,
+ *                                          const char  * type)
  * \brief Destroy a Container.
  * \param time Time at which the container is destroyed
  * \param name Name on the container to destroy
  * \param type Type of the container
+ * \return 0 if success \n
+ *         An error code otherwise
  */
 trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
                                          const char*  type);
@@ -309,7 +301,7 @@ trace_return_t pajeStartLink   (varPrec time, const char* type,
 
 /**
  * \ingroup cpaje
- * \fn trace_return_t pajeStartLink (varPrec  time,
+ * \fn trace_return_t pajeEndLink (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     const char  * dest,

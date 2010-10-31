@@ -24,9 +24,8 @@
  *  (")(") \n
  *
  * \section Presentation
- * The GTG library provides a low level library to generate traces in various \n
- * formats (Paje, OTF). \n
- * The use of the library is simple, you just need to include the GTG.h header \n
+ * The GTG library provides a low level library to generate traces in various formats (Paje, OTF). \n
+ * The use of the library is simple, you just need to include the GTG.h header
  * and then you can use the library as you wish. \n
  * Some simple examples are available in the test directory. \n
  */

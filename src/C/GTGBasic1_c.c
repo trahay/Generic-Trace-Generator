@@ -98,12 +98,12 @@ trace_return_t addContType   (const char* alias, const char* contType,
 #ifdef BUILD_PAJE
         case PAJE :
         case VITE :
-            return pajeAddProcType (alias, contType, name);
+            return pajeAddContType (alias, contType, name);
             break;
 #endif
 #ifdef BUILD_OTF
         case OTF :
-            return OTFAddProcType (alias, contType, name);
+            return OTFAddContType (alias, contType, name);
             break;
 #endif
 #ifdef BUILD_TAU

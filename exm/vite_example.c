@@ -11,9 +11,9 @@ int main (int argc, char** argv){
     setComm (MPI_COMM_WORLD);
     initTrace ("cvite");
     if (rk==0){
-        addProcType ("CT_NET", "0", "Network");
-        addProcType ("CT_NODE", "CT_NET", "Node");
-        addProcType ("CT_PROC", "CT_NODE", "Proc");
+        addContType ("CT_NET", "0", "Network");
+        addContType ("CT_NODE", "CT_NET", "Node");
+        addContType ("CT_PROC", "CT_NODE", "Proc");
         addStateType ("ST_NodeState", "CT_NODE", "Node state");
         addStateType ("ST_ProcState", "CT_PROC", "Procstate");
         addEntityValue ("SN_0", "ST_NodeState", "Sleep", "0.5 0.5 0.5");

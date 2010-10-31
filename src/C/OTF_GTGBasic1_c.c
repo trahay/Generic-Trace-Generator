@@ -226,7 +226,7 @@ trace_return_t OTFInitTrace(const char* filenam, gtg_flag_t flags) {
     if(use_compress)
         OTF_Writer_setCompression (writer, use_compress);
 
-    OTFAddProcType("0", NULL, "0");
+    OTFAddContType("0", NULL, "0");
 
     for(i = 0 ; i < MAX_PROCESS ; i ++) {
         states_saved[i].current_id = 0;
@@ -246,7 +246,7 @@ trace_return_t OTFSetCompress(int val) {
     return TRACE_ERR_WRITE;
 }
 
-trace_return_t OTFAddProcType (const char* alias, const char* contType, 
+trace_return_t OTFAddContType (const char* alias, const char* contType, 
                                const char* name){
     uint32_t parent = 0;
     if(current_ctType >= MAX_PROCESSTYPE) {
