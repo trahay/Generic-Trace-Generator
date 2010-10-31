@@ -11,8 +11,6 @@
 #ifndef _PAJECOLOR_
 #define _PAJECOLOR_
 
-#define _GNU_SOURCE
-#include <stdio.h>
 #include "GTGBasic1.h"
 
 typedef char* paje_color_t;
@@ -24,15 +22,6 @@ typedef char* paje_color_t;
  * \param color GTG color to convert
  * \return The PAJE color
  */
-static inline
-const paje_color_t Paje_get_color(gtg_color_t p_color) {
-	/* todo */
-	paje_color_t res = NULL;
-	asprintf(&res, "%1.1f %1.1f %1.1f", 
-		 (float)GTG_COLOR_GET_RED(p_color->rgb)/256,
-		 (float)GTG_COLOR_GET_GREEN(p_color->rgb)/256,
-		 (float)GTG_COLOR_GET_BLUE(p_color->rgb)/256);
-	return res;
-}
+const paje_color_t Paje_get_color(gtg_color_t p_color);
 
 #endif

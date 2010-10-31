@@ -10,6 +10,7 @@
 #endif
 
 #include "paje_GTGBasic1.h"
+#include "pajeColor.h"
 
 
 /* set in GTGBasic1_c.c
@@ -201,6 +202,16 @@ void merge (char* filename, int nbFile){
     }
     fclose (res);
     clean_files (filename, nbFile);
+}
+
+const paje_color_t Paje_get_color(gtg_color_t p_color) {
+	/* todo */
+	paje_color_t res = NULL;
+	asprintf(&res, "%1.1f %1.1f %1.1f", 
+		 (float)GTG_COLOR_GET_RED(p_color->rgb)/256,
+		 (float)GTG_COLOR_GET_GREEN(p_color->rgb)/256,
+		 (float)GTG_COLOR_GET_BLUE(p_color->rgb)/256);
+	return res;
 }
 
 char*
