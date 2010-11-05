@@ -95,7 +95,7 @@ AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF insta
                                 use_otf_from_system=no
                                 otfdir=$withval
                                 AC_MSG_RESULT(yes using $otfdir)
-                                AC_SUBST(MPIDIR, $otfdir)
+                                AC_SUBST(OTFDIR, $otfdir)
                         fi
                 else
 			# either --without-mpi or --with-mpi=no is set
@@ -111,7 +111,7 @@ if test $use_otf = yes ; then
    fi
 
    # MPI header
-   AC_CHECK_HEADER([otf.h],[enable_otf=yes],)	
+   AC_CHECK_HEADER([otf.h],[enable_otf=yes], AC_MSG_WARN([Cannot find libOTF.]))
 else
   enable_otf=no
 fi
