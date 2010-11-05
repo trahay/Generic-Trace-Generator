@@ -97,6 +97,7 @@ AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF insta
                                 AC_MSG_RESULT(yes using $otfdir)
                                 AC_SUBST(OTFDIR, $otfdir)
 				OTF_INC=$otfdir/include
+				OTF_LIB=$otfdir/lib
                         fi
                 else
 			# either --without-mpi or --with-mpi=no is set
@@ -121,11 +122,28 @@ AC_ARG_WITH(otf-include, [AS_HELP_STRING([--with-otf-include[=<dir>]], [Use a sp
   		fi
         ])
 
+AC_ARG_WITH(otf-lib, [AS_HELP_STRING([--with-otf-lib[=<dir>]], [Use a specific libotf.so directory])],
+        [
+                if test x$withval != xno; then
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+                                use_otf_from_system=yes
+                        else
+                                # use specified path
+                                use_otf_from_system=no
+                                otf_lib_dir=$withval
+                                AC_MSG_RESULT(yes using $otf_lib_dir)
+				OTF_LIB=$otf_lib_dir
+                                AC_SUBST(OTF_LIB, $otf_lib_dir)
+                        fi
+  		fi
+        ])
+
 if test $use_otf = yes ; then
    AC_SUBST(USE_OTFDIR_FROM_USER,$use_otf_from_system)
    if test x$use_otf_from_system = xno; then
       CPPFLAGS="${CPPFLAGS} -I$OTF_INC/"
-      LDFLAGS="${LDFLAGS} -L$otfdir/lib/"
+      LDFLAGS="${LDFLAGS} -L$OTF_LIB"
    fi
 
    # MPI header
