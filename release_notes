@@ -1,0 +1,16 @@
+The GTG team is pleased to announce the release 0.1
+
+Generic Trace Generator (GTG) aims at providing a simple and generic
+interface for generating execution traces in several formats (OTF,
+Paje, etc.) It will be used by EZTrace and ViTE, but it can also be
+used by any application.
+
+GTG is available under the CECILL-C license and it can be downloaded
+from the GTG website: http://gtg.gforge.inria.fr/
+
+gtg 0.1 is the first release of this project. This version includes:
+* Full support for PAJE and VITE formats
+* Partial support for OTF format. The following features are missing
+for this format:
+  * links
+  * colors
