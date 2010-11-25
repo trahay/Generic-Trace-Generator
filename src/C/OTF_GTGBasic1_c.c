@@ -184,8 +184,7 @@ int getLinkTypeFromName(const char *type) {
 }
 
 /* Initialize all the OTF-specific variables */
-static void __OTF_init()
-{
+static void __OTF_init() {
     /* initialize otf_color_null */
     asprintf(&otf_color_null.colorID, "NO COLOR");
     otf_color_null.red = 0;
@@ -338,8 +337,8 @@ trace_return_t OTFAddLinkType (const char* alias   , const char* name,
     return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddVarType (const char* alias   , const char* name,
-                              const char* contType){
+trace_return_t OTFAddVarType (const char* alias   , const char* contType,
+                              const char* name){
     if(current_variableType >= MAX_VARIABLETYPE) {
         fprintf(stderr, "Too many Variable types (%d)!\n", MAX_VARIABLETYPE);
 	return TRACE_ERR_WRITE;
@@ -538,11 +537,18 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
         current_variable ++;
         variables[current_variable].parent = parent;
         variables[current_variable].type = varType;
+        variables[current_variable].value = val;
         counter = current_variable;
         OTF_Writer_writeDefCounter(writer, 0, counter, type, 0, varType, NULL);
     }
 
-    OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, val);
+    if(variables[current_variable].value < 0) {
+        fprintf(stderr, "A counter value can not be negative!\n");
+	return TRACE_ERR_WRITE;
+    }
+
+
+    OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, variables[current_variable].value);
 
     if(verbose)
         printf("setVar : %s %s %f\n", type, cont, val);
@@ -551,6 +557,28 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
 
 trace_return_t OTFAddVar (varPrec time, const char*  type,
                           const char*  cont, varPrec val){
+    int parent  = getCtFromName(cont);
+    int varType = getVariableTypeFromName(type);
+    
+    int counter = getVariableFromCont(parent, varType);
+    if(counter == 0) { /* New one */
+        current_variable ++;
+        variables[current_variable].parent = parent;
+        variables[current_variable].type = varType;
+        counter = current_variable;
+        variables[current_variable].value = 0;
+        OTF_Writer_writeDefCounter(writer, 0, counter, type, 0, varType, NULL);
+    }
+
+    variables[current_variable].value += val;
+
+    if(variables[current_variable].value < 0) {
+        fprintf(stderr, "A counter value can not be negative!\n");
+	return TRACE_ERR_WRITE;
+    }
+
+    OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, variables[current_variable].value);
+
     if(verbose)
         printf("addVar : %s %s %f\n", type, cont, val);
     return TRACE_SUCCESS;
@@ -558,6 +586,28 @@ trace_return_t OTFAddVar (varPrec time, const char*  type,
 
 trace_return_t OTFSubVar (varPrec time, const char*  type,
                           const char*  cont, varPrec val){
+    int parent  = getCtFromName(cont);
+    int varType = getVariableTypeFromName(type);
+    
+    int counter = getVariableFromCont(parent, varType);
+    if(counter == 0) { /* New one */
+        current_variable ++;
+        variables[current_variable].parent = parent;
+        variables[current_variable].type = varType;
+        counter = current_variable;
+        variables[current_variable].value = 0;
+        OTF_Writer_writeDefCounter(writer, 0, counter, type, 0, varType, NULL);
+    }
+
+    variables[current_variable].value -= val;
+
+    if(variables[current_variable].value < 0) {
+        fprintf(stderr, "A counter value can not be negative!\n");
+	return TRACE_ERR_WRITE;
+    }
+
+    OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, variables[current_variable].value);
+
     if(verbose)
         printf("subVar : %s %s %f\n", type, cont, val);
     return TRACE_SUCCESS;
