@@ -441,7 +441,7 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType){
     if (verbose)
-        fprintf (headFile, "Add link type: alias: %s name: %s contType: %s src: %s des: %s \n", alias, name, contType, srcContType, destContType);
+        printf ("Add link type: alias: %s name: %s contType: %s src: %s des: %s \n", alias, name, contType, srcContType, destContType);
     if (headFile){
         fprintf (headFile, "41 '%s' '%s' '%s' '%s' '%s' \n", alias, name, contType, srcContType, destContType);
 
