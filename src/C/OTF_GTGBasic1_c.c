@@ -479,7 +479,7 @@ trace_return_t OTFPopState (varPrec time, const char* type,
     if(verbose)
         printf("PopState : parent %d, stateType %d, val %d\n", st.cont, st.stateType, st.value);
 
-    OTF_Writer_writeEnter (writer, time*TIMER_RES, st.value, st.cont, 0);
+    OTF_Writer_writeLeave (writer, time*TIMER_RES, st.value, st.cont, 0);
 
     return TRACE_SUCCESS;
 }
