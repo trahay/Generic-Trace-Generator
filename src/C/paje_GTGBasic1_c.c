@@ -39,22 +39,22 @@ static gtg_flag_t paje_flags;
 	if(paje_flags & GTG_FLAG_NOTBUF) \
 		fflush(file)
 
-// Structure containing the info of a current line
+/* Structure containing the info of a current line */
 typedef struct line_t{
-    FILE*   file;   // File
-    char*   value;  // The value of the line
-    int     size;   // Size of the value buffer
-    varPrec time;   // Time (second element of the line)
-    int     status; // If EOF reached
+    FILE*   file;   /* File                               */
+    char*   value;  /* The value of the line              */
+    size_t  size;   /* Size of the value buffer           */
+    varPrec time;   /* Time (second element of the line)  */
+    int     status; /* If EOF reached                     */
 }line_t;
 
 typedef struct doubleLinkList_t{
-    struct doubleLinkList_t* prev; // Previous element
-    struct doubleLinkList_t* next; // Next element
-    line_t current;         // Current line
+    struct doubleLinkList_t* prev; /* Previous element */
+    struct doubleLinkList_t* next; /* Next element     */
+    line_t current;                /* Current line     */
 }doubleLinkList_t;
 
-// Insert a doubleLinkList_t item in the sorted doubleLinkedList starting with first
+/* Insert a doubleLinkList_t item in the sorted doubleLinkedList starting with first */
 void insert (doubleLinkList_t** first, doubleLinkList_t* item){
     varPrec time;
     doubleLinkList_t* iter = *first;
@@ -63,15 +63,15 @@ void insert (doubleLinkList_t** first, doubleLinkList_t* item){
         exit(-1);
     }
     time = item->current.time;
-    // If nil list, item is the first and leaving
+    /* If nil list, item is the first and leaving */
     if (iter==NULL){
         *first=item;
         item->prev = NULL;
         item->next = NULL;
-        //        printf (stderr, "Nil list \n");
+        /*  printf (stderr, "Nil list \n"); */
         return;
     }
-    // If to insert in first pos
+    /* If to insert in first pos */
     if (time<=iter->current.time){
         item->prev = NULL;
         item->next = *first;
@@ -80,11 +80,11 @@ void insert (doubleLinkList_t** first, doubleLinkList_t* item){
         *first = item;
         return;
     }
-    // Positionning iterator to insert in a sorted list
+    /* Positionning iterator to insert in a sorted list */
     while (time>iter->current.time && iter->next)
         iter = iter->next;
 
-    if (time<=iter->current.time){///!\
+    if (time<=iter->current.time){
         item->prev = iter->prev;
         item->next = iter;
         iter->prev = item;
@@ -122,7 +122,7 @@ void myGetLine (doubleLinkList_t* li){
 
     if (li->current.size==0 || ret ==-1){
         li->current.status=0;
-        //        fprintf (stderr, "Invalid read \n");
+        /* fprintf (stderr, "Invalid read \n"); */
     }
     
     if ((li->current.size)>0)
@@ -132,9 +132,10 @@ void myGetLine (doubleLinkList_t* li){
 }
 
 void clean_files (char* fileName, int nbFile){
+    int ret;
     char cmd[BUFFSIZE];
     sprintf (cmd, "rm %s_root.ept %s_proc*.ept", filename,filename);
-    system (cmd);
+    ret = system(cmd);    
 }
 
 void merge (char* filename, int nbFile){
@@ -146,10 +147,10 @@ void merge (char* filename, int nbFile){
     char            * buf = NULL;
     char              tmp[BUFFSIZE];
     char              tmp2[BUFFSIZE];
-    int               size;
+    size_t            size;
     int               i;          
 
-    // Getting the first part of the trace (header+def)
+    /* Getting the first part of the trace (header+def) */
     sprintf (tmp, "%s.trace", filename);
     res = fopen (tmp, "w+");
     sprintf (tmp2, "%s_root.ept", filename);
@@ -166,7 +167,7 @@ void merge (char* filename, int nbFile){
         fprintf (res, "%s", buf);
     }while (buf[0] != EOF);
     fclose (oldF);
-    // Initialising the parallel merge
+    /* Initialising the parallel merge */
     list = (doubleLinkList_t *)malloc (sizeof (doubleLinkList_t)*nbFile);
     for (i=0;i<nbFile;i++)
         initMerge (filename, i, list+i);
@@ -176,9 +177,9 @@ void merge (char* filename, int nbFile){
         insert (&first, list+i);
     }
 
-    //    fprintf (stderr, "Nb file = %d \n La liste : \n", nbFile);
-    //    for (i=0;i<nbFile;i++)
-    //        fprintf (stderr, "L1 = %s \n", list[i].current.value);
+    /*  fprintf (stderr, "Nb file = %d \n La liste : \n", nbFile); */
+    /*  for (i=0;i<nbFile;i++)                                     */
+    /*      fprintf (stderr, "L1 = %s \n", list[i].current.value); */
 
     while (first && first->current.status != 0){
         fprintf (res, "%s", first->current.value);
@@ -196,22 +197,23 @@ void merge (char* filename, int nbFile){
             if (first && iter->current.status != 0)
                 insert (&first, iter);
         }
-        //        for (i=0;i<nbFile;i++)
-        //            fprintf (stderr, "L1 = %s, st=%d \n", list[i].current.value,list[i].current.status);
-        //        fprintf (stderr, "<---------------------------->\n\n");
+        /* for (i=0;i<nbFile;i++) */
+        /*     fprintf (stderr, "L1 = %s, st=%d \n", list[i].current.value,list[i].current.status); */
+        /* fprintf (stderr, "<---------------------------->\n\n"); */
     }
     fclose (res);
     clean_files (filename, nbFile);
 }
 
 const paje_color_t Paje_get_color(gtg_color_t p_color) {
-	/* todo */
-	paje_color_t res = NULL;
-	asprintf(&res, "%1.1f %1.1f %1.1f", 
-		 (float)GTG_COLOR_GET_RED(p_color->rgb)/256,
-		 (float)GTG_COLOR_GET_GREEN(p_color->rgb)/256,
-		 (float)GTG_COLOR_GET_BLUE(p_color->rgb)/256);
-	return res;
+    /* todo */
+    int ret;
+    paje_color_t res = NULL;
+    ret = asprintf(&res, "%1.1f %1.1f %1.1f", 
+                   (float)GTG_COLOR_GET_RED(  p_color->rgb)/256,
+                   (float)GTG_COLOR_GET_GREEN(p_color->rgb)/256,
+                   (float)GTG_COLOR_GET_BLUE( p_color->rgb)/256);
+    return res;
 }
 
 char*
@@ -651,7 +653,7 @@ trace_return_t pajeSubVar   (varPrec time, const char*  type,
 trace_return_t pajeEndTrace (){
     int size = 1;
     my_close ();
-    // Wait for all proc to finish writing their trace
+    /* Wait for all proc to finish writing their trace */
 #ifdef USE_MPI
     if(paje_flags & GTG_FLAG_USE_MPI) {
         MPI_Barrier (MPI_COMM_WORLD);
