@@ -5,7 +5,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([GTG], [0.1], [gtg-devel@lists.gforge.inria.fr])
+AC_INIT([GTG], [0.2-dev], [gtg-devel@lists.gforge.inria.fr])
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
@@ -17,6 +17,11 @@ AC_PROG_LIBTOOL
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdio.h string.h stdlib.h])
+
+AC_CHECK_FUNCS([getline], have_getline=yes)
+if [ test  "x$have_getline" = xyes ]; then
+   CFLAGS="${CFLAGS} -DHAVE_GETLINE"
+fi
 
 # crappy hack: of the macros AC_PROG_{CC,CXX,F77,FC}, only the
 # first expanded one will check for object file extension etc,
