@@ -112,6 +112,47 @@ void initMerge (char* file, int rk, doubleLinkList_t* li){
     li->current.status = 1;
 }
 
+
+#ifndef HAVE_GETLINE
+int getline(char** buf, int* size, FILE* stream)
+{
+  int alloc_size = 1024;
+
+  if(!*buf) {
+    /* we need to allocate the buffer */
+    alloc_size = 1024;
+    *buf = malloc(sizeof(char) * alloc_size);
+  } else {
+    alloc_size = *size;
+  }
+  int nb_char = 0;
+  *buf[0]=0;
+
+  do {
+    if(nb_char + 512 >= alloc_size) {
+      /* the next fgets may overflow the buffer, so let's
+	 allocate more space */
+      alloc_size *= 2;
+      *buf = realloc(*buf, alloc_size);
+      *size = alloc_size;
+    }
+
+    /* read at most 512 bytes */
+    int ret = fgets((*buf)+nb_char, 512, stream);
+
+    if(!ret){
+      /* error while reading or EOF */
+      *size = 1;
+      (*buf)[0] = EOF;
+      return -1;
+    }
+    nb_char = strlen(*buf);
+  } while((*buf)[nb_char -1] !='\n');
+
+  return nb_char;
+}
+#endif	/* HAVE_GETLINE */
+
 void myGetLine (doubleLinkList_t* li){
     int toto;
     int ret;
@@ -122,9 +163,8 @@ void myGetLine (doubleLinkList_t* li){
 
     if (li->current.size==0 || ret ==-1){
         li->current.status=0;
-        /* fprintf (stderr, "Invalid read \n"); */
     }
-    
+
     if ((li->current.size)>0)
         sscanf (li->current.value, "%d %lf", &toto, &(li->current.time));
     else
@@ -148,7 +188,7 @@ void merge (char* filename, int nbFile){
     char              tmp[BUFFSIZE];
     char              tmp2[BUFFSIZE];
     size_t            size;
-    int               i;          
+    int               i;
 
     /* Getting the first part of the trace (header+def) */
     sprintf (tmp, "%s.trace", filename);
