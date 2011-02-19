@@ -537,16 +537,16 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
         current_variable ++;
         variables[current_variable].parent = parent;
         variables[current_variable].type = varType;
-        variables[current_variable].value = val;
         counter = current_variable;
         OTF_Writer_writeDefCounter(writer, 0, counter, type, 0, varType, NULL);
     }
+
+    variables[current_variable].value = val;
 
     if(variables[current_variable].value < 0) {
         fprintf(stderr, "A counter value can not be negative!\n");
 	return TRACE_ERR_WRITE;
     }
-
 
     OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, variables[current_variable].value);
 
