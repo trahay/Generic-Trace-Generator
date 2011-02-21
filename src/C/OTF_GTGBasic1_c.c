@@ -341,12 +341,7 @@ trace_return_t OTFSetState (varPrec time, const char* type,
   }
 
   /* Allocate a new State structure and fill it */
-  /* todo: clean this stuff, we should define a macro that initialize all this */
-  p_state = (State_t*) malloc(sizeof(State_t));
-  init_State(*p_state);
-  p_state->value = state;
-  p_state->cont = p_parent->id;
-  p_state->stateType = stateType;
+  alloc_State(p_state, state, p_parent->id, stateType);
 
   /* Add the structure to the container state stack. */
   gtg_stack_push(&p_state->token, &p_parent->state_stack.token);
@@ -368,11 +363,7 @@ trace_return_t OTFPushState (varPrec time, const char* type,
   State_t* p_state;
 
   /* Allocate a new State structure and fill it */
-  p_state = (State_t*) malloc(sizeof(State_t));
-  init_State(*p_state);
-  p_state->value = value;
-  p_state->cont = p_parent->id;
-  p_state->stateType = stateType;
+  alloc_State(p_state, value, p_parent->id, stateType);
 
   /* Add the structure to the container state stack. */
   gtg_stack_push(&p_state->token, &p_parent->state_stack.token);
@@ -466,14 +457,9 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
 
   if(!p_counter) {
     /* the variable doesn't exist yet. Allocate and initialize it  */
-    p_counter = (Variable_t*) malloc(sizeof(Variable_t));
-    init_Variable(*p_counter);
-    p_counter->id = (gtg_list_entry(variables.token.prev, Variable_t, token)->id) + 1;
-
-    p_counter->parent = parent;
-    p_counter->type = varType;
+    alloc_Variable(p_counter, (gtg_list_entry(variables.token.prev, Variable_t, token)->id) + 1,
+		   parent, varType, 0);
     gtg_list_add_tail(&(p_counter->token), &(variables.token));
-
     OTF_Writer_writeDefCounter(writer, 0, p_counter->id, type, 0, varType, NULL);
   }
 
@@ -504,13 +490,9 @@ trace_return_t OTFAddVar (varPrec time, const char*  type,
 
   if(!p_counter) {
     /* the variable doesn't exist yet. Allocate and initialize it  */
-    p_counter = (Variable_t*) malloc(sizeof(Variable_t));
-    init_Variable(*p_counter);
-    p_counter->id = (gtg_list_entry(variables.token.prev, Variable_t, token)->id) + 1;
-    p_counter->parent = parent;
-    p_counter->type = varType;
-    /* Let's assume that the initial value is 0 */
-    p_counter->value = 0;
+    alloc_Variable(p_counter, (gtg_list_entry(variables.token.prev, Variable_t, token)->id) + 1,
+		   parent, varType, 0 /* Let's assume that the initial value is 0 */);
+
     gtg_list_add_tail(&(p_counter->token), &(variables.token));
 
     OTF_Writer_writeDefCounter(writer, 0, p_counter->id, type, 0, varType, NULL);

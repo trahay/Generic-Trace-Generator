@@ -232,6 +232,25 @@ typedef struct otf_color* otf_color_t;
   strcpy((ptr)->alias, _alias_);					\
   }while(0)
 
+#define alloc_Variable(_ptr_, _id_, _parent_, _type_, _value_)	\
+  do {								\
+    (_ptr_) = (Variable_t*) malloc(sizeof(Variable_t));		\
+    init_Variable(*(_ptr_));					\
+    (_ptr_)->id = _id_;						\
+    (_ptr_)->parent = _parent_;					\
+    (_ptr_)->type = _type_;					\
+    (_ptr_)->value = _value_;					\
+  }while(0)
+
+#define alloc_State(_ptr_, _value_, _cont_, _stateType_)	\
+  do {								\
+    _ptr_ = (State_t*) malloc(sizeof(State_t));			\
+    init_State(*(_ptr_));					\
+    (_ptr_)->value = _value_;					\
+    (_ptr_)->cont = _cont_;					\
+    (_ptr_)->stateType = _stateType_;				\
+  }while(0)
+
 #define free_struct(_type_, _list_head_)\
   do{\
     _type_ *ptr, *tmp;					\
