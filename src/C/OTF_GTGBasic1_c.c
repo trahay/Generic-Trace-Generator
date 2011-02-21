@@ -466,7 +466,7 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
 
   if(!p_counter) {
     /* the variable doesn't exist yet. Allocate and initialize it  */
-    p_counter = (Variable_t*) malloc(sizeof(State_t));
+    p_counter = (Variable_t*) malloc(sizeof(Variable_t));
     init_Variable(*p_counter);
     p_counter->id = (gtg_list_entry(variables.token.prev, Variable_t, token)->id) + 1;
 
@@ -504,7 +504,7 @@ trace_return_t OTFAddVar (varPrec time, const char*  type,
 
   if(!p_counter) {
     /* the variable doesn't exist yet. Allocate and initialize it  */
-    p_counter = (Variable_t*) malloc(sizeof(State_t));
+    p_counter = (Variable_t*) malloc(sizeof(Variable_t));
     init_Variable(*p_counter);
     p_counter->id = (gtg_list_entry(variables.token.prev, Variable_t, token)->id) + 1;
     p_counter->parent = parent;
