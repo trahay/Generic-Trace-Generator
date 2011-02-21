@@ -34,17 +34,17 @@ AC_ARG_WITH(fortran,
             [AS_HELP_STRING([--with-fortran[=<bool>]], [Enable fortran])],
             [
                 if test x$withval != xno; then
-                  if test x$FC = x; then
-                      use_fortran=no 
-                      AC_MSG_ERROR(A Fortran compiler is required)
-                   else
-                      use_fortran=yes
-                  fi
+                  use_fortran=yes
                 else
                   use_fortran=no
                 fi
             ])
 
+if [ test $use_fortran = yes ]; then
+   if test x$FC = x; then
+      AC_MSG_ERROR(A Fortran compiler is required)
+   fi
+fi
 
 AM_CONDITIONAL([FORTRAN], [test "x$use_fortran" = xyes])
 
