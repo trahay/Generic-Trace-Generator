@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: GTG
+Description: GTG - Generic Trace Generator
+Version: @VERSION@
+Libs: -L${libdir} -lgtg
+Cflags: -I${includedir}

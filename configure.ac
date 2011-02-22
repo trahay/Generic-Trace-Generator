@@ -175,6 +175,7 @@ AM_CONDITIONAL([USE_PDFLATEX], [test "x$PDFLATEX" != xno])
 AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
 
 AC_OUTPUT([Makefile \
+	   gtg.pc \
           inc/Makefile \
 	  src/Makefile \
 	  doc/Makefile \
