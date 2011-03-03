@@ -54,10 +54,10 @@ const otf_color_t OTF_get_color(gtg_color_t color) {
  */
 #define getXXXPtrFromName(_type_, list_head)			\
   struct _type_ *get##_type_##PtrFromName(const char *name) {	\
+    struct _type_ *ptr;						\
     if(name == NULL) {						\
       return NULL;						\
     }								\
-    struct _type_ *ptr;						\
     gtg_list_for_each_entry(ptr, &(list_head).token, token) {	\
       if(strcmp(name, ptr->name) == 0				\
 	 || strcmp(name, ptr->alias) == 0) {			\
@@ -185,6 +185,7 @@ trace_return_t OTFSetCompress(int val) {
 trace_return_t OTFAddContType (const char* alias, const char* contType, 
 			       const char* name) {
   uint32_t parent = 0;
+  ContainerType_t *p_cont;
 
   if(contType != NULL && strcmp(contType, "0") != 0) {
     /* get its parent id */
@@ -194,7 +195,6 @@ trace_return_t OTFAddContType (const char* alias, const char* contType,
   /* allocate the container type, initialise it and add it to the list of
    * container types.
    */
-  ContainerType_t *p_cont;
   alloc_init_struct(ContainerType_t, p_cont, &ctType.token, name, alias);
 
   if(verbose)
@@ -277,9 +277,9 @@ trace_return_t OTFAddVarType (const char* alias   , const char* contType,
 trace_return_t OTFAddEntityValue (const char* alias, const char* entType,
 				  const char* name , const otf_color_t color) {
   int type;
+  EntityValue_t *p_ent;
   type = getStateTypeFromName(entType);
 
-  EntityValue_t *p_ent;
   alloc_init_struct(EntityValue_t, p_ent, &states.token, name, alias);
 
   if(verbose)
@@ -293,13 +293,13 @@ trace_return_t OTFAddContainer (varPrec time, const char* alias,
 				const char*  type, const char* container,
 				const char*  name, const char* file) {
   int parent;
+  Container_t *p_cont;
   parent = getContainerFromName(container);
   /*int ctType = getContainerTypeFromName(type);*/
 
   /* allocate the Container, initialize it and add it to the list of
    * containers.
    */
-  Container_t *p_cont;
   alloc_init_struct(Container_t, p_cont, &conts.token, name, alias);
   /* Initialize the state stack. */
   init_State(p_cont->state_stack);
@@ -518,6 +518,9 @@ trace_return_t OTFSubVar (varPrec time, const char*  type,
 }
 
 trace_return_t OTFEndTrace () {
+  Container_t *ptr, *tmp;
+  State_t *ptr2, *tmp2;
+
   /* free all the allocated structures */
   free_struct(ContainerType_t, ctType);
   free_struct(StateType_t, stateTypes);
@@ -527,12 +530,10 @@ trace_return_t OTFEndTrace () {
   free_struct(EntityValue_t, states);
 
   /* special case for the list of containers since each one contains a state stack */
-  Container_t *ptr, *tmp;
   gtg_list_for_each_entry_safe(ptr, tmp, &(conts).token, token) {
     gtg_list_del(&(ptr->token));
 
     /* Free the State stack */
-    State_t *ptr2, *tmp2;
     gtg_list_for_each_entry_safe(ptr2, tmp2, &(ptr->state_stack).token, token) {
       gtg_list_del(&(ptr2->token));
       free(ptr2);
