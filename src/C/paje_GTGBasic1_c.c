@@ -1,9 +1,10 @@
 #ifdef BUILD_PAJE
 
-#define _GNU_SOURCE_
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 #ifdef USE_MPI
 #include <mpi.h>
@@ -12,6 +13,9 @@
 #include "paje_GTGBasic1.h"
 #include "pajeColor.h"
 
+#if HAVE_LIBZ
+#include "gtg_compress.h"
+#endif
 
 /* set in GTGBasic1_c.c
  * verbose !=0 means debugging mode
@@ -53,6 +57,53 @@ typedef struct doubleLinkList_t{
     struct doubleLinkList_t* next; /* Next element     */
     line_t current;                /* Current line     */
 }doubleLinkList_t;
+
+#if HAVE_LIBZ
+static z_stream z;
+static int compression_ratio = 0;
+
+/* compress data and write to disk */
+void paje_print(FILE* file, const char*format, ...)
+{
+  int len = 0;
+  int ret = 0;
+  va_list args;
+  char* tmp_buf = NULL;
+  va_start(args, format);
+
+  if(compression_ratio) {
+    len = vasprintf(&tmp_buf, format, args);
+    va_end(args);
+
+    ret = gtg_compress_m2f(&z, tmp_buf, len, file);
+    if (ret < 0) {
+      fprintf(stderr, "gtg: an error occured while compressing\n");
+    }
+  } else {
+    /* don't compress, write directly to disk */
+    vfprintf(file, format, args);
+    va_end(args);
+  }
+}
+
+trace_return_t pajeSetCompress(int val)
+{
+  compression_ratio = val;
+  if(val)
+    gtg_compress_init(&z, compression_ratio);
+  return TRACE_SUCCESS;
+}
+
+#else  /* HAVE_LIBZ */
+
+#define paje_print fprintf
+
+trace_return_t pajeSetCompress(int val)
+{
+  return TRACE_ERR_WRITE;
+}
+
+#endif
 
 /* Insert a doubleLinkList_t item in the sorted doubleLinkedList starting with first */
 void insert (doubleLinkList_t** first, doubleLinkList_t* item){
@@ -175,7 +226,7 @@ void clean_files (char* fileName, int nbFile){
     int ret;
     char cmd[BUFFSIZE];
     sprintf (cmd, "rm %s_root.ept %s_proc*.ept", filename,filename);
-    ret = system(cmd);    
+    ret = system(cmd);
 }
 
 void merge (char* filename, int nbFile){
@@ -191,7 +242,13 @@ void merge (char* filename, int nbFile){
     int               i;
 
     /* Getting the first part of the trace (header+def) */
-    sprintf (tmp, "%s.trace", filename);
+#if HAVE_LIBZ
+    if(compression_ratio)
+      sprintf (tmp, "%s.trace.z", filename);
+    else
+#endif
+      sprintf (tmp, "%s.trace", filename);
+
     res = fopen (tmp, "w+");
     sprintf (tmp2, "%s_root.ept", filename);
     oldF = fopen (tmp2,"a+");
@@ -204,7 +261,7 @@ void merge (char* filename, int nbFile){
         i = getline (&buf, &size, oldF);
         if (size==0 || i==-1)
             break;
-        fprintf (res, "%s", buf);
+        paje_print (res, "%s", buf);
     }while (buf[0] != EOF);
     fclose (oldF);
     /* Initialising the parallel merge */
@@ -222,7 +279,7 @@ void merge (char* filename, int nbFile){
     /*      fprintf (stderr, "L1 = %s \n", list[i].current.value); */
 
     while (first && first->current.status != 0){
-        fprintf (res, "%s", first->current.value);
+        paje_print (res, "%s", first->current.value);
         myGetLine (first);
         if (first->current.status==0){
             first=first->next;

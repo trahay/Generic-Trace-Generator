@@ -56,6 +56,16 @@ trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags
 char* pajeGetName (int rk);
 
 /**
+ * \ingroup cotf
+ * \fn trace_return_t pajeSetCompress(int val)
+ * \brief Enable trace compression.
+ * \param val 0 means no compression, otherwize the output files will be compressed.
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t pajeSetCompress(int val);
+
+/**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddContType   (const char* alias,
  *                             const char* contType, 

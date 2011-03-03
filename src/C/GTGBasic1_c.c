@@ -85,6 +85,8 @@ trace_return_t setCompress (int val){
             break;
 #endif
     case PAJE :
+      return pajeSetCompress(val);
+      break;
     case TAU :
     default :
         return TRACE_SUCCESS;

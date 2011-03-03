@@ -23,6 +23,9 @@ if [ test  "x$have_getline" = xyes ]; then
    CFLAGS="${CFLAGS} -DHAVE_GETLINE"
 fi
 
+AC_CHECK_LIB(z, deflate, have_libz=yes)
+AM_CONDITIONAL([HAVE_LIBZ], [ test "x$have_libz" = xyes])
+
 # crappy hack: of the macros AC_PROG_{CC,CXX,F77,FC}, only the
 # first expanded one will check for object file extension etc,
 # and fail if that doesn't work.
