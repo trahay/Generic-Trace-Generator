@@ -88,10 +88,12 @@ AM_CONDITIONAL([USE_MPI], [test "x$enable_mpi" = xyes])
 
 
 # OTF stuff
+otf_asked=no
 use_otf=yes
 AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF installation])],
         [
                 if test x$withval != xno; then
+		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
                                 use_otf_from_system=yes
@@ -113,6 +115,7 @@ AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF insta
 AC_ARG_WITH(otf-include, [AS_HELP_STRING([--with-otf-include[=<dir>]], [Use a specific OTF header directory])],
         [
                 if test x$withval != xno; then
+		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
                                 use_otf_from_system=yes
@@ -130,6 +133,7 @@ AC_ARG_WITH(otf-include, [AS_HELP_STRING([--with-otf-include[=<dir>]], [Use a sp
 AC_ARG_WITH(otf-lib, [AS_HELP_STRING([--with-otf-lib[=<dir>]], [Use a specific libotf.so directory])],
         [
                 if test x$withval != xno; then
+		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
                                 use_otf_from_system=yes
@@ -152,7 +156,11 @@ if test $use_otf = yes ; then
    fi
 
    # MPI header
+   enable_otf=no
    AC_CHECK_HEADER([otf.h],[enable_otf=yes], AC_MSG_WARN([Cannot find libOTF.]))
+   if test $enable_otf = no && test $otf_asked = yes ; then
+         AC_MSG_ERROR(Cannot find libOTF.)
+   fi
 else
   enable_otf=no
 fi
