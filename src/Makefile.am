@@ -24,7 +24,7 @@ libgtg_la_SOURCES = \
 
 if FORTRAN
 libgtg_la_SOURCES += C/interfaceCFortranBasic1.c    \
-		  FORTRAN/GTGBasic1_f.f90
+		  FORTRAN/GTGBasic1_f.f
 endif
 
 if USE_MPI
