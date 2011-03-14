@@ -574,7 +574,7 @@ trace_return_t pajeSetState   (varPrec time, const char* type,
 trace_return_t pajePushState   (varPrec time, const char* type,
                      const char*  cont, const char* val){
     if(verbose)
-        printf("MushState : type %s, container %s, val %s\n", type, cont, val);
+        printf("PushState : type %s, container %s, val %s\n", type, cont, val);
     if (procFile){
         fprintf (procFile, "11 %.13e '%s' '%s' '%s'\n", 
                  time, type, cont, val);
