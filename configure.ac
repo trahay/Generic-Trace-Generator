@@ -5,12 +5,12 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([GTG], [0.2-dev], [gtg-devel@lists.gforge.inria.fr])
+AC_INIT([GTG], [0.1-1], [gtg-devel@lists.gforge.inria.fr])
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
 AC_PROG_CC
-AC_PROG_FC([],90)
+AC_PROG_F77
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
@@ -37,17 +37,17 @@ AC_ARG_WITH(fortran,
             [AS_HELP_STRING([--with-fortran[=<bool>]], [Enable fortran])],
             [
                 if test x$withval != xno; then
-                  if test x$FC = x; then
-                      use_fortran=no 
-                      AC_MSG_ERROR(A Fortran compiler is required)
-                   else
-                      use_fortran=yes
-                  fi
+                  use_fortran=yes
                 else
                   use_fortran=no
                 fi
             ])
 
+if [ test $use_fortran = yes ]; then
+   if test x$F77 = x; then
+      AC_MSG_ERROR(A Fortran compiler is required)
+   fi
+fi
 
 AM_CONDITIONAL([FORTRAN], [test "x$use_fortran" = xyes])
 
@@ -91,10 +91,12 @@ AM_CONDITIONAL([USE_MPI], [test "x$enable_mpi" = xyes])
 
 
 # OTF stuff
+otf_asked=no
 use_otf=yes
 AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF installation])],
         [
                 if test x$withval != xno; then
+		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
                                 use_otf_from_system=yes
@@ -116,6 +118,7 @@ AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF insta
 AC_ARG_WITH(otf-include, [AS_HELP_STRING([--with-otf-include[=<dir>]], [Use a specific OTF header directory])],
         [
                 if test x$withval != xno; then
+		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
                                 use_otf_from_system=yes
@@ -133,6 +136,7 @@ AC_ARG_WITH(otf-include, [AS_HELP_STRING([--with-otf-include[=<dir>]], [Use a sp
 AC_ARG_WITH(otf-lib, [AS_HELP_STRING([--with-otf-lib[=<dir>]], [Use a specific libotf.so directory])],
         [
                 if test x$withval != xno; then
+		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
                                 use_otf_from_system=yes
@@ -155,7 +159,11 @@ if test $use_otf = yes ; then
    fi
 
    # MPI header
+   enable_otf=no
    AC_CHECK_HEADER([otf.h],[enable_otf=yes], AC_MSG_WARN([Cannot find libOTF.]))
+   if test $enable_otf = no && test $otf_asked = yes ; then
+         AC_MSG_ERROR(Cannot find libOTF.)
+   fi
 else
   enable_otf=no
 fi
@@ -178,6 +186,7 @@ AM_CONDITIONAL([USE_PDFLATEX], [test "x$PDFLATEX" != xno])
 AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
 
 AC_OUTPUT([Makefile \
+	   gtg.pc \
           inc/Makefile \
 	  src/Makefile \
 	  doc/Makefile \
