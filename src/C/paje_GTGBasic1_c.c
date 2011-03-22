@@ -273,14 +273,14 @@ pajeGetName (int procNb){
 trace_return_t my_open (int rk){
     trace_return_t ret = TRACE_ERR_OPEN;
     char f[BUFFSIZE];
-
+    
     if (!procFile){
-	    if(!paje_flags & GTG_FLAG_USE_MPI) {
-		    procFile = headFile;
-	    } else {
-		    sprintf (f, "%s_proc%d.ept", filename, rk);
-		    procFile = fopen (f, "w");
-	    }
+        if(!(paje_flags & GTG_FLAG_USE_MPI)) {
+            procFile = headFile;
+        } else {
+            sprintf (f, "%s_proc%d.ept", filename, rk);
+            procFile = fopen (f, "w");
+        }
         if (!procFile)
             return ret;
         ret = TRACE_SUCCESS;
