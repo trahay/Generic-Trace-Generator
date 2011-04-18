@@ -15,6 +15,13 @@ AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
+# Correct install paths
+AS_IF([test x"$prefix" = x -o x"$prefix" = "xNONE"], [prefix="/usr/local"])
+AS_IF([test x"$exec_prefix" = x -o x"$exec_prefix" = "xNONE"], [exec_prefix="\${prefix}"])
+AS_IF([test "$docdir" = "\${datarootdir}/doc/\${PACKAGE_TARNAME}"],
+[docdir="\${datarootdir}/doc"])
+
+
 # Checks for header files.
 AC_CHECK_HEADERS([stdio.h string.h stdlib.h])
 
@@ -88,6 +95,7 @@ AM_CONDITIONAL([USE_MPI], [test "x$enable_mpi" = xyes])
 
 
 # OTF stuff
+use_internal_otf=yes
 otf_asked=no
 use_otf=yes
 AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF installation])],
@@ -96,10 +104,10 @@ AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF insta
 		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
-                                use_otf_from_system=yes
+				use_internal_otf=yes
                         else
                                 # use specified path
-                                use_otf_from_system=no
+				use_internal_otf=no
                                 otfdir=$withval
                                 AC_MSG_RESULT(yes using $otfdir)
                                 AC_SUBST(OTFDIR, $otfdir)
@@ -107,7 +115,8 @@ AC_ARG_WITH(otf, [AS_HELP_STRING([--with-otf[=<dir>]], [Use a specific OTF insta
 				OTF_LIB=$otfdir/lib
                         fi
                 else
-			# either --without-mpi or --with-mpi=no is set
+			# either --without-otf or --with-otf=no is set
+			use_internal_otf=no
                         use_otf=no
                 fi
         ])
@@ -118,10 +127,10 @@ AC_ARG_WITH(otf-include, [AS_HELP_STRING([--with-otf-include[=<dir>]], [Use a sp
 		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
-                                use_otf_from_system=yes
+				use_internal_otf=yes
                         else
                                 # use specified path
-                                use_otf_from_system=no
+				use_internal_otf=no
                                 otf_inc_dir=$withval
                                 AC_MSG_RESULT(yes using $otf_inc_dir)
 				OTF_INC=$otf_inc_dir
@@ -136,10 +145,10 @@ AC_ARG_WITH(otf-lib, [AS_HELP_STRING([--with-otf-lib[=<dir>]], [Use a specific l
 		   	otf_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
-                                use_otf_from_system=yes
+				use_internal_otf=yes
                         else
                                 # use specified path
-                                use_otf_from_system=no
+				use_internal_otf=no
                                 otf_lib_dir=$withval
                                 AC_MSG_RESULT(yes using $otf_lib_dir)
 				OTF_LIB=$otf_lib_dir
@@ -149,17 +158,55 @@ AC_ARG_WITH(otf-lib, [AS_HELP_STRING([--with-otf-lib[=<dir>]], [Use a specific l
         ])
 
 if test $use_otf = yes ; then
-   AC_SUBST(USE_OTFDIR_FROM_USER,$use_otf_from_system)
-   if test x$use_otf_from_system = xno; then
+   enable_otf=yes
+   if test x$use_internal_otf = xno; then
       CPPFLAGS="${CPPFLAGS} -I$OTF_INC/"
       LDFLAGS="${LDFLAGS} -L$OTF_LIB"
-   fi
 
-   # MPI header
-   enable_otf=no
-   AC_CHECK_HEADER([otf.h],[enable_otf=yes], AC_MSG_WARN([Cannot find libOTF.]))
-   if test $enable_otf = no && test $otf_asked = yes ; then
+   # Check for OTF header
+      AC_CHECK_HEADER([otf.h],[enable_otf=yes], AC_MSG_WARN([Cannot find libOTF.]))
+      if test $enable_otf = no && test $otf_asked = yes ; then
          AC_MSG_ERROR(Cannot find libOTF.)
+      fi
+
+   else
+
+  dnl configure otf from extlib
+    otf_parent_dir=`pwd`
+    otf_dir="extlib/otf"
+    AC_MSG_NOTICE([configuring in otf_dir ($otf_parent_dir/$otf_dir)])
+    AS_IF([test "$srcdir" != "."],
+                [
+                        test -d "$otf_dir" ||
+                        mkdir -p "$otf_dir" ||
+                        AC_MSG_ERROR([cannot create $otf_dir])
+                ])
+
+                cd $otf_dir
+
+                case $srcdir in
+                        .)
+                                otf_srcdir="$srcdir"
+                                ;;
+                        /*)
+                                otf_srcdir="$srcdir/$otf_dir"
+                                ;;
+                        *)
+                                otf_srcdir="../../$srcdir/$otf_dir"
+                                ;;
+                esac
+
+                otf_conf_cmd="$otf_srcdir/configure"
+   otf_conf_args="$otf_conf_args --prefix=\"$prefix\" --exec-prefix=\"$exec_prefix\" --bindir=\"$bindir\" --libdir=\"$libdir\" --includedir=\"$includedir\" --docdir=\"$docdir/otf\" $OTFFLAGS --cache-file=\"/dev/null\" --srcdir=\"$otf_srcdir\""
+                AC_MSG_NOTICE([running $SHELL $otf_conf_cmd $otf_conf_args])
+                eval "$SHELL '$otf_conf_cmd' $otf_conf_args"
+                AS_IF([test $? != "0"], [AC_MSG_ERROR([$otf_conf_cmd failed for $otf_dir])])
+
+                cd $otf_parent_dir
+                AS_IF([test x"$OTFLIB" = x], [OTF_LDFLAGS="-lotf"])
+
+#		OTF_CPPFLAGS="$OTF_CPPFLAGS -I${prefix}/include/otf"
+#		CPPFLAGS="${CPPFLAGS} -I${prefix}/include/otf"
    fi
 else
   enable_otf=no
@@ -167,6 +214,9 @@ fi
 
 AM_CONDITIONAL([USE_OTF], [test "x$enable_otf" = xyes])
 
+AC_MSG_WARN([use otf = $use_internal_otf])
+
+AM_CONDITIONAL(DONT_USE_INTERNAL_OTF, test x"$use_internal_otf" != "xyes")
 
 
 # Checks for programs
@@ -184,7 +234,8 @@ AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
 
 AC_OUTPUT([Makefile \
 	   gtg.pc \
-          inc/Makefile \
-	  src/Makefile \
-	  doc/Makefile \
-	  doc/Doxyfile])
+           extlib/Makefile \
+           inc/Makefile \
+	   src/Makefile \
+	   doc/Makefile \
+	   doc/Doxyfile])
