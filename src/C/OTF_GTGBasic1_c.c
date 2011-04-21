@@ -287,7 +287,7 @@ trace_return_t OTFAddStateType (const char* alias, const char* contType,
     if(verbose)
         printf("addStateType : id %d, alias %s, name %s, contType %s\n", current_stateType, alias, name, contType);
 
-    OTF_Writer_writeDefFunctionGroup(writer, getCtContFromName(contType), current_stateType, name);
+    OTF_Writer_writeDefFunctionGroup(writer, 0, current_stateType, name);
 
     current_stateType ++;
 
@@ -350,7 +350,7 @@ trace_return_t OTFAddVarType (const char* alias   , const char* contType,
     variableTypes[current_variableType].alias = (char *)malloc(sizeof(char)*(strlen(alias)+1));
     strcpy(variableTypes[current_variableType].alias, alias);
 
-    OTF_Writer_writeDefCounterGroup (writer, getCtContFromName(contType), current_variableType, name);
+    OTF_Writer_writeDefCounterGroup (writer, 0, current_variableType, name);
 
     if(verbose)
         printf("addVarType : id %d, alias %s, name %s, contType %s\n", current_variableType, alias, name, contType);
