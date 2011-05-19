@@ -1,4 +1,4 @@
-SUBDIRS = inc/ src/ doc/
+SUBDIRS = extlib/ inc/ src/ doc/
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gtg.pc

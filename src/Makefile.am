@@ -39,9 +39,21 @@ libgtg_la_SOURCES += C/gtg_compress_core.c
 endif
 
 if USE_OTF
-libgtg_la_CFLAGS += -DBUILD_OTF
+
+if DONT_USE_INTERNAL_OTF
+OTFINCLUDE =
+OTFLIBADD = -lotf
+OTFDEPENDENCIES =
+else
+OTFINCLUDE = -I$(top_srcdir)/extlib/otf/otflib -I$(top_builddir)/extlib/otf/otflib
+OTFLIBADD = $(top_builddir)/extlib/otf/otflib/libotf.la
+OTFDEPENDENCIES = $(OTFLIBADD)
+endif
+
+libgtg_la_CFLAGS += -DBUILD_OTF $(OTFINCLUDE)
 libgtg_la_SOURCES += C/OTF_GTGBasic1_c.c
-libgtg_la_LIBADD += -lotf
+libgtg_la_LIBADD += $(OTFLIBADD)
+libgtg_la_DEPENDENCIES = $(OTFDEPENDENCIES)
 endif
 
 if HAVE_LIBZ

@@ -1,0 +1,6 @@
+
+if DONT_USE_INTERNAL_OTF
+SUBDIRS =
+else
+SUBDIRS = otf
+endif

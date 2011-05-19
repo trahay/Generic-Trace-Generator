@@ -215,7 +215,7 @@ trace_return_t OTFAddStateType (const char* alias, const char* contType,
   if(verbose)
     printf("addStateType : id %d, alias %s, name %s, contType %s\n", p_state->id, alias, name, contType);
 
-  OTF_Writer_writeDefFunctionGroup(writer, getContainerTypeFromName(contType), p_state->id, name);
+  OTF_Writer_writeDefFunctionGroup(writer, 0, p_state->id, name);
 
   return TRACE_SUCCESS;
 }
@@ -266,7 +266,7 @@ trace_return_t OTFAddVarType (const char* alias   , const char* contType,
   VariableType_t *p_variable;
   alloc_init_struct(VariableType_t, p_variable, &variableTypes.token, name, alias);
 
-  OTF_Writer_writeDefCounterGroup (writer, getContainerTypeFromName(contType), p_variable->id, name);
+  OTF_Writer_writeDefCounterGroup (writer, 0, p_variable->id, name);
 
   if(verbose)
     printf("addVarType : id %d, alias %s, name %s, contType %s\n", p_variable->id, alias, name, contType);
@@ -307,7 +307,7 @@ trace_return_t OTFAddContainer (varPrec time, const char* alias,
   if(verbose)
     printf("addCont : parent %d, id %d, name %s, alias %s, type %s, parent %s\n", parent, p_cont->id, name, alias, type, container);
 
-  OTF_Writer_writeDefProcess(writer, 1, p_cont->id, name, parent);
+  OTF_Writer_writeDefProcess(writer, 0, p_cont->id, name, parent);
   OTF_Writer_writeBeginProcess (writer, time*TIMER_RES, p_cont->id);
 
   return TRACE_SUCCESS;
@@ -418,32 +418,29 @@ trace_return_t OTFAddEvent (varPrec time    , const char* type,
 trace_return_t OTFStartLink (varPrec time, const char* type,
 			     const char*   src, const char* dest,
 			     const char*   val , const char* key){
-  /*
-    uint32_t source = getContainerFromName(src);
-    uint32_t destination = getContainerFromName(dest);
-    uint32_t linkType = getLinkTypeFromName(type);
-      
-    OTF_Writer_writeSendMsg(writer, time*TIMER_RES, source, destination, 0, linkType, 0, 0);
-    if(verbose)
-    printf("StartLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, source, destination, linkType, val, key);
-  */
+      uint32_t source = getContainerFromName(src);
+      uint32_t destination = getContainerFromName(dest);
+      uint32_t linkType = getLinkTypeFromName(type);
+
+      OTF_Writer_writeSendMsg(writer, time*TIMER_RES, source, destination, 0, linkType, 0, 0);
+      if(verbose)
+      printf("StartLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, source, destination, linkType, val, key);
 
   return TRACE_SUCCESS;
 }
 
 trace_return_t OTFEndLink (varPrec time, const char* type,
-			   const char*   src, const char* dest,
-			   const char*   val, const char* key){
-  /*
-    uint32_t src_cont = getContainerFromName(src);
-    uint32_t dest_cont = getContainerFromName(dest);
-    uint32_t linkType = getLinkTypeFromName(type);
-      
-    OTF_Writer_writeRecvMsg(writer, time*TIMER_RES, dest_cont, src_cont, 0, linkType, 0, 0);
-    if(verbose)
-    printf("EndLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, src_cont, dest_cont, linkType, val, key);
-  */
-  return TRACE_SUCCESS;
+                           const char*   src, const char* dest,
+                           const char*   val, const char* key){
+      uint32_t src_cont = getContainerFromName(src);
+      uint32_t dest_cont = getContainerFromName(dest);
+      uint32_t linkType = getLinkTypeFromName(type);
+
+      OTF_Writer_writeRecvMsg(writer, time*TIMER_RES, dest_cont, src_cont, 0, linkType, 0, 0);
+      if(verbose)
+      printf("EndLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, src_cont, dest_cont, linkType, val, key);
+
+    return TRACE_SUCCESS;
 }
 
 trace_return_t OTFSetVar (varPrec time, const char*  type,
