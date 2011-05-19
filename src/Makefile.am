@@ -19,6 +19,8 @@ libgtg_la_LDFLAGS = --no-undefined
 libgtg_la_SOURCES = \
 	  C/GTGBasic1_c.c     \
 	  C/GTGColor.c     \
+	  C/GTGReplay.c     \
+	  C/GTGMemory.c     \
 	  C/paje_GTGBasic1_c.c
 
 

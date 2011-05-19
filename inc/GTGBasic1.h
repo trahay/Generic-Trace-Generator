@@ -41,6 +41,11 @@
 #define GTG_FLAG_NOTBUF  2
 
 /**
+ * \brief Allow the application to record events out of order
+ */
+#define GTG_FLAG_OUTOFORDER  4
+
+/**
  * \brief Flags that can be specified to GTG.
  */
 typedef uint8_t gtg_flag_t;

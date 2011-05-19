@@ -1,15 +1,19 @@
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdarg.h>
 #include "pajeColor.h"
 #include "GTGBasic1.h"
+#include "GTGReplay.h"
 #include "OTF_GTGBasic1.h"
 #include "paje_GTGBasic1.h"
 
 /* verbose !=0 means debugging mode */
 int verbose = 0;
 static traceType_t traceType;
-/* Bufferized or not bufferized */
-static int mode;
+
 /* Flags that should be used */
-static gtg_flag_t gtg_flags;
+gtg_flag_t gtg_flags;
+
 
 char* getName (int procNbr){
     switch (traceType){
@@ -52,6 +56,10 @@ trace_return_t initTrace   (const char* filename, int rank, gtg_flag_t flags){
     /* first, let's initialize gtg */
     gtg_color_init();
 
+    if( (flags & GTG_FLAG_USE_MPI) && (flags & GTG_FLAG_OUTOFORDER)) {
+      fprintf(stderr, "Warning: you cannot record events out of order when using MPI\n");
+      flags ^= GTG_FLAG_OUTOFORDER;
+    }
     gtg_flags = flags;
 
     switch (traceType){
@@ -238,6 +246,12 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
 trace_return_t addContainer   (varPrec time, const char* alias    ,
                     const char*  type, const char* container,
                     const char*  name, const char* file){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    /* if the application records events out of order, don't execute this function right now. */
+    gtg_record(event_addContainer, time, alias, type, container, name, file);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -263,6 +277,11 @@ trace_return_t addContainer   (varPrec time, const char* alias    ,
 
 trace_return_t destroyContainer     (varPrec time, const char*  name,
                           const char*  type){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_destroyContainer, time, name, type);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -286,6 +305,12 @@ trace_return_t destroyContainer     (varPrec time, const char*  name,
 
 trace_return_t setState   (varPrec time, const char* type,
                 const char*  cont, const char* val){
+
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_setState, time, type, cont, val);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -309,6 +334,11 @@ trace_return_t setState   (varPrec time, const char* type,
 
 trace_return_t pushState   (varPrec time, const char* type,
                  const char*  cont, const char* val){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_pushState, time, type, cont, val);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -332,6 +362,11 @@ trace_return_t pushState   (varPrec time, const char* type,
 
 trace_return_t popState   (varPrec time, const char* type,
                 const char*  cont){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_popState, time, type, cont);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -355,6 +390,11 @@ trace_return_t popState   (varPrec time, const char* type,
 
 trace_return_t addEvent   (varPrec time, const char* type,
                 const char*  cont, const char* val){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_addEvent, time, type, cont, val);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -380,6 +420,12 @@ trace_return_t startLink   (varPrec time, const char* type,
                  const char*  cont, const char* src,
                  const char*  dest, const char* val,
                  const char* key){
+
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_startLink, time, type, cont, src, dest, val, key);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -405,6 +451,10 @@ trace_return_t endLink   (varPrec time, const char* type,
                const char*  cont, const char* src,
                const char*  dest, const char* val,
                const char* key){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_endLink, time, type, cont, src, dest, val, key);
+    return TRACE_SUCCESS;
+  }
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -428,6 +478,11 @@ trace_return_t endLink   (varPrec time, const char* type,
 
 trace_return_t setVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_setVar, time, type, cont, val);
+    return TRACE_SUCCESS;
+  }
+
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -451,6 +506,10 @@ trace_return_t setVar   (varPrec time, const char*  type,
 
 trace_return_t addVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_addVar, time, type, cont, val);
+    return TRACE_SUCCESS;
+  }
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -474,6 +533,10 @@ trace_return_t addVar   (varPrec time, const char*  type,
 
 trace_return_t subVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val){
+  if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+    gtg_record(event_subVar, time, type, cont, val);
+    return TRACE_SUCCESS;
+  }
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -497,6 +560,10 @@ trace_return_t subVar   (varPrec time, const char*  type,
 
 trace_return_t endTrace (){
     int ret = TRACE_ERR_CLOSE;
+
+    if(gtg_flags & GTG_FLAG_OUTOFORDER) {
+      gtg_write_events(-1);
+    }
 
     switch (traceType){
 #ifdef BUILD_PAJE
