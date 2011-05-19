@@ -116,24 +116,25 @@ void gtg_write_events(long nb_events_to_write)
       fprintf(stderr, "Unknown event type: %d\n", cur_event->type);
     }
 
-    /* free the parameters */
-    if(cur_event->data) {
-      free(cur_event->data);
-      cur_event->data = NULL;
-    }
-
     /* remove the current item from the list */
     prev = cur_event->prev;
     next = cur_event->next;
     if(prev) prev->next = next;
     if(next) next->prev = prev;
 
-
     n++;
     nb_events--;
     /* delete the current event */
     ptr = cur_event;
+
+    /* free the parameters */
+    if(cur_event->data) {
+      free(cur_event->data);
+       cur_event->data = NULL;
+    }
+
     cur_event = next;
+
     gtg_block_free(memory, ptr);
   }
   __first_event = cur_event;
@@ -142,6 +143,7 @@ void gtg_write_events(long nb_events_to_write)
   gtg_flags |= GTG_FLAG_OUTOFORDER;
 
 }
+
 
 /* Insert an event in the list of events.
  * At any time, this list is sorted.
@@ -156,8 +158,8 @@ static void __gtg_insert(struct event_list_t* new_event) {
   if(!__last_event || !__first_event) {
     __last_event = new_event;
     __first_event = new_event;
-    new_event->next = new_event;
-    new_event->prev = new_event;
+    new_event->next = NULL;
+    new_event->prev = NULL;
     return ;
   }
 
@@ -242,12 +244,6 @@ void gtg_record(enum event_type_t type, varPrec time, ...) {
 
   /* allocate the new event */
   new_event = gtg_block_malloc(memory);
-
-  if(!__last_event) {
-    /* The list of event is not yet initialized */
-    __last_event = new_event;
-    __first_event = new_event;
-  }
 
   new_event->next = NULL;
   new_event->type = type;
