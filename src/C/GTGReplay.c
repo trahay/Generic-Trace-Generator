@@ -221,7 +221,7 @@ static void __gtg_insert(struct event_list_t* new_event) {
 #define FORMAT_SIX_STRING "%s\3%s\3%s\3%s\3%s\3%s"
 #define FORMAT_FIVE_STRING "%s\3%s\3%s\3%s\3%s"
 #define FORMAT_THREE_STRING "%s\3%s\3%s"
-#define FORMAT_TWO_STRING_ONE_DOUBLE "%s\3%s\3%d"
+#define FORMAT_TWO_STRING_ONE_DOUBLE "%s\3%s\3%e"
 #define FORMAT_TWO_STRING "%s\3%s"
 
 /* postpone the recording of an event */
