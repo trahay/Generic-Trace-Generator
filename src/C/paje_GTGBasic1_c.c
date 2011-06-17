@@ -502,7 +502,10 @@ trace_return_t pajeAddContType   (const char* alias, const char* contType,
     if(verbose)
         printf("addCtType : name %s, alias %s, contType %s\n", name, alias, contType);
     if (headFile){
-        fprintf (headFile, "1 '%s' '%s' '%s' \n", alias, contType, name);
+      if(contType)
+        fprintf (headFile, "1 \"%s\" \"%s\" \"%s\" \n", alias, contType, name);
+      else
+        fprintf (headFile, "1 \"%s\" 0 \"%s\" \n", alias, name);
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -515,7 +518,7 @@ trace_return_t pajeAddStateType   (const char* alias, const char* contType,
     if(verbose)
 	    printf("addStateType : alias %s, name %s, contType %s\n",  alias, name, contType);
     if (headFile){
-        fprintf (headFile, "3 '%s' '%s' '%s' \n", alias, contType, name);
+        fprintf (headFile, "3 \"%s\" \"%s\" \"%s\" \n", alias, contType, name);
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -528,7 +531,7 @@ trace_return_t pajeAddEventType   (const char* alias, const char* contType,
     if(verbose)
 	    printf("addEventType :  alias %s, name %s, contType %s\n", alias, name, contType);
     if (headFile){
-        fprintf (headFile, "4 '%s' '%s' '%s' \n", alias, contType, name);
+        fprintf (headFile, "4 \"%s\" \"%s\" \"%s\" \n", alias, contType, name);
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -542,7 +545,7 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
     if (verbose)
         printf ("Add link type: alias: %s name: %s contType: %s src: %s des: %s \n", alias, name, contType, srcContType, destContType);
     if (headFile){
-        fprintf (headFile, "41 '%s' '%s' '%s' '%s' '%s' \n", alias, name, contType, srcContType, destContType);
+        fprintf (headFile, "41 \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \n", alias, name, contType, srcContType, destContType);
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -555,7 +558,7 @@ trace_return_t pajeAddVarType   (const char* alias   , const char* name,
     if(verbose)
 	    printf("addVarType : alias %s, name %s, contType %s\n", alias, name, contType);
     if (headFile){
-        fprintf (headFile, "50 '%s' '%s' '%s' \n", alias, contType, name);
+        fprintf (headFile, "50 \"%s\" \"%s\" \"%s\" \n", alias, contType, name);
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -568,7 +571,7 @@ trace_return_t pajeAddEntityValue   (const char* alias, const char* entType,
     if(verbose)
         printf("addEntityValue : color %s, alias %s, name %s, type %s\n", color, alias, name, entType);
     if (headFile){
-        fprintf (headFile, "6 '%s' '%s' '%s' '%s'\n", alias, entType, name, color);
+        fprintf (headFile, "6 \"%s\" \"%s\" \"%s\" \"%s\"\n", alias, entType, name, color);
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -580,8 +583,13 @@ trace_return_t pajeAddContainer   (varPrec time, const char* alias    ,
                         const char*  type, const char* container,
                         const char*  name, const char* file){
     if (headFile){
-        fprintf (headFile, "7 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
+      if(container && strcmp(container, "(null)")!=0 )
+        fprintf (headFile, "7 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  time, alias, type, container, name, file);
+      else
+        fprintf (headFile, "7 %.13e \"%s\" \"%s\" 0 \"%s\" \"%s\"\n",
+                 time, alias, type, name, file);
+
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -593,8 +601,12 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
                            const char*  type, const char* container,
                            const char*  name){
     if (headFile){
-        fprintf (headFile, "7 %.13e '%s' '%s' '%s' '%s'\n", 
+      if(container && strcmp(container, "(null)")!=0)
+        fprintf (headFile, "7 %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  time, alias, type, container, name);
+      else
+        fprintf (headFile, "7 %.13e \"%s\" \"%s\" 0 \"%s\"\n",
+                 time, alias, type, name);
 
 	FLUSH(headFile);
         return TRACE_SUCCESS;
@@ -605,7 +617,7 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
 trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
                               const char*  type){
     if (headFile){
-        fprintf (headFile, "8 %.13e '%s' '%s' \n", 
+        fprintf (headFile, "8 %.13e \"%s\" \"%s\" \n", 
                  time, name, type);
 
 	FLUSH(headFile);
@@ -619,7 +631,7 @@ trace_return_t pajeSetState   (varPrec time, const char* type,
     if(verbose)
         printf("SetState : type %s, container %s, val %s\n", type, cont, val);
     if (procFile){
-        fprintf (procFile, "10 %.13e '%s' '%s' '%s'\n", 
+        fprintf (procFile, "10 %.13e \"%s\" \"%s\" \"%s\"\n", 
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -633,7 +645,7 @@ trace_return_t pajePushState   (varPrec time, const char* type,
     if(verbose)
         printf("PushState : type %s, container %s, val %s\n", type, cont, val);
     if (procFile){
-        fprintf (procFile, "11 %.13e '%s' '%s' '%s'\n", 
+        fprintf (procFile, "11 %.13e \"%s\" \"%s\" \"%s\"\n", 
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -647,7 +659,7 @@ trace_return_t pajePopState   (varPrec time, const char* type,
     if(verbose)
         printf("PopState : type %s, container %s\n", type, cont);
     if (procFile){
-        fprintf (procFile, "12 %.13e '%s' '%s'\n", 
+        fprintf (procFile, "12 %.13e \"%s\" \"%s\"\n", 
                  time, type, cont);
 
 	FLUSH(procFile);
@@ -661,7 +673,7 @@ trace_return_t pajeAddEvent   (varPrec time, const char* type,
     if(verbose)
         printf("AddEvent : type %s, cont %s, val %s\n", type, cont, val);
     if (procFile){
-        fprintf (procFile, "20 %.13e '%s' '%s' '%s'\n", 
+        fprintf (procFile, "20 %.13e \"%s\" \"%s\" \"%s\"\n", 
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -677,7 +689,7 @@ trace_return_t pajeStartLink   (varPrec time, const char* type,
         printf ("Start link: type: %s container: %s src: %s val: %s key %s\n", 
                  type, cont, src, val, key);
     if (procFile){
-        fprintf (procFile, "42 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
+        fprintf (procFile, "42 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n", 
                  time, type, cont, src, val, key);
 
 	FLUSH(procFile);
@@ -693,7 +705,7 @@ trace_return_t pajeEndLink   (varPrec time, const char* type,
         printf ("End link type: %s container: %s src: %s val: %s key %s\n", 
                  type, cont, dest, val, key);
     if (procFile){
-        fprintf (procFile, "43 %.13e '%s' '%s' '%s' '%s' '%s'\n", 
+        fprintf (procFile, "43 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n", 
                  time, type, cont, dest, val, key);
 
 	FLUSH(procFile);
@@ -708,7 +720,7 @@ trace_return_t pajeSetVar   (varPrec time, const char*  type,
         printf ("SetVar: type: %s container: %s value: %e\n", 
                 type, cont, val);
     if (procFile){
-        fprintf (procFile, "51 %.13e '%s' '%s' %e\n", 
+        fprintf (procFile, "51 %.13e \"%s\" \"%s\" %e\n", 
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -723,7 +735,7 @@ trace_return_t pajeAddVar   (varPrec time, const char*  type,
         printf ("AddVar: type: %s container: %s value: %e\n", 
                 type, cont, val);
     if (procFile){
-        fprintf (procFile, "52 %.13e '%s' '%s' %e\n", 
+        fprintf (procFile, "52 %.13e \"%s\" \"%s\" %e\n", 
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -738,7 +750,7 @@ trace_return_t pajeSubVar   (varPrec time, const char*  type,
         printf ("SubVar: type: %s container: %s value: %e\n", 
                 type, cont, val);
     if (procFile){
-        fprintf (procFile, "53 %.13e '%s' '%s' %e\n", 
+        fprintf (procFile, "53 %.13e \"%s\" \"%s\" %e\n", 
                  time, type, cont, val);
 
 	FLUSH(procFile);
