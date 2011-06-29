@@ -98,7 +98,7 @@ typedef struct VariableType {
 typedef struct Variable {
     int parent;
     int type;
-    int value;
+    uint64_t value;
 } Variable_t;
 
 struct otf_color {
