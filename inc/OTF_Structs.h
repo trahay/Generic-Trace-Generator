@@ -108,7 +108,7 @@ typedef struct VariableType {
 typedef struct Variable {
     int             parent;
     int             type;
-    int             value;
+    uint64_t        value;
     int             id;
     struct gtg_list token;	/* stored in the variables list */
 } Variable_t;
