@@ -110,7 +110,7 @@ static inline void gtg_list_del(gtg_list_t entry)
  * \param head the head for the list.
  */
 #define gtg_list_for_each(pos, head) \
-  for (pos = (head)->nxt; pos != (head); pos = pos->next)
+  for (pos = (head)->next; pos != (head); pos = pos->next)
 
 /**
  * \fn gtg_list_for_each_reverse(gtg_list_t pos, gtg_list_t head)
@@ -160,5 +160,15 @@ static inline void gtg_list_del(gtg_list_t entry)
        &pos->member != (head);						\
        pos = n, n = gtg_list_entry(n->member.next, typeof(*n), member))
 
+
+static inline int gtg_list_size(gtg_list_t l)
+{
+  int res = 0;
+  gtg_list_t ptr = NULL;
+  gtg_list_for_each(ptr, l)
+    res++;
+
+  return res;
+}
 
 #endif	/* GTG_LIST_H */
