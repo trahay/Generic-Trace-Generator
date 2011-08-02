@@ -2,10 +2,10 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
-
-#include "OTF_Structs.h"
-#include "OTF_GTGBasic1.h"
 #include <otf.h>
+
+#include "GTGOTF_Structs.h"
+#include "GTGOTF_Basic.h"
 
 /* set in GTGBasic1_c.c
  * verbose !=0 means debugging mode
@@ -185,8 +185,9 @@ int getLinkTypeFromName(const char *type) {
 
 /* Initialize all the OTF-specific variables */
 static void __OTF_init() {
+    int ret;
     /* initialize otf_color_null */
-    asprintf(&otf_color_null.colorID, "NO COLOR");
+    ret = asprintf(&otf_color_null.colorID, "NO COLOR");
     otf_color_null.red = 0;
     otf_color_null.green = 0;
     otf_color_null.blue = 0;

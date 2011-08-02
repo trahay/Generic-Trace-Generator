@@ -51,4 +51,4 @@ endif
 
 
 #noinst_HEADERS =  ev_codes.h
-#include_HEADERS = GTGBasic1.h  OTF_GTGBasic1.h  pajeColor.h  paje_GTGBasic1.h  types.h
+#include_HEADERS = GTGBasic.h  GTGOTF_Basic.h  GTGPaje_Color.h GTGPaje_Basic.h GTGtypes.h

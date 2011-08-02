@@ -1,5 +1,3 @@
-// Big header containing all the useful headers to include
-
 /**
  * \file GTG.h
  * \brief Generic header to include
@@ -11,12 +9,8 @@
  *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
- */
-#include "GTGBasic1.h"
-#include "GTGColor.h"
-
-
-/**
+ *
+ *
  * \mainpage The GTG library
  *
  *   (\\/)  \n
@@ -28,4 +22,12 @@
  * The use of the library is simple, you just need to include the GTG.h header
  * and then you can use the library as you wish. \n
  * Some simple examples are available in the test directory. \n
+ *
  */
+#ifndef _GTG_H_
+#define _GTG_H_
+
+#include "GTGBasic.h"
+#include "GTGColor.h"
+
+#endif /* _GTG_H_ */

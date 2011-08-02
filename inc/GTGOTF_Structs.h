@@ -1,5 +1,5 @@
 /**
- *  \file OTF_Structs.h
+ *  \file GTGOTF_Structs.h
  *  \version 0.1
  *  \brief
  *  OTF_Structs gives the global types and functions needed to have the OTF implementation.
@@ -14,11 +14,11 @@
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  *
  */
-#ifndef _OTFSTRUCTS_
-#define _OTFSTRUCTS_
+#ifndef _GTG_OTF_STRUCTS_H_
+#define _GTG_OTF_STRUCTS_H_
 
 #include <stdint.h>
-#include "types.h"
+#include "GTGTypes.h"
 
 /* ContainerTypes */
 #define MAX_PROCESSTYPE 100
@@ -110,4 +110,4 @@ struct otf_color {
 
 typedef struct otf_color* otf_color_t;
 
-#endif
+#endif /* _GTG_OTF_STRUCTS_H_ */

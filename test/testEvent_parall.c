@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <mpi.h>
-#include "GTG.h"
+#include <GTG.h>
 
 /* Size of the buffer used */
 #define TXTSIZE 200

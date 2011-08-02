@@ -1,6 +1,6 @@
-#include "GTGColor.h"
 #include <string.h>
 #include <stdlib.h>
+#include "GTGColor.h"
 
 #define NB_DEFAULT_COLOR 22
 struct gtg_color __gtg_colors[NB_DEFAULT_COLOR];

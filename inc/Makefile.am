@@ -1,4 +1,4 @@
 # Copyright © CNRS, INRIA, Université Bordeaux 1
 # See COPYING in top-level directory.
 
-include_HEADERS = GTG.h GTGBasic1.h GTGColor.h OTF_GTGBasic1.h pajeColor.h  paje_GTGBasic1.h  types.h OTF_Structs.h
+include_HEADERS = GTG.h GTGBasic.h GTGColor.h GTGTypes.h GTGPaje_Basic.h GTGPaje_Color.h GTGOTF_Basic.h GTGOTF_Structs.h

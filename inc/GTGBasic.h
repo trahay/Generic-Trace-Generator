@@ -1,10 +1,9 @@
 /**
- *  \file GTGBasic1.h
+ *  \file GTGBasic.h
  *  \version 0.1
  *  \brief
  *
  *  GTGBasic is a basic interface to generate trace in various formats.
- *
  *
  *  \authors
  *    Developers are : \n
@@ -18,11 +17,12 @@
  *  It has been initiated in 2010 by *eztrace* and *ViTE* projects that both needs a good library to generate traces.
  *
  */
-#ifndef _TRACEGENERATORBASIC_
-#define _TRACEGENERATORBASIC_
+#ifndef _GTG_BASIC_H_
+#define _GTG_BASIC_H_
+
 #include <stdlib.h>
 #include <string.h>
-#include "types.h"
+#include "GTGTypes.h"
 #include "GTGColor.h"
 
 /**
@@ -448,7 +448,4 @@ trace_return_t addVar   (varPrec time, const char*  type,
 trace_return_t subVar   (varPrec time, const char*  type,
               const char*  cont, varPrec val);
 
-#endif
-
-
-
+#endif /* _GTG_BASIC_H_ */

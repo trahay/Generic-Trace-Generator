@@ -6,8 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "../inc/GTG.h"
-#include "../inc/pajeColor.h"
+
+#include <GTG.h>
+#include <GTGPaje_Color.h>
 
 /* Size of the buffer used */
 #define TXTSIZE 200

@@ -1,7 +1,7 @@
 !!!
 !!!@file traceGeneratorBasic1_f.f90
 !!!
-module traceGeneratorBasic1_f
+module gtg_f
 
 implicit none
 
@@ -261,5 +261,5 @@ subroutine endTrace_f (ierr)
   call endTrace_i (ierr)
 end subroutine endTrace_f
 
-end module traceGeneratorBasic1_f
+end module gtg_f
 

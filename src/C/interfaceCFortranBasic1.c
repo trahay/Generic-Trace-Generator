@@ -1,4 +1,4 @@
-#include "GTGBasic1.h"
+#include "GTGBasic.h"
 
 void
 setTraceType_i (int *type)

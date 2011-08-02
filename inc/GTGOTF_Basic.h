@@ -1,5 +1,5 @@
 /**
- *  \file OTF_GTGBasic1.h
+ *  \file GTGOTF_Basic.h
  *  \version 0.1
  *  \brief
  *  OTF_GTGBasic1 is the OTF implementation of the basic interface to generate traces (GTGBasic1).
@@ -13,12 +13,12 @@
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  */
-#ifndef _OTFTRACEGENERATORBASIC_
-#define _OTFTRACEGENERATORBASIC_
+#ifndef _GTG_OTF_BASIC_H_
+#define _GTG_OTF_BASIC_H_
 
-#include "types.h"
-#include "GTGBasic1.h"
-#include "OTF_Structs.h"
+#include "GTGTypes.h"
+#include "GTGBasic.h"
+#include "GTGOTF_Structs.h"
 
 /**
  * \defgroup cotf OTF interface in C of the traceGeneratorBasic API
@@ -358,7 +358,7 @@ trace_return_t OTFSubVar   (varPrec time, const char*  type,
  */
 trace_return_t OTFEndTrace ();
 
-#endif
+#endif /* _GTG_OTF_BASIC_H_ */
 
 
 

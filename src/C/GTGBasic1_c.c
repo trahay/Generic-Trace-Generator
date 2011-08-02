@@ -1,7 +1,7 @@
-#include "pajeColor.h"
-#include "GTGBasic1.h"
-#include "OTF_GTGBasic1.h"
-#include "paje_GTGBasic1.h"
+#include "GTGBasic.h"
+#include "GTGPaje_Color.h"
+#include "GTGOTF_Basic.h"
+#include "GTGPaje_Basic.h"
 
 /* verbose !=0 means debugging mode */
 int verbose = 0;

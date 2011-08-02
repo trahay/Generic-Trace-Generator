@@ -1,5 +1,5 @@
 /**
- *  \file paje_GTGBasic1.h
+ *  \file GTGPaje_Basic.h
  *  \version 0.1
  *  \brief
  *  paje_GTGBasic1 is the Paje implementation of the basic interface to generate traces (GTGBasic1).
@@ -14,11 +14,11 @@
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  *
  */
-#ifndef _PAJETRACEGENERATORBASIC_
-#define _PAJETRACEGENERATORBASIC_
+#ifndef _GTG_PAJE_BASIC_H_
+#define _GTG_PAJE_BASIC_H_
 
-#include "GTGBasic1.h"
-#include "types.h"
+#include "GTGBasic.h"
+#include "GTGTypes.h"
 
 /**
  * \brief Constant to create a paje trace
@@ -391,7 +391,7 @@ trace_return_t pajeEndTrace ();
  */
 trace_return_t viteEndTrace ();
 
-#endif
+#endif /* _GTG_PAJE_BASIC_H_ */
 
 
 

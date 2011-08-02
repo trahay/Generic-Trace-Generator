@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../inc/GTG.h"
+#include <GTG.h>
 
 int main (int argc, char** argv){
     int rk;
