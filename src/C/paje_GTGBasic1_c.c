@@ -10,8 +10,7 @@
 #endif
 
 #include "GTG.h"
-#include "GTGPaje_Color.h"
-#include "GTGPaje_Basic.h"
+#include "GTGPaje.h"
 
 /* set in GTGBasic1_c.c
  * verbose !=0 means debugging mode
