@@ -27,7 +27,9 @@
 #ifndef _GTG_H_
 #define _GTG_H_
 
-#include "GTGBasic.h"
+#include <stdint.h>
+#include "GTGTypes.h"
 #include "GTGColor.h"
+#include "GTGBasic.h"
 
 #endif /* _GTG_H_ */

@@ -20,11 +20,6 @@
 #ifndef _GTG_BASIC_H_
 #define _GTG_BASIC_H_
 
-#include <stdlib.h>
-#include <string.h>
-#include "GTGTypes.h"
-#include "GTGColor.h"
-
 /**
  * \brief No flag specified.
  */

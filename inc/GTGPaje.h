@@ -1,5 +1,5 @@
 /**
- *  \file GTGPaje_Color.h
+ *  \file GTGPaje.h
  *  \version 0.1
  *  \brief
  *
@@ -7,10 +7,8 @@
  *
  */
 
-#ifndef _GTG_PAJE_COLOR_H_
-#define _GTG_PAJE_COLOR_H_
-
-#include "GTGBasic.h"
+#ifndef _GTG_PAJE_H_
+#define _GTG_PAJE_H_
 
 typedef char* paje_color_t;
 
@@ -23,4 +21,6 @@ typedef char* paje_color_t;
  */
 const paje_color_t Paje_get_color(gtg_color_t p_color);
 
-#endif /* _GTG_PAJE_COLOR_H_ */
+#include "GTGPaje_Basic.h"
+
+#endif /* _GTG_PAJE_H_ */

@@ -9,8 +9,9 @@
 #include <mpi.h>
 #endif
 
-#include "GTGPaje_Basic.h"
+#include "GTG.h"
 #include "GTGPaje_Color.h"
+#include "GTGPaje_Basic.h"
 
 /* set in GTGBasic1_c.c
  * verbose !=0 means debugging mode

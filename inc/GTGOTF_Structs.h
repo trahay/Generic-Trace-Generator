@@ -17,9 +17,6 @@
 #ifndef _GTG_OTF_STRUCTS_H_
 #define _GTG_OTF_STRUCTS_H_
 
-#include <stdint.h>
-#include "GTGTypes.h"
-
 /* ContainerTypes */
 #define MAX_PROCESSTYPE 100
 

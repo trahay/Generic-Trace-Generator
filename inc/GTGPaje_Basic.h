@@ -17,9 +17,6 @@
 #ifndef _GTG_PAJE_BASIC_H_
 #define _GTG_PAJE_BASIC_H_
 
-#include "GTGBasic.h"
-#include "GTGTypes.h"
-
 /**
  * \brief Constant to create a paje trace
  */

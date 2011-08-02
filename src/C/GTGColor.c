@@ -1,3 +1,11 @@
+/**
+ *  \file GTGColor.c
+ *  \version 0.1
+ *  \brief
+ *
+ *  This file defines some basic colors to use in entity values for GTG.
+ *
+ */
 #include <string.h>
 #include <stdlib.h>
 #include "GTGColor.h"
@@ -224,7 +232,7 @@ void gtg_color_init()
 	__init_color(GTG_GRENAT    , "GRENAT"    , GTG_GRENAT_RGB);
 	__init_color(GTG_ORANGE    , "ORANGE"    , GTG_ORANGE_RGB);
 	__init_color(GTG_MAUVE     , "MAUVE"     , GTG_MAUVE_RGB);
-	__init_color(GTG_LIGHTPINK , "LIGHTPINK" ,  GTG_LIGHTPINK_RGB);
+	__init_color(GTG_LIGHTPINK , "LIGHTPINK" , GTG_LIGHTPINK_RGB);
 
 }
 

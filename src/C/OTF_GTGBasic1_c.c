@@ -1,11 +1,12 @@
+#ifdef BUILD_OTF
 
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <otf.h>
 
-#include "GTGOTF_Structs.h"
-#include "GTGOTF_Basic.h"
+#include "GTG.h"
+#include "GTGOTF.h"
 
 /* set in GTGBasic1_c.c
  * verbose !=0 means debugging mode
@@ -665,3 +666,5 @@ trace_return_t OTFEndTrace (){
 
     return TRACE_SUCCESS;
 }
+
+#endif /* BUILD_OTF */
