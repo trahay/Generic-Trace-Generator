@@ -14,7 +14,8 @@
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  *
- *  It has been initiated in 2010 by *eztrace* and *ViTE* projects that both needs a good library to generate traces.
+ *  It has been initiated in 2010 by *eztrace* and *ViTE* projects
+ *  that both needs a good library to generate traces.
  *
  */
 #ifndef _GTG_BASIC_H_
@@ -39,7 +40,6 @@
  * \brief Flags that can be specified to GTG.
  */
 typedef uint8_t gtg_flag_t;
-
 
 /**
  * \defgroup traceType Trace type handler
@@ -92,7 +92,6 @@ char* getName (int procRk);
  */
 int bufferedModeActivated();
 
-
 /** 
  * \defgroup init To init the generated trace file(s)
  */
@@ -106,7 +105,7 @@ int bufferedModeActivated();
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t initTrace   (const char* filename, int rank, gtg_flag_t flags);
+trace_return_t initTrace(const char* filename, int rank, gtg_flag_t flags);
 
 /**
  * \ingroup init
@@ -115,7 +114,7 @@ trace_return_t initTrace   (const char* filename, int rank, gtg_flag_t flags);
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t endTrace   ();
+trace_return_t endTrace();
 /**
  * \ingroup init
  * \fn trace_return_t setCompress (int val)
@@ -124,7 +123,7 @@ trace_return_t endTrace   ();
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t setCompress (int val);
+trace_return_t setCompress(int val);
 
 /**
  * \defgroup procf Functions related to the containers
@@ -141,8 +140,9 @@ trace_return_t setCompress (int val);
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addContType   (const char* alias, const char* contType, 
-                   const char* name);
+trace_return_t addContType(const char* alias, 
+                           const char* contType, 
+                           const char* name);
 
 /**
  * \defgroup statef Functions related to the states
@@ -159,8 +159,9 @@ trace_return_t addContType   (const char* alias, const char* contType,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addStateType   (const char* alias, const char* contType, 
-                    const char* name);
+trace_return_t addStateType(const char* alias, 
+                            const char* contType, 
+                            const char* name);
 
 /**
  * \defgroup eventf Functions related to the events
@@ -177,8 +178,9 @@ trace_return_t addStateType   (const char* alias, const char* contType,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addEventType   (const char* alias, const char* contType, 
-                    const char* name);
+trace_return_t addEventType(const char* alias, 
+                            const char* contType, 
+                            const char* name);
 
 /**
  * \defgroup linkf Functions related to links
@@ -199,9 +201,11 @@ trace_return_t addEventType   (const char* alias, const char* contType,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addLinkType   (const char* alias   , const char* name,
-                   const char* contType, const char* srcContType,
-                   const char* destContType);
+trace_return_t addLinkType(const char* alias, 
+                           const char* name,
+                           const char* contType, 
+                           const char* srcContType,
+                           const char* destContType);
 
 /**
  * \defgroup varf Functions related to variables
@@ -218,8 +222,9 @@ trace_return_t addLinkType   (const char* alias   , const char* name,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addVarType   (const char* alias   , const char* name,
-                  const char* contType); 
+trace_return_t addVarType(const char* alias, 
+                          const char* name,
+                          const char* contType); 
 
 /**
  * \ingroup init
@@ -235,8 +240,10 @@ trace_return_t addVarType   (const char* alias   , const char* name,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addEntityValue   (const char* alias, const char* entType, 
-                      const char* name , gtg_color_t p_color);
+trace_return_t addEntityValue(const char* alias, 
+                              const char* entType, 
+                              const char* name, 
+                              gtg_color_t p_color);
 
 /**
  * \ingroup procf
@@ -252,13 +259,17 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
  * \param type Type of the new container
  * \param container Container parent
  * \param name Alternative name of the variable type
- * \param file File containing the container for vite format. Use "0" or "" chains for other formats.
+ * \param file File containing the container for vite format. Use "0"
+ *        or "" chains for other formats.
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addContainer   (varPrec time, const char* alias    ,
-                    const char*  type, const char* container,
-                    const char*  name, const char* file);
+trace_return_t addContainer(varPrec time, 
+                            const char* alias,
+                            const char* type, 
+                            const char* container,
+                            const char* name, 
+                            const char* file);
 
 /**
  * \ingroup procf
@@ -272,8 +283,9 @@ trace_return_t addContainer   (varPrec time, const char* alias    ,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t destroyContainer     (varPrec time, const char*  name,
-                          const char*  type);
+trace_return_t destroyContainer(varPrec time, 
+                                const char* name,
+                                const char* type);
 
 /**
  * \ingroup statef
@@ -289,8 +301,10 @@ trace_return_t destroyContainer     (varPrec time, const char*  name,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t setState   (varPrec time, const char* type,
-                const char*  cont, const char* val);
+trace_return_t setState(varPrec time, 
+                        const char* type,
+                        const char* cont, 
+                        const char* val);
 
 /**
  * \ingroup statef
@@ -306,8 +320,10 @@ trace_return_t setState   (varPrec time, const char* type,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t pushState   (varPrec time, const char* type,
-                 const char*  cont, const char* val);
+trace_return_t pushState(varPrec time, 
+                         const char* type,
+                         const char* cont, 
+                         const char* val);
 
 /**
  * \ingroup statef
@@ -321,8 +337,9 @@ trace_return_t pushState   (varPrec time, const char* type,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t popState   (varPrec time, const char* type,
-                const char*  cont);
+trace_return_t popState(varPrec time, 
+                        const char* type,
+                        const char* cont);
 
 /**
  * \ingroup eventf
@@ -338,8 +355,10 @@ trace_return_t popState   (varPrec time, const char* type,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addEvent   (varPrec time, const char* type,
-                const char*  cont, const char* val);
+trace_return_t addEvent(varPrec time, 
+                        const char* type,
+                        const char* cont, 
+                        const char* val);
 
 /**
  * \ingroup linkf
@@ -353,7 +372,8 @@ trace_return_t addEvent   (varPrec time, const char* type,
  * \brief Start a Link.
  * \param time Time the link starts
  * \param type Type of the link
- * \param cont Container containing the link (an ancestor of source and destination container)
+ * \param cont Container containing the link (an ancestor of source
+ *             and destination container)
  * \param src  Source container
  * \param dest Destination container
  * \param val  Value of the link
@@ -361,10 +381,10 @@ trace_return_t addEvent   (varPrec time, const char* type,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t startLink   (varPrec time, const char* type,
-                 const char*  cont, const char* src,
-                 const char*  dest, const char* val,
-                 const char* key);
+trace_return_t startLink(varPrec time, const char* type,
+                         const char* cont, const char* src,
+                         const char* dest, const char* val,
+                         const char* key);
 
 /**
  * \ingroup linkf
@@ -378,7 +398,8 @@ trace_return_t startLink   (varPrec time, const char* type,
  * \brief End a Link.
  * \param time Time the link ends
  * \param type Type of the link
- * \param cont Container containing the link (an ancestor of source and destination container)
+ * \param cont Container containing the link (an ancestor of source
+ *             and destination container)
  * \param src  Source container
  * \param dest Destination container
  * \param val  Value of the link
@@ -386,10 +407,10 @@ trace_return_t startLink   (varPrec time, const char* type,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t endLink   (varPrec time, const char* type,
-               const char*  cont, const char* src,
-               const char*  dest, const char* val,
-               const char* key);
+trace_return_t endLink(varPrec time, const char* type,
+                       const char* cont, const char* src,
+                       const char* dest, const char* val,
+                       const char* key);
 
 /**
  * \ingroup varf
@@ -405,8 +426,10 @@ trace_return_t endLink   (varPrec time, const char* type,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t setVar   (varPrec time, const char*  type,
-              const char*  cont, varPrec val);
+trace_return_t setVar(varPrec time, 
+                      const char* type,
+                      const char* cont, 
+                      varPrec val);
 
 /**
  * \ingroup varf
@@ -422,8 +445,10 @@ trace_return_t setVar   (varPrec time, const char*  type,
  * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t addVar   (varPrec time, const char*  type,
-              const char*  cont, varPrec val);
+trace_return_t addVar(varPrec time, 
+                      const char* type,
+                      const char* cont, 
+                      varPrec val);
 
 /**
  * \ingroup varf
@@ -440,7 +465,9 @@ trace_return_t addVar   (varPrec time, const char*  type,
  *         An error code otherwise
  */
 
-trace_return_t subVar   (varPrec time, const char*  type,
-              const char*  cont, varPrec val);
+trace_return_t subVar(varPrec time, 
+                      const char* type,
+                      const char* cont, 
+                      varPrec val);
 
 #endif /* _GTG_BASIC_H_ */
