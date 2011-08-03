@@ -248,4 +248,7 @@ extern gtg_color_t GTG_LIGHTPINK;
 void gtg_color_init();
 void gtg_color_exit();
 
+gtg_color_t gtg_color_create( const char *name, uint8_t r, uint8_t g, uint8_t b);
+void        gtg_color_free(gtg_color_t color);
+
 #endif /* _GTGCOLOR_H_ */

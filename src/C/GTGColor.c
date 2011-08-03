@@ -242,3 +242,16 @@ void gtg_color_exit()
 	for (i=0; i<NB_DEFAULT_COLOR; i++)
 		free(__gtg_colors[i].color_name);
 }
+
+gtg_color_t gtg_color_create( const char *name, uint8_t r, uint8_t g, uint8_t b)
+{
+    gtg_color_t color = (gtg_color_t)malloc(sizeof(struct gtg_color));
+    __init_color( color, name, GTG_COLOR_SET_COLOR(r, g, b) );
+    return color;
+}
+
+void gtg_color_free( gtg_color_t color ) {
+    if ( color->color_name != NULL )
+        free(color->color_name);
+    free(color);
+}
