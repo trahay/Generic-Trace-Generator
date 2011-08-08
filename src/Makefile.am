@@ -19,6 +19,7 @@ libgtg_la_LDFLAGS = --no-undefined
 libgtg_la_SOURCES = \
 	  C/GTGBasic1_c.c     \
 	  C/GTGColor.c     \
+	  C/paje_header.c	\
 	  C/paje_GTGBasic1_c.c
 
 if FORTRAN

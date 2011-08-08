@@ -1,6 +1,6 @@
 #ifdef BUILD_PAJE
 
-#define _GNU_SOURCE_
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -11,6 +11,10 @@
 
 #include "GTG.h"
 #include "GTGPaje.h"
+
+extern int _is_paje_header_written;
+void pajeInitHeaderData( int fmt );
+void pajeWriteHeader( FILE *file );
 
 /* set in GTGBasic1_c.c
  * verbose !=0 means debugging mode
@@ -37,6 +41,12 @@ static gtg_flag_t paje_flags;
 #define FLUSH(file) \
 	if(paje_flags & GTG_FLAG_NOTBUF) \
 		fflush(file)
+
+#define PRINT_PAJE_HEADER()                     \
+    if ( !_is_paje_header_written ) {           \
+        pajeWriteHeader( headFile );            \
+        FLUSH( headFile );                      \
+    }
 
 /* Structure containing the info of a current line */
 typedef struct line_t{
@@ -296,8 +306,7 @@ trace_return_t my_close (){
     return ret;
 }
 
-trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, int fmt){
-
+trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, int fmt) {
     char file[BUFFSIZE];
     trace_return_t ret = TRACE_ERR_OPEN;
 
@@ -317,130 +326,18 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
             fprintf (stderr, "Failed to open file %s. \n Leaving \n", file);
             return ret;
         }
-        fprintf (headFile,"\
-%%EventDef PajeDefineContainerType	1 \n\
-%% 	  Alias 	string            \n\
-%% 	  ContainerType string            \n\
-%% 	  Name 		string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeDefineStateType		3 \n\
-%% 	  Alias 	string            \n\
-%% 	  ContainerType string            \n\
-%% 	  Name 		string            \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeDefineEventType		4 \n\
-%% 	  Alias 	string            \n\
-%% 	  ContainerType string            \n\
-%% 	  Name 		string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeDefineEntityValue	6 \n\
-%% 	  Alias         string            \n\
-%% 	  EntityType 	string            \n\
-%% 	  Name 		string            \n\
-%% 	  Color 	color             \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeCreateContainer		7 \n\
-%% 	  Time          date              \n\
-%% 	  Alias 	string            \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Name 		string            \n");
-        if(fmt==FMT_VITE)
-            fprintf (headFile,"\
-%% 	  FileName	string            \n");
-            fprintf (headFile,"\
-%%EndEventDef                             \n\
-%%EventDef PajeDestroyContainer		8 \n\
-%% 	  Time          date              \n\
-%% 	  Name 		string            \n\
-%% 	  Type 		string            \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeSetState			10\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value         string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajePushState	      	11\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value         string            \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajePopState			12\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeNewEvent			20\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value         string            \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeDefineLinkType		41\n\
-%% 	  Alias               string      \n\
-%% 	  Name 		      string      \n\
-%% 	  ContainerType	      string      \n\
-%% 	  SourceContainerType string      \n\
-%% 	  DestContainerType   string      \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeStartLink	       	42\n\
-%%	  Time 		  date            \n\
-%%	  Type 		  string          \n\
-%%	  Container 	  string          \n\
-%%	  SourceContainer string          \n\
-%%	  Value 	  string          \n\
-%%	  Key 		  string          \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeEndLink			43\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  DestContainer string            \n\
-%% 	  Value 	string            \n\
-%% 	  Key 		string            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeDefineVariableType	50\n\
-%%	  Alias         string            \n\
-%% 	  Name  	string            \n\
-%% 	  ContainerType string            \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeSetVariable		51\n\
-%% 	  Time          date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value 	double            \n\
-%%EndEventDef                             \n\
-%%EventDef PajeAddVariable		52\n\
-%% 	  Time          date              \n\
-%%	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value 	double            \n\
-%%EndEventDef                             \n");
-        fprintf (headFile,"\
-%%EventDef PajeSubVariable		53\n\
-%% 	  Time 		date              \n\
-%% 	  Type 		string            \n\
-%% 	  Container 	string            \n\
-%% 	  Value 	double            \n\
-%%EndEventDef \n");
+
+        pajeInitHeaderData( fmt );
 
 	FLUSH(headFile);
     }
     return my_open(rank);
 }
 
-trace_return_t pajeAddContType   (const char* alias, const char* contType, 
-                       const char* name){
+trace_return_t pajeAddContType(const char* alias, const char* contType, 
+                               const char* name) {
+    PRINT_PAJE_HEADER();
+
     if(verbose)
         printf("addCtType : name %s, alias %s, contType %s\n", name, alias, contType);
     if (headFile){
@@ -457,6 +354,8 @@ trace_return_t pajeAddContType   (const char* alias, const char* contType,
 
 trace_return_t pajeAddStateType   (const char* alias, const char* contType, 
                         const char* name){
+    PRINT_PAJE_HEADER();
+
     if(verbose)
 	    printf("addStateType : alias %s, name %s, contType %s\n",  alias, name, contType);
     if (headFile){
@@ -470,6 +369,8 @@ trace_return_t pajeAddStateType   (const char* alias, const char* contType,
 
 trace_return_t pajeAddEventType   (const char* alias, const char* contType, 
                         const char* name){
+    PRINT_PAJE_HEADER();
+
     if(verbose)
 	    printf("addEventType :  alias %s, name %s, contType %s\n", alias, name, contType);
     if (headFile){
@@ -484,6 +385,8 @@ trace_return_t pajeAddEventType   (const char* alias, const char* contType,
 trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType){
+    PRINT_PAJE_HEADER();
+
     if (verbose)
         printf ("Add link type: alias: %s name: %s contType: %s src: %s des: %s \n", alias, name, contType, srcContType, destContType);
     if (headFile){
@@ -497,6 +400,8 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
 
 trace_return_t pajeAddVarType   (const char* alias   , const char* name,
                       const char* contType){
+    PRINT_PAJE_HEADER();
+
     if(verbose)
 	    printf("addVarType : alias %s, name %s, contType %s\n", alias, name, contType);
     if (headFile){
@@ -510,6 +415,8 @@ trace_return_t pajeAddVarType   (const char* alias   , const char* name,
 
 trace_return_t pajeAddEntityValue   (const char* alias, const char* entType, 
                           const char* name , const char* color){
+    PRINT_PAJE_HEADER();
+
     if(verbose)
         printf("addEntityValue : color %s, alias %s, name %s, type %s\n", color, alias, name, entType);
     if (headFile){
@@ -524,6 +431,8 @@ trace_return_t pajeAddEntityValue   (const char* alias, const char* entType,
 trace_return_t pajeAddContainer   (varPrec time, const char* alias    ,
                         const char*  type, const char* container,
                         const char*  name, const char* file){
+    PRINT_PAJE_HEADER();
+
     if (headFile){
       if(container && strcmp(container, "(null)")!=0 )
         fprintf (headFile, "7 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
@@ -542,6 +451,8 @@ trace_return_t pajeAddContainer   (varPrec time, const char* alias    ,
 trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
                            const char*  type, const char* container,
                            const char*  name){
+    PRINT_PAJE_HEADER();
+
     if (headFile){
       if(container && strcmp(container, "(null)")!=0)
         fprintf (headFile, "7 %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
@@ -558,6 +469,8 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
 
 trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
                               const char*  type){
+    PRINT_PAJE_HEADER();
+
     if (headFile){
         fprintf (headFile, "8 %.13e \"%s\" \"%s\" \n", 
                  time, name, type);

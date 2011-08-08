@@ -388,6 +388,44 @@ trace_return_t pajeEndTrace ();
  */
 trace_return_t viteEndTrace ();
 
+/*
+ * Functions to handle extra-parameters in the Paje Definitions
+ * This will need to be cleaned to be closer to OTF interface
+ */
+enum gtg_paje_evtdef_e {
+  GTG_PAJE_EVTDEF_DefineContainerType,
+  GTG_PAJE_EVTDEF_DefineStateType,
+  GTG_PAJE_EVTDEF_DefineEventType,
+  GTG_PAJE_EVTDEF_DefineEntityValue,
+  GTG_PAJE_EVTDEF_CreateContainer,
+  GTG_PAJE_EVTDEF_DestroyContainer,
+  GTG_PAJE_EVTDEF_SetState,
+  GTG_PAJE_EVTDEF_PushState,
+  GTG_PAJE_EVTDEF_PopState,
+  GTG_PAJE_EVTDEF_NewEvent,
+  GTG_PAJE_EVTDEF_DefineLinkType,
+  GTG_PAJE_EVTDEF_StartLink,
+  GTG_PAJE_EVTDEF_EndLink,
+  GTG_PAJE_EVTDEF_DefineVariableType,
+  GTG_PAJE_EVTDEF_SetVariable,
+  GTG_PAJE_EVTDEF_AddVariable,
+  GTG_PAJE_EVTDEF_SubVariable,
+  GTG_PAJE_EVTDEF_NBR
+};
+
+enum gtg_paje_fieldtype_e { 
+  GTG_PAJE_FIELDTYPE_Int,
+  GTG_PAJE_FIELDTYPE_Hex,
+  GTG_PAJE_FIELDTYPE_Date,
+  GTG_PAJE_FIELDTYPE_Double,
+  GTG_PAJE_FIELDTYPE_String,
+  GTG_PAJE_FIELDTYPE_Color,
+  GTG_PAJE_FIELDTYPE_NBR
+};
+
+void pajeEventDefAddParam( enum gtg_paje_evtdef_e event, const char *name, 
+                           enum gtg_paje_fieldtype_e type );
+
 #endif /* _GTG_PAJE_BASIC_H_ */
 
 
