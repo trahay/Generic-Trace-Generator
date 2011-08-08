@@ -650,5 +650,12 @@ trace_return_t viteEndTrace (){
 }
 
 
+/*
+ * Hack that will be removed 
+ */
+FILE *pajeGetProcFile() {
+  return procFile;
+}
+
 #endif
 
