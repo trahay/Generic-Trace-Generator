@@ -7,8 +7,6 @@
 /* verbose !=0 means debugging mode */
 int verbose = 0;
 static traceType_t traceType;
-/* Bufferized or not bufferized */
-static int mode;
 /* Flags that should be used */
 static gtg_flag_t gtg_flags;
 
