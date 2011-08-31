@@ -1,6 +1,7 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdarg.h>
+#include <time.h>
 
 #include "GTGBasic1.h"
 #include "GTGReplay.h"
@@ -14,7 +15,7 @@ struct event_list_t {
   struct event_list_t *prev;
   enum event_type_t type;
   varPrec time;
-  void* data;
+  uint64_t data[6];
 };
 
 static struct event_list_t* __first_event = NULL;
@@ -37,16 +38,6 @@ static void __gtg_print_events()
   }
 }
 
-/* fill the params array with n strings extracted from buffer */
-static void __get_n_events(void* buffer, char**params, int n)
-{
-  int x;
-  params[0]=strtok((char*)buffer, "\3");
-  for(x=1;x<n;x++) {
-    params[x]=strtok(NULL, "\3");
-  }
-}
-
 /* run the first nb_events_to_write events
  * if nb_events_to_write == 1, it run all recorded events.
  */
@@ -55,7 +46,6 @@ void gtg_write_events(long nb_events_to_write)
   struct event_list_t* cur_event = __first_event;
   struct event_list_t* prev;
   struct event_list_t* next;
-  char* params[8];
   void* ptr;
   volatile int n = 0;
 
@@ -68,49 +58,66 @@ void gtg_write_events(long nb_events_to_write)
     switch(cur_event->type) {
     case event_addContainer:
       /* get the 5 parameters that were recorded and pass them to addContainer */
-      __get_n_events(cur_event->data, params, 5);
-      addContainer(cur_event->time, params[0], params[1], params[2], params[3], params[4]);
+      addContainer(cur_event->time, (char*)cur_event->data[0],
+		   (char*)cur_event->data[1],
+		   (char*)cur_event->data[2],
+		   (char*)cur_event->data[3],
+		   (char*)cur_event->data[4]);
       break;
     case event_destroyContainer:
-      __get_n_events(cur_event->data, params, 2);
-      destroyContainer(cur_event->time, params[0], params[1]);
+      destroyContainer(cur_event->time, (char*)cur_event->data[0],
+		       (char*)cur_event->data[1]);
       break;
     case event_setState:
-      __get_n_events(cur_event->data, params, 3);
-      setState(cur_event->time, params[0], params[1], params[2]);
+      setState(cur_event->time, (char*)cur_event->data[0],
+	       (char*)cur_event->data[1],
+	       (char*)cur_event->data[2]);
       break;
     case event_pushState:
-      __get_n_events(cur_event->data, params, 3);
-      pushState(cur_event->time, params[0], params[1], params[2]);
+      pushState(cur_event->time, (char*)cur_event->data[0],
+		(char*)cur_event->data[1],
+		(char*)cur_event->data[2]);
       break;
     case event_popState:
-      __get_n_events(cur_event->data, params, 2);
-      popState(cur_event->time, params[0], params[1]);
+      popState(cur_event->time, (char*)cur_event->data[0],
+	       (char*)cur_event->data[1]);
       break;
     case event_addEvent:
-      __get_n_events(cur_event->data, params, 3);
-      addEvent(cur_event->time, params[0], params[1], params[2]);
+      addEvent(cur_event->time, (char*)cur_event->data[0],
+	       (char*)cur_event->data[1],
+	       (char*)cur_event->data[2]);
       break;
     case event_startLink:
-      __get_n_events(cur_event->data, params, 6);
-      startLink(cur_event->time, params[0], params[1], params[2], params[3], params[4], params[5]);
+      startLink(cur_event->time, (char*)cur_event->data[0],
+		(char*)cur_event->data[1],
+		(char*)cur_event->data[2],
+		(char*)cur_event->data[3],
+		(char*)cur_event->data[4],
+		(char*)cur_event->data[5]);
       break;
     case event_endLink:
-      __get_n_events(cur_event->data, params, 6);
-      endLink(cur_event->time, params[0], params[1], params[2], params[3], params[4], params[5]);
+      endLink(cur_event->time, (char*)cur_event->data[0],
+	      (char*)cur_event->data[1],
+	      (char*)cur_event->data[2],
+	      (char*)cur_event->data[3],
+	      (char*)cur_event->data[4],
+	      (char*)cur_event->data[5]);
       break;
 
     case event_setVar:
-      __get_n_events(cur_event->data, params, 3);
-      setVar(cur_event->time, params[0], params[1], atof(params[2]));
+      setVar(cur_event->time, (char*)cur_event->data[0],
+	     (char*)cur_event->data[1],
+	     (double)cur_event->data[2]);
       break;
     case event_addVar:
-      __get_n_events(cur_event->data, params, 3);
-      addVar(cur_event->time, params[0], params[1], atof(params[2]));
+      addVar(cur_event->time, (char*)cur_event->data[0],
+	     (char*)cur_event->data[1],
+	     (double)cur_event->data[2]);
       break;
     case event_subVar:
-      __get_n_events(cur_event->data, params, 3);
-      subVar(cur_event->time, params[0], params[1], atof(params[2]));
+      subVar(cur_event->time, (char*)cur_event->data[0],
+	     (char*)cur_event->data[1],
+	     (double)cur_event->data[2]);
       break;
     default:
       fprintf(stderr, "Unknown event type: %d\n", cur_event->type);
@@ -126,13 +133,6 @@ void gtg_write_events(long nb_events_to_write)
     nb_events--;
     /* delete the current event */
     ptr = cur_event;
-
-    /* free the parameters */
-    if(cur_event->data) {
-      free(cur_event->data);
-       cur_event->data = NULL;
-    }
-
     cur_event = next;
 
     gtg_block_free(memory, ptr);
@@ -143,7 +143,6 @@ void gtg_write_events(long nb_events_to_write)
   gtg_flags |= GTG_FLAG_OUTOFORDER;
 
 }
-
 
 /* Insert an event in the list of events.
  * At any time, this list is sorted.
@@ -163,7 +162,9 @@ static void __gtg_insert(struct event_list_t* new_event) {
     return ;
   }
 
-  if(likely(new_event->time >= __last_event->time)) {
+  /* This is the 'normal' case: the event is the last one */
+  if(likely(new_event->time >= __last_event->time))
+  {
     /* the event is the last one */
     __last_event->next = new_event;
     new_event->prev = __last_event;
@@ -224,6 +225,23 @@ static void __gtg_insert(struct event_list_t* new_event) {
 #define FORMAT_TWO_STRING_ONE_DOUBLE "%s\3%s\3%e"
 #define FORMAT_TWO_STRING "%s\3%s"
 
+/* copy nb_string string parameters and nb_double double parameters into the data arary of evt
+ * warning: actually, the parameters are not copied (in the case of string)
+ */
+static void __copy_args(struct event_list_t* evt, int nb_string, int nb_double, va_list args)
+{
+  int i;
+  for(i=0; i<nb_string; i++) {
+    const char*x = va_arg(args, char*);
+    evt->data[i] = (uint64_t) x;
+  }
+
+  for(i=nb_string; i<nb_string+nb_double; i++) {
+    double x = va_arg(args, double);
+    evt->data[i] = (uint64_t)x;
+  }
+}
+
 /* postpone the recording of an event */
 void gtg_record(enum event_type_t type, varPrec time, ...) {
   struct event_list_t* new_event;
@@ -249,53 +267,47 @@ void gtg_record(enum event_type_t type, varPrec time, ...) {
   new_event->type = type;
   new_event->time = time;
 
-  /* macro that concatenates parameters */
-  /* todo: this macros calls malloc, we should try to use a pre-allocated buffer
-   * to improve its performance.
-   */
-#define COPY_ARGS(ptr, format, arg)		\
-  {						\
-    va_start (arg, format);			\
-    vasprintf ((char**)(ptr), format, arg);	\
-  }
-
   /* Depending on the type of event, copy its parameters */
   switch(type) {
   case event_startLink:
   case event_endLink:
     /* 6 parameters */
-    COPY_ARGS (&(new_event->data), FORMAT_SIX_STRING, arguments);
+    va_start (arguments, FORMAT_SIX_STRING);
+    __copy_args(new_event, 6, 0, arguments);
     break;
 
   case event_addContainer:
     /* 5 parameters */
-    COPY_ARGS (&(new_event->data), FORMAT_FIVE_STRING, arguments);
+    va_start (arguments, FORMAT_FIVE_STRING);
+    __copy_args(new_event, 5, 0, arguments);
     break;
 
   case event_setState:
   case event_pushState:
   case event_addEvent:
     /* 3 parameters */
-    COPY_ARGS (&(new_event->data), FORMAT_THREE_STRING, arguments);
+    va_start (arguments, FORMAT_THREE_STRING);
+    __copy_args(new_event, 3, 0, arguments);
     break;
   case event_setVar:
   case event_addVar:
   case event_subVar:
     /* 2 string parameters + 1 double */
-    COPY_ARGS(&(new_event->data), FORMAT_TWO_STRING_ONE_DOUBLE, arguments);
+    va_start (arguments, FORMAT_TWO_STRING_ONE_DOUBLE);
+    __copy_args(new_event, 2, 1, arguments);
     break;
 
   case event_destroyContainer:
   case event_popState:
     /* 2 parameters */
-    COPY_ARGS(&(new_event->data), FORMAT_TWO_STRING, arguments);
+    va_start (arguments, FORMAT_TWO_STRING);
+    __copy_args(new_event, 2, 0, arguments);
     break;
   default:
     fprintf(stderr, "Unknown event type: %d\n", type);
   }
 
   va_end (arguments);
-
   /* Insert the new event in the list */
   nb_events++;
   __gtg_insert(new_event);
