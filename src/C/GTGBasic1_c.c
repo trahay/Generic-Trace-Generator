@@ -246,6 +246,20 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
 trace_return_t addContainer   (varPrec time, const char* alias    ,
                     const char*  type, const char* container,
                     const char*  name, const char* file){
+
+#ifdef BUILD_OTF
+  /* for OTF traces, adding a container consists in two steps:
+   * 1 - defining the container (this appears in the trace headers)
+   * 2 - starting the container (this appears in the body)
+   * We need to define the container right now so that it can be refered to
+   * before its start (for example a StartLink event may use this container
+   * before its creation)
+   */
+  if (traceType == OTF){
+        return OTFDefineContainer (alias, type, container, name, file);
+  }
+#endif
+
   if(gtg_flags & GTG_FLAG_OUTOFORDER) {
     /* if the application records events out of order, don't execute this function right now. */
     gtg_record(event_addContainer, time, alias, type, container, name, file);
@@ -263,7 +277,7 @@ trace_return_t addContainer   (varPrec time, const char* alias    ,
 #endif
 #ifdef BUILD_OTF
     case OTF :
-        return OTFAddContainer (time, alias, type, container, name, file);
+        return OTFStartContainer (time, alias, type, container, name, file);
         break;
 #endif
 #ifdef BUILD_TAU

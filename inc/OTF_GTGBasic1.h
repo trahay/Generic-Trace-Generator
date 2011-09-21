@@ -153,9 +153,30 @@ trace_return_t OTFAddEntityValue   (const char* alias, const char* entType,
 
 /**
  * \ingroup cotf
- * \fn trace_return_t OTFAddContainer (varPrec  time,
+ * \fn trace_return_t OTFDefineContainer (varPrec  time,
  *                           const char  * alias,
  *                           const char  * type, 
+ *                           const char  * container,
+ *                           const char  * name,
+ *                           const char  * file)
+ * \brief Define a Container.
+ * \param alias Alias of the new container
+ * \param type Type of the container
+ * \param container Container parent
+ * \param name Name of the variable type
+ * \param file File containing the container trace
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t OTFDefineContainer (const char* alias,
+				   const char*  type, const char* container,
+				   const char*  name, const char* file);
+
+/**
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddContainer (varPrec  time,
+ *                           const char  * alias,
+ *                           const char  * type,
  *                           const char  * container,
  *                           const char  * name,
  *                           const char  * file)
@@ -169,9 +190,9 @@ trace_return_t OTFAddEntityValue   (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t OTFAddContainer (varPrec time, const char* alias    ,
-                      const char*  type, const char* container,
-                      const char*  name, const char* file);
+trace_return_t OTFStartContainer (varPrec time, const char* alias    ,
+				  const char*  type, const char* container,
+				  const char*  name, const char* file);
 
 /**
  * \ingroup cotf

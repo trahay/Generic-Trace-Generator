@@ -289,9 +289,9 @@ trace_return_t OTFAddEntityValue (const char* alias, const char* entType,
   return TRACE_SUCCESS;
 }
 
-trace_return_t OTFAddContainer (varPrec time, const char* alias,
-				const char*  type, const char* container,
-				const char*  name, const char* file) {
+trace_return_t OTFDefineContainer (const char* alias,
+				   const char*  type, const char* container,
+				   const char*  name, const char* file) {
   int parent;
   Container_t *p_cont;
   parent = getContainerFromName(container);
@@ -308,7 +308,19 @@ trace_return_t OTFAddContainer (varPrec time, const char* alias,
     printf("addCont : parent %d, id %d, name %s, alias %s, type %s, parent %s\n", parent, p_cont->id, name, alias, type, container);
 
   OTF_Writer_writeDefProcess(writer, 0, p_cont->id, name, parent);
-  OTF_Writer_writeBeginProcess (writer, time*TIMER_RES, p_cont->id);
+
+  return TRACE_SUCCESS;
+}
+
+trace_return_t OTFStartContainer (varPrec time, const char* alias,
+				const char*  type, const char* container,
+				const char*  name, const char* file) {
+  uint32_t new_container = getContainerFromName(alias);
+  if(!new_container) {
+    /* container not yet defined */
+    OTFDefineContainer(alias, type, container, name, file);
+  }
+  OTF_Writer_writeBeginProcess (writer, time*TIMER_RES, new_container);
 
   return TRACE_SUCCESS;
 }
@@ -316,7 +328,7 @@ trace_return_t OTFAddContainer (varPrec time, const char* alias,
 trace_return_t OTFSeqAddContainer (varPrec time, const char* alias,
 				   const char*  type, const char* container,
 				   const char*  name) {
-  return OTFAddContainer(time, alias, type, container, name, NULL);
+  return OTFStartContainer(time, alias, type, container, name, NULL);
 }
 
 trace_return_t OTFDestroyContainer (varPrec time, const char*  name,
