@@ -395,22 +395,20 @@ trace_return_t OTFPopState (varPrec time, const char* type,
   State_t *p_state;
   /* Free the current State structure (if it exists). */
   if(!gtg_stack_empty(&p_parent->state_stack.token)) {
+    /* Get the top of the stack. */
     p_state = gtg_list_entry(gtg_stack_top(&p_parent->state_stack.token), State_t, token);
     gtg_stack_pop(&p_parent->state_stack.token);
-    free(p_state);
   } else {
     /* The stack is empty, don't do anything and print a warning */
     fprintf(stderr, "Warning: PopState called, but the stack is empty!\n");
     return TRACE_ERR_WRITE;
   }
 
-  /* Get the top of the stack. */
-  p_state = gtg_list_entry(gtg_stack_top(&p_parent->state_stack.token), State_t, token);
-
   if(verbose)
     printf("PopState : parent %d, stateType %d, val %d\n", p_state->cont, p_state->stateType, p_state->value);
 
   OTF_Writer_writeLeave (writer, time*TIMER_RES, p_state->value, p_state->cont, 0);
+  free(p_state);
 
   return TRACE_SUCCESS;
 }
