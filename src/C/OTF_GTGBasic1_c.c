@@ -40,6 +40,13 @@ LinkType_t linkTypes;
 /* Root name */
 static char *filename = NULL;
 
+#define CHECK_RESULT(__func__) {				\
+    if(__func__ != 1) {						\
+      fprintf(stderr, "Error while writing the OTF trace\n");	\
+      abort();							\
+    }								\
+  }
+
 #define TIMER_RES 100000.
 
 struct otf_color otf_color_null;
@@ -215,7 +222,7 @@ trace_return_t OTFAddStateType (const char* alias, const char* contType,
   if(verbose)
     printf("addStateType : id %d, alias %s, name %s, contType %s\n", p_state->id, alias, name, contType);
 
-  OTF_Writer_writeDefFunctionGroup(writer, 0, p_state->id, name);
+  CHECK_RESULT(OTF_Writer_writeDefFunctionGroup(writer, 0, p_state->id, name));
 
   return TRACE_SUCCESS;
 }
@@ -234,7 +241,7 @@ trace_return_t OTFAddEventType (const char* alias, const char* contType,
   if(verbose)
     printf("addEventType : id %d, alias %s, name %s, contType %s\n", p_event->id, alias, name, contType);
 
-  OTF_Writer_writeDefMarker(writer, 0, p_event->id, name, OTF_MARKER_TYPE_UNKNOWN);
+  CHECK_RESULT(OTF_Writer_writeDefMarker(writer, 0, p_event->id, name, OTF_MARKER_TYPE_UNKNOWN));
 
   return TRACE_SUCCESS;
 }
@@ -266,7 +273,7 @@ trace_return_t OTFAddVarType (const char* alias   , const char* contType,
   VariableType_t *p_variable;
   alloc_init_struct(VariableType_t, p_variable, &variableTypes.token, name, alias);
 
-  OTF_Writer_writeDefCounterGroup (writer, 0, p_variable->id, name);
+  CHECK_RESULT(OTF_Writer_writeDefCounterGroup (writer, 0, p_variable->id, name));
 
   if(verbose)
     printf("addVarType : id %d, alias %s, name %s, contType %s\n", p_variable->id, alias, name, contType);
@@ -285,7 +292,7 @@ trace_return_t OTFAddEntityValue (const char* alias, const char* entType,
   if(verbose)
     printf("addEntityValue : id %d, alias %s, name %s, type %d\n", p_ent->id, alias, name, type);
 
-  OTF_Writer_writeDefFunction(writer, 0, p_ent->id, name, type, 0);
+  CHECK_RESULT(OTF_Writer_writeDefFunction(writer, 0, p_ent->id, name, type, 0));
   return TRACE_SUCCESS;
 }
 
@@ -303,11 +310,10 @@ trace_return_t OTFDefineContainer (const char* alias,
   alloc_init_struct(Container_t, p_cont, &conts.token, name, alias);
   /* Initialize the state stack. */
   init_State(p_cont->state_stack);
-
   if(verbose)
     printf("addCont : parent %d, id %d, name %s, alias %s, type %s, parent %s\n", parent, p_cont->id, name, alias, type, container);
 
-  OTF_Writer_writeDefProcess(writer, 0, p_cont->id, name, parent);
+  CHECK_RESULT(OTF_Writer_writeDefProcess(writer, 0, p_cont->id, name, parent));
 
   return TRACE_SUCCESS;
 }
@@ -334,7 +340,7 @@ trace_return_t OTFSeqAddContainer (varPrec time, const char* alias,
 trace_return_t OTFDestroyContainer (varPrec time, const char*  name,
 				    const char*  type) {
   uint32_t process = getContainerFromName(name);
-  OTF_Writer_writeEndProcess (writer, time*TIMER_RES, process);
+  CHECK_RESULT(OTF_Writer_writeEndProcess (writer, time*TIMER_RES, process));
   return TRACE_SUCCESS;
 }
 
@@ -357,11 +363,10 @@ trace_return_t OTFSetState (varPrec time, const char* type,
 
   /* Add the structure to the container state stack. */
   gtg_stack_push(&p_state->token, &p_parent->state_stack.token);
-
   if(verbose)
     printf("SetState : parent %d, stateType %d, val %d\n", p_parent->id, stateType, state);
 
-  OTF_Writer_writeEnter (writer, time*TIMER_RES, state, p_parent->id, 0);
+  CHECK_RESULT(OTF_Writer_writeEnter (writer, time*TIMER_RES, state, p_parent->id, 0));
 
   return TRACE_SUCCESS;
 }
@@ -383,7 +388,7 @@ trace_return_t OTFPushState (varPrec time, const char* type,
   if(verbose)
     printf("PushState : parent %d, stateType %d, val %d\n", p_parent->id, stateType, value);
 
-  OTF_Writer_writeEnter (writer, time*TIMER_RES, value, p_parent->id, 0);
+  CHECK_RESULT(OTF_Writer_writeEnter (writer, time*TIMER_RES, value, p_parent->id, 0));
   return TRACE_SUCCESS;
 }
 
@@ -407,7 +412,7 @@ trace_return_t OTFPopState (varPrec time, const char* type,
   if(verbose)
     printf("PopState : parent %d, stateType %d, val %d\n", p_state->cont, p_state->stateType, p_state->value);
 
-  OTF_Writer_writeLeave (writer, time*TIMER_RES, p_state->value, p_state->cont, 0);
+  CHECK_RESULT(OTF_Writer_writeLeave (writer, time*TIMER_RES, p_state->value, p_state->cont, 0));
   free(p_state);
 
   return TRACE_SUCCESS;
@@ -417,7 +422,7 @@ trace_return_t OTFAddEvent (varPrec time    , const char* type,
 			    const char *cont, const char* val){
   uint32_t process = getContainerFromName(cont);
   uint32_t eventType = getEventTypeFromName(type);
-  OTF_Writer_writeMarker (writer, time*TIMER_RES, process, eventType, val);
+  CHECK_RESULT(OTF_Writer_writeMarker (writer, time*TIMER_RES, process, eventType, val));
 
   if(verbose)
     printf("AddEvent : parent %d, eventType %d, val %s\n", process, eventType, val);
@@ -428,13 +433,13 @@ trace_return_t OTFAddEvent (varPrec time    , const char* type,
 trace_return_t OTFStartLink (varPrec time, const char* type,
 			     const char*   src, const char* dest,
 			     const char*   val , const char* key){
-      uint32_t source = getContainerFromName(src);
-      uint32_t destination = getContainerFromName(dest);
-      uint32_t linkType = getLinkTypeFromName(type);
+  uint32_t source = getContainerFromName(src);
+  uint32_t destination = getContainerFromName(dest);
+  uint32_t linkType = getLinkTypeFromName(type);
 
-      OTF_Writer_writeSendMsg(writer, time*TIMER_RES, source, destination, 0, linkType, 0, 0);
-      if(verbose)
-      printf("StartLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, source, destination, linkType, val, key);
+  CHECK_RESULT(OTF_Writer_writeSendMsg(writer, time*TIMER_RES, source, destination, 0, linkType, 0, 0));
+  if(verbose)
+    printf("StartLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, source, destination, linkType, val, key);
 
   return TRACE_SUCCESS;
 }
@@ -442,13 +447,13 @@ trace_return_t OTFStartLink (varPrec time, const char* type,
 trace_return_t OTFEndLink (varPrec time, const char* type,
                            const char*   src, const char* dest,
                            const char*   val, const char* key){
-      uint32_t src_cont = getContainerFromName(src);
-      uint32_t dest_cont = getContainerFromName(dest);
-      uint32_t linkType = getLinkTypeFromName(type);
+  uint32_t src_cont = getContainerFromName(src);
+  uint32_t dest_cont = getContainerFromName(dest);
+  uint32_t linkType = getLinkTypeFromName(type);
 
-      OTF_Writer_writeRecvMsg(writer, time*TIMER_RES, dest_cont, src_cont, 0, linkType, 0, 0);
-      if(verbose)
-      printf("EndLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, src_cont, dest_cont, linkType, val, key);
+  CHECK_RESULT(OTF_Writer_writeRecvMsg(writer, time*TIMER_RES, dest_cont, src_cont, 0, linkType, 0, 0));
+  if(verbose)
+    printf("EndLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, src_cont, dest_cont, linkType, val, key);
 
     return TRACE_SUCCESS;
 }
@@ -467,7 +472,7 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
     alloc_Variable(p_counter, (gtg_list_entry(variables.token.prev, Variable_t, token)->id) + 1,
 		   parent, varType, 0);
     gtg_list_add_tail(&(p_counter->token), &(variables.token));
-    OTF_Writer_writeDefCounter(writer, 0, p_counter->id, type, 0, varType, NULL);
+    CHECK_RESULT(OTF_Writer_writeDefCounter(writer, 0, p_counter->id, type, 0, varType, NULL));
   }
 
   /* Update the value of the variable */
@@ -478,7 +483,7 @@ trace_return_t OTFSetVar (varPrec time, const char*  type,
     return TRACE_ERR_WRITE;
   }
 
-  OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, p_counter->value);
+  CHECK_RESULT(OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, p_counter->value));
 
   if(verbose)
     printf("setVar : %s %s %f\n", type, cont, val);
@@ -502,7 +507,7 @@ trace_return_t OTFAddVar (varPrec time, const char*  type,
 
     gtg_list_add_tail(&(p_counter->token), &(variables.token));
 
-    OTF_Writer_writeDefCounter(writer, 0, p_counter->id, type, 0, varType, NULL);
+    CHECK_RESULT(OTF_Writer_writeDefCounter(writer, 0, p_counter->id, type, 0, varType, NULL));
   }
   /* update the variable value */
   p_counter->value += val;
@@ -512,7 +517,7 @@ trace_return_t OTFAddVar (varPrec time, const char*  type,
     return TRACE_ERR_WRITE;
   }
 
-  OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, p_counter->value);
+  CHECK_RESULT(OTF_Writer_writeCounter (writer, time*TIMER_RES, parent, varType, p_counter->value));
 
   if(verbose)
     printf("addVar : %s %s %f\n", type, cont, val);
