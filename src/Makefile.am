@@ -59,14 +59,12 @@ libgtg_la_DEPENDENCIES = $(OTFDEPENDENCIES)
 endif
 
 if HAVE_LIBZ
-gtg_compress_SOURCES = C/gtg_compress.c \
-	               C/gtg_compress.h
+gtg_compress_SOURCES = C/gtg_compress.c
 
 gtg_compress_LDADD = -lz libgtg.la
 gtg_compress_CPPFLAGS = -I$(srcdir)/../inc/
 
-gtg_decompress_SOURCES = C/gtg_decompress.c \
-	               C/gtg_compress.h
+gtg_decompress_SOURCES = C/gtg_decompress.c
 
 gtg_decompress_LDADD = -lz libgtg.la
 gtg_decompress_CPPFLAGS = -I$(srcdir)/../inc/
