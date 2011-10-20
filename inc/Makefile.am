@@ -12,6 +12,5 @@ include_HEADERS = GTG.h \
 		  types.h \
 		  OTF_Structs.h \
 		  gtg_list.h \
-		  gtg_stack.h
-
-
+		  gtg_stack.h \
+		  gtg_compress.h
