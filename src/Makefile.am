@@ -13,7 +13,7 @@ lib_LTLIBRARIES = libgtg.la
 
 libgtg_la_CPPFLAGS = -I$(srcdir)/../inc/
 libgtg_la_CFLAGS = -Wall -pedantic -DBUILD_PAJE
-libgtg_la_LIBADD = -lrt
+libgtg_la_LIBADD =
 libgtg_la_LDFLAGS = --no-undefined
 
 libgtg_la_SOURCES = \
