@@ -389,7 +389,7 @@ static void __gtg_insert(struct event_list_t* new_event) {
    * happened not so long before last_event.
    */
   cur_event = __last_event;
-  while(cur_event->time >= new_event->time) {
+  while(cur_event->time > new_event->time) {
     if(cur_event->prev)
       cur_event = cur_event->prev;
     else
