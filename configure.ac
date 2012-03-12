@@ -31,7 +31,22 @@ if [ test  "x$have_getline" = xyes ]; then
    CFLAGS="${CFLAGS} -DHAVE_GETLINE"
 fi
 
-AC_CHECK_LIB(z, deflate, have_libz=yes)
+
+use_libz=yes
+AC_ARG_WITH(libz,
+            [AS_HELP_STRING([--with-libz[=<bool>]], [Enable libZ])],
+            [
+                if test x$withval != xno; then
+                  use_libz=yes
+                else
+                  use_libz=no
+                fi
+            ])
+
+
+if [ test $use_libz = yes ]; then
+  AC_CHECK_LIB(z, deflate, have_libz=yes)
+fi
 AM_CONDITIONAL([HAVE_LIBZ], [ test "x$have_libz" = xyes])
 
 # crappy hack: of the macros AC_PROG_{CC,CXX,F77,FC}, only the
