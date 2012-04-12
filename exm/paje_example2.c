@@ -25,6 +25,8 @@ void clear (char* buf, int size){
 
 /* Main function to generate a trace in the Paje format called cpaje2.trace */
 int main (int argc, char** argv){
+(void) argc;
+(void) argv;
     double time;
     double timer;
     int    i;

@@ -3,6 +3,8 @@
 #include <GTG.h>
 
 int main (int argc, char** argv){
+(void) argc;
+(void) argv;
     setTraceType (PAJE);
     initTrace ("cpaje", 0, GTG_FLAG_NONE);
     addContType ("CT_NET", "0", "Network");
