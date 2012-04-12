@@ -9,6 +9,11 @@
 #include <mpi.h>
 #endif
 
+#ifndef HAVE_ASPRINTF
+extern int asprintf(char **ret, const char *format, ...);
+//extern int vasprintf(char **ret, const char *format, va_list args);
+#endif /* HAVE_ASPRINTF */
+
 #include "GTG.h"
 #include "GTGPaje.h"
 
@@ -147,7 +152,7 @@ int getline(char** buf, int* size, FILE* stream)
     }
 
     /* read at most 512 bytes */
-    int ret = fgets((*buf)+nb_char, 512, stream);
+    char * ret = fgets((*buf)+nb_char, 512, stream);
 
     if(!ret){
       /* error while reading or EOF */
@@ -179,12 +184,12 @@ void myGetLine (doubleLinkList_t* li){
     else
         fprintf (stderr, "failed to read \n");
 }
-
+/* need to run 'rm -f' force because there is no file some time*/
 void clean_files (char* fileName, int nbFile){
     int ret;
     char cmd[BUFFSIZE];
-    sprintf (cmd, "rm %s_root.ept %s_proc*.ept", filename,filename);
-    ret = system(cmd);    
+    sprintf (cmd, "rm -f %s_root.ept %s_proc*.ept", filename,filename);
+    ret = system(cmd);
 }
 
 void merge (char* filename, int nbFile){
@@ -255,10 +260,10 @@ void merge (char* filename, int nbFile){
 }
 
 const paje_color_t Paje_get_color(gtg_color_t p_color) {
-    /* todo */
+    /** \todo it is not const*/
     int ret;
     paje_color_t res = NULL;
-    ret = asprintf(&res, "%1.1f %1.1f %1.1f", 
+    ret = asprintf(&res, "%1.1f %1.1f %1.1f",
                    (float)GTG_COLOR_GET_RED(  p_color->rgb)/256,
                    (float)GTG_COLOR_GET_GREEN(p_color->rgb)/256,
                    (float)GTG_COLOR_GET_BLUE( p_color->rgb)/256);
@@ -282,7 +287,7 @@ pajeGetName (int procNb){
 trace_return_t my_open (int rk){
     trace_return_t ret = TRACE_ERR_OPEN;
     char f[BUFFSIZE];
-    
+
     if (!procFile){
         if(!(paje_flags & GTG_FLAG_USE_MPI)) {
             procFile = headFile;
@@ -311,7 +316,7 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
     trace_return_t ret = TRACE_ERR_OPEN;
 
     my_close ();
-    rank = rk;
+    rank = rk;	/* fixme: why there is need to copy filenam ????*/
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
     strcpy (filename, filenam);
     procFile = NULL;
@@ -334,7 +339,7 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
     return my_open(rank);
 }
 
-trace_return_t pajeAddContType(const char* alias, const char* contType, 
+trace_return_t pajeAddContType(const char* alias, const char* contType,
                                const char* name) {
     PRINT_PAJE_HEADER();
 
@@ -352,7 +357,7 @@ trace_return_t pajeAddContType(const char* alias, const char* contType,
     return TRACE_ERR_WRITE;
 }
 
-trace_return_t pajeAddStateType   (const char* alias, const char* contType, 
+trace_return_t pajeAddStateType   (const char* alias, const char* contType,
                         const char* name){
     PRINT_PAJE_HEADER();
 
@@ -367,7 +372,7 @@ trace_return_t pajeAddStateType   (const char* alias, const char* contType,
     return TRACE_ERR_WRITE;
 }
 
-trace_return_t pajeAddEventType   (const char* alias, const char* contType, 
+trace_return_t pajeAddEventType   (const char* alias, const char* contType,
                         const char* name){
     PRINT_PAJE_HEADER();
 
@@ -413,7 +418,7 @@ trace_return_t pajeAddVarType   (const char* alias   , const char* name,
     return TRACE_ERR_WRITE;
 }
 
-trace_return_t pajeAddEntityValue   (const char* alias, const char* entType, 
+trace_return_t pajeAddEntityValue   (const char* alias, const char* entType,
                           const char* name , const char* color){
     PRINT_PAJE_HEADER();
 
@@ -472,7 +477,7 @@ trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
     PRINT_PAJE_HEADER();
 
     if (headFile){
-        fprintf (headFile, "8 %.13e \"%s\" \"%s\" \n", 
+        fprintf (headFile, "8 %.13e \"%s\" \"%s\" \n",
                  time, name, type);
 
 	FLUSH(headFile);
@@ -486,7 +491,7 @@ trace_return_t pajeSetState   (varPrec time, const char* type,
     if(verbose)
         printf("SetState : type %s, container %s, val %s\n", type, cont, val);
     if (procFile){
-        fprintf (procFile, "10 %.13e \"%s\" \"%s\" \"%s\"\n", 
+        fprintf (procFile, "10 %.13e \"%s\" \"%s\" \"%s\"\n",
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -500,7 +505,7 @@ trace_return_t pajePushState   (varPrec time, const char* type,
     if(verbose)
         printf("PushState : type %s, container %s, val %s\n", type, cont, val);
     if (procFile){
-        fprintf (procFile, "11 %.13e \"%s\" \"%s\" \"%s\"\n", 
+        fprintf (procFile, "11 %.13e \"%s\" \"%s\" \"%s\"\n",
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -514,7 +519,7 @@ trace_return_t pajePopState   (varPrec time, const char* type,
     if(verbose)
         printf("PopState : type %s, container %s\n", type, cont);
     if (procFile){
-        fprintf (procFile, "12 %.13e \"%s\" \"%s\"\n", 
+        fprintf (procFile, "12 %.13e \"%s\" \"%s\"\n",
                  time, type, cont);
 
 	FLUSH(procFile);
@@ -528,7 +533,7 @@ trace_return_t pajeAddEvent   (varPrec time, const char* type,
     if(verbose)
         printf("AddEvent : type %s, cont %s, val %s\n", type, cont, val);
     if (procFile){
-        fprintf (procFile, "20 %.13e \"%s\" \"%s\" \"%s\"\n", 
+        fprintf (procFile, "20 %.13e \"%s\" \"%s\" \"%s\"\n",
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -541,10 +546,10 @@ trace_return_t pajeStartLink   (varPrec time, const char* type,
                      const char*   cont, const char* src,
                      const char*   val , const char* key){
     if (verbose)
-        printf ("Start link: type: %s container: %s src: %s val: %s key %s\n", 
+        printf ("Start link: type: %s container: %s src: %s val: %s key %s\n",
                  type, cont, src, val, key);
     if (procFile){
-        fprintf (procFile, "42 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n", 
+        fprintf (procFile, "42 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  time, type, cont, src, val, key);
 
 	FLUSH(procFile);
@@ -557,10 +562,10 @@ trace_return_t pajeEndLink   (varPrec time, const char* type,
                    const char*   cont, const char* dest,
                    const char*   val , const char* key){
     if (verbose)
-        printf ("End link type: %s container: %s src: %s val: %s key %s\n", 
+        printf ("End link type: %s container: %s src: %s val: %s key %s\n",
                  type, cont, dest, val, key);
     if (procFile){
-        fprintf (procFile, "43 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n", 
+        fprintf (procFile, "43 %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  time, type, cont, dest, val, key);
 
 	FLUSH(procFile);
@@ -572,10 +577,10 @@ trace_return_t pajeEndLink   (varPrec time, const char* type,
 trace_return_t pajeSetVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
     if (verbose)
-        printf ("SetVar: type: %s container: %s value: %e\n", 
+        printf ("SetVar: type: %s container: %s value: %e\n",
                 type, cont, val);
     if (procFile){
-        fprintf (procFile, "51 %.13e \"%s\" \"%s\" %e\n", 
+        fprintf (procFile, "51 %.13e \"%s\" \"%s\" %e\n",
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -587,10 +592,10 @@ trace_return_t pajeSetVar   (varPrec time, const char*  type,
 trace_return_t pajeAddVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
     if (verbose)
-        printf ("AddVar: type: %s container: %s value: %e\n", 
+        printf ("AddVar: type: %s container: %s value: %e\n",
                 type, cont, val);
     if (procFile){
-        fprintf (procFile, "52 %.13e \"%s\" \"%s\" %e\n", 
+        fprintf (procFile, "52 %.13e \"%s\" \"%s\" %e\n",
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -602,10 +607,10 @@ trace_return_t pajeAddVar   (varPrec time, const char*  type,
 trace_return_t pajeSubVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val){
     if (verbose)
-        printf ("SubVar: type: %s container: %s value: %e\n", 
+        printf ("SubVar: type: %s container: %s value: %e\n",
                 type, cont, val);
     if (procFile){
-        fprintf (procFile, "53 %.13e \"%s\" \"%s\" %e\n", 
+        fprintf (procFile, "53 %.13e \"%s\" \"%s\" %e\n",
                  time, type, cont, val);
 
 	FLUSH(procFile);
@@ -613,6 +618,19 @@ trace_return_t pajeSubVar   (varPrec time, const char*  type,
     }
     return TRACE_ERR_WRITE;
 }
+
+trace_return_t pajeAddComment   (const char*  comment){
+    if (verbose)
+        printf ("AddComment: %s \n",comment);
+
+    if (procFile){
+	fprintf(procFile,"#%s\r\n",comment);
+	FLUSH(procFile);
+        return TRACE_SUCCESS;
+    }
+    return TRACE_ERR_WRITE;
+}
+
 
 trace_return_t pajeEndTrace (){
     int size = 1;
@@ -651,7 +669,7 @@ trace_return_t viteEndTrace (){
 
 
 /*
- * Hack that will be removed 
+ * Hack that will be removed
  */
 FILE *pajeGetProcFile() {
   return procFile;

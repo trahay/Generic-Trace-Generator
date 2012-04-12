@@ -77,6 +77,9 @@ trace_return_t initTrace   (const char* filename, int rank, gtg_flag_t flags){
 }
 
 trace_return_t setCompress (int val){
+#ifndef BUILD_OTF
+(void) val;
+#endif
     switch (traceType){
 #ifdef BUILD_OTF
     case OTF :
@@ -91,7 +94,7 @@ trace_return_t setCompress (int val){
     return TRACE_SUCCESS;
 }
 
-trace_return_t addContType   (const char* alias, const char* contType, 
+trace_return_t addContType   (const char* alias, const char* contType,
                               const char* name){
         switch (traceType){
 #ifdef BUILD_PAJE
@@ -114,7 +117,7 @@ trace_return_t addContType   (const char* alias, const char* contType,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addStateType   (const char* alias, const char* contType, 
+trace_return_t addStateType   (const char* alias, const char* contType,
                     const char* name){
 
         switch (traceType){
@@ -138,7 +141,7 @@ trace_return_t addStateType   (const char* alias, const char* contType,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addEventType   (const char* alias, const char* contType, 
+trace_return_t addEventType   (const char* alias, const char* contType,
                     const char* name){
 
         switch (traceType){
@@ -209,7 +212,7 @@ trace_return_t addVarType   (const char* alias   , const char* name,
     return TRACE_SUCCESS;
 }
 
-trace_return_t addEntityValue   (const char* alias, const char* entType, 
+trace_return_t addEntityValue   (const char* alias, const char* entType,
                       const char* name , gtg_color_t p_color){
     switch (traceType){
 #ifdef BUILD_PAJE
@@ -377,6 +380,9 @@ trace_return_t startLink   (varPrec time, const char* type,
                  const char*  cont, const char* src,
                  const char*  dest, const char* val,
                  const char* key){
+#ifndef BUILD_OTF
+(void) dest;
+#endif
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -402,6 +408,9 @@ trace_return_t endLink   (varPrec time, const char* type,
                const char*  cont, const char* src,
                const char*  dest, const char* val,
                const char* key){
+#ifndef BUILD_OTF
+(void) src;
+#endif
     switch (traceType){
 #ifdef BUILD_PAJE
     case PAJE :
@@ -492,6 +501,29 @@ trace_return_t subVar   (varPrec time, const char*  type,
     return TRACE_SUCCESS;
 }
 
+trace_return_t AddComment   (const char*  comment){
+    switch (traceType){
+#ifdef BUILD_PAJE
+    case PAJE :
+    case VITE :
+        return pajeAddComment (comment);
+        break;
+#endif
+#ifdef BUILD_OTF
+    case OTF :
+        return OTFAddComment (comment);
+        break;
+#endif
+#ifdef BUILD_TAU
+    case TAU :
+#endif
+    default :
+        break;
+    }
+    return TRACE_SUCCESS;
+}
+
+
 trace_return_t endTrace (){
     int ret = TRACE_ERR_CLOSE;
 
@@ -520,5 +552,4 @@ trace_return_t endTrace (){
 
     return TRACE_SUCCESS;
 }
-
 
