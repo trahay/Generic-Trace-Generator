@@ -37,6 +37,7 @@ endif
 if HAVE_LIBZ
 libgtg_la_CFLAGS += -DHAVE_LIBZ
 libgtg_la_SOURCES += C/gtg_compress_core.c
+libgtg_la_LIBADD += -lz
 
 endif
 
