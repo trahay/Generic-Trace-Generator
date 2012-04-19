@@ -261,5 +261,12 @@ subroutine endTrace_f (ierr)
   call endTrace_i (ierr)
 end subroutine endTrace_f
 
+subroutine addComm_f (comm, ierr)
+  character (len=*), intent (in) :: comm
+  integer, intent (out) :: ierr
+  call addComm_i  (comm, len (trim (comm)),&
+       &          ierr)
+end subroutine addComm_f
+
 end module gtg_f
 

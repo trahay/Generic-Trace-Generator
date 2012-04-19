@@ -337,6 +337,16 @@ subVar_i (varPrec * time,
 }
 
 void
+addComm_i (char *comm, int *s2, int *err)
+{
+  char *t = (char *) malloc (sizeof (char) * (*s2 + 1));
+  memcpy (t, comm, *s2);
+  t[*s2] = '\0';
+  *err = addComment (t);
+}
+
+
+void
 endTrace_i (int *err)
 {
   *err = endTrace ();
@@ -506,6 +516,12 @@ subvar_i_ (varPrec * time,
 	   char *type, int *s2, char *cont, int *s1, varPrec * val, int *err)
 {
   subVar_i (time, type, s2, cont, s1, val, err);
+}
+
+void
+addcomm_i_ (char *comm, int *s2, int *err)
+{
+  addComm_i (comm, s2, err);
 }
 
 void
