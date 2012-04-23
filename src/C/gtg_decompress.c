@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "gtg_compress.h"
+#include "GTGCompress.h"
 
 char* input_filename;
 char* output_filename;

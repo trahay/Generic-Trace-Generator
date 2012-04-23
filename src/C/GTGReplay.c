@@ -4,7 +4,7 @@
 #include <time.h>
 #include <assert.h>
 
-#include "GTGBasic1.h"
+#include "GTGBasic.h"
 #include "GTGReplay.h"
 #include "GTGMemory.h"
 

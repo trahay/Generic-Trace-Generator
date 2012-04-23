@@ -1,6 +1,14 @@
-#include "GTGColor.h"
+/**
+ *  \file GTGColor.c
+ *  \version 0.1
+ *  \brief
+ *
+ *  This file defines some basic colors to use in entity values for GTG.
+ *
+ */
 #include <string.h>
 #include <stdlib.h>
+#include "GTGColor.h"
 
 #define NB_DEFAULT_COLOR 22
 struct gtg_color __gtg_colors[NB_DEFAULT_COLOR];
@@ -224,7 +232,7 @@ void gtg_color_init()
 	__init_color(GTG_GRENAT    , "GRENAT"    , GTG_GRENAT_RGB);
 	__init_color(GTG_ORANGE    , "ORANGE"    , GTG_ORANGE_RGB);
 	__init_color(GTG_MAUVE     , "MAUVE"     , GTG_MAUVE_RGB);
-	__init_color(GTG_LIGHTPINK , "LIGHTPINK" ,  GTG_LIGHTPINK_RGB);
+	__init_color(GTG_LIGHTPINK , "LIGHTPINK" , GTG_LIGHTPINK_RGB);
 
 }
 
@@ -233,4 +241,17 @@ void gtg_color_exit()
 	int i;
 	for (i=0; i<NB_DEFAULT_COLOR; i++)
 		free(__gtg_colors[i].color_name);
+}
+
+gtg_color_t gtg_color_create( const char *name, uint8_t r, uint8_t g, uint8_t b)
+{
+    gtg_color_t color = (gtg_color_t)malloc(sizeof(struct gtg_color));
+    __init_color( color, name, GTG_COLOR_SET_COLOR(r, g, b) );
+    return color;
+}
+
+void gtg_color_free( gtg_color_t color ) {
+    if ( color->color_name != NULL )
+        free(color->color_name);
+    free(color);
 }

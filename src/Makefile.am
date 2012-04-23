@@ -21,6 +21,7 @@ libgtg_la_SOURCES = \
 	  C/GTGColor.c     \
 	  C/GTGReplay.c     \
 	  C/GTGMemory.c     \
+	  C/paje_header.c	\
 	  C/paje_GTGBasic1_c.c
 
 
@@ -72,4 +73,4 @@ gtg_decompress_CPPFLAGS = -I$(srcdir)/../inc/
 endif
 
 #noinst_HEADERS =  ev_codes.h
-#include_HEADERS = GTGBasic1.h  OTF_GTGBasic1.h  pajeColor.h  paje_GTGBasic1.h  types.h
+#include_HEADERS = GTGBasic.h  GTGOTF_Basic.h  GTGPaje_Color.h GTGPaje_Basic.h GTGtypes.h

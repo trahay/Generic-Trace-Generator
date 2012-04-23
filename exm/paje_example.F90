@@ -7,8 +7,8 @@ program main
 
 !! To manage this C include
 !! Call the file .F90 (and not .f90) or add a preprocessor flag  (-cpp for ifort for example)
-#include "../inc/pajeColor.h"  
-  use traceGeneratorBasic1_f
+#include <GTGPaje_Color.h>
+  use gtg_f
   implicit none
   real (8) :: time
   real (8) :: val

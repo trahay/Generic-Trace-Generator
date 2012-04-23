@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <time.h>
 #include <zlib.h>
-#include "gtg_compress.h"
+#include "GTGCompress.h"
 
 #define BUF_SIZE_MAX (1024*1024*32)
 /* block size used  */

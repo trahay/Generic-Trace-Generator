@@ -2,15 +2,16 @@
 # See COPYING in top-level directory.
 
 include_HEADERS = GTG.h \
-		  GTGBasic1.h \
+		  GTGBasic.h \
 		  GTGColor.h \
 		  GTGReplay.h \
 		  GTGMemory.h \
-		  OTF_GTGBasic1.h \
-		  pajeColor.h \
-		  paje_GTGBasic1.h \
-		  types.h \
-		  OTF_Structs.h \
-		  gtg_list.h \
-		  gtg_stack.h \
-		  gtg_compress.h
+		  GTGOTF.h \
+		  GTGOTF_Basic.h \
+		  GTGOTF_Structs.h \
+		  GTGPaje.h \
+		  GTGPaje_Basic.h \
+		  GTGTypes.h \
+		  GTGList.h \
+		  GTGStack.h \
+		  GTGCompress.h

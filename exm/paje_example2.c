@@ -6,8 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "../inc/GTG.h"
-#include "../inc/pajeColor.h"
+
+#include <GTG.h>
+#include <GTGPaje_Color.h>
 
 /* Size of the buffer used */
 #define TXTSIZE 200
@@ -24,6 +25,8 @@ void clear (char* buf, int size){
 
 /* Main function to generate a trace in the Paje format called cpaje2.trace */
 int main (int argc, char** argv){
+(void) argc;
+(void) argv;
     double time;
     double timer;
     int    i;

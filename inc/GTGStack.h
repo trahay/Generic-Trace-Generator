@@ -1,7 +1,7 @@
 #ifndef GTG_STACK_H
 #define GTG_STACK_H
 
-#include "gtg_list.h"
+#include "GTGList.h"
 
 typedef struct gtg_list gtg_stack;
 typedef gtg_stack* gtg_stack_t;

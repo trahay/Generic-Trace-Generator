@@ -6,9 +6,8 @@
  *  This file defines some useful colors to use in entity values for GTG.
  *
  */
-
-#ifndef _GTGCOLOR_
-#define _GTGCOLOR_
+#ifndef _GTGCOLOR_H_
+#define _GTGCOLOR_H_
 
 #include <stdint.h>
 
@@ -246,9 +245,10 @@ extern gtg_color_t GTG_MAUVE;
  */
 extern gtg_color_t GTG_LIGHTPINK;
 
-
-
 void gtg_color_init();
 void gtg_color_exit();
 
-#endif
+gtg_color_t gtg_color_create( const char *name, uint8_t r, uint8_t g, uint8_t b);
+void        gtg_color_free(gtg_color_t color);
+
+#endif /* _GTGCOLOR_H_ */

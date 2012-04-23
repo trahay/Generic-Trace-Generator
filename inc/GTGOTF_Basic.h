@@ -1,8 +1,8 @@
 /**
- *  \file paje_GTGBasic1.h
+ *  \file GTGOTF_Basic.h
  *  \version 0.1
  *  \brief
- *  paje_GTGBasic1 is the Paje implementation of the basic interface to generate traces (GTGBasic1).
+ *  OTF_GTGBasic1 is the OTF implementation of the basic interface to generate traces (GTGBasic1).
  *
  *  \authors
  *    Developers are : \n
@@ -12,62 +12,51 @@
  *        Kevin    Coulomb  - kevin.coulomb@gmail.com \n
  *        Mathieu  Faverge  - faverge@labri.fr \n
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
- *
  */
-#ifndef _PAJETRACEGENERATORBASIC_
-#define _PAJETRACEGENERATORBASIC_
+#ifndef _GTG_OTF_BASIC_H_
+#define _GTG_OTF_BASIC_H_
 
-#include "GTGBasic1.h"
-#include "types.h"
-
-/**
- * \brief Constant to create a paje trace
- */
-#define FMT_PAJE 0
-/**
- * \brief Constant to create a vite trace
- */
-#define FMT_VITE 1
+#include "GTGTypes.h"
+#include "GTGBasic.h"
+#include "GTGOTF_Structs.h"
 
 /**
- * \defgroup cpaje Paje interface in C of the GTGBasic1 API
+ * \defgroup cotf OTF interface in C of the traceGeneratorBasic API
  */
-
-/**
- * \ingroup cpaje
- * \fn trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags, int fmt)
- * \brief Initialize a VITE trace ( *.ept)
- * \param filename Root name of the file to create
- * \param rank Rank of the processor
- * \param flags One of GTG_FLAG_NONE, GTG_FLAG_USE_MPI, GTG_FLAG_NOTBUF.
- * \param fmt Format, paje or vite
- * \return 0 if success
- *         An error code otherwise
- */
-trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags, int fmt);
-
-/**
- * \ingroup cpaje
- * \fn char* pajeGetName (int rk)
- * \param rk Rank of the proc you want the filename containing it
- * \brief Function to get the name of the file containing all the data for the proc of rank rk
- * \return Name of the file. 
- */
-char* pajeGetName (int rk);
 
 /**
  * \ingroup cotf
- * \fn trace_return_t pajeSetCompress(int val)
+ * \fn const char* OTF_get_color(gtg_color_t color)
+ * \brief Converts a GTG color into a OTF color.
+ * \param color GTG color to convert
+ * \return The OTF color
+ */
+const otf_color_t OTF_get_color(gtg_color_t color);
+
+/**
+ * \ingroup cotf
+ * \fn trace_return_t OTFInitTrace   (const char* filename, gtg_flag_t flags)
+ * \brief Initialize an OTF trace.
+ * \param filename Root name of the file to create
+ * \param flags One of GTG_FLAG_NONE, GTG_FLAG_USE_MPI, GTG_FLAG_NOTBUF.
+ * \return 0 if success
+ *         An error code otherwise
+ */
+trace_return_t OTFInitTrace   (const char* filename, gtg_flag_t flags);
+
+/**
+ * \ingroup cotf
+ * \fn trace_return_t OTFSetCompress(int val)
  * \brief Enable trace compression.
  * \param val 0 means no compression, otherwize the output files will be compressed.
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeSetCompress(int val);
+trace_return_t OTFSetCompress(int val);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddContType   (const char* alias,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddContType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief Add a Container Type.
@@ -77,12 +66,12 @@ trace_return_t pajeSetCompress(int val);
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddContType   (const char* alias, const char* contType, 
+trace_return_t OTFAddContType   (const char* alias, const char* contType, 
                        const char* name);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddStateType   (const char* alias,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddStateType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief Add a State Type.
@@ -92,12 +81,12 @@ trace_return_t pajeAddContType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddStateType   (const char* alias, const char* contType, 
+trace_return_t OTFAddStateType   (const char* alias, const char* contType, 
                         const char* name);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddEventType   (const char* alias,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddEventType   (const char* alias,
  *                             const char* contType, 
  *                             const char* name)
  * \brief Add an Event Type.
@@ -107,12 +96,12 @@ trace_return_t pajeAddStateType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddEventType   (const char* alias, const char* contType, 
+trace_return_t OTFAddEventType   (const char* alias, const char* contType, 
                         const char* name);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddLinkType   (const char* alias,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddLinkType   (const char* alias,
  *                            const char* name,
  *                            const char* contType, 
  *                            const char* srcContType,
@@ -126,13 +115,13 @@ trace_return_t pajeAddEventType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
+trace_return_t OTFAddLinkType   (const char* alias   , const char* name,
                        const char* contType, const char* srcContType,
                        const char* destContType);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddVarType   (const char* alias,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddVarType   (const char* alias,
  *                           const char* contType, 
  *                           const char* name)
  * \brief Add a Variable Type.
@@ -142,15 +131,15 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddVarType   (const char* alias   , const char* name,
+trace_return_t OTFAddVarType   (const char* alias   , const char* name,
                       const char* contType); 
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddEntityValue   (const char* alias,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddEntityValue   (const char* alias,
  *                               const char* entType, 
  *                               const char* name,
- *                               const char* color)
+ *                               const otf_color_t color)
  * \brief Add an Entity Value.
  * \param alias Alias on the entity value
  * \param entType Type of the entity
@@ -159,20 +148,19 @@ trace_return_t pajeAddVarType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddEntityValue   (const char* alias, const char* entType, 
-                          const char* name , const char* color);
+trace_return_t OTFAddEntityValue   (const char* alias, const char* entType, 
+				    const char* name , const otf_color_t color);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddContainer (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFDefineContainer (varPrec  time,
  *                           const char  * alias,
  *                           const char  * type, 
  *                           const char  * container,
  *                           const char  * name,
  *                           const char  * file)
- * \brief Add a Container (VITE format).
- * \param time Time at which the container is added
- * \param alias Alias on the new container
+ * \brief Define a Container.
+ * \param alias Alias of the new container
  * \param type Type of the container
  * \param container Container parent
  * \param name Name of the variable type
@@ -180,49 +168,50 @@ trace_return_t pajeAddEntityValue   (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddContainer (varPrec time, const char* alias    ,
-                      const char*  type, const char* container,
-                      const char*  name, const char* file);
-
+trace_return_t OTFDefineContainer (const char* alias,
+				   const char*  type, const char* container,
+				   const char*  name, const char* file);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeSeqAddContainer (varPrec  time,
- *                                         const char  * alias,
- *                                         const char  * type, 
- *                                         const char  * container,
- *                                         const char  * name)
- * \brief Add a Container (PAJE format).
+ * \ingroup cotf
+ * \fn trace_return_t OTFStartContainer (varPrec  time,
+ *                           const char  * alias,
+ *                           const char  * type,
+ *                           const char  * container,
+ *                           const char  * name,
+ *                           const char  * file)
+ * \brief Start a Container.
  * \param time Time at which the container is added
- * \param alias Alias on the new container
+ * \param alias Alias of the new container
  * \param type Type of the container
  * \param container Container parent
  * \param name Name of the variable type
+ * \param file File containing the container trace
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
-                                      const char*  type, const char* container,
-                                      const char*  name);
+trace_return_t OTFStartContainer (varPrec time, const char* alias    ,
+				  const char*  type, const char* container,
+				  const char*  name, const char* file);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeDestroyContainer (varPrec  time,
- *                                          const char  * name,
- *                                          const char  * type)
+ * \ingroup cotf
+ * \fn trace_return_t OTFDestroyContainer (varPrec  time,
+ *                               const char  * name,
+ *                               const char  * type) 
  * \brief Destroy a Container.
  * \param time Time at which the container is destroyed
- * \param name Name on the container to destroy
+ * \param name Name of the container
  * \param type Type of the container
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
-                                         const char*  type);
+trace_return_t OTFDestroyContainer     (varPrec time, const char*  name,
+                              const char*  type);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeSetState (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFSetState (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -234,12 +223,12 @@ trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeSetState   (varPrec time, const char* type,
+trace_return_t OTFSetState   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajePushState (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFPushState (varPrec  time,
  *                        const char  * type,
  *                        const char  * cont,
  *                        const char  * val)
@@ -251,12 +240,12 @@ trace_return_t pajeSetState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajePushState   (varPrec time, const char* type,
+trace_return_t OTFPushState   (varPrec time, const char* type,
                      const char*  cont, const char* val);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajePopState (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFPopState (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont)
  * \brief Revert the State of a Container to its previous value.
@@ -266,11 +255,12 @@ trace_return_t pajePushState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajePopState   (varPrec time, const char* type,
+trace_return_t OTFPopState   (varPrec time, const char* type,
                     const char*  cont);
+
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddEvent (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddEvent (varPrec  time,
  *                       const char  * type,
  *                       const char  * cont,
  *                       const char  * val)
@@ -282,126 +272,125 @@ trace_return_t pajePopState   (varPrec time, const char* type,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddEvent   (varPrec time, const char* type,
+trace_return_t OTFAddEvent   (varPrec time, const char* type,
                     const char*  cont, const char* val);
 
-
-
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeStartLink (varPrec  time,
- *                     const char  * type,
- *                     const char  * cont,
- *                     const char  * src,
- *                     const char  * val,
- *                     const char  * key)
- * \brief Start a link
+ * \ingroup cotf
+ * \fn trace_return_t OTFStartLink (varPrec  time,
+ *                        const char  * type,
+ *                        const char  * cont,
+ *                        const char  * src,
+ *                        const char  * val,
+ *                        const char  * key)
+ * \brief Start a Link.
  * \param time Time at which the link starts
  * \param type Type of the link
- * \param cont Container parent of the source and destination containers containing the link
- * \param src  Source container
- * \param val  Value of the link
- * \param key  Key used to match start link with end link
+ * \param cont Container containning the link
+ * \param src  Container source
+ * \param val  Entity value of the link
+ * \param key  Key to identify the link
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeStartLink   (varPrec time, const char* type,
-                                const char*   cont, const char* src,
-                                const char*   val , const char* key);
+trace_return_t OTFStartLink   (varPrec time, const char* type,
+                     const char*   src, const char* dest,
+                     const char*   val , const char* key);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeEndLink (varPrec  time,
- *                     const char  * type,
- *                     const char  * cont,
- *                     const char  * dest,
- *                     const char  * val,
- *                     const char  * key)
- * \brief Start a link
- * \param time Time at which the link starts
+ * \ingroup cotf
+ * \fn trace_return_t OTFEndLink (varPrec  time,
+ *                      const char  * type,
+ *                      const char  * cont,
+ *                      const char  * dest,
+ *                      const char  * val,
+ *                      const char  * key)
+ * \brief End a Link.
+ * \param time Time at which the link ends
  * \param type Type of the link
- * \param cont Container parent of the source and destination containers containing the link
- * \param dest Source container
- * \param val  Value of the link
- * \param key  Key used to match start link with end link
+ * \param cont Container containning the link
+ * \param dest Container destination
+ * \param val  Entity value of the link
+ * \param key  Key to identify the link
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeEndLink   (varPrec time, const char* type,
-                              const char*   cont, const char* dest,
-                              const char*   val , const char* key);
+trace_return_t OTFEndLink   (varPrec time, const char* type,
+                   const char*  src, const char* dest,
+                   const char*  val, const char* key);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeSetVar (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFSetVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
- * \brief Set a Variable value
+ * \brief Set a Variable value.
  * \param time Time at which the variable is set
  * \param type Type of the variable
- * \param cont Container containing the variable
+ * \param cont Container containning the variable
  * \param val  Value of the variable
  * \return 0 if success \n
  *         An error code otherwise
  */
-
-trace_return_t pajeSetVar   (varPrec time, const char*  type,
+trace_return_t OTFSetVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeAddVar (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
  * \brief Add a value to a Variable.
  * \param time Time at which the variable is incremented
  * \param type Type of the variable
- * \param cont Container containing the variable
+ * \param cont Container containning the variable
  * \param val  Value added
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddVar   (varPrec time, const char*  type,
+trace_return_t OTFAddVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
- * \ingroup cpaje
- * \fn trace_return_t pajeSubVar (varPrec  time,
+ * \ingroup cotf
+ * \fn trace_return_t OTFSubVar (varPrec  time,
  *                     const char  * type,
  *                     const char  * cont,
  *                     varPrec  val)
  * \brief Substract a value from a Variable.
  * \param time Time at which the variable is incremented
  * \param type Type of the variable
- * \param cont Container containing the variable
+ * \param cont Container containning the variable
  * \param val  Value substracted
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeSubVar   (varPrec time, const char*  type,
+trace_return_t OTFSubVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
 
 /**
- * \ingroup cpaje
- * \fn pajeEndTrace ()
- * \brief Finalize a PAJE trace.
- * \return 0 if success \n
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddComment   (const char*  comment)
+ *
+ * \brief Add some Comment in Trace file.
+ * \param comment Comment to be added
+ * \return TRACE_SUCCESS on success \n
  *         An error code otherwise
  */
-trace_return_t pajeEndTrace ();
+trace_return_t OTFAddComment   (const char*  comment);
 
 /**
- * \ingroup cpaje
- * \fn viteEndTrace ()
- * \brief Finalize a VITE trace.
+ * \ingroup cotf
+ * \fn OTFEndTrace ()
+ * \brief Finalize an OTF trace.
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t viteEndTrace ();
+trace_return_t OTFEndTrace ();
 
-#endif
+#endif /* _GTG_OTF_BASIC_H_ */
 
 
 

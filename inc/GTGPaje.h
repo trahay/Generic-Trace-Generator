@@ -1,17 +1,14 @@
 /**
- *  \file pajeColor.h
+ *  \file GTGPaje.h
  *  \version 0.1
  *  \brief
  *
  *  pajeColor is a file that defines function that manipulate colors.
  *
-
  */
 
-#ifndef _PAJECOLOR_
-#define _PAJECOLOR_
-
-#include "GTGBasic1.h"
+#ifndef _GTG_PAJE_H_
+#define _GTG_PAJE_H_
 
 typedef char* paje_color_t;
 
@@ -24,4 +21,6 @@ typedef char* paje_color_t;
  */
 const paje_color_t Paje_get_color(gtg_color_t p_color);
 
-#endif
+#include "GTGPaje_Basic.h"
+
+#endif /* _GTG_PAJE_H_ */

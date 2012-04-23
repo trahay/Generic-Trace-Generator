@@ -1,11 +1,12 @@
+#ifdef BUILD_OTF
 
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
-
-#include "OTF_Structs.h"
-#include "OTF_GTGBasic1.h"
 #include <otf.h>
+
+#include "GTG.h"
+#include "GTGOTF.h"
 
 /* set in GTGBasic1_c.c
  * verbose !=0 means debugging mode
@@ -529,6 +530,12 @@ trace_return_t OTFSubVar (varPrec time, const char*  type,
   return OTFAddVar(time, type, cont, - (val) );
 }
 
+trace_return_t OTFAddComment   (const char*  comment){
+  /* Not implemented yet */
+    return TRACE_ERR_WRITE;
+}
+
+
 trace_return_t OTFEndTrace () {
   Container_t *ptr, *tmp;
   State_t *ptr2, *tmp2;
@@ -574,3 +581,5 @@ trace_return_t OTFEndTrace () {
 
   return TRACE_SUCCESS;
 }
+
+#endif /* BUILD_OTF */

@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "GTG.h"
+#include <GTG.h>
+
+
 
 int main (int argc, char** argv){
+(void) argc;
+(void) argv;
     setTraceType (PAJE);
     initTrace ("gtg_color", 0, GTG_FLAG_NONE);
     addContType ("CT_NET", "0", "Network");
@@ -45,6 +49,7 @@ int main (int argc, char** argv){
 	    char* nodeState = NULL;
 	    asprintf(&nodeState, "SN_%d", i);
 	    setState ((float)i, "ST_NodeState", "C_P0", nodeState);
+	    free(nodeState);
     }
 
     endTrace ();

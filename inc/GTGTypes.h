@@ -1,5 +1,5 @@
 /**
- *  \file types.h
+ *  \file GTGtypes.h
  *  \version 0.1
  *  \brief
  *
@@ -15,8 +15,8 @@
  *        Olivier  Lagrasse - lagrasse@enseirb-matmeca.fr \n
  *
  */
-#ifndef _TYPES_LOC__
-#define _TYPES_LOC__
+#ifndef _GTG_TYPES_H_
+#define _GTG_TYPES_H_
 /**
  * \defgroup type Types used
  */
@@ -26,7 +26,6 @@
  * \brief Use the double precision type for time and value.
  */
 typedef double varPrec;
-
 
 /**
  * \ingroup type Return values of functions
@@ -39,5 +38,6 @@ typedef enum trace_return_t{
     TRACE_ERR_CLOSE, /*!< Failed to close file.          */
     TRACE_ERR_WRITE,  /*!< Failed to write trace.         */      
     TRACE_ERR_NOT_IMPL  /*!< Function not impleneted.         */      
-}trace_return_t;
-#endif
+} trace_return_t;
+
+#endif /* _GTG_TYPES_H_ */
