@@ -9,7 +9,7 @@ DOX_CONFIG = $(DOX_DIR)/Doxyfile
 
 DOX_MAN_DIR = $(DOC_DIR)/man
 DOX_LATEX_DIR = $(DOC_DIR)/latex
-DOX_PDF = $(DOC_DIR)/documentation.pdf
+DOX_PDF = $(DOC_DIR)/gtg_refmanual.pdf
 DOX_HTML_DIR = $(DOC_DIR)/html/
 DOX_TAG = $(DOC_DIR)/gtg.tag
 
@@ -49,12 +49,12 @@ endif
 
 # Crappy hack: automake cannot copy a directory, so we have to do it by hand.
 install_html: $(DOX_TAG) $(DOX_HTML_DIR)/index.html
-	mkdir -p $(htmldir)
-	cp -r $(DOX_HTML_DIR) $(htmldir)
+	mkdir -p $(DESTDIR)$(htmldir)
+	cp -r $(DOX_HTML_DIR) $(DESTDIR)$(htmldir)
 
 install_pdf: $(DOX_PDF)
-	mkdir -p $(pdfdir)
-	cp -r $(DOX_PDF) $(pdfdir)
+	mkdir -p $(DESTDIR)$(pdfdir)
+	cp -r $(DOX_PDF) $(DESTDIR)$(pdfdir)
 
 if USE_PDFLATEX
 install-data-am: install_pdf install_html
