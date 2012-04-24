@@ -5,15 +5,16 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([GTG], [0.1-2], [gtg-devel@lists.gforge.inria.fr])
+AC_INIT([GTG], [0.2-dev], [gtg-devel@lists.gforge.inria.fr])
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
 AC_PROG_CC
-AC_PROG_FC([],90)
+AC_PROG_F77
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
+AM_PROG_CC_C_O
 
 # Correct install paths
 AS_IF([test x"$prefix" = x -o x"$prefix" = "xNONE"], [prefix="/usr/local"])
@@ -29,6 +30,24 @@ AC_CHECK_FUNCS([getline], have_getline=yes)
 if [ test  "x$have_getline" = xyes ]; then
    CFLAGS="${CFLAGS} -DHAVE_GETLINE"
 fi
+
+
+use_libz=yes
+AC_ARG_WITH(libz,
+            [AS_HELP_STRING([--with-libz[=<bool>]], [Enable libZ])],
+            [
+                if test x$withval != xno; then
+                  use_libz=yes
+                else
+                  use_libz=no
+                fi
+            ])
+
+
+if [ test $use_libz = yes ]; then
+  AC_CHECK_LIB(z, deflate, have_libz=yes)
+fi
+AM_CONDITIONAL([HAVE_LIBZ], [ test "x$have_libz" = xyes])
 
 # crappy hack: of the macros AC_PROG_{CC,CXX,F77,FC}, only the
 # first expanded one will check for object file extension etc,
@@ -48,7 +67,7 @@ AC_ARG_WITH(fortran,
             ])
 
 if [ test $use_fortran = yes ]; then
-   if test x$FC = x; then
+   if test x$F77 = x; then
       AC_MSG_ERROR(A Fortran compiler is required)
    fi
 fi

@@ -17,6 +17,8 @@
 #ifndef _GTG_PAJE_BASIC_H_
 #define _GTG_PAJE_BASIC_H_
 
+#include "GTGBasic.h"
+
 /**
  * \brief Constant to create a paje trace
  */
@@ -51,6 +53,16 @@ trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags
  * \return Name of the file. 
  */
 char* pajeGetName (int rk);
+
+/**
+ * \ingroup cpaje
+ * \fn trace_return_t pajeSetCompress(int val)
+ * \brief Enable trace compression.
+ * \param val 0 means no compression, otherwize the output files will be compressed.
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t pajeSetCompress(int val);
 
 /**
  * \ingroup cpaje
@@ -369,6 +381,17 @@ trace_return_t pajeAddVar   (varPrec time, const char*  type,
  */
 trace_return_t pajeSubVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
+
+/**
+ * \ingroup cpaje
+ * \fn trace_return_t pajeAddComment   (const char*  comment)
+ *
+ * \brief Add some Comment in Trace file.
+ * \param comment Comment to be added
+ * \return TRACE_SUCCESS on success \n
+ *         An error code otherwise
+ */
+trace_return_t pajeAddComment   (const char*  comment);
 
 /**
  * \ingroup cpaje

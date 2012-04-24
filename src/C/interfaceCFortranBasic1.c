@@ -342,7 +342,7 @@ addComm_i (char *comm, int *s2, int *err)
   char *t = (char *) malloc (sizeof (char) * (*s2 + 1));
   memcpy (t, comm, *s2);
   t[*s2] = '\0';
-  *err = addComment (t);
+  *err = AddComment (t);
 }
 
 

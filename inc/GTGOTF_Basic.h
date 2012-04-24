@@ -153,13 +153,34 @@ trace_return_t OTFAddEntityValue   (const char* alias, const char* entType,
 
 /**
  * \ingroup cotf
- * \fn trace_return_t OTFAddContainer (varPrec  time,
+ * \fn trace_return_t OTFDefineContainer (varPrec  time,
  *                           const char  * alias,
  *                           const char  * type, 
  *                           const char  * container,
  *                           const char  * name,
  *                           const char  * file)
- * \brief Add a Container.
+ * \brief Define a Container.
+ * \param alias Alias of the new container
+ * \param type Type of the container
+ * \param container Container parent
+ * \param name Name of the variable type
+ * \param file File containing the container trace
+ * \return 0 if success \n
+ *         An error code otherwise
+ */
+trace_return_t OTFDefineContainer (const char* alias,
+				   const char*  type, const char* container,
+				   const char*  name, const char* file);
+
+/**
+ * \ingroup cotf
+ * \fn trace_return_t OTFStartContainer (varPrec  time,
+ *                           const char  * alias,
+ *                           const char  * type,
+ *                           const char  * container,
+ *                           const char  * name,
+ *                           const char  * file)
+ * \brief Start a Container.
  * \param time Time at which the container is added
  * \param alias Alias of the new container
  * \param type Type of the container
@@ -169,9 +190,9 @@ trace_return_t OTFAddEntityValue   (const char* alias, const char* entType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t OTFAddContainer (varPrec time, const char* alias    ,
-                      const char*  type, const char* container,
-                      const char*  name, const char* file);
+trace_return_t OTFStartContainer (varPrec time, const char* alias    ,
+				  const char*  type, const char* container,
+				  const char*  name, const char* file);
 
 /**
  * \ingroup cotf
@@ -348,6 +369,17 @@ trace_return_t OTFAddVar   (varPrec time, const char*  type,
  */
 trace_return_t OTFSubVar   (varPrec time, const char*  type,
                   const char*  cont, varPrec val);
+
+/**
+ * \ingroup cotf
+ * \fn trace_return_t OTFAddComment   (const char*  comment)
+ *
+ * \brief Add some Comment in Trace file.
+ * \param comment Comment to be added
+ * \return TRACE_SUCCESS on success \n
+ *         An error code otherwise
+ */
+trace_return_t OTFAddComment   (const char*  comment);
 
 /**
  * \ingroup cotf

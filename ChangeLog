@@ -1,0 +1,10 @@
+Version 0.2
+-----------
+* Events can now be recorded out of order
+* Add an AddComment function (not implemented for OTF files)
+* Improved Vampir/Triva compatibility
+* Paje traces can now be compressed
+
+Version 0.1
+-----------
+* First release
