@@ -251,6 +251,8 @@ AC_PATH_TOOL([PDFLATEX], [pdflatex], no)
 AM_CONDITIONAL([USE_PDFLATEX], [test "x$PDFLATEX" != xno])
 AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
 
+AC_CONFIG_SUBDIRS([extlib/otf])
+
 AC_OUTPUT([Makefile \
 	   gtg.pc \
            extlib/Makefile \
