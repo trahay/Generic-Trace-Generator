@@ -1,4 +1,4 @@
-# Copyright © CNRS, INRIA, Université Bordeaux 1
+# Copyright Â© CNRS, INRIA, UniversitÃ© Bordeaux 1
 # See COPYING in top-level directory.
 
 #                                               -*- Autoconf -*-
@@ -236,6 +236,39 @@ AM_CONDITIONAL([USE_OTF], [test "x$enable_otf" = xyes])
 AC_MSG_WARN([use otf = $use_internal_otf])
 
 AM_CONDITIONAL(DONT_USE_INTERNAL_OTF, test x"$use_internal_otf" != "xyes")
+
+
+
+# OTF2 stuff
+use_otf2=no
+AC_ARG_WITH(otf2, [AS_HELP_STRING([--with-otf2[=<dir>]], [Use a specific OTF2 installation])],
+        [
+                if test x$withval != xno; then
+		   	use_otf2=yes
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+                        else
+                                # use specified path
+                                otf2dir=$withval
+                                AC_MSG_RESULT(yes using $otf2dir)
+                                AC_SUBST(OTF2DIR, $otf2dir)
+
+#				AC_CHECK_PROG (OTF2_CONFIG, otf2-config, yes, no, [$otf2dir/bin])
+				otf2_cflags=`$otf2dir/bin/otf2-config --cflags`
+				otf2_libs="-L$otf2dir/lib -Wl,-rpath,$otf2dir/lib -lotf2"
+                        fi
+                fi
+        ])
+
+AC_SUBST(OTF2_LIBS, $otf2_libs)
+AC_SUBST(OTF2_CFLAGS, $otf2_cflags)
+
+AM_CONDITIONAL([USE_OTF2], [test "x$use_otf2" = xyes])
+
+AC_MSG_WARN([use otf2 = $use_otf2])
+
+
+
 
 
 # Checks for programs

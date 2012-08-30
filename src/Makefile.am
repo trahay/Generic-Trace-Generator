@@ -60,15 +60,26 @@ libgtg_la_LIBADD += $(OTFLIBADD)
 libgtg_la_DEPENDENCIES = $(OTFDEPENDENCIES)
 endif
 
+
+if USE_OTF2
+
+OTF2INCLUDE = $(OTF2_CFLAGS)
+OTF2LIBADD = $(OTF2_LIBS)
+
+libgtg_la_CFLAGS += -DBUILD_OTF2 $(OTF2INCLUDE)
+libgtg_la_SOURCES += C/gtg_otf2.c
+libgtg_la_LIBADD += $(OTF2LIBADD)
+endif
+
 if HAVE_LIBZ
 gtg_compress_SOURCES = C/gtg_compress.c
 
-gtg_compress_LDADD = -lz libgtg.la
+gtg_compress_LDADD = -lz libgtg.la $(OTF2LIBADD)
 gtg_compress_CPPFLAGS = -I$(srcdir)/../inc/
 
 gtg_decompress_SOURCES = C/gtg_decompress.c
 
-gtg_decompress_LDADD = -lz libgtg.la
+gtg_decompress_LDADD = -lz libgtg.la $(OTF2LIBADD)
 gtg_decompress_CPPFLAGS = -I$(srcdir)/../inc/
 endif
 

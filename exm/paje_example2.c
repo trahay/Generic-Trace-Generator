@@ -8,7 +8,7 @@
 #include <errno.h>
 
 #include <GTG.h>
-#include <GTGPaje_Color.h>
+//#include <GTGPaje_Color.h>
 
 /* Size of the buffer used */
 #define TXTSIZE 200

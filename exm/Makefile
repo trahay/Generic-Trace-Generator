@@ -11,7 +11,7 @@ gtg_color: gtg_color.c
 	gcc -Wall -W -o gtg_color gtg_color.c $(CFLAGS) $(LDFLAGS) -lgtg -lpthread
 
 otf_example: otf_example.c
-	gcc -Wall -W -o otf_example otf_example.c $(CFLAGS) $(LDFLAGS) -lgtg -lpthread -lotf
+	gcc -Wall -W -o otf_example otf_example.c $(CFLAGS) $(LDFLAGS) -lgtg -lpthread -lotf2
 
 clean:
 	rm -f $(BIN)
