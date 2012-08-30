@@ -65,6 +65,7 @@ typedef enum traceType{
     PAJE, /*!< Paje trace format. */
     VITE, /*!< ViTE-specific trace format. */
     OTF,  /*!< OTF trace format.  */
+    OTF2,  /*!< OTF trace format.  */
     TAU   /*!< TAU Trace format.  */
 }traceType_t;
 

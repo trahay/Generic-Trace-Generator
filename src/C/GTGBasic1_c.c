@@ -9,6 +9,7 @@
 #include "GTGBasic.h"
 #include "GTGReplay.h"
 #include "GTGOTF_Basic.h"
+//#include "gtg_otf2.h"
 #include "GTGPaje_Basic.h"
 
 /* verbose !=0 means debugging mode */
@@ -80,10 +81,17 @@ trace_return_t initTrace   (const char* filename, int rank, gtg_flag_t flags){
       return OTFInitTrace (filename, flags);
         break;
 #endif	/* BUILD_OTF */
+#ifdef BUILD_OTF2
+    case OTF2 :
+      fprintf(stderr, "otf2 init trace\n");
+      return OTF2InitTrace (filename, flags);
+        break;
+#endif	/* BUILD_OTF2 */
 #ifdef BUILD_TAU
     case TAU :
 #endif	/* BUILD_TAU */
     default :
+      fprintf(stderr, "Unknown trace type %d otf2=%d\n", traceType, OTF2);
         break;
     }
     return TRACE_ERR_NOT_IMPL;
@@ -97,6 +105,11 @@ trace_return_t setCompress (int val){
 #ifdef BUILD_OTF
     case OTF :
         return OTFSetCompress (val);
+            break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2SetCompress (val);
             break;
 #endif
     case PAJE :
@@ -123,6 +136,11 @@ trace_return_t addContType   (const char* alias, const char* contType,
             return OTFAddContType (alias, contType, name);
             break;
 #endif
+#ifdef BUILD_OTF2
+        case OTF2 :
+            return OTF2AddContType (alias, contType, name);
+            break;
+#endif
 #ifdef BUILD_TAU
         case TAU :
 #endif
@@ -145,6 +163,11 @@ trace_return_t addStateType   (const char* alias, const char* contType,
 #ifdef BUILD_OTF
         case OTF :
             return OTFAddStateType (alias, contType, name);
+            break;
+#endif
+#ifdef BUILD_OTF2
+        case OTF2 :
+            return OTF2AddStateType (alias, contType, name);
             break;
 #endif
 #ifdef BUILD_TAU
@@ -171,6 +194,11 @@ trace_return_t addEventType   (const char* alias, const char* contType,
             return OTFAddEventType (alias, contType, name);
             break;
 #endif
+#ifdef BUILD_OTF2
+        case OTF2 :
+            return OTF2AddEventType (alias, contType, name);
+            break;
+#endif
 #ifdef BUILD_TAU
         case TAU :
 #endif
@@ -193,6 +221,11 @@ trace_return_t addLinkType   (const char* alias   , const char* name,
 #ifdef BUILD_OTF
     case OTF :
         return OTFAddLinkType (alias, name, contType, srcContType, destContType);
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2AddLinkType (alias, name, contType, srcContType, destContType);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -218,6 +251,11 @@ trace_return_t addVarType   (const char* alias   , const char* name,
         return OTFAddVarType (alias, contType, name);
         break;
 #endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2AddVarType (alias, contType, name);
+        break;
+#endif
 #ifdef BUILD_TAU
     case TAU :
 #endif
@@ -239,6 +277,11 @@ trace_return_t addEntityValue   (const char* alias, const char* entType,
 #ifdef BUILD_OTF
     case OTF :
         return OTFAddEntityValue (alias, entType, name, OTF_get_color(p_color));
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2AddEntityValue (alias, entType, name, NULL);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -267,6 +310,19 @@ trace_return_t addContainer   (varPrec time, const char* alias    ,
   }
 #endif
 
+#ifdef BUILD_OTF2
+  /* for OTF traces, adding a container consists in two steps:
+   * 1 - defining the container (this appears in the trace headers)
+   * 2 - starting the container (this appears in the body)
+   * We need to define the container right now so that it can be refered to
+   * before its start (for example a StartLink event may use this container
+   * before its creation)
+   */
+  if (traceType == OTF2){
+        return OTF2DefineContainer (alias, type, container, name, file);
+  }
+#endif
+
   if(gtg_flags & GTG_FLAG_OUTOFORDER) {
     /* if the application records events out of order, don't execute this function right now. */
     gtg_record(event_addContainer, time, alias, type, container, name, file);
@@ -285,6 +341,11 @@ trace_return_t addContainer   (varPrec time, const char* alias    ,
 #ifdef BUILD_OTF
     case OTF :
         return OTFStartContainer (time, alias, type, container, name, file);
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2StartContainer (time, alias, type, container, name, file);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -313,6 +374,11 @@ trace_return_t destroyContainer     (varPrec time, const char*  name,
 #ifdef BUILD_OTF
     case OTF :
         return OTFDestroyContainer (time, name, type);
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2DestroyContainer (time, name, type);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -344,6 +410,11 @@ trace_return_t setState   (varPrec time, const char* type,
         return OTFSetState (time, type, cont, val);
         break;
 #endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2SetState (time, type, cont, val);
+        break;
+#endif
 #ifdef BUILD_TAU
     case TAU :
 #endif
@@ -370,6 +441,11 @@ trace_return_t pushState   (varPrec time, const char* type,
 #ifdef BUILD_OTF
     case OTF :
         return OTFPushState (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2PushState (time, type, cont, val);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -400,6 +476,11 @@ trace_return_t popState   (varPrec time, const char* type,
         return OTFPopState (time, type, cont);
         break;
 #endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2PopState (time, type, cont);
+        break;
+#endif
 #ifdef BUILD_TAU
     case TAU :
 #endif
@@ -426,6 +507,11 @@ trace_return_t addEvent   (varPrec time, const char* type,
 #ifdef BUILD_OTF
     case OTF :
         return OTFAddEvent (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2AddEvent (time, type, cont, val);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -464,6 +550,11 @@ trace_return_t startLink   (varPrec time, const char* type,
         return OTFStartLink (time, type, src, dest, val, key);
         break;
 #endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2StartLink (time, type, src, dest, val, key);
+        break;
+#endif
 #ifdef BUILD_TAU
     case TAU :
 #endif
@@ -498,6 +589,11 @@ trace_return_t endLink   (varPrec time, const char* type,
         return OTFEndLink (time, type, src, dest, val, key);
         break;
 #endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2EndLink (time, type, src, dest, val, key);
+        break;
+#endif
 #ifdef BUILD_TAU
     case TAU :
 #endif
@@ -524,6 +620,11 @@ trace_return_t setVar   (varPrec time, const char*  type,
 #ifdef BUILD_OTF
     case OTF :
         return OTFSetVar (time, type, cont, val);
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2SetVar (time, type, cont, val);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -553,6 +654,11 @@ trace_return_t addVar   (varPrec time, const char*  type,
         return OTFAddVar (time, type, cont, val);
         break;
 #endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2AddVar (time, type, cont, val);
+        break;
+#endif
 #ifdef BUILD_TAU
     case TAU :
 #endif
@@ -580,6 +686,11 @@ trace_return_t subVar   (varPrec time, const char*  type,
         return OTFSubVar (time, type, cont, val);
         break;
 #endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2SubVar (time, type, cont, val);
+        break;
+#endif
 #ifdef BUILD_TAU
     case TAU :
 #endif
@@ -600,6 +711,11 @@ trace_return_t AddComment   (const char*  comment){
 #ifdef BUILD_OTF
     case OTF :
         return OTFAddComment (comment);
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        return OTF2AddComment (comment);
         break;
 #endif
 #ifdef BUILD_TAU
@@ -631,6 +747,11 @@ trace_return_t endTrace (){
 #ifdef BUILD_OTF
     case OTF :
         ret = OTFEndTrace ();
+        break;
+#endif
+#ifdef BUILD_OTF2
+    case OTF2 :
+        ret = OTF2EndTrace ();
         break;
 #endif
 #ifdef BUILD_TAU

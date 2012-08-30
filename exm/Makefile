@@ -1,4 +1,4 @@
-BIN= paje_example paje_example2 gtg_color otf_example
+BIN= paje_example paje_example2 gtg_color otf_example otf2_example
 
 all: $(BIN)
 paje_example: paje_example.c
@@ -12,6 +12,9 @@ gtg_color: gtg_color.c
 
 otf_example: otf_example.c
 	gcc -Wall -W -o otf_example otf_example.c $(CFLAGS) $(LDFLAGS) -lgtg -lpthread -lotf2
+
+otf_example2: otf_example2.c
+	gcc -Wall -W -g -O0 -o otf_example2 otf_example2.c $(CFLAGS) $(LDFLAGS) -lgtg -lpthread -lotf2 -lz
 
 clean:
 	rm -f $(BIN)
