@@ -309,7 +309,15 @@ trace_return_t OTF2SetState (varPrec time,
 			     const char *cont,
 			     const char *val) {
 
-  return TRACE_SUCCESS;
+  OTF2_Container_t *p_cont = OTF2_getContainerPtrFromName(cont);
+
+  /* We need to free the current State structure (if it exists). */
+  OTF2_State_t* p_state;
+  if(!gtg_stack_empty(&p_cont->state_stack.token)) {
+    OTF2PopState(time, type, cont);
+  }
+
+  return OTF2PushState(time, type, cont, val);
 }
 
 trace_return_t OTF2PushState (varPrec time,
@@ -348,6 +356,7 @@ trace_return_t OTF2PopState (varPrec time,
 
   CHECK_STATUS(OTF2_EvtWriter_Leave( p_cont->evt_writer, NULL, time, p_ent->id ));
 
+  free(p_state);
   return TRACE_SUCCESS;
 }
 
