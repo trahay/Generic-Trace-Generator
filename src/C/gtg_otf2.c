@@ -16,6 +16,8 @@ static gtg_flag_t otf2_flags;
 
 #define TIMER_RES 100000.
 
+enum OTF2_Compression_enum otf2_compression = OTF2_COMPRESSION_NONE;
+
 
 OTF2_GlobalDefWriter* global_def_writer = NULL;
 OTF2_Archive*  archive = NULL;
@@ -148,7 +150,8 @@ trace_return_t OTF2InitTrace(const char *filenam,
 			       1024 * 1024,
 			       4 * 1024 * 1024,
 			       OTF2_SUBSTRATE_POSIX,
-			       OTF2_COMPRESSION_NONE );
+			       otf2_compression );
+
   /* Set master slave mode, description, and creator. */
   CHECK_STATUS(OTF2_Archive_SetFlushCallbacks( archive, &flush_callbacks, NULL ));
 
@@ -169,7 +172,11 @@ trace_return_t OTF2InitTrace(const char *filenam,
 
 trace_return_t OTF2SetCompress(int val) {
   /* todo: implement during otf2_archive_open */
-
+  if(val) {
+    fprintf(stderr, "otf2 compression mode ON\n");
+    otf2_compression = OTF2_COMPRESSION_ZLIB;
+  } else
+    otf2_compression = OTF2_COMPRESSION_NONE;
   return TRACE_ERR_WRITE;
 }
 
