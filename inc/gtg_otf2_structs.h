@@ -65,6 +65,9 @@ typedef struct OTF2_Container {
   struct otf2_string name;
   OTF2_EvtWriter*    evt_writer;
   uint32_t           id;
+  struct OTF2_Container *parent;
+  struct gtg_list        children_list;
+  unsigned               nb_children;
   struct gtg_list    token;	/* stored in the conts list */
   OTF2_Variable_t    variable_list;
   OTF2_State_t       state_stack;
@@ -141,6 +144,9 @@ void OTF2_init_Container(OTF2_Container_t *p_cont)
   init_otf2_string_nil(&p_cont->name);
   p_cont->evt_writer = NULL;
   p_cont->id = id_NIL;
+  p_cont->parent = NULL;
+  p_cont->nb_children = 0;
+  GTG_LIST_INIT(&p_cont->children_list);
   GTG_LIST_INIT(&p_cont->token);
   GTG_LIST_INIT(&p_cont->variable_list.token);
   GTG_STACK_INIT(&p_cont->state_stack.token);

@@ -186,6 +186,8 @@ trace_return_t OTF2InitTrace(const char *filenam,
 
   CHECK_STATUS(OTF2_GlobalDefWriter_WriteString( global_def_writer, 0, "Process" ));
 
+  /* TODO: set the timer resolution */
+  //OTF2_GlobalDefWriter_WriteClockProperties (OTF2_GlobalDefWriter *writerHandle, uint64_t timer_resolution, uint64_t global_offset, uint64_t trace_length)
 
   return TRACE_SUCCESS;
 }
@@ -284,6 +286,7 @@ trace_return_t OTF2DefineContainer (const char *alias,
 				    const char *file) {
 
 
+  OTF2_Container_t *p_parent = OTF2_getContainerPtrFromName(container);
   OTF2_Container_t *p_container;
   alloc_struct(p_container, OTF2_Container_t, &container_list.token);
 
@@ -294,13 +297,31 @@ trace_return_t OTF2DefineContainer (const char *alias,
 
   GTG_STACK_INIT(&p_container->state_stack.token);
   GTG_LIST_INIT(&p_container->variable_list.token);
+  GTG_LIST_INIT(&p_container->children_list);
+  p_container->nb_children = 0;
+  p_container->parent = p_parent;
+
+
+
+  CHECK_STATUS(OTF2_GlobalDefWriter_WriteSystemTreeNode(global_def_writer,
+							p_container->id,
+							p_container->name.id,
+							p_container->name.id,
+							p_container->parent?p_container->parent->id : OTF2_UNDEFINED_UINT32));
+
+  CHECK_STATUS(OTF2_GlobalDefWriter_WriteLocationGroup(global_def_writer,
+						       p_container->id,
+						       p_container->name.id,
+						       OTF2_LOCATION_GROUP_TYPE_PROCESS,
+						       p_container->id));
 
   CHECK_STATUS(OTF2_GlobalDefWriter_WriteLocation(global_def_writer,
 						  p_container->id,
 						  p_container->name.id, /* name of the process */
 						  OTF2_LOCATION_TYPE_CPU_THREAD,
 						  0, /* nb of events before flush ? */
-						  0));	  /* location group */
+						  p_container->id));	  /* location group */
+
 
   p_container->evt_writer = OTF2_Archive_GetEvtWriter( archive, p_container->id);
 
