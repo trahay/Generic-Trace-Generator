@@ -3,6 +3,7 @@
 #define BUILD_OTF2
 #ifdef BUILD_OTF2
 
+#include <assert.h>
 #include <otf2/otf2.h>
 #include "gtg_otf2.h"
 
@@ -36,7 +37,7 @@ OTF2_Container_t container_list;
 //OTF2_StateType_t stateTypes;
 OTF2_EntityValue_t state_list;
 //OTF2_VariableType_t variableTypes;
-//OTF2_Variable_t variables;
+OTF2_VariableType_t var_list;
 //OTF2_EventType_t eventTypes;
 //OTF2_LinkType_t linkTypes;
 
@@ -69,20 +70,39 @@ OTF2_EntityValue_t state_list;
 /* generate functions that permit to retrieve a pointer to an object*/
 OTF2_getXXXPtrFromName(Container, container_list)
 OTF2_getXXXPtrFromName(EntityValue, state_list)
+OTF2_getXXXPtrFromName(VariableType, var_list)
+
 // OTF2_getXXXPtrFromName(ContainerType, ctType)
 // OTF2_getXXXPtrFromName(StateType, stateTypes)
-// OTF2_getXXXPtrFromName(VariableType, variableTypes)
 // OTF2_getXXXPtrFromName(EventType, eventTypes)
 // OTF2_getXXXPtrFromName(LinkType, linkTypes)
 
 /* generate functions that permit to retrieve the id of objects */
 OTF2_getXXXFromName(Container)
 OTF2_getXXXFromName(EntityValue)
+OTF2_getXXXFromName(VariableType)
 //OTF2_getXXXFromName(ContainerType)
 //OTF2_getXXXFromName(StateType)
-//OTF2_getXXXFromName(VariableType)
 //OTF2_getXXXFromName(EventType)
 //OTF2_getXXXFromName(LinkType)
+
+
+/*
+ * return a pointer to the Variable whose container is cont and whose variable type is type.
+ * return NULL if not found
+ */
+OTF2_Variable_t *OTF2_getVariablePtrFromCont(OTF2_Container_t *p_cont, OTF2_VariableType_t *vtype) {
+  struct OTF2_Variable *p_var;
+
+  /* todo: use one list of variable per container */
+  gtg_list_for_each_entry(p_var, &p_cont->variable_list.token, token) {
+    if(vtype->id == p_var->p_var_type->id) {
+      return p_var;
+    }
+  }
+  return NULL;
+}
+
 
 
 /* Define a pre and post flush callback. If no memory is left in OTF2's internal memory buffer
@@ -131,7 +151,7 @@ static void __OTF2_init() {
   OTF2_init_Container(&container_list);
 //  init_StateType(stateTypes);
   OTF2_init_EntityValue(&state_list);
-//  init_VariableType(variableTypes);
+  OTF2_init_VariableType(&var_list);
 //  init_Variable(variables);
 //  init_EventType(eventTypes);
 //  init_LinkType(linkTypes);
@@ -214,6 +234,18 @@ trace_return_t OTF2AddVarType (const char *alias,
 			       const char *contType,
 			       const char *name) {
 
+  OTF2_VariableType_t *var;
+  alloc_struct(var, OTF2_VariableType_t, &var_list.token);
+
+  /* initialize and declare (to lib OTF2) strings */
+  init_otf2_string(&var->alias, alias);
+  init_otf2_string(&var->name, name);
+  var->id = get_new_var_id();
+
+  OTF2_GlobalDefWriter_WriteParameter( 	global_def_writer,
+					var->id,
+					var->name.id,
+					OTF2_PARAMETER_TYPE_UINT64);
   return TRACE_SUCCESS;
 }
 
@@ -261,6 +293,7 @@ trace_return_t OTF2DefineContainer (const char *alias,
   init_otf2_string(&p_container->alias, alias);
 
   GTG_STACK_INIT(&p_container->state_stack.token);
+  GTG_LIST_INIT(&p_container->variable_list.token);
 
   CHECK_STATUS(OTF2_GlobalDefWriter_WriteLocation(global_def_writer,
 						  p_container->id,
@@ -388,11 +421,40 @@ trace_return_t OTF2EndLink (varPrec time,
   return TRACE_SUCCESS;
 }
 
+
+static OTF2_Variable_t* __create_new_var(OTF2_Container_t *p_cont,
+					 OTF2_VariableType_t *p_type) {
+
+ OTF2_Variable_t* p_var = malloc(sizeof(OTF2_Variable_t));
+ p_var->p_cont = p_cont;
+ p_var->p_var_type = p_type;
+ p_var->value = 0;
+ gtg_list_add(&p_var->token, &p_cont->variable_list.token);
+}
+
 trace_return_t OTF2SetVar (varPrec time,
 			   const char *type,
 			   const char *cont,
 			   varPrec val) {
 
+  OTF2_Container_t *p_cont = OTF2_getContainerPtrFromName(cont);
+  OTF2_VariableType_t *p_type = OTF2_getVariableTypePtrFromName(type);
+  OTF2_Variable_t *p_var = OTF2_getVariablePtrFromCont(p_cont, p_type);
+
+  if(!p_var) {
+    /* first time this variable is set for this container */
+    p_var = __create_new_var(p_cont, p_type);
+  }
+
+  p_var->value = (uint64_t) val;
+
+  fprintf(stderr, "SetVar(%lu): %lu\n", (uint64_t)val, (uint64_t)p_var->value);
+
+  OTF2_EvtWriter_ParameterUnsignedInt(p_cont->evt_writer,
+				      NULL,
+				      time,
+				      p_type->id,
+				      p_var->value);
   return TRACE_SUCCESS;
 }
 
@@ -401,6 +463,23 @@ trace_return_t OTF2AddVar (varPrec time,
 			   const char *cont,
 			   varPrec val) {
 
+  OTF2_Container_t *p_cont = OTF2_getContainerPtrFromName(cont);
+  OTF2_VariableType_t *p_type = OTF2_getVariableTypePtrFromName(type);
+  OTF2_Variable_t *p_var = OTF2_getVariablePtrFromCont(p_cont, p_type);
+
+  if(!p_var) {
+    /* first time this variable is set for this container */
+    p_var = __create_new_var(p_cont, p_type);
+  }
+
+  p_var->value += (uint64_t) val;
+  fprintf(stderr, "AddVar (%lu): %lu\n", (uint64_t) val, (uint64_t) p_var->value);
+
+  OTF2_EvtWriter_ParameterUnsignedInt(p_cont->evt_writer,
+				      NULL,
+				      time,
+				      p_type->id,
+				      p_var->value);
   return TRACE_SUCCESS;
 }
 

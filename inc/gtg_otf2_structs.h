@@ -33,9 +33,31 @@ typedef struct ContainerType {
 /*! States */
 typedef struct OTF2_State {
   struct OTF2_EntityValue *value;
-  struct OTF2_Container  *cont;
+  struct OTF2_Container   *cont;
   gtg_stack token;	/* stored in the states list */
 } OTF2_State_t;
+
+
+/*! Variables/Counters */
+typedef struct OTF2_VariableType {
+  struct otf2_string     alias;
+  struct otf2_string     name;
+  struct OTF2_Container *cont;
+  uint32_t               id;
+  varPrec                last_value;
+  struct gtg_list token;	/* stored in the variableTypes list */
+} OTF2_VariableType_t;
+
+
+
+typedef struct OTF2_Variable {
+  struct OTF2_Container *p_cont;
+  OTF2_VariableType_t   *p_var_type;
+  uint64_t               value;
+  //  uint32_t               id;
+  struct gtg_list        token;	/* stored in the container's variable_list */
+} OTF2_Variable_t;
+
 
 /*! Containers */
 typedef struct OTF2_Container {
@@ -43,8 +65,9 @@ typedef struct OTF2_Container {
   struct otf2_string name;
   OTF2_EvtWriter*    evt_writer;
   uint32_t           id;
-  struct gtg_list token;	/* stored in the conts list */
-  OTF2_State_t state_stack;
+  struct gtg_list    token;	/* stored in the conts list */
+  OTF2_Variable_t    variable_list;
+  OTF2_State_t       state_stack;
 } OTF2_Container_t;
 
 
@@ -89,23 +112,6 @@ typedef struct Link {
 } Link_t;
 
 
-/*! Variables/Counters */
-typedef struct VariableType {
-    char           *name;
-    char           *alias;
-    int             contType;
-    int             id;
-    struct gtg_list token;	/* stored in the variableTypes list */
-} VariableType_t;
-
-typedef struct Variable {
-    int             parent;
-    int             type;
-    uint64_t        value;
-    int             id;
-    struct gtg_list token;	/* stored in the variables list */
-} Variable_t;
-
 
 
 #define alloc_struct(ptr, type, list_head)				\
@@ -136,6 +142,7 @@ void OTF2_init_Container(OTF2_Container_t *p_cont)
   p_cont->evt_writer = NULL;
   p_cont->id = id_NIL;
   GTG_LIST_INIT(&p_cont->token);
+  GTG_LIST_INIT(&p_cont->variable_list.token);
   GTG_STACK_INIT(&p_cont->state_stack.token);
 }
 
@@ -147,6 +154,16 @@ void OTF2_init_EntityValue(OTF2_EntityValue_t *p_ent)
   init_otf2_string_nil(&p_ent->name);
   p_ent->id = id_NIL;
   GTG_LIST_INIT(&p_ent->token);
+}
+
+static inline
+void OTF2_init_VariableType(OTF2_VariableType_t *p_var)
+{
+  init_otf2_string_nil(&p_var->alias);
+  init_otf2_string_nil(&p_var->name);
+  p_var->id = id_NIL;
+  p_var->cont = NULL;
+  GTG_LIST_INIT(&p_var->token);
 }
 
 #endif /* GTG_OTF2_STRUCTS_H */

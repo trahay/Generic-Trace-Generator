@@ -84,11 +84,12 @@ int main (int argc, char** argv){
 
         CHECK_RETURN (setState (time, txt, proc, name));        /* State changes modifications */
 
+#if 0
 	time += 0.1;
 	CHECK_RETURN (pushState (time, txt, proc, name));        /* State changes modifications */
 	time+=0.1;
 	CHECK_RETURN (popState (time, txt, proc));        /* State changes modifications */
-
+#endif
         /* Links */
         sprintf (name, "L_%d", i%2);
         sprintf (txt , "C_Net0");
@@ -104,6 +105,12 @@ int main (int argc, char** argv){
 
         sprintf (txt, "C_N%d", i%2);
         CHECK_RETURN (setVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
+        time += 0.13;
+
+        CHECK_RETURN (addVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
+        time += 0.13;
+
+        CHECK_RETURN (subVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
         time += 0.13;
 
     }
