@@ -36,7 +36,8 @@ int main (int argc, char** argv){
 
     /* Initialisation */
     setTraceType (OTF2);
-    CHECK_RETURN (initTrace ("cotf", 0, GTG_FLAG_NONE));
+    setCompress(0);
+    CHECK_RETURN (initTrace ("cotf2", 0, GTG_FLAG_NONE));
     /* Creating types used */
     CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
     CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));
