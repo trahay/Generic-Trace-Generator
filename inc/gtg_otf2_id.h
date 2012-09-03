@@ -6,6 +6,7 @@ enum id_type {
   process,
   function,
   variable,
+  mpi_req,
   last_id
 };
 
@@ -24,6 +25,8 @@ static uint32_t get_new_id(enum id_type type) {
 #define get_new_function_id() get_new_id(function)
 
 #define get_new_var_id() get_new_id(variable)
+
+#define get_new_mpi_req_id() get_new_id(mpi_req)
 
 
 static inline

@@ -59,6 +59,17 @@ typedef struct OTF2_Variable {
 } OTF2_Variable_t;
 
 
+
+typedef struct OTF2_Link {
+  struct otf2_string     alias;	/* key */
+  struct otf2_string     name;	/* val */
+  struct OTF2_Container *p_src;
+  struct OTF2_Container *p_dest;
+  uint32_t               id;
+  struct gtg_list        token;
+} OTF2_Link_t;
+
+
 /*! Containers */
 typedef struct OTF2_Container {
   struct otf2_string alias;
@@ -170,6 +181,17 @@ void OTF2_init_VariableType(OTF2_VariableType_t *p_var)
   p_var->id = id_NIL;
   p_var->cont = NULL;
   GTG_LIST_INIT(&p_var->token);
+}
+
+static inline
+void OTF2_init_Link(OTF2_Link_t *p_link)
+{
+  init_otf2_string_nil(&p_link->alias);
+  init_otf2_string_nil(&p_link->name);
+  p_link->p_src = NULL;
+  p_link->p_dest = NULL;
+  p_link->id = id_NIL;
+  GTG_LIST_INIT(&p_link->token);
 }
 
 #endif /* GTG_OTF2_STRUCTS_H */

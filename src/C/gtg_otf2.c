@@ -39,7 +39,7 @@ OTF2_EntityValue_t state_list;
 //OTF2_VariableType_t variableTypes;
 OTF2_VariableType_t var_list;
 //OTF2_EventType_t eventTypes;
-//OTF2_LinkType_t linkTypes;
+OTF2_Link_t link_list;
 
 
 
@@ -71,6 +71,7 @@ OTF2_VariableType_t var_list;
 OTF2_getXXXPtrFromName(Container, container_list)
 OTF2_getXXXPtrFromName(EntityValue, state_list)
 OTF2_getXXXPtrFromName(VariableType, var_list)
+OTF2_getXXXPtrFromName(Link, link_list)
 
 // OTF2_getXXXPtrFromName(ContainerType, ctType)
 // OTF2_getXXXPtrFromName(StateType, stateTypes)
@@ -81,6 +82,7 @@ OTF2_getXXXPtrFromName(VariableType, var_list)
 OTF2_getXXXFromName(Container)
 OTF2_getXXXFromName(EntityValue)
 OTF2_getXXXFromName(VariableType)
+OTF2_getXXXFromName(Link)
 //OTF2_getXXXFromName(ContainerType)
 //OTF2_getXXXFromName(StateType)
 //OTF2_getXXXFromName(EventType)
@@ -154,7 +156,7 @@ static void __OTF2_init() {
   OTF2_init_VariableType(&var_list);
 //  init_Variable(variables);
 //  init_EventType(eventTypes);
-//  init_LinkType(linkTypes);
+  OTF2_init_Link(&link_list);
 }
 
 /* Beginning of the implementation of the interface for OTF2 */
@@ -429,6 +431,36 @@ trace_return_t OTF2StartLink (varPrec time,
 			      const char *val,
 			      const char *key){
 
+  OTF2_Container_t *p_dest = OTF2_getContainerPtrFromName(src);
+  OTF2_Container_t *p_src = OTF2_getContainerPtrFromName(src);
+
+  OTF2_Link_t *p_link = NULL;
+  alloc_struct(p_link, OTF2_Link_t, &link_list.token);
+
+  init_otf2_string(&p_link->alias, key);
+  init_otf2_string(&p_link->name, val);
+
+  p_link->p_src = p_src;
+  p_link->p_dest = p_dest;
+  p_link->id = get_new_mpi_req_id();
+
+
+#if 0
+  CHECK_RESULT(OTF_Writer_writeSendMsg(writer, time*TIMER_RES, source, destination, 0, linkType, 0, 0));
+  if(verbose)
+    printf("StartLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, source, destination, linkType, val, key);
+
+  return TRACE_SUCCESS;
+#endif
+
+  CHECK_STATUS(OTF2_EvtWriter_MpiSend( p_src->evt_writer,
+				       NULL,
+				       time,
+				       p_dest->id,
+				       0, /* communicator */
+				       p_link->id, /* tag */
+				       0)); /* msg length */
+
   return TRACE_SUCCESS;
 }
 
@@ -439,6 +471,17 @@ trace_return_t OTF2EndLink (varPrec time,
 			    const char *val,
 			    const char *key){
 
+
+  OTF2_Link_t *p_link = OTF2_getLinkPtrFromName(key);
+
+  CHECK_STATUS(OTF2_EvtWriter_MpiRecv(p_link->p_dest->evt_writer,
+				      NULL,
+				      time,
+				      p_link->p_src->id,
+				      0, /* communicator */
+				      p_link->id, /* tag */
+				      0));	  /* length */
+  gtg_list_del(&p_link->token);
   return TRACE_SUCCESS;
 }
 
@@ -451,6 +494,7 @@ static OTF2_Variable_t* __create_new_var(OTF2_Container_t *p_cont,
  p_var->p_var_type = p_type;
  p_var->value = 0;
  gtg_list_add(&p_var->token, &p_cont->variable_list.token);
+ return p_var;
 }
 
 trace_return_t OTF2SetVar (varPrec time,
