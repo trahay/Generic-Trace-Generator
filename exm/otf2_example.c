@@ -58,43 +58,40 @@ int main (int argc, char** argv){
     CHECK_RETURN (addEventType ("E_0", "CT_PROC", "Rabbit"));
     CHECK_RETURN (addEventType ("E_1", "CT_PROC", "Chocolate"));
     /* Building containers tree */
-    CHECK_RETURN (addContainer (0.00000, "C_Net0", "CT_NET", "0", "Ensemble0", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_N0", "CT_NODE", "C_Net0", "Node0", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_P0", "CT_PROC", "C_N0", "Proc0", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_P1", "CT_PROC", "C_N0", "Proc1", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_P2", "CT_PROC", "C_N0", "Proc2", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_N1", "CT_NODE", "C_Net0", "Node1", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_P3", "CT_PROC", "C_N1", "Proc3", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_P4", "CT_PROC", "C_N1", "Proc4", "0"));
-    CHECK_RETURN (addContainer (0.00000, "C_P5", "CT_PROC", "C_N1", "Proc5", "0"));
+    CHECK_RETURN (addContainer (0.00000, "Programme", "CT_PROC", "0", "Programme", "0"));
+
+    CHECK_RETURN (addContainer (0.00000, "C_P0", "CT_PROC", "Programme", "Proc0", "0"));
+    CHECK_RETURN (addContainer (0.00000, "C_P0T0", "CT_PROC", "C_P0", "Proc0_Thread0", "0"));
+
+    CHECK_RETURN (addContainer (0.00000, "C_P1", "CT_PROC", "Programme", "Proc1", "0"));
+    CHECK_RETURN (addContainer (0.00000, "C_P1T0", "CT_PROC", "C_P1", "Proc1_Thread0", "0"));
+
+    CHECK_RETURN (addContainer (0.00000, "C_P2", "CT_PROC", "Programme", "Proc2", "0"));
+    CHECK_RETURN (addContainer (0.00000, "C_P2T0", "CT_PROC", "C_P2", "Proc2_Thread0", "0"));
+
+    CHECK_RETURN (addContainer (0.00000, "C_P3", "CT_PROC", "Programme", "Proc3", "0"));
+    CHECK_RETURN (addContainer (0.00000, "C_P3T0", "CT_PROC", "C_P3", "Proc3_Thread0", "0"));
 
     clear (txt, TXTSIZE);
     time = 1.00000000;
-    for (i=0; i<200; i++){
-        if (i%10 == 0){
-            sprintf (txt , "ST_NodeState");
-            sprintf (proc, "C_N%d", (i%20)?0:1);
-            sprintf (name, "SN_%d", i%3);
-        }
-        else{
-            sprintf (txt , "ST_ProcState");
-            sprintf (proc, "C_P%d", i%6);
-            sprintf (name, "SP_%d", i%5+3);
-        }
+    for (i=0; i<10; i++){
+      sprintf (txt , "ST_ProcState");
+      sprintf (proc, "C_P%d", i%4);
+      sprintf (name, "SP_%d", i%5+3);
 
-        CHECK_RETURN (setState (time, txt, proc, name));        /* State changes modifications */
+      CHECK_RETURN (setState (time, txt, proc, name));        /* State changes modifications */
 
 #if 0
-	time += 0.1;
-	CHECK_RETURN (pushState (time, txt, proc, name));        /* State changes modifications */
-	time+=0.1;
-	CHECK_RETURN (popState (time, txt, proc));        /* State changes modifications */
+      time += 0.1;
+      CHECK_RETURN (pushState (time, txt, proc, name));        /* State changes modifications */
+      time+=0.1;
+      CHECK_RETURN (popState (time, txt, proc));        /* State changes modifications */
 #endif
         /* Links */
         sprintf (name, "L_%d", i%2);
-        sprintf (txt , "C_Net0");
-        sprintf (src , "C_P%d", (i+2)%6);
-        sprintf (dest, "C_P%d", (i+5)%6);
+        sprintf (txt , "Programme");
+        sprintf (src , "C_P%d", (i+2)%4);
+        sprintf (dest, "C_P%d", (i+5)%4);
         sprintf (proc, "%d", i);
         sprintf (key , "%d", i);
 
@@ -102,16 +99,6 @@ int main (int argc, char** argv){
         time += 0.12;
 
         CHECK_RETURN (endLink (time, name, txt, src, dest, proc, key));
-
-        sprintf (txt, "C_N%d", i%2);
-        CHECK_RETURN (setVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
-        time += 0.13;
-
-        CHECK_RETURN (addVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
-        time += 0.13;
-
-        CHECK_RETURN (subVar (time, "V_Mem", txt, i%5));    /* Modification of the variables */
-        time += 0.13;
 
     }
 
@@ -142,7 +129,7 @@ int main (int argc, char** argv){
     time = 0.57000000;
     for (i=0;i<50;i++){
         sprintf (name, "E_%d", i%2);
-        sprintf (proc, "C_P%d", i%6);
+        sprintf (proc, "C_P%d", i%4);
         sprintf (key , "%d", i%13);
         CHECK_RETURN (addEvent (time, name, proc, key));    /* Adding events */
         time += 1.000000000;
