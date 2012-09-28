@@ -272,9 +272,12 @@ trace_return_t OTF2AddEntityValue (const char *alias,
   /* Write definition for the code region which was just entered and left to the global definition writer.  */
   OTF2_GlobalDefWriter_WriteRegion( global_def_writer,
 				    state->id, /* The unique identifier for this Region definition.  */
-				    state->alias.id,	/* Name of the region. References a String definition.  */
+				    state->alias.id, /* Name of the region (demangled name if available). References a String definition.  */
+				    state->alias.id,	/* Alternative name of the region (e.g. mangled name). References a String definition. */
 				    state->name.id,	/* A more detailed description of this region. References a String definition.  */
-				    OTF2_REGION_TYPE_FUNCTION, /* Region type.  */
+				    OTF2_REGION_ROLE_FUNCTION, /* Region role.  */
+				    OTF2_PARADIGM_UNKNOWN,
+				    OTF2_REGION_FLAG_NONE,
 				    0,			       /* The source file where this region was declared. References a String definition.  */
 				    0,			       /* Starting line number of this region in the source file.  */
 				    0 /* Ending line number of this region in the source file. */ );
