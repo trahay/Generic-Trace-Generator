@@ -195,12 +195,14 @@ trace_return_t OTF2InitTrace(const char *filenam,
 }
 
 trace_return_t OTF2SetCompress(int val) {
-  /* todo: implement during otf2_archive_open */
+
   if(val) {
     fprintf(stderr, "otf2 compression mode ON\n");
     otf2_compression = OTF2_COMPRESSION_ZLIB;
-  } else
+  } else {
     otf2_compression = OTF2_COMPRESSION_NONE;
+  }
+
   return TRACE_ERR_WRITE;
 }
 
@@ -350,7 +352,7 @@ trace_return_t OTF2SeqAddContainer (varPrec time,
 				    const char *container,
 				    const char *name) {
 
-  return OTF2StartContainer(time, alias, type, container, name, NULL);
+  return OTF2StartContainer(time*TIMER_RES, alias, type, container, name, NULL);
 }
 
 trace_return_t OTF2DestroyContainer (varPrec time,
@@ -392,9 +394,7 @@ trace_return_t OTF2PushState (varPrec time,
   /* Add the structure to the container state stack. */
   gtg_stack_push(&p_state->token, &p_cont->state_stack.token);
 
-
-  fprintf(stderr, "ENTER\n");
-  CHECK_STATUS(OTF2_EvtWriter_Enter( p_cont->evt_writer, NULL, time, p_ent->id ));
+  CHECK_STATUS(OTF2_EvtWriter_Enter( p_cont->evt_writer, NULL, time*TIMER_RES, p_ent->id ));
   return TRACE_SUCCESS;
 }
 
@@ -408,9 +408,8 @@ trace_return_t OTF2PopState (varPrec time,
   gtg_stack_pop(&p_cont->state_stack.token);
 
   OTF2_EntityValue_t *p_ent = p_state->value;
-  fprintf(stderr, "LEAVE\n");
 
-  CHECK_STATUS(OTF2_EvtWriter_Leave( p_cont->evt_writer, NULL, time, p_ent->id ));
+  CHECK_STATUS(OTF2_EvtWriter_Leave( p_cont->evt_writer, NULL, time*TIMER_RES, p_ent->id ));
 
   free(p_state);
   return TRACE_SUCCESS;
@@ -444,18 +443,9 @@ trace_return_t OTF2StartLink (varPrec time,
   p_link->p_dest = p_dest;
   p_link->id = get_new_mpi_req_id();
 
-
-#if 0
-  CHECK_RESULT(OTF_Writer_writeSendMsg(writer, time*TIMER_RES, source, destination, 0, linkType, 0, 0));
-  if(verbose)
-    printf("StartLink : time %f, src %d, dest %d, linkType %d, val %s, key %s\n", time*TIMER_RES, source, destination, linkType, val, key);
-
-  return TRACE_SUCCESS;
-#endif
-
   CHECK_STATUS(OTF2_EvtWriter_MpiSend( p_src->evt_writer,
 				       NULL,
-				       time,
+				       time*TIMER_RES,
 				       p_dest->id,
 				       0, /* communicator */
 				       p_link->id, /* tag */
@@ -476,7 +466,7 @@ trace_return_t OTF2EndLink (varPrec time,
 
   CHECK_STATUS(OTF2_EvtWriter_MpiRecv(p_link->p_dest->evt_writer,
 				      NULL,
-				      time,
+				      time*TIMER_RES,
 				      p_link->p_src->id,
 				      0, /* communicator */
 				      p_link->id, /* tag */
@@ -517,7 +507,7 @@ trace_return_t OTF2SetVar (varPrec time,
 
   OTF2_EvtWriter_ParameterUnsignedInt(p_cont->evt_writer,
 				      NULL,
-				      time,
+				      time*TIMER_RES,
 				      p_type->id,
 				      p_var->value);
   return TRACE_SUCCESS;
@@ -542,7 +532,7 @@ trace_return_t OTF2AddVar (varPrec time,
 
   OTF2_EvtWriter_ParameterUnsignedInt(p_cont->evt_writer,
 				      NULL,
-				      time,
+				      time*TIMER_RES,
 				      p_type->id,
 				      p_var->value);
   return TRACE_SUCCESS;
