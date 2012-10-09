@@ -326,7 +326,7 @@ static void __gtg_insert(struct event_list_t* new_event) {
     goto out;
   }
 
-  if(new_event->time <= __first_event->time) {
+  if(new_event->time < __first_event->time) {
     /* the event is the first one */
     __first_event->prev = new_event;
     new_event->next = __first_event;
