@@ -47,6 +47,8 @@ int main (int argc, char** argv){
     CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_RED));
     CHECK_RETURN (addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", GTG_PINK));
     CHECK_RETURN (addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", GTG_BLACK));
+    CHECK_RETURN (addEntityValue ("SP_10","ST_ProcState", "Initialization", GTG_RED));
+    CHECK_RETURN (addEntityValue ("SP_11","ST_ProcState", "Finalize", GTG_RED));
     CHECK_RETURN (addEntityValue ("SP_3", "ST_ProcState", "Produit", GTG_ORANGE));
     CHECK_RETURN (addEntityValue ("SP_4", "ST_ProcState", "Somme", GTG_GREEN));
     CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", GTG_BLUE));
@@ -71,6 +73,12 @@ int main (int argc, char** argv){
 
     CHECK_RETURN (addContainer (0.00000, "C_P3", "CT_PROC", "Programme", "Proc3", "0"));
     CHECK_RETURN (addContainer (0.00000, "C_P3T0", "CT_PROC", "C_P3", "Proc3_Thread0", "0"));
+
+
+    CHECK_RETURN (setState (0, "ST_ProcState", "C_P0", "SP_10"));
+    CHECK_RETURN (setState (0, "ST_ProcState", "C_P1", "SP_10"));
+    CHECK_RETURN (setState (0, "ST_ProcState", "C_P2", "SP_10"));
+    CHECK_RETURN (setState (0, "ST_ProcState", "C_P3", "SP_10"));
 
     clear (txt, TXTSIZE);
     time = 1.00000000;
@@ -134,6 +142,13 @@ int main (int argc, char** argv){
         CHECK_RETURN (addEvent (time, name, proc, key));    /* Adding events */
         time += 1.000000000;
     }
+
+
+    time +=1.0;
+    CHECK_RETURN (setState (time, "ST_ProcState", "C_P0", "SP_11"));
+    CHECK_RETURN (setState (time, "ST_ProcState", "C_P1", "SP_11"));
+    CHECK_RETURN (setState (time, "ST_ProcState", "C_P2", "SP_11"));
+    CHECK_RETURN (setState (time, "ST_ProcState", "C_P3", "SP_11"));
 
     /* Ending the trace */
     CHECK_RETURN (endTrace ());
