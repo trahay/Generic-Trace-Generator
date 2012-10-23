@@ -433,7 +433,7 @@ trace_return_t OTF2StartLink (varPrec time,
 			      const char *val,
 			      const char *key){
 
-  OTF2_Container_t *p_dest = OTF2_getContainerPtrFromName(src);
+  OTF2_Container_t *p_dest = OTF2_getContainerPtrFromName(dest);
   OTF2_Container_t *p_src = OTF2_getContainerPtrFromName(src);
 
   OTF2_Link_t *p_link = NULL;
