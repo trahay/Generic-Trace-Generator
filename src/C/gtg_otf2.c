@@ -3,6 +3,13 @@
 #define BUILD_OTF2
 #ifdef BUILD_OTF2
 
+#define _XOPEN_SOURCE 500   /* See feature_test_macros(7) */
+#include <ftw.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include <assert.h>
 #include <otf2/otf2.h>
 #include "gtg_otf2.h"
@@ -159,15 +166,34 @@ static void __OTF2_init() {
   OTF2_init_Link(&link_list);
 }
 
+static int __rm_file(const char *fpath, const struct stat *sb,
+	     int typeflag, struct FTW *ftwbuf) {
+
+  if(S_ISDIR(sb->st_mode)) {
+    if(rmdir(fpath))
+      return 1;
+  } else {
+    if(unlink(fpath))
+      return 1;
+  }
+  return 0;
+}
+
 /* Beginning of the implementation of the interface for OTF2 */
 trace_return_t OTF2InitTrace(const char *filenam,
 			     gtg_flag_t flags) {
   otf2_flags = flags;
 
   __OTF2_init();
+
+  /* if the trace already exists, delete it */
+  if(nftw(filenam, __rm_file, 10, FTW_DEPTH) != 0) {
+    perror("nftw");
+  }
+
   /* Create new archive handle. */
   archive = OTF2_Archive_Open( filenam,
-			       "archive_name",
+			       filenam,
 			       OTF2_FILEMODE_WRITE,
 			       1024 * 1024,
 			       4 * 1024 * 1024,
@@ -506,8 +532,6 @@ trace_return_t OTF2SetVar (varPrec time,
 
   p_var->value = (uint64_t) val;
 
-  fprintf(stderr, "SetVar(%lu): %lu\n", (uint64_t)val, (uint64_t)p_var->value);
-
   OTF2_EvtWriter_ParameterUnsignedInt(p_cont->evt_writer,
 				      NULL,
 				      time*TIMER_RES,
@@ -531,7 +555,6 @@ trace_return_t OTF2AddVar (varPrec time,
   }
 
   p_var->value += (uint64_t) val;
-  fprintf(stderr, "AddVar (%lu): %lu\n", (uint64_t) val, (uint64_t) p_var->value);
 
   OTF2_EvtWriter_ParameterUnsignedInt(p_cont->evt_writer,
 				      NULL,
