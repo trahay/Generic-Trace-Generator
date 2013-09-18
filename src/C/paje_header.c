@@ -14,22 +14,7 @@
 
 int _is_paje_header_written = 0;
 
-struct gtg_paje_edp_s {
-    struct gtg_paje_edp_s *next;
-    char *name;
-    enum gtg_paje_fieldtype_e type;
-};
-typedef struct gtg_paje_edp_s gtg_paje_edp_t;
-
-struct gtg_paje_eventdef_s {
-    char *name;
-    int id;
-    gtg_paje_edp_t *first;
-    gtg_paje_edp_t *last;
-};
-typedef struct gtg_paje_eventdef_s gtg_paje_eventdef_t;
-
-gtg_paje_eventdef_t eventdefs[GTG_PAJE_EVTDEF_NBR] = {
+gtg_paje_eventdef_t paje_eventdefs[GTG_PAJE_EVTDEF_NBR] = {
     { "PajeDefineContainerType", 0, NULL, NULL},
     { "PajeDefineStateType",     1, NULL, NULL},
     { "PajeDefineEventType",     2, NULL, NULL},
@@ -61,9 +46,9 @@ char *FieldType[GTG_PAJE_FIELDTYPE_NBR] = {
 };
 
 #define printExtra( file, event )                               \
-    if ( (eventdefs[event].first) != NULL ) {                   \
+    if ( (paje_eventdefs[event].first) != NULL ) {                   \
         gtg_paje_edp_t *e, *n;                                  \
-        for( e = eventdefs[event].first; e != NULL; ) {         \
+        for( e = paje_eventdefs[event].first; e != NULL; ) {         \
             n = e->next;                                        \
             fprintf(file, "%% %s %s\n", e->name, FieldType[e->type]); \
             e = n;                                              \
@@ -87,12 +72,12 @@ void pajeEventDefAddParam( enum gtg_paje_evtdef_e event, const char *name,
     node->name = strdup(name);
     node->type = type;
 
-    if( eventdefs[event].first == NULL ) {
-        eventdefs[event].first = node;
-        eventdefs[event].last = node;
+    if( paje_eventdefs[event].first == NULL ) {
+        paje_eventdefs[event].first = node;
+        paje_eventdefs[event].last = node;
     } else {
-        eventdefs[event].last->next = node;
-        eventdefs[event].last = node;
+        paje_eventdefs[event].last->next = node;
+        paje_eventdefs[event].last = node;
     }
 }
 
@@ -100,7 +85,7 @@ void pajeEventDefDeleteParams( enum gtg_paje_evtdef_e event )
 {
     gtg_paje_edp_t *e, *n;
 
-    for( e = eventdefs[event].first; e != NULL; ) {
+    for( e = paje_eventdefs[event].first; e != NULL; ) {
         n = e->next;
 
         free(e->name);
@@ -108,8 +93,8 @@ void pajeEventDefDeleteParams( enum gtg_paje_evtdef_e event )
 
         e = n;
     }
-    eventdefs[event].first = NULL;
-    eventdefs[event].last = NULL;
+    paje_eventdefs[event].first = NULL;
+    paje_eventdefs[event].last = NULL;
 }
 
 void pajeEventDefClean()
@@ -223,7 +208,7 @@ void pajeWriteHeader( FILE *file )
     _is_paje_header_written = 1;
     for(i=0; i<GTG_PAJE_EVTDEF_NBR; i++) {
         fprintf(file, "%%EventDef %s %d\n",
-                eventdefs[i].name, eventdefs[i].id);
+                paje_eventdefs[i].name, paje_eventdefs[i].id);
         printExtra( file, i );
         fprintf(file, "%%EndEventDef\n");
     }

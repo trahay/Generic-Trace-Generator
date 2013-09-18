@@ -448,6 +448,23 @@ enum gtg_paje_fieldtype_e {
   GTG_PAJE_FIELDTYPE_NBR
 };
 
+struct gtg_paje_edp_s {
+    struct gtg_paje_edp_s *next;
+    char *name;
+    enum gtg_paje_fieldtype_e type;
+};
+typedef struct gtg_paje_edp_s gtg_paje_edp_t;
+
+struct gtg_paje_eventdef_s {
+    char *name;
+    int id;
+    gtg_paje_edp_t *first;
+    gtg_paje_edp_t *last;
+};
+typedef struct gtg_paje_eventdef_s gtg_paje_eventdef_t;
+
+extern gtg_paje_eventdef_t paje_eventdefs[GTG_PAJE_EVTDEF_NBR];
+
 void pajeEventDefAddParam( enum gtg_paje_evtdef_e event, const char *name,
                            enum gtg_paje_fieldtype_e type );
 
