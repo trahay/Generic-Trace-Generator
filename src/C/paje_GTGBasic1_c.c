@@ -12,7 +12,7 @@
 
 #ifndef HAVE_ASPRINTF
 extern int asprintf(char **ret, const char *format, ...);
-//extern int vasprintf(char **ret, const char *format, va_list args);
+/* extern int vasprintf(char **ret, const char *format, va_list args); */
 #endif /* HAVE_ASPRINTF */
 
 #include "GTG.h"
@@ -182,18 +182,19 @@ void initMerge (char* file, int rk, doubleLinkList_t* li){
 
 
 #ifndef HAVE_GETLINE
-int getline(char** buf, int* size, FILE* stream)
+ssize_t getline(char** buf, size_t* size, FILE* stream)
 {
+  char *ret;
   int alloc_size = 1024;
+  int nb_char = 0;
 
-  if(!*buf) {
+  if(!(*buf)) {
     /* we need to allocate the buffer */
     alloc_size = 1024;
     *buf = malloc(sizeof(char) * alloc_size);
   } else {
     alloc_size = *size;
   }
-  int nb_char = 0;
   *buf[0]=0;
 
   do {
@@ -206,7 +207,7 @@ int getline(char** buf, int* size, FILE* stream)
     }
 
     /* read at most 512 bytes */
-    char * ret = fgets((*buf)+nb_char, 512, stream);
+    ret = fgets((*buf)+nb_char, 512, stream);
 
     if(!ret){
       /* error while reading or EOF */
@@ -238,12 +239,16 @@ void myGetLine (doubleLinkList_t* li){
     else
         fprintf (stderr, "failed to read \n");
 }
+
 /* need to run 'rm -f' force because there is no file some time*/
 void clean_files (char* fileName, int nbFile){
     int ret;
     char cmd[BUFFSIZE];
     sprintf (cmd, "rm -f %s_root.ept %s_proc*.ept", filename,filename);
     ret = system(cmd);
+    if (ret == -1) {
+        perror("cleanfiles");
+    }
 }
 
 void merge (char* filename, int nbFile){
@@ -319,7 +324,7 @@ void merge (char* filename, int nbFile){
     clean_files (filename, nbFile);
 }
 
-const paje_color_t Paje_get_color(gtg_color_t p_color) {
+paje_color_t Paje_get_color(gtg_color_t p_color) {
     /** \todo it is not const*/
     int ret;
     paje_color_t res = NULL;
@@ -327,6 +332,7 @@ const paje_color_t Paje_get_color(gtg_color_t p_color) {
                    (float)GTG_COLOR_GET_RED(  p_color->rgb)/256,
                    (float)GTG_COLOR_GET_GREEN(p_color->rgb)/256,
                    (float)GTG_COLOR_GET_BLUE( p_color->rgb)/256);
+    (void)ret;
     return res;
 }
 

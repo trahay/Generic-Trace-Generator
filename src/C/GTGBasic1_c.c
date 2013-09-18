@@ -642,6 +642,6 @@ trace_return_t endTrace (){
 
     gtg_color_exit();
 
-    return TRACE_SUCCESS;
+    return ret;
 }
 

@@ -19,7 +19,7 @@ typedef char* paje_color_t;
  * \param color GTG color to convert
  * \return The PAJE color
  */
-const paje_color_t Paje_get_color(gtg_color_t p_color);
+paje_color_t Paje_get_color(gtg_color_t p_color);
 
 #include "GTGPaje_Basic.h"
 
