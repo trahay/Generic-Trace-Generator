@@ -1,0 +1,67 @@
+jinja2pythonpkgdatadir = $(pkgdatadir)/python/jinja2
+jinja2pythonpkgdata_DATA = $(srcdir)/vendor/python/site-packages/jinja2/AUTHORS \
+                           $(srcdir)/vendor/python/site-packages/jinja2/LICENSE \
+                           $(srcdir)/vendor/python/site-packages/jinja2/_debugsupport.c
+jinja2pythonpkgdata_PYTHON = $(srcdir)/vendor/python/site-packages/jinja2/__init__.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/debug.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/bccache.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/visitor.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/exceptions.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/nodes.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/optimizer.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/utils.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/lexer.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/environment.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/sandbox.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/defaults.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/_stringdefs.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/loaders.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/parser.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/filters.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/runtime.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/meta.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/compiler.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/constants.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/ext.py \
+                             $(srcdir)/vendor/python/site-packages/jinja2/tests.py
+
+_markupsafejinja2pythonpkgdatadir = $(pkgdatadir)/python/jinja2/_markupsafe
+_markupsafejinja2pythonpkgdata_PYTHON = $(srcdir)/vendor/python/site-packages/jinja2/_markupsafe/__init__.py \
+                                        $(srcdir)/vendor/python/site-packages/jinja2/_markupsafe/_native.py \
+                                        $(srcdir)/vendor/python/site-packages/jinja2/_markupsafe/_constants.py \
+                                        $(srcdir)/vendor/python/site-packages/jinja2/_markupsafe/_bundle.py \
+                                        $(srcdir)/vendor/python/site-packages/jinja2/_markupsafe/tests.py
+
+jinja2eggpythonpkgdatadir = $(pkgdatadir)/python/Jinja2.egg-info
+jinja2eggpythonpkgdata_DATA = $(srcdir)/vendor/python/site-packages/Jinja2.egg-info/PKG-INFO \
+                              $(srcdir)/vendor/python/site-packages/Jinja2.egg-info/not-zip-safe \
+                              $(srcdir)/vendor/python/site-packages/Jinja2.egg-info/requires.txt \
+                              $(srcdir)/vendor/python/site-packages/Jinja2.egg-info/entry_points.txt \
+                              $(srcdir)/vendor/python/site-packages/Jinja2.egg-info/SOURCES.txt \
+                              $(srcdir)/vendor/python/site-packages/Jinja2.egg-info/top_level.txt \
+                              $(srcdir)/vendor/python/site-packages/Jinja2.egg-info/dependency_links.txt
+
+EXTRA_DIST += $(jinja2pythonpkgdata_DATA) \
+              $(jinja2pythonpkgdata_PYTHON) \
+              $(_markupsafejinja2pythonpkgdata_PYTHON) \
+              $(jinja2eggpythonpkgdata_DATA) \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/security.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/__init__.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/doctests.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/debug.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/loader.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/imports.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/core_tags.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/lexnparse.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/utils.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/inheritance.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/api.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/filters.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/regression.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/ext.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/tests.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/res/__init__.py \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/res/templates/syntaxerror.html \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/res/templates/foo/test.html \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/res/templates/test.html \
+              $(srcdir)/vendor/python/site-packages/jinja2/testsuite/res/templates/broken.html

@@ -34,8 +34,19 @@ int main (int argc, char** argv){
     char   dest[TXTSIZE];
     char   key [TXTSIZE];
 
+    if(argc>=2) {
+      if(!strcmp(argv[1], "PAJE"))
+	setTraceType (PAJE);
+      else if(!strcmp(argv[1], "OTF"))
+	setTraceType (OTF);
+      else
+	setTraceType (OTF2);
+    } else {
+      setTraceType (OTF2);
+    }
+
     /* Initialisation */
-    setTraceType (OTF2);
+
     setCompress(0);
     CHECK_RETURN (initTrace ("cotf2", 0, GTG_FLAG_NONE));
     /* Creating types used */
@@ -56,7 +67,7 @@ int main (int argc, char** argv){
     CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", GTG_PURPLE));
     CHECK_RETURN (addLinkType ("L_0", "Fanin", "CT_NET", "CT_PROC", "CT_PROC"));
     CHECK_RETURN (addLinkType ("L_1", "Bloc", "CT_NET", "CT_PROC", "CT_PROC"));
-    CHECK_RETURN (addVarType ("V_Mem", "Memoire", "CT_NODE"));
+    CHECK_RETURN (addVarType ("V_Mem", "Memoire", "CT_PROC"));
     CHECK_RETURN (addEventType ("E_0", "CT_PROC", "Rabbit"));
     CHECK_RETURN (addEventType ("E_1", "CT_PROC", "Chocolate"));
     /* Building containers tree */
@@ -82,6 +93,12 @@ int main (int argc, char** argv){
 
     clear (txt, TXTSIZE);
     time = 1.00000000;
+
+    CHECK_RETURN (setVar (time, "V_Mem", "C_P0", 13));    /* Modification of the variables */
+    CHECK_RETURN (setVar (time, "V_Mem", "C_P1", 0));    /* Modification of the variables */
+    CHECK_RETURN (setVar (time, "V_Mem", "C_P2", 17));    /* Modification of the variables */
+    CHECK_RETURN (setVar (time, "V_Mem", "C_P2", 42));    /* Modification of the variables */
+
     for (i=0; i<10; i++){
       sprintf (txt , "ST_ProcState");
       sprintf (proc, "C_P%d", i%4);
@@ -95,18 +112,24 @@ int main (int argc, char** argv){
       time+=0.1;
       CHECK_RETURN (popState (time, txt, proc));        /* State changes modifications */
 #endif
-        /* Links */
-        sprintf (name, "L_%d", i%2);
-        sprintf (txt , "Programme");
-        sprintf (src , "C_P%d", (i+2)%4);
-        sprintf (dest, "C_P%d", (i+5)%4);
-        sprintf (proc, "%d", i);
-        sprintf (key , "%d", i);
+      CHECK_RETURN (addVar (time, "V_Mem", proc, (i*13)));    /* Modification of the variables */
 
-        CHECK_RETURN (startLink (time, name, txt, src, dest, proc, key));
-        time += 0.12;
+      time+=0.1;
+      CHECK_RETURN (subVar (time, "V_Mem", proc, i%5));    /* Modification of the variables */
+      time+=0.1;
 
-        CHECK_RETURN (endLink (time, name, txt, src, dest, proc, key));
+      /* Links */
+      sprintf (name, "L_%d", i%2);
+      sprintf (txt , "Programme");
+      sprintf (src , "C_P%d", (i+2)%4);
+      sprintf (dest, "C_P%d", (i+5)%4);
+      sprintf (proc, "%d", i);
+      sprintf (key , "%d", i);
+
+      CHECK_RETURN (startLink (time, name, txt, src, dest, proc, key));
+      time += 0.12;
+
+      CHECK_RETURN (endLink (time, name, txt, src, dest, proc, key));
 
     }
 

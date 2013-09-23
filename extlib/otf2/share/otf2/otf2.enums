@@ -1,0 +1,892 @@
+GeneralEnum(
+    """Possible mappings from local to global identifiers.""",
+    'MappingType',
+    EnumEntry(
+        """Mapping of string identifiers.""",
+        'OTF2_MAPPING_STRING'),
+    EnumEntry(
+        """Mapping of attribute identifiers.""",
+        'OTF2_MAPPING_ATTRIBUTE'),
+    EnumEntry(
+        """Mapping of location identifiers.""",
+        'OTF2_MAPPING_LOCATION'),
+    EnumEntry(
+        """Mapping of region identifiers.""",
+        'OTF2_MAPPING_REGION'),
+    EnumEntry(
+        """Mapping of group identifiers.""",
+        'OTF2_MAPPING_GROUP'),
+    EnumEntry(
+        """Mapping of metric identifiers.""",
+        'OTF2_MAPPING_METRIC'),
+    EnumEntry(
+        """Mapping of MPI communicator identifiers.""",
+        'OTF2_MAPPING_COMM'),
+    EnumEntry(
+        """Mapping of parameter identifiers.""",
+        'OTF2_MAPPING_PARAMETER'),
+    EnumEntry(
+        """Mapping of RMA window identifiers.""",
+        'OTF2_MAPPING_RMA_WIN'),
+    terminator=True)
+
+GeneralEnum(
+    """OTF2 basic data types.""",
+    'Type',
+    EnumEntry(
+        """Undefined type.""",
+        'OTF2_TYPE_NONE'),
+    EnumEntry(
+        """Unsigned 8-bit integer.""",
+        'OTF2_TYPE_UINT8',
+        type=uint8_t),
+    EnumEntry(
+        """Unsigned 16-bit integer.""",
+        'OTF2_TYPE_UINT16',
+        type=uint16_t),
+    EnumEntry(
+        """Unsigned 32-bit integer.""",
+        'OTF2_TYPE_UINT32',
+        type=uint32_t),
+    EnumEntry(
+        """Unsigned 64-bit integer.""",
+        'OTF2_TYPE_UINT64',
+        type=uint64_t),
+    EnumEntry(
+        """Signed 8-bit integer.""",
+        'OTF2_TYPE_INT8',
+        type=int8_t),
+    EnumEntry(
+        """Signed 16-bit integer.""",
+        'OTF2_TYPE_INT16',
+        type=int16_t),
+    EnumEntry(
+        """Signed 32-bit integer.""",
+        'OTF2_TYPE_INT32',
+        type=int32_t),
+    EnumEntry(
+        """Signed 64-bit integer.""",
+        'OTF2_TYPE_INT64',
+        type=int64_t),
+    EnumEntry(
+        """32-bit floating point value.""",
+        'OTF2_TYPE_FLOAT',
+        type=float),
+    EnumEntry(
+        """64-bit floating point value.""",
+        'OTF2_TYPE_DOUBLE',
+        type=double),
+    includes=['MappingType'])
+
+GeneralEnum(
+    """List of known paradigms.""",
+    'Paradigm',
+    EnumEntry(
+        """An unknown paradigm.""",
+        'OTF2_PARADIGM_UNKNOWN'),
+    EnumEntry(
+        """Regions generated through user instrumentation.""",
+        'OTF2_PARADIGM_USER'),
+    EnumEntry(
+        """Regions generated through compiler instrumentation.""",
+        'OTF2_PARADIGM_COMPILER'),
+    EnumEntry(
+        """Regions referring to OpenMP directives and API functions.""",
+        'OTF2_PARADIGM_OPENMP'),
+    EnumEntry(
+        """Regions referring to MPI functions.""",
+        'OTF2_PARADIGM_MPI'),
+    EnumEntry(
+        """Regions referring to CUDA API functions.""",
+        'OTF2_PARADIGM_CUDA'),
+    EnumEntry(
+        """Regions used by the measurement software.""",
+        'OTF2_PARADIGM_MEASUREMENT_SYSTEM',
+        since=Version(1,2)),
+    since=Version(1,1))
+
+GeneralEnum(
+    """Type of definitions used as metric in an thumbnail.""",
+    'ThumbnailType',
+    EnumEntry(
+        """The referenced definitions are of type @eref{Region}.""",
+        'OTF2_THUMBNAIL_TYPE_REGION'),
+    EnumEntry(
+        """The referenced definitions are of type @eref{MetricMember}.""",
+        'OTF2_THUMBNAIL_TYPE_METRIC'),
+    EnumEntry(
+        """The referenced definitions are of type @eref{Attribute}.""",
+        'OTF2_THUMBNAIL_TYPE_ATTRIBUTES'),
+    since=Version(1,2))
+
+DefEnum(
+    """""",
+    'SystemTreeDomain',
+    EnumEntry(
+        """\
+        All nodes below a node with this attribute encompass a tightly coupled
+        HPC system.
+        """,
+        'OTF2_SYSTEM_TREE_DOMAIN_MACHINE'),
+    EnumEntry(
+        """\
+        All nodes below a node with this attribute encompass a system where
+        processes can communicate via hardware shared memory.
+        """,
+        'OTF2_SYSTEM_TREE_DOMAIN_SHARED_MEMORY'),
+    EnumEntry(
+        """\
+        A numa domain. A set of processors around memory which the processors
+        can directly access.
+        """,
+        'OTF2_SYSTEM_TREE_DOMAIN_NUMA'),
+    EnumEntry(
+        """\
+        Socket, physical package, or chip. In the physical meaning, i.e. that
+        you can add or remove physically.
+        """,
+        'OTF2_SYSTEM_TREE_DOMAIN_SOCKET'),
+    EnumEntry(
+        """\
+        Cache. Can be L1i, L1d, L2, L3, ...
+        """,
+        'OTF2_SYSTEM_TREE_DOMAIN_CACHE'),
+    EnumEntry(
+        """\
+        Core. A computation unit (may be shared by several logical processors).
+        """,
+        'OTF2_SYSTEM_TREE_DOMAIN_CORE'),
+    EnumEntry(
+        """\
+        Processing Unit (An non-shared ALU, FPU, ...)
+        """,
+        'OTF2_SYSTEM_TREE_DOMAIN_PU'),
+    since=Version(1,2))
+
+DefEnum(
+    """List of possible definitions of type LocationGroup.""",
+    'LocationGroupType',
+    EnumEntry(
+        """A location group of unknown type.""",
+        'OTF2_LOCATION_GROUP_TYPE_UNKNOWN'),
+    EnumEntry(
+        """A process.""",
+        'OTF2_LOCATION_GROUP_TYPE_PROCESS'))
+
+DefEnum(
+    """List of possible definitions of type Location.""",
+    'LocationType',
+    EnumEntry(
+        """A location of unknown type.""",
+        'OTF2_LOCATION_TYPE_UNKNOWN'),
+    EnumEntry(
+        """A CPU thread.""",
+        'OTF2_LOCATION_TYPE_CPU_THREAD'),
+    EnumEntry(
+        """A GPU location.""",
+        'OTF2_LOCATION_TYPE_GPU'),
+    EnumEntry(
+        """A metric only location e.g. an external device.""",
+        'OTF2_LOCATION_TYPE_METRIC'))
+
+DefEnum(
+    """List of possible definitions of type Region.""",
+    'RegionType',
+    EnumEntry(
+        """A region of unknown type.""",
+        'OTF2_REGION_TYPE_UNKNOWN'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_FUNCTION'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_LOOP'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_USER_REGION'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_FILE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_PARALLEL'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_LOOP'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_SECTIONS'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_SECTION'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_WORKSHARE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_SINGLE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_MASTER'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_CRITICAL'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_ATOMIC'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_BARRIER'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_IBARRIER'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_FLUSH'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_CRITICAL_SBLOCK'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_SINGLE_SBLOCK'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_WRAPPER'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_TASK'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_TASK_WAIT'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_MPI_COLL_BARRIER'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_MPI_COLL_ONE2ALL'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_MPI_COLL_ALL2ONE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_MPI_COLL_ALL2ALL'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_MPI_COLL_OTHER'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_PHASE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_DYNAMIC'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_DYNAMIC_PHASE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_DYNAMIC_LOOP'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_DYNAMIC_FUNCTION'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_DYNAMIC_LOOP_PHASE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_TASK_CREATE'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_ORDERED'),
+    EnumEntry(
+        """""",
+        'OTF2_REGION_TYPE_OMP_ORDERED_SBLOCK'),
+    attic=Version(1,1))
+
+DefEnum(
+    """List of possible roles of a Region.""",
+    'RegionRole',
+    EnumEntry(
+        """A region of unknown role.""",
+        'OTF2_REGION_ROLE_UNKNOWN'),
+    EnumEntry(
+        """An entire function/subroutine.""",
+        'OTF2_REGION_ROLE_FUNCTION'),
+    EnumEntry(
+        """An API function wrapped by Score-P.""",
+        'OTF2_REGION_ROLE_WRAPPER'),
+    EnumEntry(
+        """A loop in the code.""",
+        'OTF2_REGION_ROLE_LOOP'),
+    EnumEntry(
+        """An arbitrary section of code.""",
+        'OTF2_REGION_ROLE_CODE'),
+    EnumEntry(
+        """E.g. OpenMP "parallel" construct (structured block)""",
+        'OTF2_REGION_ROLE_PARALLEL'),
+    EnumEntry(
+        """E.g. OpenMP "sections" construct""",
+        'OTF2_REGION_ROLE_SECTIONS'),
+    EnumEntry(
+        """Individual "section" inside an OpenMP "sections" construct""",
+        'OTF2_REGION_ROLE_SECTION'),
+    EnumEntry(
+        """E.g. OpenMP "workshare" construct""",
+        'OTF2_REGION_ROLE_WORKSHARE'),
+    EnumEntry(
+        """E.g. OpenMP "single" construct""",
+        'OTF2_REGION_ROLE_SINGLE'),
+    EnumEntry(
+        """E.g. OpenMP "single" construct (structured block)""",
+        'OTF2_REGION_ROLE_SINGLE_SBLOCK'),
+    EnumEntry(
+        """E.g. OpenMP "master" construct""",
+        'OTF2_REGION_ROLE_MASTER'),
+    EnumEntry(
+        """E.g. OpenMP "critical" construct""",
+        'OTF2_REGION_ROLE_CRITICAL'),
+    EnumEntry(
+        """E.g. OpenMP "critical" construct (structured block)""",
+        'OTF2_REGION_ROLE_CRITICAL_SBLOCK'),
+    EnumEntry(
+        """E.g. OpenMP "atomic" construct""",
+        'OTF2_REGION_ROLE_ATOMIC'),
+    EnumEntry(
+        """Explicit barrier""",
+        'OTF2_REGION_ROLE_BARRIER'),
+    EnumEntry(
+        """Implicit barrier""",
+        'OTF2_REGION_ROLE_IMPLICIT_BARRIER'),
+    EnumEntry(
+        """E.g. OpenMP "flush" construct""",
+        'OTF2_REGION_ROLE_FLUSH'),
+    EnumEntry(
+        """E.g. OpenMP "ordered" construct""",
+        'OTF2_REGION_ROLE_ORDERED'),
+    EnumEntry(
+        """E.g. OpenMP "ordered" construct (structured block)""",
+        'OTF2_REGION_ROLE_ORDERED_SBLOCK'),
+    EnumEntry(
+        """"task" construct (structured block)""",
+        'OTF2_REGION_ROLE_TASK'),
+    EnumEntry(
+        """"task" construct (creation)""",
+        'OTF2_REGION_ROLE_TASK_CREATE'),
+    EnumEntry(
+        """"taskwait" construct""",
+        'OTF2_REGION_ROLE_TASK_WAIT'),
+    EnumEntry(
+        """Collective 1:N communication operation""",
+        'OTF2_REGION_ROLE_COLL_ONE2ALL'),
+    EnumEntry(
+        """Collective N:1 communication operation""",
+        'OTF2_REGION_ROLE_COLL_ALL2ONE'),
+    EnumEntry(
+        """Collective N:N communication operation""",
+        'OTF2_REGION_ROLE_COLL_ALL2ALL'),
+    EnumEntry(
+        """Collective M:N communication operation""",
+        'OTF2_REGION_ROLE_COLL_OTHER'),
+    EnumEntry(
+        """Any file I/O operation.""",
+        'OTF2_REGION_ROLE_FILE_IO'),
+    EnumEntry(
+        """A point-to-point communication function.""",
+        'OTF2_REGION_ROLE_POINT2POINT'),
+    EnumEntry(
+        """A remote memory access communication operation.""",
+        'OTF2_REGION_ROLE_RMA'),
+    EnumEntry(
+        """A data transfer operation in memory.""",
+        'OTF2_REGION_ROLE_DATA_TRANSFER'),
+    EnumEntry(
+        """An artificial region, mostly used by the monitor software.""",
+        'OTF2_REGION_ROLE_ARTIFICIAL',
+        since=Version(1,2)),
+    since=Version(1,1))
+
+DefEnum(
+    """List of possible flags to specify special characteristics of a Region.""",
+    'RegionFlag',
+    EnumEntry(
+        """A region without special characterization.""",
+        'OTF2_REGION_FLAG_NONE',
+        0),
+    EnumEntry(
+        """Each time this region is entered it will get an individual call path in the profile.""",
+        'OTF2_REGION_FLAG_DYNAMIC',
+        '( 1 << 0 )'),
+    EnumEntry(
+        """Each time this region is entered it will get an individual root node in the profile.""",
+        'OTF2_REGION_FLAG_PHASE',
+        '( 1 << 1 )'),
+    type=uint32_t,
+    bitset_like=True,
+    since=Version(1,1))
+
+DefEnum(
+    """""",
+    'GroupTypePre12',
+    EnumEntry(
+        """Group of unknown type.""",
+        'OTF2_GROUP_TYPE_PRE_1_2_UNKNOWN'),
+    EnumEntry(
+        """Group of locations.""",
+        'OTF2_GROUP_TYPE_PRE_1_2_LOCATIONS'),
+    EnumEntry(
+        """Group of regions.""",
+        'OTF2_GROUP_TYPE_PRE_1_2_REGIONS'),
+    EnumEntry(
+        """Group of metrics.""",
+        'OTF2_GROUP_TYPE_PRE_1_2_METRIC'),
+    EnumEntry(
+        """MPI group.""",
+        'OTF2_GROUP_TYPE_PRE_1_2_MPI_GROUP'),
+    EnumEntry(
+        """\
+        Special group type to efficiently handle MPI self-like communicators.
+        """,
+        'OTF2_GROUP_TYPE_PRE_1_2_MPI_COMM_SELF'),
+    EnumEntry(
+        """\
+        List of location IDs, which are MPI ranks.
+
+        The size of this group should match the size of MPI_COMM_WORLD.
+        Each entry in the list is a location ID, where the index of the
+        entry is equal to the rank in MPI_COMM_WORLD.
+        (Ie. rank i corresponds to location members[i])
+
+        Also, if this definition is present, the location group ids of
+        locations with type OTF2_LOCATION_TYPE_CPU_THREAD should match
+        The MPI rank.
+
+        This group needs to be defined, before any group of type
+        @eref{OTF2_GROUP_TYPE_PRE_1_2_MPI_GROUP}.
+
+        Note: This does not makes sense in local definitions.
+        """,
+        'OTF2_GROUP_TYPE_PRE_1_2_MPI_LOCATIONS'),
+    attic=Version(1,2))
+
+DefEnum(
+    """""",
+    'GroupType',
+    EnumEntry(
+        """Group of unknown type.""",
+        'OTF2_GROUP_TYPE_UNKNOWN'),
+    EnumEntry(
+        """Group of locations.""",
+        'OTF2_GROUP_TYPE_LOCATIONS'),
+    EnumEntry(
+        """Group of regions.""",
+        'OTF2_GROUP_TYPE_REGIONS'),
+    EnumEntry(
+        """Group of metrics.""",
+        'OTF2_GROUP_TYPE_METRIC'),
+    EnumEntry(
+        """\
+        List of location IDs, which are MPI ranks.
+
+        The size of this group should match the size of MPI_COMM_WORLD.
+        Each entry in the list is a location ID, where the index of the
+        entry is equal to the rank in MPI_COMM_WORLD.
+        (Ie. rank i corresponds to location members[i])
+
+        Also, if this definition is present, the location group ids of
+        locations with type OTF2_LOCATION_TYPE_CPU_THREAD should match
+        The MPI rank.
+
+        This group needs to be defined, before any group of type
+        @eref{OTF2_GROUP_TYPE_MPI_GROUP}.
+
+        Note: This does not makes sense in local definitions.
+        """,
+        'OTF2_GROUP_TYPE_COMM_LOCATIONS'),
+    EnumEntry(
+        """MPI group.""",
+        'OTF2_GROUP_TYPE_COMM_GROUP'),
+    EnumEntry(
+        """\
+        Special group type to efficiently handle MPI self-like communicators.
+        """,
+        'OTF2_GROUP_TYPE_COMM_SELF'),
+    since=Version(1,2))
+
+DefEnum(
+    """List of possible flags to specify special characteristics of a Group.""",
+    'GroupFlag',
+    EnumEntry(
+        """A group without special characterization.""",
+        'OTF2_GROUP_FLAG_NONE',
+        0),
+    EnumEntry(
+        """\
+        No translation needs to be done when a group of type
+        @eref{OTF2_GROUP_TYPE_COMM_GROUP} has this flag.
+        """,
+        'OTF2_GROUP_FLAG_GLOBAL_MEMBERS',
+        '( 1 << 0 )'),
+    type=uint32_t,
+    bitset_like=True,
+    since=Version(1,2))
+
+DefEnum(
+    """Metric occurrence.""",
+    'MetricOccurrence',
+    EnumEntry(
+        """Metric occurs at every region enter and leave.""",
+        'OTF2_METRIC_SYNCHRONOUS_STRICT'),
+    EnumEntry(
+        """\
+        Metric occurs only at a region enter and leave, but does not need to
+        occur at every enter/leave.
+        """,
+        'OTF2_METRIC_SYNCHRONOUS'),
+    EnumEntry(
+        """\
+        Metric can occur at any place i.e. it is not related to region enter
+        and leaves.
+        """,
+        'OTF2_METRIC_ASYNCHRONOUS'))
+
+DefEnum(
+    """""",
+    'MetricType',
+    EnumEntry(
+        """Any metric of a type not explicitly listed below.""",
+        'OTF2_METRIC_TYPE_OTHER'),
+    EnumEntry(
+        """PAPI counter.""",
+        'OTF2_METRIC_TYPE_PAPI'),
+    EnumEntry(
+        """Resource usage counter.""",
+        'OTF2_METRIC_TYPE_RUSAGE'),
+    EnumEntry(
+        """User metrics.""",
+        'OTF2_METRIC_TYPE_USER'))
+
+DefEnum(
+    """\
+    Information about whether the metric value is accumulated,
+    absolute, or relative. Used for the lower half-byte of
+    OTF2_MetricMode.
+    """,
+    'MetricValueProperty',
+    EnumEntry(
+        """\
+        Accumulated metric is monotonously increasing (i.e., PAPI counter for
+        number of executed floating point operations).
+        """,
+        'OTF2_METRIC_VALUE_ACCUMULATED'),
+    EnumEntry(
+        """Absolute metric (i.e., temperature, rate, mean value, etc.).""",
+        'OTF2_METRIC_VALUE_ABSOLUTE'),
+    EnumEntry(
+        """Relative metric.""",
+        'OTF2_METRIC_VALUE_RELATIVE'),
+    terminator=EnumEntry(
+        """\
+        This mask can be used to get lower half-byte in OTF2_MetricMode that is
+        used to indicate metric value property.
+        """,
+        'OTF2_METRIC_VALUE_MASK',
+        '15 /* xxxx1111 */'))
+
+DefEnum(
+    """\
+    Determines when the values have been collected or for
+    which interval of time they are valid. Used for the
+    upper half-byte of OTF2_MetricMode.
+    """,
+    'MetricTiming',
+    EnumEntry(
+        """\
+        Metric value belongs to the time interval since the beginning of the
+        measurement.
+        """,
+        'OTF2_METRIC_TIMING_START'),
+    EnumEntry(
+        """\
+        Metric value is only valid at a point in time but not necessarily for
+        any interval of time.
+        """,
+        'OTF2_METRIC_TIMING_POINT',
+        '1 << 4'),
+    EnumEntry(
+        """\
+        Metric value is related to the time interval since the last counter
+        sample of the same metric, i.e. the immediate past.
+        """,
+        'OTF2_METRIC_TIMING_LAST',
+        '2 << 4'),
+    EnumEntry(
+        """\
+        Metric value is valid from now until the next counter sample, i.e. the
+        future right ahead.
+        """,
+        'OTF2_METRIC_TIMING_NEXT',
+        '3 << 4'),
+    terminator=EnumEntry(
+        """\
+        This mask can be used to get the upper half-byte in OTF2_MetricMode that
+        is used to indicate metric timing information.
+        """,
+        'OTF2_METRIC_TIMING_MASK',
+        '240 /* 1111xxxx */'))
+
+DefEnum(
+    """\
+    Metric mode is a combination of value property and timing information.
+    """,
+    'MetricMode',
+    EnumEntry(
+        """Accumulated metric, 'START' timing.""",
+        'OTF2_METRIC_ACCUMULATED_START',
+        'OTF2_METRIC_VALUE_ACCUMULATED | OTF2_METRIC_TIMING_START'),
+    EnumEntry(
+        """Accumulated metric, 'POINT' timing.""",
+        'OTF2_METRIC_ACCUMULATED_POINT',
+        'OTF2_METRIC_VALUE_ACCUMULATED | OTF2_METRIC_TIMING_POINT'),
+    EnumEntry(
+        """Accumulated metric, 'LAST' timing.""",
+        'OTF2_METRIC_ACCUMULATED_LAST',
+        'OTF2_METRIC_VALUE_ACCUMULATED | OTF2_METRIC_TIMING_LAST'),
+    EnumEntry(
+        """Accumulated metric, 'NEXT' timing.""",
+        'OTF2_METRIC_ACCUMULATED_NEXT',
+        'OTF2_METRIC_VALUE_ACCUMULATED | OTF2_METRIC_TIMING_NEXT'),
+    EnumEntry(
+        """Absolute metric, 'POINT' timing.""",
+        'OTF2_METRIC_ABSOLUTE_POINT',
+        'OTF2_METRIC_VALUE_ABSOLUTE | OTF2_METRIC_TIMING_POINT'),
+    EnumEntry(
+        """Absolute metric, 'LAST' timing.""",
+        'OTF2_METRIC_ABSOLUTE_LAST',
+        'OTF2_METRIC_VALUE_ABSOLUTE | OTF2_METRIC_TIMING_LAST'),
+    EnumEntry(
+        """Absolute metric, 'NEXT' timing.""",
+        'OTF2_METRIC_ABSOLUTE_NEXT',
+        'OTF2_METRIC_VALUE_ABSOLUTE | OTF2_METRIC_TIMING_NEXT'),
+    EnumEntry(
+        """Relative metric, 'POINT' timing.""",
+        'OTF2_METRIC_RELATIVE_POINT',
+        'OTF2_METRIC_VALUE_RELATIVE | OTF2_METRIC_TIMING_POINT'),
+    EnumEntry(
+        """Relative metric, 'LAST' timing.""",
+        'OTF2_METRIC_RELATIVE_LAST',
+        'OTF2_METRIC_VALUE_RELATIVE | OTF2_METRIC_TIMING_LAST'),
+    EnumEntry(
+        """Relative metric, 'NEXT' timing.""",
+        'OTF2_METRIC_RELATIVE_NEXT',
+        'OTF2_METRIC_VALUE_RELATIVE | OTF2_METRIC_TIMING_NEXT'))
+
+DefEnum(
+    """Metric base types.""",
+    'MetricBase',
+    EnumEntry(
+        """Binary base.""",
+        'OTF2_BASE_BINARY'),
+    EnumEntry(
+        """Decimal base.""",
+        'OTF2_BASE_DECIMAL'))
+
+DefEnum(
+    """""",
+    'MetricScope',
+    EnumEntry(
+        """Scope of a metric is another location.""",
+        'OTF2_SCOPE_LOCATION'),
+    EnumEntry(
+        """Scope of a metric is a location group.""",
+        'OTF2_SCOPE_LOCATION_GROUP'),
+    EnumEntry(
+        """Scope of a metric is a system tree node.""",
+        'OTF2_SCOPE_SYSTEM_TREE_NODE'),
+    EnumEntry(
+        """Scope of a metric is a generic group of locations.""",
+        'OTF2_SCOPE_GROUP'))
+
+DefEnum(
+    """List of possible kinds a MetricClass can be recorded by.""",
+    'RecorderKind',
+    EnumEntry(
+        """No specific kind of recorder.""",
+        'OTF2_RECORDER_KIND_UNKNOWN'),
+    EnumEntry(
+        """Only @eref{MetricInstances} will record this metric class.""",
+        'OTF2_RECORDER_KIND_ABSTRACT'),
+    EnumEntry(
+        """\
+        This metric class will only be recored by locations of type
+        @eref{OTF2_LOCATION_TYPE_CPU_THREAD}.
+        """,
+        'OTF2_RECORDER_KIND_CPU'),
+    EnumEntry(
+        """\
+        This metric class will only be recored by locations of type
+        @eref{OTF2_LOCATION_TYPE_GPU}.
+        """,
+        'OTF2_RECORDER_KIND_GPU'),
+    since=Version(1,2))
+
+DefEnum(
+    """List of possible for definitions of type Parameter.""",
+    'ParameterType',
+    EnumEntry(
+        """Parameter is of type string.""",
+        'OTF2_PARAMETER_TYPE_STRING'),
+    EnumEntry(
+        """Parameter is of type signed 8-byte integer.""",
+        'OTF2_PARAMETER_TYPE_INT64'),
+    EnumEntry(
+        """Parameter is of type unsigned 8-byte integer.""",
+        'OTF2_PARAMETER_TYPE_UINT64'))
+
+EventEnum(
+    """Types for use in the MeasurementOnOff event.""",
+    'MeasurementMode',
+    EnumEntry(
+        """The measurement resumed with event recording.""",
+        'OTF2_MEASUREMENT_ON',
+        1),
+    EnumEntry(
+        """The measurement suspended with event recording.""",
+        'OTF2_MEASUREMENT_OFF'))
+
+EventEnum(
+    """\
+    Types of collective operations.
+    """,
+    'CollectiveOp',
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_BARRIER'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_BCAST'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_GATHER'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_GATHERV'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_SCATTER'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_SCATTERV'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_ALLGATHER'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_ALLGATHERV'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_ALLTOALL'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_ALLTOALLV'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_ALLTOALLW'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_ALLREDUCE'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_REDUCE'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_REDUCE_SCATTER'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_SCAN'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_EXSCAN'),
+    EnumEntry(
+        """""",
+        'OTF2_COLLECTIVE_OP_REDUCE_SCATTER_BLOCK'),
+    EnumEntry(
+        """Collectively create a handle (ie. MPI_Win, MPI_Comm, MPI_File).""",
+        'OTF2_COLLECTIVE_OP_CREATE_HANDLE'),
+    EnumEntry(
+        """Collectively destroy a handle.""",
+        'OTF2_COLLECTIVE_OP_DESTROY_HANDLE'),
+    EnumEntry(
+        """Collectively allocate memory.""",
+        'OTF2_COLLECTIVE_OP_ALLOCATE'),
+    EnumEntry(
+        """Collectively deallocate memory.""",
+        'OTF2_COLLECTIVE_OP_DEALLOCATE'),
+    EnumEntry(
+        """Collectively create a handle and allocate memory.""",
+        'OTF2_COLLECTIVE_OP_CREATE_HANDLE_AND_ALLOCATE'),
+    EnumEntry(
+        """Collectively destroy a handle and deallocate memory.""",
+        'OTF2_COLLECTIVE_OP_DESTROY_HANDLE_AND_DEALLOCATE'))
+
+EventEnum(
+    """Type of direct RMA synchronization call""",
+    'RmaSyncType',
+    EnumEntry(
+        """Synchronize memory copy.""",
+        'OTF2_RMA_SYNC_TYPE_MEMORY'),
+    EnumEntry(
+        """Incoming remote notification.""",
+        'OTF2_RMA_SYNC_TYPE_NOTIFY_IN'),
+    EnumEntry(
+        """Outgoing remote notification.""",
+        'OTF2_RMA_SYNC_TYPE_NOTIFY_OUT'),
+    since=Version(1,2))
+
+EventEnum(
+    """Synchronization level used in RMA synchronization records.""",
+    'RmaSyncLevel',
+    EnumEntry(
+        """\
+        No process synchronization or access completion (e.g.,
+        MPI_Win_post, MPI_Win_start).
+        """,
+        'OTF2_RMA_SYNC_LEVEL_NONE',
+        0),
+    EnumEntry(
+        """Synchronize processes (e.g., MPI_Win_create/free).""",
+        'OTF2_RMA_SYNC_LEVEL_PROCESS',
+        '( 1 << 0 )'),
+    EnumEntry(
+        """Complete memory accesses (e.g., MPI_Win_complete, MPI_Win_wait).""",
+        'OTF2_RMA_SYNC_LEVEL_MEMORY',
+        '( 1 << 1 )'),
+    type=uint32_t,
+    bitset_like=True,
+    since=Version(1,2))
+
+EventEnum(
+    """General Lock Type.""",
+    'LockType',
+    EnumEntry(
+        """Exclusive lock. No other lock will be granted.""",
+        'OTF2_LOCK_EXCLUSIVE'),
+    EnumEntry(
+        """Shared lock. Other shared locks will be granted, but no exclusive locks.""",
+        'OTF2_LOCK_SHARED'),
+    since=Version(1,2))
+
+EventEnum(
+    """RMA Atomic Operation Type.""",
+    'RmaAtomicType',
+    EnumEntry(
+        """""",
+        'OTF2_RMA_ATOMIC_TYPE_ACCUMULATE'),
+    EnumEntry(
+        """""",
+        'OTF2_RMA_ATOMIC_TYPE_INCREMENT'),
+    EnumEntry(
+        """""",
+        'OTF2_RMA_ATOMIC_TYPE_TEST_AND_SET'),
+    EnumEntry(
+        """""",
+        'OTF2_RMA_ATOMIC_TYPE_COMPARE_AND_SWAP'),
+    since=Version(1,2))

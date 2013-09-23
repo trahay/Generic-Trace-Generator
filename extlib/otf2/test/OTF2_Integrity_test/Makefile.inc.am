@@ -1,0 +1,38 @@
+## -*- mode: makefile -*-
+
+##
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2011,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       test/OTF2_Integrity_test/Makefile.inc.am
+## maintainer Michael Wagner <michael.wagner@zih.tu-dresden.de>
+
+check_PROGRAMS               += OTF2_Integrity_test
+OTF2_Integrity_test_SOURCES  = $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_test.c
+OTF2_Integrity_test_CPPFLAGS = $(AM_CPPFLAGS) $(UTILS_CPPFLAGS)
+OTF2_Integrity_test_LDADD    = $(LIB_ROOT)libotf2.la
+
+SCOREP_TESTS += ./run_otf2_integrity_test.sh
+EXTRA_DIST   += \
+    $(SRC_ROOT)test/OTF2_Integrity_test/run_otf2_integrity_test.sh.in \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace.otf2 \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace.def \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/0.evt \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/0.def \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/1.evt \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/1.def \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/4.def \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/4.evt \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/9.evt \
+    $(SRC_ROOT)test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace/9.def

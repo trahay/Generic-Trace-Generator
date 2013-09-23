@@ -1,0 +1,28 @@
+#!/bin/sh
+
+##
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2011,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       test/OTF2_Buffer_test/run_otf2_buffer_test.sh.in
+## maintainer Bert Wesarg <bert.wesarg@tu-dresden.de>
+
+cleanup()
+{
+    rm -rf native native.otf2
+}
+trap cleanup EXIT
+
+cleanup
+./OTF2_Buffer_test @srcdir@/../test/OTF2_Buffer_test

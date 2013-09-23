@@ -1,0 +1,927 @@
+EventRecord(
+    """\
+    This event signals that the internal buffer was flushed at the given
+    time.
+    """,
+    10,
+    'BufferFlush',
+    TimeStampAttribute(
+        """The time the buffer flush finished.""",
+        'stopTime'
+    ))
+
+EventRecord(
+    """\
+    This event signals where the measurement system turned measurement on or
+    off.
+    """,
+    11,
+    'MeasurementOnOff',
+    MeasurementModeAttribute(
+        """\
+        Is the measurement turned on (@eref{OTF2_MEASUREMENT_ON}) or off
+        (@eref{OTF2_MEASUREMENT_OFF})?
+        """
+    ))
+
+EventRecord(
+    """An enter record indicates that the program enters a code region.""",
+    12,
+    'Enter',
+    RegionAttribute(
+        """Needs to be defined in a definition record""",
+        'region'
+    ))
+
+EventRecord(
+    """A leave record indicates that the program leaves a code region.""",
+    13,
+    'Leave',
+    RegionAttribute(
+        """Needs to be defined in a definition record""",
+        'region'
+    ))
+
+EventRecord(
+    """\
+    A MpiSend record indicates that a MPI message send process was initiated
+    (MPI_SEND). It keeps the necessary information for this event: receiver
+    of the message, communicator, and the message tag. You can optionally add
+    further information like the message length (size of the send buffer).
+    """,
+    14,
+    'MpiSend',
+    Attribute(
+        'MPI rank of receiver in @a communicator.',
+        uint32_t,
+        'receiver'
+    ),
+    CommAttribute(
+        """Communicator ID.""",
+        'communicator'
+    ),
+    Attribute(
+        'Message tag',
+        uint32_t,
+        'msgTag'
+    ),
+    Attribute(
+        'Message length',
+        uint64_t,
+        'msgLength'
+    ))
+
+EventRecord(
+    """\
+    A MpiIsend record indicates that a MPI message send process was initiated
+    (MPI_ISEND). It keeps the necessary information for this event: receiver of
+    the message, communicator, and the message tag. You can optionally add
+    further information like the message length (size of the send buffer).
+    """,
+    15,
+    'MpiIsend',
+    Attribute(
+        'MPI rank of receiver in @a communicator.',
+        uint32_t,
+        'receiver'
+    ),
+    CommAttribute(
+        """Communicator ID.""",
+        'communicator'
+    ),
+    Attribute(
+        'Message tag',
+        uint32_t,
+        'msgTag'
+    ),
+    Attribute(
+        """Message length""",
+        uint64_t,
+        'msgLength'
+    ),
+    Attribute(
+        """ID of the related request""",
+        uint64_t,
+        'requestID'
+    ))
+
+EventRecord(
+    """Signals the completion of non-blocking send request.""",
+    16,
+    'MpiIsendComplete',
+    Attribute(
+        """ID of the related request""",
+        uint64_t,
+        'requestID'
+    ))
+
+EventRecord(
+    """Signals the request of an receive, which can be completed later.""",
+    17,
+    'MpiIrecvRequest',
+    Attribute(
+        """ID of the requested receive""",
+        uint64_t,
+        'requestID'
+    ))
+
+EventRecord(
+    """\
+    A MpiRecv record indicates that a MPI message was received (MPI_RECV). It
+    keeps the necessary information for this event: sender of the message,
+    communicator, and the message tag. You can optionally add further
+    information like the message length (size of the receive buffer).
+    """,
+    18,
+    'MpiRecv',
+    Attribute(
+        """MPI rank of sender in @a communicator.""",
+        uint32_t,
+        'sender'
+    ),
+    CommAttribute(
+        """Communicator ID.""",
+        'communicator'
+    ),
+    Attribute(
+        """Message tag""",
+        uint32_t,
+        'msgTag'
+    ),
+    Attribute(
+        """Message length""",
+        uint64_t,
+        'msgLength'
+    ))
+
+EventRecord(
+    """\
+    A MpiIrecv record indicates that a MPI message was received (MPI_IRECV). It
+    keeps the necessary information for this event: sender of the message,
+    communicator, and the message tag. You can optionally add further
+    information like the message length (size of the receive buffer).
+    """,
+    19,
+    'MpiIrecv',
+    Attribute(
+        """MPI rank of sender in @a communicator.""",
+        uint32_t,
+        'sender'
+    ),
+    CommAttribute(
+        """Communicator ID.""",
+        'communicator'
+    ),
+    Attribute(
+        """Message tag""",
+        uint32_t,
+        'msgTag'
+    ),
+    Attribute(
+        """Message length""",
+        uint64_t,
+        'msgLength'
+    ),
+    Attribute(
+        """ID of the related request""",
+        uint64_t,
+        'requestID'
+    ))
+
+EventRecord(
+    """\
+    This events appears if the program tests if a request has already completed
+    but the test failed.
+    """,
+    20,
+    'MpiRequestTest',
+    Attribute(
+        """ID of the related request""",
+        uint64_t,
+        'requestID'
+    ))
+
+EventRecord(
+    """This events appears if the program canceled a request.""",
+    21,
+    'MpiRequestCancelled',
+    Attribute(
+        """ID of the related request""",
+        uint64_t,
+        'requestID'
+    ))
+
+EventRecord(
+    """\
+    A MpiCollectiveBegin record marks the begin of an MPI collective operation
+    (MPI_GATHER, MPI_SCATTER etc.).
+    """,
+    22,
+    'MpiCollectiveBegin')
+
+EventRecord(
+    """\
+    A MpiCollectiveEnd record marks the end of an MPI collective operation
+    (MPI_GATHER, MPI_SCATTER etc.). It keeps the necessary information for this
+    event: type of collective operation, communicator, the root of this
+    collective operation. You can optionally add further information like sent
+    and received bytes.
+    """,
+    23,
+    'MpiCollectiveEnd',
+    CollectiveOpAttribute(
+        """Determines which collective operation it is."""
+    ),
+    CommAttribute(
+        """Communicator""",
+        'communicator'
+    ),
+    Attribute(
+        """MPI rank of root in @a communicator.""",
+        uint32_t,
+        'root'
+    ),
+    Attribute(
+        """Size of the sent message.""",
+        uint64_t,
+        'sizeSent'
+    ),
+    Attribute(
+        """Size of the received message.""",
+        uint64_t,
+        'sizeReceived'
+    ))
+
+EventRecord(
+    """\
+    An OmpFork record marks that an OpenMP Thread forks a thread team.
+    
+    This event record is superseded by the @eref{ThreadFork} event record and
+    should not be used when the @eref{ThreadFork} event record is in use.
+    """,
+    24,
+    'OmpFork',
+    Attribute(
+        """Requested size of the team.""",
+        uint32_t,
+        'numberOfRequestedThreads'
+    ),
+    deprecated=Version(1,2))
+
+EventRecord(
+    """\
+    An OmpJoin record marks that a team of threads is joint and only the master
+    thread continues execution.
+    
+    This event record is superseded by the @eref{ThreadJoin} event record and
+    should not be used when the @eref{ThreadJoin} event record is in use.
+    """,
+    25,
+    'OmpJoin',
+    deprecated=Version(1,2))
+
+EventRecord(
+    """\
+    An OmpAcquireLock record marks that a thread acquires an OpenMP lock.
+    
+    This event record is superseded by the @eref{ThreadAcquireLock} event
+    record and should not be used when the @eref{ThreadAcquireLock} event
+    record is in use record.
+    """,
+    26,
+    'OmpAcquireLock',
+    Attribute(
+        """ID of the lock.""",
+        uint32_t,
+        'lockID'
+    ),
+    Attribute(
+        """\
+        A monotonically increasing number to determine the order of lock
+        acquisitions (with unsynchronized clocks this is otherwise not
+        possible). Corresponding acquire-release events have same number.
+        """,
+        uint32_t,
+        'acquisitionOrder'
+    ),
+    deprecated=Version(1,2))
+
+EventRecord(
+    """\
+    An OmpReleaseLock record marks that a thread releases an OpenMP lock.
+     
+    This event record is superseded by the @eref{ThreadReleaseLock} event
+    record and should not be used when the @eref{ThreadReleaseLock} event
+    record is in use.
+   """,
+    27,
+    'OmpReleaseLock',
+    Attribute(
+        """ID of the lock.""",
+        uint32_t,
+        'lockID'
+    ),
+    Attribute(
+        """\
+        A monotonically increasing number to determine the order of lock
+        acquisitions (with unsynchronized clocks this is otherwise not
+        possible). Corresponding acquire-release events have same number.
+        """,
+        uint32_t,
+        'acquisitionOrder'
+    ),
+    deprecated=Version(1,2))
+
+EventRecord(
+    """\
+    An OmpTaskCreate record marks that an OpenMP Task was/will be created in
+    the current region.
+    
+    This event record is superseded by the @eref{ThreadTaskCreate} event record
+    and should not be used when the @eref{ThreadTaskCreate} event record is in
+    use.
+    """,
+    28,
+    'OmpTaskCreate',
+    Attribute(
+        """Identifier of the newly created task instance.""",
+        uint64_t,
+        'taskID'
+    ),
+    deprecated=Version(1,2))
+
+EventRecord(
+    """\
+    An OmpTaskSwitch record indicates that the execution of the current task
+    will be suspended and another task starts/restarts its execution.
+    Please note that this may change the current call stack of the executing
+    location.
+    
+    This event record is superseded by the @eref{ThreadTaskSwitch} event record
+    and should not be used when the @eref{ThreadTaskSwitch} event record is in
+    use.
+    """,
+    29,
+    'OmpTaskSwitch',
+    Attribute(
+        """Identifier of the now active task instance.""",
+        uint64_t,
+        'taskID'
+    ),
+    deprecated=Version(1,2))
+
+EventRecord(
+    """\
+    An OmpTaskComplete record indicates that the execution of an OpenMP task
+    has finished.
+    
+    This event record is superseded by the @eref{ThreadTaskComplete} event
+    record and should not be used when the @eref{ThreadTaskComplete} event
+    record is in use.
+    """,
+    30,
+    'OmpTaskComplete',
+    Attribute(
+        """Identifier of the completed task instance.""",
+        uint64_t,
+        'taskID'
+    ),
+    deprecated=Version(1,2))
+
+EventRecord(
+    """\
+    A metric event is always stored at the location that recorded the metric.
+    A metric event can reference a metric class or metric instance. Therefore,
+    metric classes and instances share same ID space. Synchronous metrics are
+    always located right before the according enter and leave event.
+    """,
+    31,
+    'Metric',
+    MetricAttribute(
+        """Could be a metric class or a metric instance.""",
+        'metric'
+    ),
+    ArrayAttribute(
+        """Number of metrics with in the set.""",
+        uint8_t,
+        'numberOfMetrics',
+        TypeAttribute(
+            """List of metric types.""",
+            'typeIDs'
+        ),
+        MetricValueAttribute(
+            """List of metric values.""",
+            'metricValues'
+        )))
+
+EventRecord(
+    """\
+    A ParameterString record marks that in the current region, the specified
+    string parameter has the specified value.
+    """,
+    32,
+    'ParameterString',
+    ParameterAttribute(
+        """Parameter ID.""",
+        'parameter'
+    ),
+    StringAttribute(
+        """Value: Handle of a string definition""",
+        'string'
+    ))
+
+EventRecord(
+    """\
+    A ParameterInt record marks that in the current region, the specified
+    integer parameter has the specified value.
+    """,
+    33,
+    'ParameterInt',
+    ParameterAttribute(
+        """Parameter ID.""",
+        'parameter'
+    ),
+    Attribute(
+        """Value of the recorded parameter.""",
+        int64_t,
+        'value'
+    ))
+
+EventRecord(
+    """\
+    A ParameterUnsignedInt record marks that in the current region, the
+    specified unsigned integer parameter has the specified value.
+    """,
+    34,
+    'ParameterUnsignedInt',
+    ParameterAttribute(
+        """Parameter ID.""",
+        'parameter'
+    ),
+    Attribute(
+        """Value of the recorded parameter.""",
+        uint64_t,
+        'value'
+    ))
+
+EventRecord(
+    """An RmaWinCreate record denotes the creation of an RMA window.""",
+    35,
+    'RmaWinCreate',
+    RmaWinAttribute(
+        """ID of the window created.""",
+        'win'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaWinDestroy record denotes the destruction of an RMA window.""",
+    36,
+    'RmaWinDestroy',
+    RmaWinAttribute(
+        """ID of the window destructed.""",
+        'win'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaCollectiveBegin record denotes the beginnig of a collective RMA operation.""",
+    37,
+    'RmaCollectiveBegin',
+    since=Version(1,2))
+
+EventRecord(
+    """"An RmaCollectiveEnd record denotes the end of a collective RMA operation.""",
+    38,
+    'RmaCollectiveEnd',
+    CollectiveOpAttribute(
+        """Determines which collective operation it is."""
+    ),
+    RmaSyncLevelAttribute(
+        """Synchronization level of this collective operation.""",
+        'syncLevel'),
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Root process for this operation.""",
+        uint32_t,
+        'root'),
+    Attribute(
+        """Bytes sent in operation.""",
+        uint64_t,
+        'bytesSent'),
+    Attribute(
+        """Bytes receives in operation.""",
+        uint64_t,
+        'bytesReceived'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaGroupSync record denotes the synchronization with a subgroup of processes on a window.""",
+    39,
+    'RmaGroupSync',
+    RmaSyncLevelAttribute(
+        """Synchronization level of this collective operation.""",
+        'syncLevel'),
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    GroupAttribute(
+        """Group of remote processes involved in synchronization.""",
+        'group'),
+    since=Version(1,2))
+
+EventRecord(
+    """\
+        An RmaRequestLock record denotes the time a lock was requested and with
+        it the earliest time it could have been granted.  It is used to mark
+        (possibly) non-blocking lock request, as defined by the MPI standard.
+    """,
+    40,
+    'RmaRequestLock',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the locked remote process.""",
+        uint32_t,
+        'remote'),
+    Attribute(
+        """ID of the lock aquired, if multiple locks are defined on a window.""",
+        uint64_t,
+        'lockId'),
+    LockTypeAttribute(
+        """Type of lock aquired."""),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaAcquireLock record denotes the time a lock was aquired by the process.""",
+    41,
+    'RmaAcquireLock',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the locked remote process.""",
+        uint32_t,
+        'remote'),
+    Attribute(
+        """ID of the lock aquired, if multiple locks are defined on a window.""",
+        uint64_t,
+        'lockId'),
+    LockTypeAttribute(
+        """Type of lock aquired."""),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaTryLock record denotes the time of an unsuccessful attempt to acquire the lock.""",
+    42,
+    'RmaTryLock',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the locked remote process.""",
+        uint32_t,
+        'remote'),
+    Attribute(
+        """ID of the lock aquired, if multiple locks are defined on a window.""",
+        uint64_t,
+        'lockId'),
+    LockTypeAttribute(
+        """Type of lock aquired."""),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaReleaseLock record denotes the time the lock was released.""",
+    43,
+    'RmaReleaseLock',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the locked remote process.""",
+        uint32_t,
+        'remote'),
+    Attribute(
+        """ID of the lock released, if multiple locks are defined on a window.""",
+        uint64_t,
+        'lockId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaSync record denotes the direct synchronization with a possibly remote process.""",
+    44,
+    'RmaSync',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the locked remote process.""",
+        uint32_t,
+        'remote'),
+    RmaSyncTypeAttribute(
+        """Type of synchronization.""",
+        'syncType'),
+    since=Version(1,2))
+    
+EventRecord(
+    """An RmaWaitChange record denotes the change of a window that was waited for.""",
+    45,
+    'RmaWaitChange',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaPut record denotes the time a put operation was issued.""",
+    46,
+    'RmaPut',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the target process.""",
+        uint32_t,
+        'remote'),
+    Attribute(
+        """Bytes sent to target.""",
+        uint64_t,
+        'bytes'),
+    Attribute(
+        """ID used for matching the appropriate completion record.""",
+        uint64_t,
+        'matchingId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaGet record denotes the time a put operation was issued.""",
+    47,
+    'RmaGet',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the target process.""",
+        uint32_t,
+        'remote'),
+    Attribute(
+        """Bytes received from target.""",
+        uint64_t,
+        'bytes'),
+    Attribute(
+        """ID used for matching the appropriate completion record.""",
+        uint64_t,
+        'matchingId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaAtomic record denotes the time a atomic operation was issued.""",
+    48,
+    'RmaAtomic',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """Rank of the target process.""",
+        uint32_t,
+        'remote'),
+    RmaAtomicTypeAttribute(
+        """Type of atomic operation.""",
+        'type'),
+    Attribute(
+        """Bytes sent to target.""",
+        uint64_t,
+        'bytesSent'),
+    Attribute(
+        """Bytes received from target.""",
+        uint64_t,
+        'bytesReceived'),
+    Attribute(
+        """ID used for matching the appropriate completion record.""",
+        uint64_t,
+        'matchingId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaOpCompleteBlocking record denotes the local completion of a blocking RMA operation.""",
+    49,
+    'RmaOpCompleteBlocking',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """ID used for matching the appropriate completion record.""",
+        uint64_t,
+        'matchingId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaOpCompleteNonBlocking record denotes the local completion of a non-blocking RMA operation.""",
+    50,
+    'RmaOpCompleteNonBlocking',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """ID used for matching the appropriate completion record.""",
+        uint64_t,
+        'matchingId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaOpTest record denotes that a non-blocking RMA operation has been tested for completion unsuccessfully.""",
+    51,
+    'RmaOpTest',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """ID used for matching the appropriate completion record.""",
+        uint64_t,
+        'matchingId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An RmaOpCompleteRemote record denotes the local completion of an RMA operation.""",
+    52,
+    'RmaOpCompleteRemote',
+    RmaWinAttribute(
+        """ID of the window used for this operation.""",
+        'win'),
+    Attribute(
+        """ID used for matching the appropriate completion record.""",
+        uint64_t,
+        'matchingId'),
+    since=Version(1,2))
+
+EventRecord(
+    """An ThreadFork record marks that an thread forks a thread team.""",
+    53,
+    'ThreadFork',
+    ParadigmAttribute(
+        """""",
+        'model'
+    ),
+    Attribute(
+        """Requested size of the team.""",
+        uint32_t,
+        'numberOfRequestedThreads'
+    ),
+    since=Version(1,2),
+    alternative_event=OmpForkRecord)
+
+EventRecord(
+    """\
+    An ThreadJoin record marks that a team of threads is joint and only the master
+    thread continues execution.
+    """,
+    54,
+    'ThreadJoin',
+    ParadigmAttribute(
+        """""",
+        'model'
+    ),
+    since=Version(1,2),
+    alternative_event=OmpJoinRecord)
+
+EventRecord(
+    """""",
+    55,
+    'ThreadTeamBegin',
+    CommAttribute(
+        """Thread team""",
+        'threadTeam'
+    ),
+    since=Version(1,2))
+
+EventRecord(
+    """""",
+    56,
+    'ThreadTeamEnd',
+    CommAttribute(
+        """Thread team""",
+        'threadTeam'
+    ),
+    since=Version(1,2))
+
+EventRecord(
+    """An ThreadAcquireLock record marks that a thread acquires an lock.""",
+    57,
+    'ThreadAcquireLock',
+    ParadigmAttribute(
+        """""",
+        'model'
+    ),
+    Attribute(
+        """ID of the lock.""",
+        uint32_t,
+        'lockID'
+    ),
+    Attribute(
+        """\
+        A monotonically increasing number to determine the order of lock
+        acquisitions (with unsynchronized clocks this is otherwise not
+        possible). Corresponding acquire-release events have same number.
+        """,
+        uint32_t,
+        'acquisitionOrder'
+    ),
+    since=Version(1,2),
+    alternative_event=OmpAcquireLockRecord)
+
+EventRecord(
+    """An ThreadReleaseLock record marks that a thread releases an lock.""",
+    58,
+    'ThreadReleaseLock',
+    ParadigmAttribute(
+        """""",
+        'model'
+    ),
+    Attribute(
+        """ID of the lock.""",
+        uint32_t,
+        'lockID'
+    ),
+    Attribute(
+        """\
+        A monotonically increasing number to determine the order of lock
+        acquisitions (with unsynchronized clocks this is otherwise not
+        possible). Corresponding acquire-release events have same number.
+        """,
+        uint32_t,
+        'acquisitionOrder'
+    ),
+    since=Version(1,2),
+    alternative_event=OmpReleaseLockRecord)
+
+EventRecord(
+    """\
+    An ThreadTaskCreate record marks that an task in was/will be created and
+    will be processed by the specified thread team.
+    """,
+    59,
+    'ThreadTaskCreate',
+    CommAttribute(
+        """Thread team""",
+        'threadTeam'
+    ),
+    Attribute(
+        """Creating thread of this task. (This is redundant, remove?)""",
+        uint32_t,
+        'creatingThread'
+    ),
+    Attribute(
+        """Thread-private generation number of task's creating thread.""",
+        uint32_t,
+        'generationNumber'
+    ),
+    since=Version(1,2))
+
+EventRecord(
+    """\
+    An ThreadTaskSwitch record indicates that the execution of the current task
+    will be suspended and another task starts/restarts its execution.
+    Please note that this may change the current call stack of the executing
+    location.
+    """,
+    60,
+    'ThreadTaskSwitch',
+    CommAttribute(
+        """Thread team""",
+        'threadTeam'
+    ),
+    Attribute(
+        """Creating thread of this task.""",
+        uint32_t,
+        'creatingThread'
+    ),
+    Attribute(
+        """Thread-private generation number of task's creating thread.""",
+        uint32_t,
+        'generationNumber'
+    ),
+    since=Version(1,2))
+
+EventRecord(
+    """\
+    An ThreadTaskComplete record indicates that the execution of an OpenMP task
+    has finished.
+    """,
+    61,
+    'ThreadTaskComplete',
+    CommAttribute(
+        """Thread team""",
+        'threadTeam'
+    ),
+    Attribute(
+        """Creating thread of this task.""",
+        uint32_t,
+        'creatingThread'
+    ),
+    Attribute(
+        """Thread-private generation number of task's creating thread.""",
+        uint32_t,
+        'generationNumber'
+    ),
+    since=Version(1,2))

@@ -1,0 +1,344 @@
+## -*- mode: makefile -*-
+
+## 
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2013,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       Makefile.inc.am
+
+
+self_contained_public_headers_cppflags = \
+    -I$(BUILD_PUBLIC_INC_DIR) \
+    -I$(PUBLIC_INC_DIR)
+
+check_PROGRAMS += self_contained_public_header_OTF2_Archive_cxx
+self_contained_public_header_OTF2_Archive_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_Archive.cpp
+self_contained_public_header_OTF2_Archive_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_AttributeList_cxx
+self_contained_public_header_OTF2_AttributeList_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_AttributeList.cpp
+self_contained_public_header_OTF2_AttributeList_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_IdMap_cxx
+self_contained_public_header_OTF2_IdMap_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_IdMap.cpp
+self_contained_public_header_OTF2_IdMap_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_Callbacks_cxx
+self_contained_public_header_OTF2_Callbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_Callbacks.cpp
+self_contained_public_header_OTF2_Callbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_Definitions_cxx
+self_contained_public_header_OTF2_Definitions_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_Definitions.cpp
+self_contained_public_header_OTF2_Definitions_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_DefReaderCallbacks_cxx
+self_contained_public_header_OTF2_DefReaderCallbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_DefReaderCallbacks.cpp
+self_contained_public_header_OTF2_DefReaderCallbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_DefReader_cxx
+self_contained_public_header_OTF2_DefReader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_DefReader.cpp
+self_contained_public_header_OTF2_DefReader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_DefWriter_cxx
+self_contained_public_header_OTF2_DefWriter_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_DefWriter.cpp
+self_contained_public_header_OTF2_DefWriter_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_Events_cxx
+self_contained_public_header_OTF2_Events_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_Events.cpp
+self_contained_public_header_OTF2_Events_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_EvtReaderCallbacks_cxx
+self_contained_public_header_OTF2_EvtReaderCallbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_EvtReaderCallbacks.cpp
+self_contained_public_header_OTF2_EvtReaderCallbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_EvtReader_cxx
+self_contained_public_header_OTF2_EvtReader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_EvtReader.cpp
+self_contained_public_header_OTF2_EvtReader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_EvtWriter_cxx
+self_contained_public_header_OTF2_EvtWriter_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_EvtWriter.cpp
+self_contained_public_header_OTF2_EvtWriter_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_SnapReaderCallbacks_cxx
+self_contained_public_header_OTF2_SnapReaderCallbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_SnapReaderCallbacks.cpp
+self_contained_public_header_OTF2_SnapReaderCallbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_SnapReader_cxx
+self_contained_public_header_OTF2_SnapReader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_SnapReader.cpp
+self_contained_public_header_OTF2_SnapReader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_SnapWriter_cxx
+self_contained_public_header_OTF2_SnapWriter_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_SnapWriter.cpp
+self_contained_public_header_OTF2_SnapWriter_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GeneralDefinitions_cxx
+self_contained_public_header_OTF2_GeneralDefinitions_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GeneralDefinitions.cpp
+self_contained_public_header_OTF2_GeneralDefinitions_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GlobalDefReaderCallbacks_cxx
+self_contained_public_header_OTF2_GlobalDefReaderCallbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GlobalDefReaderCallbacks.cpp
+self_contained_public_header_OTF2_GlobalDefReaderCallbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GlobalDefReader_cxx
+self_contained_public_header_OTF2_GlobalDefReader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GlobalDefReader.cpp
+self_contained_public_header_OTF2_GlobalDefReader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GlobalDefWriter_cxx
+self_contained_public_header_OTF2_GlobalDefWriter_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GlobalDefWriter.cpp
+self_contained_public_header_OTF2_GlobalDefWriter_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GlobalEvtReaderCallbacks_cxx
+self_contained_public_header_OTF2_GlobalEvtReaderCallbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GlobalEvtReaderCallbacks.cpp
+self_contained_public_header_OTF2_GlobalEvtReaderCallbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GlobalEvtReader_cxx
+self_contained_public_header_OTF2_GlobalEvtReader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GlobalEvtReader.cpp
+self_contained_public_header_OTF2_GlobalEvtReader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GlobalSnapReaderCallbacks_cxx
+self_contained_public_header_OTF2_GlobalSnapReaderCallbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GlobalSnapReaderCallbacks.cpp
+self_contained_public_header_OTF2_GlobalSnapReaderCallbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_GlobalSnapReader_cxx
+self_contained_public_header_OTF2_GlobalSnapReader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_GlobalSnapReader.cpp
+self_contained_public_header_OTF2_GlobalSnapReader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_Reader_cxx
+self_contained_public_header_OTF2_Reader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_Reader.cpp
+self_contained_public_header_OTF2_Reader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_Thumbnail_cxx
+self_contained_public_header_OTF2_Thumbnail_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_Thumbnail.cpp
+self_contained_public_header_OTF2_Thumbnail_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_Marker_cxx
+self_contained_public_header_OTF2_Marker_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_Marker.cpp
+self_contained_public_header_OTF2_Marker_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_MarkerReaderCallbacks_cxx
+self_contained_public_header_OTF2_MarkerReaderCallbacks_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_MarkerReaderCallbacks.cpp
+self_contained_public_header_OTF2_MarkerReaderCallbacks_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_MarkerReader_cxx
+self_contained_public_header_OTF2_MarkerReader_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_MarkerReader.cpp
+self_contained_public_header_OTF2_MarkerReader_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_OTF2_MarkerWriter_cxx
+self_contained_public_header_OTF2_MarkerWriter_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_OTF2_MarkerWriter.cpp
+self_contained_public_header_OTF2_MarkerWriter_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_otf2_cxx
+self_contained_public_header_otf2_cxx_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_otf2.cpp
+self_contained_public_header_otf2_cxx_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+check_PROGRAMS += self_contained_public_header_otf2_c
+self_contained_public_header_otf2_c_SOURCES = $(SRC_ROOT)test/public_headers/self_contained_public_header_otf2.c
+self_contained_public_header_otf2_c_CPPFLAGS = $(self_contained_public_headers_cppflags)
+
+CC_COMPILE_OTF2=$(CC) $(CPPFLAGS) $(CFLAGS) `$(DESTDIR)$(bindir)/otf2-config --cflags` -c -o $@ $<
+CC_LINK_OTF2=$(CC) $(CPPFLAGS) $(CFLAGS) `$(DESTDIR)$(bindir)/otf2-config --ldflags` `$(DESTDIR)$(bindir)/otf2-config --libs` $^ -o $@
+
+CXX_COMPILE_OTF2=$(CXX) $(CPPFLAGS) $(CXXFLAGS) `$(DESTDIR)$(bindir)/otf2-config --cflags` -c -o $@ $<
+CXX_LINK_OTF2=$(CXX) $(CPPFLAGS) $(CXXFLAGS) `$(DESTDIR)$(bindir)/otf2-config --ldflags` `$(DESTDIR)$(bindir)/otf2-config --libs` $^ -o $@
+
+installcheck_public_headers = installcheck_public_header_OTF2_Archive_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_AttributeList_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_IdMap_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_Callbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_Definitions_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_DefReaderCallbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_DefReader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_DefWriter_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_Events_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_EvtReaderCallbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_EvtReader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_EvtWriter_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_SnapReaderCallbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_SnapReader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_SnapWriter_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GeneralDefinitions_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GlobalDefReaderCallbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GlobalDefReader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GlobalDefWriter_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GlobalEvtReaderCallbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GlobalEvtReader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GlobalSnapReaderCallbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_GlobalSnapReader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_Reader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_Thumbnail_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_Marker_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_MarkerReaderCallbacks_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_MarkerReader_cxx$(EXEEXT) \
+	installcheck_public_header_OTF2_MarkerWriter_cxx$(EXEEXT) \
+	installcheck_public_header_otf2_cxx$(EXEEXT) \
+	installcheck_public_header_otf2_c$(EXEEXT)
+
+installcheck-public-headers: $(installcheck_public_headers)
+
+installcheck_public_header_OTF2_Archive_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_Archive.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_Archive_cxx$(EXEEXT): installcheck_public_header_OTF2_Archive_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_AttributeList_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_AttributeList.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_AttributeList_cxx$(EXEEXT): installcheck_public_header_OTF2_AttributeList_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_IdMap_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_IdMap.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_IdMap_cxx$(EXEEXT): installcheck_public_header_OTF2_IdMap_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_Callbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_Callbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_Callbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_Callbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_Definitions_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_Definitions.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_Definitions_cxx$(EXEEXT): installcheck_public_header_OTF2_Definitions_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_DefReaderCallbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_DefReaderCallbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_DefReaderCallbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_DefReaderCallbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_DefReader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_DefReader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_DefReader_cxx$(EXEEXT): installcheck_public_header_OTF2_DefReader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_DefWriter_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_DefWriter.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_DefWriter_cxx$(EXEEXT): installcheck_public_header_OTF2_DefWriter_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_Events_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_Events.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_Events_cxx$(EXEEXT): installcheck_public_header_OTF2_Events_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_EvtReaderCallbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_EvtReaderCallbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_EvtReaderCallbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_EvtReaderCallbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_EvtReader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_EvtReader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_EvtReader_cxx$(EXEEXT): installcheck_public_header_OTF2_EvtReader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_EvtWriter_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_EvtWriter.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_EvtWriter_cxx$(EXEEXT): installcheck_public_header_OTF2_EvtWriter_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_SnapReaderCallbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_SnapReaderCallbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_SnapReaderCallbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_SnapReaderCallbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_SnapReader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_SnapReader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_SnapReader_cxx$(EXEEXT): installcheck_public_header_OTF2_SnapReader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_SnapWriter_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_SnapWriter.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_SnapWriter_cxx$(EXEEXT): installcheck_public_header_OTF2_SnapWriter_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GeneralDefinitions_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GeneralDefinitions.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GeneralDefinitions_cxx$(EXEEXT): installcheck_public_header_OTF2_GeneralDefinitions_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GlobalDefReaderCallbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GlobalDefReaderCallbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GlobalDefReaderCallbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_GlobalDefReaderCallbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GlobalDefReader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GlobalDefReader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GlobalDefReader_cxx$(EXEEXT): installcheck_public_header_OTF2_GlobalDefReader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GlobalDefWriter_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GlobalDefWriter.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GlobalDefWriter_cxx$(EXEEXT): installcheck_public_header_OTF2_GlobalDefWriter_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GlobalEvtReaderCallbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GlobalEvtReaderCallbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GlobalEvtReaderCallbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_GlobalEvtReaderCallbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GlobalEvtReader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GlobalEvtReader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GlobalEvtReader_cxx$(EXEEXT): installcheck_public_header_OTF2_GlobalEvtReader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GlobalSnapReaderCallbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GlobalSnapReaderCallbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GlobalSnapReaderCallbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_GlobalSnapReaderCallbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_GlobalSnapReader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_GlobalSnapReader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_GlobalSnapReader_cxx$(EXEEXT): installcheck_public_header_OTF2_GlobalSnapReader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_Reader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_Reader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_Reader_cxx$(EXEEXT): installcheck_public_header_OTF2_Reader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_Thumbnail_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_Thumbnail.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_Thumbnail_cxx$(EXEEXT): installcheck_public_header_OTF2_Thumbnail_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_Marker_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_Marker.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_Marker_cxx$(EXEEXT): installcheck_public_header_OTF2_Marker_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_MarkerReaderCallbacks_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_MarkerReaderCallbacks.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_MarkerReaderCallbacks_cxx$(EXEEXT): installcheck_public_header_OTF2_MarkerReaderCallbacks_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_MarkerReader_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_MarkerReader.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_MarkerReader_cxx$(EXEEXT): installcheck_public_header_OTF2_MarkerReader_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_OTF2_MarkerWriter_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_OTF2_MarkerWriter.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_OTF2_MarkerWriter_cxx$(EXEEXT): installcheck_public_header_OTF2_MarkerWriter_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_otf2_cxx.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_otf2.cpp
+	$(AM_V_CXX)$(CXX_COMPILE_OTF2)
+installcheck_public_header_otf2_cxx$(EXEEXT): installcheck_public_header_otf2_cxx.$(OBJEXT)
+	$(AM_V_CXXLD)$(CXX_LINK_OTF2)
+
+installcheck_public_header_otf2_c.$(OBJEXT): $(srcdir)/../test/public_headers/self_contained_public_header_otf2.c
+	$(AM_V_CC)$(CC_COMPILE_OTF2)
+installcheck_public_header_otf2_c$(EXEEXT): installcheck_public_header_otf2_c.$(OBJEXT)
+	$(AM_V_CCLD)$(CC_LINK_OTF2)
+
+DISTCLEANFILES += $(installcheck_public_headers)

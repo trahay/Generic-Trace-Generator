@@ -1,0 +1,50 @@
+diff -aburN otf2-1.2.1/build-config/VERSION otf2/build-config/VERSION
+--- otf2-1.2.1/build-config/VERSION	2013-09-18 11:34:17.000000000 +0200
++++ otf2/build-config/VERSION	2013-09-23 17:05:15.738881512 +0200
+@@ -1,17 +1 @@
+-Specify package and library interface version here. The package version has
+-merely marketing character and is the version encoded in the tarball. Much
+-more important is the library interface version as it is crucial for dynamic
+-(re)linking. Please CAREFULLY READ following documents before adjusting the
+-library interface version:
+-
+-    https://www.gnu.org/software/libtool/manual/libtool.html#Versioning
+-    http://sourceware.org/autobook/autobook/autobook_91.html#SEC91
+-
+-package.major=1
+-package.minor=2
+-package.bugfix=1
+-package.suffix=
+-
+-library.current=3
+-library.revision=0
+-library.age=0
++1.2.1
+\ No newline at end of file
+diff -aburN otf2-1.2.1/vendor/common/build-config/generate-library-version.sh otf2/vendor/common/build-config/generate-library-version.sh
+--- otf2-1.2.1/vendor/common/build-config/generate-library-version.sh	1970-01-01 01:00:00.000000000 +0100
++++ otf2/vendor/common/build-config/generate-library-version.sh	2013-09-23 17:05:15.762882487 +0200
+@@ -0,0 +1,9 @@
++#!/bin/sh
++
++res=`cat $1`
++if [ $# -gt 1 ] ; then
++    IFS=. read current revision age < $1
++    eval $2
++else
++    echo -n $res
++fi
+diff -aburN otf2-1.2.1/vendor/common/build-config/generate-package-version.sh otf2/vendor/common/build-config/generate-package-version.sh
+--- otf2-1.2.1/vendor/common/build-config/generate-package-version.sh	1970-01-01 01:00:00.000000000 +0100
++++ otf2/vendor/common/build-config/generate-package-version.sh	2013-09-23 17:05:15.758882324 +0200
+@@ -0,0 +1,9 @@
++#!/bin/sh
++
++res=`cat $1`
++if [ $# -gt 1 ] ; then
++    IFS=. read major minor bugfix < $1
++    eval $2
++else
++    echo -n $res
++fi
+\ No newline at end of file

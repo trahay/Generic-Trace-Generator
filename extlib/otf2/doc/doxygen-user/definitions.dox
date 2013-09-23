@@ -1,0 +1,3067 @@
+/**
+ *  @page definition_records List of all definition records
+ *
+ *
+ *  @dot
+ *  digraph otf2_definitions {
+ *      rankdir = BT;
+ *      bgcolor = "transparent";
+ *      edge [arrowhead="open", style="dashed", fontname=FreeSans, fontsize=8]
+ *      node [shape=record, fontname=FreeSans, fontsize=10];
+ *      String [
+ *          label="String",
+ *          href="@ref String"
+ *      ];
+ *      Attribute [
+ *          label="Attribute",
+ *          href="@ref Attribute"
+ *      ];
+ *      Attribute -> String [
+ *          label="name",
+ *          href="@ref Attribute_name"
+ *      ];
+ *      SystemTreeNode [
+ *          label="SystemTreeNode",
+ *          href="@ref SystemTreeNode"
+ *      ];
+ *      SystemTreeNode -> String [
+ *          label="name",
+ *          href="@ref SystemTreeNode_name"
+ *      ];
+ *      SystemTreeNode -> String [
+ *          label="className",
+ *          href="@ref SystemTreeNode_className"
+ *      ];
+ *      SystemTreeNode -> SystemTreeNode [
+ *          label="parent",
+ *          href="@ref SystemTreeNode_parent"
+ *      ];
+ *      LocationGroup [
+ *          label="LocationGroup",
+ *          href="@ref LocationGroup"
+ *      ];
+ *      LocationGroup -> String [
+ *          label="name",
+ *          href="@ref LocationGroup_name"
+ *      ];
+ *      LocationGroup -> SystemTreeNode [
+ *          label="systemTreeParent",
+ *          href="@ref LocationGroup_systemTreeParent"
+ *      ];
+ *      Location [
+ *          label="Location",
+ *          href="@ref Location"
+ *      ];
+ *      Location -> String [
+ *          label="name",
+ *          href="@ref Location_name"
+ *      ];
+ *      Location -> LocationGroup [
+ *          label="locationGroup",
+ *          href="@ref Location_locationGroup"
+ *      ];
+ *      Region [
+ *          label="Region",
+ *          href="@ref Region"
+ *      ];
+ *      Region -> String [
+ *          label="name",
+ *          href="@ref Region_name"
+ *      ];
+ *      Region -> String [
+ *          label="canonicalName",
+ *          href="@ref Region_canonicalName"
+ *      ];
+ *      Region -> String [
+ *          label="description",
+ *          href="@ref Region_description"
+ *      ];
+ *      Region -> String [
+ *          label="sourceFile",
+ *          href="@ref Region_sourceFile"
+ *      ];
+ *      Callsite [
+ *          label="Callsite",
+ *          href="@ref Callsite"
+ *      ];
+ *      Callsite -> String [
+ *          label="sourceFile",
+ *          href="@ref Callsite_sourceFile"
+ *      ];
+ *      Callsite -> Region [
+ *          label="enteredRegion",
+ *          href="@ref Callsite_enteredRegion"
+ *      ];
+ *      Callsite -> Region [
+ *          label="leftRegion",
+ *          href="@ref Callsite_leftRegion"
+ *      ];
+ *      Callpath [
+ *          label="Callpath",
+ *          href="@ref Callpath"
+ *      ];
+ *      Callpath -> Callpath [
+ *          label="parent",
+ *          href="@ref Callpath_parent"
+ *      ];
+ *      Callpath -> Region [
+ *          label="region",
+ *          href="@ref Callpath_region"
+ *      ];
+ *      Group [
+ *          label="Group",
+ *          href="@ref Group"
+ *      ];
+ *      Group -> String [
+ *          label="name",
+ *          href="@ref Group_name"
+ *      ];
+ *      Group -> Location [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_LOCATIONS or groupType == OTF2_GROUP_TYPE_MPI_LOCATIONS",
+ *          href="@ref Group_members"
+ *      ];
+ *      Group -> Region [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_REGIONS",
+ *          href="@ref Group_members"
+ *      ];
+ *      Group -> MetricClass [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_METRIC",
+ *          href="@ref Group_members"
+ *      ];
+ *      Group -> MetricInstance [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_METRIC",
+ *          href="@ref Group_members"
+ *      ];
+ *      MetricMember [
+ *          label="MetricMember",
+ *          href="@ref MetricMember"
+ *      ];
+ *      MetricMember -> String [
+ *          label="name",
+ *          href="@ref MetricMember_name"
+ *      ];
+ *      MetricMember -> String [
+ *          label="description",
+ *          href="@ref MetricMember_description"
+ *      ];
+ *      MetricMember -> String [
+ *          label="unit",
+ *          href="@ref MetricMember_unit"
+ *      ];
+ *      MetricClass [
+ *          label="MetricClass",
+ *          href="@ref MetricClass"
+ *      ];
+ *      MetricClass -> MetricMember [
+ *          label="metricMembers",
+ *          href="@ref MetricClass_metricMembers"
+ *      ];
+ *      MetricInstance [
+ *          label="MetricInstance",
+ *          href="@ref MetricInstance"
+ *      ];
+ *      MetricInstance -> MetricClass [
+ *          label="metricClass",
+ *          href="@ref MetricInstance_metricClass"
+ *      ];
+ *      MetricInstance -> Location [
+ *          label="recorder",
+ *          href="@ref MetricInstance_recorder"
+ *      ];
+ *      MetricInstance -> Location [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_LOCATION",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+ *      MetricInstance -> LocationGroup [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_LOCATION_GROUP",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+ *      MetricInstance -> SystemTreeNode [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_SYSTEM_TREE_NODE",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+ *      MetricInstance -> Group [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_GROUP",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+ *      Comm [
+ *          label="Comm",
+ *          href="@ref Comm"
+ *      ];
+ *      Comm -> String [
+ *          label="name",
+ *          href="@ref Comm_name"
+ *      ];
+ *      Comm -> Group [
+ *          label="group",
+ *          href="@ref Comm_group"
+ *      ];
+ *      Comm -> Comm [
+ *          label="parent",
+ *          href="@ref Comm_parent"
+ *      ];
+ *      Parameter [
+ *          label="Parameter",
+ *          href="@ref Parameter"
+ *      ];
+ *      Parameter -> String [
+ *          label="name",
+ *          href="@ref Parameter_name"
+ *      ];
+ *      RmaWin [
+ *          label="RmaWin",
+ *          href="@ref RmaWin"
+ *      ];
+ *      RmaWin -> String [
+ *          label="name",
+ *          href="@ref RmaWin_name"
+ *      ];
+ *      RmaWin -> Comm [
+ *          label="comm",
+ *          href="@ref RmaWin_comm"
+ *      ];
+ *  }
+ *  @enddot
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor ClockProperties
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[ClockProperties]{%
+ *   @endlatexonly
+ *      ClockProperties
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ * @endif
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  Defines the timer resolution and time range of this trace. There will
+ *  be no event with a timestamp less than @a globalOffset, and no
+ *  event with timestamp greater than (@a globalOffset + @a
+ *  traceLength).
+ *
+ *  This definition is only valid as a global definition.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ClockProperties_timerResolution
+ *        timerResolution @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Ticks per seconds. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ClockProperties_globalOffset
+ *        globalOffset @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A timestamp smaller than all event timestamps. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ClockProperties_traceLength
+ *        traceLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A timespan which includes the timespan between the smallest and
+ *      greatest timestamp of all event timestamps. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteClockProperties()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor MappingTable
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[MappingTable]{%
+ *   @endlatexonly
+ *      MappingTable
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ * @endif
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  Mapping tables are needed for situations where an ID is not globally
+ *  known at measurement time. They are applied automatically at
+ *  reading.
+ *
+ *  This definition is only valid as a local definition.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MappingType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MappingTable_mappingType
+ *        mappingType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Says to what type of ID the mapping table has to be applied. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        const OTF2_IdMap* @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MappingTable_idMap
+ *        idMap @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Mapping table. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_DefWriter_WriteMappingTable()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor ClockOffset
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[ClockOffset]{%
+ *   @endlatexonly
+ *      ClockOffset
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ * @endif
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  Clock offsets are used for clock corrections.
+ *
+ *  This definition is only valid as a local definition.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ClockOffset_time
+ *        time @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Time when this offset was determined. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        int64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ClockOffset_offset
+ *        offset @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The offset to the global clock which was determined at @a time. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        double @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ClockOffset_standardDeviation
+ *        standardDeviation @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A possible standard deviation, which can be used as a metric for the
+ *      quality of the offset. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_DefWriter_WriteClockOffset()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor String
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[String]{%
+ *   @endlatexonly
+ *      @ref OTF2_StringRef String
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        const char* @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor String_string
+ *        string @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The string, null terminated. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteString()
+ *  @see OTF2_DefWriter_WriteString()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Attribute
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Attribute]{%
+ *   @endlatexonly
+ *      @ref OTF2_AttributeRef Attribute
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Attribute_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of the attribute. References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Type @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Attribute_type
+ *        type @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of the attribute value. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteAttribute()
+ *  @see OTF2_DefWriter_WriteAttribute()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor SystemTreeNode
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[SystemTreeNode]{%
+ *   @endlatexonly
+ *      @ref OTF2_SystemTreeNodeRef SystemTreeNode
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNode_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Free form instance name of this node. References a @ref String
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNode_className
+ *        className @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Free form class name of this node References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_SystemTreeNodeRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNode_parent
+ *        parent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parent id of this node. May be @eref{OTF2_UNDEFINED_SYSTEM_TREE_NODE}
+ *      to indicate that there is no parent. References a @ref
+ *      SystemTreeNode definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteSystemTreeNode()
+ *  @see OTF2_DefWriter_WriteSystemTreeNode()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor LocationGroup
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[LocationGroup]{%
+ *   @endlatexonly
+ *      @ref OTF2_LocationGroupRef LocationGroup
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor LocationGroup_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of the group. References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationGroupType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor LocationGroup_locationGroupType
+ *        locationGroupType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of this group. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_SystemTreeNodeRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor LocationGroup_systemTreeParent
+ *        systemTreeParent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parent of this location group in the system tree. References a @ref
+ *      SystemTreeNode definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteLocationGroup()
+ *  @see OTF2_DefWriter_WriteLocationGroup()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Location
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Location]{%
+ *   @endlatexonly
+ *      @ref OTF2_LocationRef Location
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Location_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of the location References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Location_locationType
+ *        locationType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Location type. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Location_numberOfEvents
+ *        numberOfEvents @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Number of events this location has recorded. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationGroupRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Location_locationGroup
+ *        locationGroup @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Location group which includes this location. References a @ref
+ *      LocationGroup definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteLocation()
+ *  @see OTF2_DefWriter_WriteLocation()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Region
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Region]{%
+ *   @endlatexonly
+ *      @ref OTF2_RegionRef Region
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of the region (demangled name if available). References a @ref
+ *      String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_canonicalName
+ *        canonicalName @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Alternative name of the region (e.g. mangled name). References a @ref
+ *      String definition. Since version 1.1. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_description
+ *        description @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A more detailed description of this region. References a @ref String
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionRole @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_regionRole
+ *        regionRole @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Region role. Since version 1.1. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_paradigm
+ *        paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Paradigm. Since version 1.1. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionFlag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_regionFlags
+ *        regionFlags @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Region flags. Since version 1.1. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_sourceFile
+ *        sourceFile @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The source file where this region was declared. References a @ref
+ *      String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_beginLineNumber
+ *        beginLineNumber @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Starting line number of this region in the source file. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Region_endLineNumber
+ *        endLineNumber @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Ending line number of this region in the source file. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteRegion()
+ *  @see OTF2_DefWriter_WriteRegion()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Callsite
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Callsite]{%
+ *   @endlatexonly
+ *      @ref OTF2_CallsiteRef Callsite
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Callsite_sourceFile
+ *        sourceFile @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The source file where this call was made. References a @ref String
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Callsite_lineNumber
+ *        lineNumber @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Line number in the source file where this call was made. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Callsite_enteredRegion
+ *        enteredRegion @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The region which was called. References a @ref Region definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Callsite_leftRegion
+ *        leftRegion @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The region which made the call. References a @ref Region definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteCallsite()
+ *  @see OTF2_DefWriter_WriteCallsite()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Callpath
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Callpath]{%
+ *   @endlatexonly
+ *      @ref OTF2_CallpathRef Callpath
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CallpathRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Callpath_parent
+ *        parent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *       References a @ref Callpath definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Callpath_region
+ *        region @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *       References a @ref Region definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteCallpath()
+ *  @see OTF2_DefWriter_WriteCallpath()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Group
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Group]{%
+ *   @endlatexonly
+ *      @ref OTF2_GroupRef Group
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Group_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of this group References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_GroupType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Group_groupType
+ *        groupType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The type of this group. Since version 1.2. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Group_paradigm
+ *        paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The paradigm of this communication group. Since version 1.2. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_GroupFlag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Group_groupFlags
+ *        groupFlags @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Flags for this group. Since version 1.2. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Group_numberOfMembers
+ *        numberOfMembers @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The number of members in this group. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Group_members
+ *        members @hblack{[} numberOfMembers @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The identifiers of the group members. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteGroup()
+ *  @see OTF2_DefWriter_WriteGroup()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor MetricMember
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[MetricMember]{%
+ *   @endlatexonly
+ *      @ref OTF2_MetricMemberRef MetricMember
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A metric is defined by a metric member definition. A metric member is
+ *  always a member of a metric class. Therefore, a single metric is a
+ *  special case of a metric class with only one member. It is not
+ *  allowed to reference a metric member id in a metric event, but
+ *  only metric class IDs.
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of the metric. References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_description
+ *        description @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Description of the metric. References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_metricType
+ *        metricType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Metric type: PAPI, etc. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricMode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_metricMode
+ *        metricMode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Metric mode: accumulative, fix, relative, etc. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Type @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_valueType
+ *        valueType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of the value: int64_t, uint64_t, or double. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricBase @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_metricBase
+ *        metricBase @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The recorded values should be handled in this given base, either
+ *      binary or decimal. This information can be used if the value
+ *      needs to be scaled. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        int64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_exponent
+ *        exponent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The values inside the Metric events should be scaled by the factor
+ *      base^exponent, to get the value in its base unit. For example,
+ *      if the metric values come in as KiBi, than the base should be
+ *      @eref{OTF2_BASE_BINARY} and the exponent 10. Than the writer
+ *      does not need to scale the values up to bytes, but can
+ *      directly write the KiBi values into the Metric event. At
+ *      reading time, the reader can apply the scaling factor to get
+ *      the value in its base unit, ie. in bytes. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricMember_unit
+ *        unit @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Unit of the metric. This needs to be the scale free base unit, ie.
+ *      "bytes", "operations", or "seconds". In particular this unit
+ *      should not have any scale prefix. References a @ref String
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteMetricMember()
+ *  @see OTF2_DefWriter_WriteMetricMember()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor MetricClass
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[MetricClass]{%
+ *   @endlatexonly
+ *      @ref OTF2_MetricRef MetricClass
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  For a metric class it is implicitly given that the event stream that
+ *  records the metric is also the scope. A metric class can contain
+ *  multiple different metrics.
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint8_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricClass_numberOfMetrics
+ *        numberOfMetrics @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Number of metrics within the set. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricMemberRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricClass_metricMembers
+ *        metricMembers @hblack{[} numberOfMetrics @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      List of metric members. References a @ref MetricMember definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricOccurrence @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricClass_metricOccurrence
+ *        metricOccurrence @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Defines occurrence of a metric set. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RecorderKind @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricClass_recorderKind
+ *        recorderKind @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      What kind of locations will record this metric class, or will this
+ *      metric class only be recorded by metric instances. Since
+ *      version 1.2. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteMetricClass()
+ *  @see OTF2_DefWriter_WriteMetricClass()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor MetricInstance
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[MetricInstance]{%
+ *   @endlatexonly
+ *      @ref OTF2_MetricRef MetricInstance
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A metric instance is used to define metrics that are recorded at one
+ *  location for multiple locations or for another location. The
+ *  occurrence of a metric instance is implicitly of type
+ *  @eref{OTF2_METRIC_ASYNCHRONOUS}.
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricInstance_metricClass
+ *        metricClass @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The instanced @eref{MetricClass}. This metric class must be of kind
+ *      @eref{OTF2_RECORDER_KIND_ABSTRACT}. References a @ref
+ *      MetricClass definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricInstance_recorder
+ *        recorder @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Recorder of the metric: location ID. References a @ref Location
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricScope @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricInstance_metricScope
+ *        metricScope @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Defines type of scope: location, location group, system tree node, or
+ *      a generic group of locations. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricInstance_scope
+ *        scope @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Scope of metric: ID of a location, location group, system tree node,
+ *      or a generic group of locations. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteMetricInstance()
+ *  @see OTF2_DefWriter_WriteMetricInstance()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Comm
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Comm]{%
+ *   @endlatexonly
+ *      @ref OTF2_CommRef Comm
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Comm_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The name given by calling MPI_Comm_set_name on this communicator. Or
+ *      the empty name to indicate that no name was given. References
+ *      a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_GroupRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Comm_group
+ *        group @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The describing MPI group of this MPI communicator
+ *
+ *      The group needs to be of type @eref{OTF2_GROUP_TYPE_MPI_GROUP} or
+ *      @eref{OTF2_GROUP_TYPE_MPI_COMM_SELF}. References a @ref Group
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Comm_parent
+ *        parent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The parent MPI communicator from which this communicator was created,
+ *      if any. Use @eref{OTF2_UNDEFINED_COMM} to indicate no parent.
+ *      References a @ref Comm definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteComm()
+ *  @see OTF2_DefWriter_WriteComm()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor Parameter
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[Parameter]{%
+ *   @endlatexonly
+ *      @ref OTF2_ParameterRef Parameter
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Parameter_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of the parameter (variable name etc.) References a @ref String
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_ParameterType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Parameter_parameterType
+ *        parameterType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of the parameter, @eref{OTF2_ParameterType} for possible types. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteParameter()
+ *  @see OTF2_DefWriter_WriteParameter()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor RmaWin
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[RmaWin]{%
+ *   @endlatexonly
+ *      @ref OTF2_RmaWinRef RmaWin
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A window defines the communication context for any remote-memory
+ *  access operation.
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaWin_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name, e.g. 'GASPI Queue 1', 'NVidia Card 2', etc.. References a @ref
+ *      String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaWin_comm
+ *        comm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator object used to create the window. References a @ref Comm
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteRmaWin()
+ *  @see OTF2_DefWriter_WriteRmaWin()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor MetricClassRecorder
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[MetricClassRecorder]{%
+ *   @endlatexonly
+ *      MetricClassRecorder
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ * @endif
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricClassRecorder_metricClass
+ *        metricClass @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parent @ref MetricClass definition to which this one is a
+ *      supplementary definition. References a @ref MetricClass
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricClassRecorder_recorder
+ *        recorder @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The location which recorded the referenced metric class. References a
+ *      @ref Location definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteMetricClassRecorder()
+ *  @see OTF2_DefWriter_WriteMetricClassRecorder()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor SystemTreeNodeProperty
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[SystemTreeNodeProperty]{%
+ *   @endlatexonly
+ *      SystemTreeNodeProperty
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ * @endif
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_SystemTreeNodeRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNodeProperty_systemTreeNode
+ *        systemTreeNode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parent @ref SystemTreeNode definition to which this one is a
+ *      supplementary definition. References a @ref SystemTreeNode
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNodeProperty_name
+ *        name @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Name of the property. References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNodeProperty_value
+ *        value @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Property value. References a @ref String definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteSystemTreeNodeProperty()
+ *  @see OTF2_DefWriter_WriteSystemTreeNodeProperty()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor SystemTreeNodeDomain
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *   @latexonly
+ *   \section[SystemTreeNodeDomain]{%
+ *   @endlatexonly
+ *      SystemTreeNodeDomain
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ * @endif
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_SystemTreeNodeRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNodeDomain_systemTreeNode
+ *        systemTreeNode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parent @ref SystemTreeNode definition to which this one is a
+ *      supplementary definition. References a @ref SystemTreeNode
+ *      definition. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_SystemTreeDomain @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SystemTreeNodeDomain_systemTreeDomain
+ *        systemTreeDomain @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *       @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_GlobalDefWriter_WriteSystemTreeNodeDomain()
+ *  @see OTF2_DefWriter_WriteSystemTreeNodeDomain()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ */

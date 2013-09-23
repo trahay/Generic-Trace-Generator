@@ -1,0 +1,26 @@
+Usage: otf2-config [OPTION]... COMMAND
+
+Commands:
+  --cflags     prints additional compiler flags. They already contain
+               the include flags
+  --cppflags   prints the include flags for the OTF2 headers
+  --libs       prints the required libraries for linking
+  --ldflags    prints the required linker flags
+  --cc         prints the C compiler name
+  --help       prints this usage information
+
+  --version    prints the version number of the OTF2 package and
+  --otf2-revision
+               prints the revision number of the OTF2 package
+  --common-revision
+               prints the revision number of the common package
+  --interface-version
+               prints the interface version number
+
+Options:
+  --backend
+               on systems, which required cross-compiling, this flag
+               specifies that the information for the backend is displayed.
+               By default the information for the frontend is displayed.
+               On non-cross compiling systems, this flag is ignored
+  --cuda       specifies that the required flags are for the CUDA compiler

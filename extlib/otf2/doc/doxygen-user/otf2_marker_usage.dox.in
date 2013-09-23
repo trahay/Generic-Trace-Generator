@@ -1,0 +1,62 @@
+Usage: otf2-marker [OPTION] [ARGUMENTS]... ANCHORFILE
+Read or edit a marker file.
+
+Options:
+                      Print all markers sorted by group.
+      --def <GROUP> [<CATEGORY>]
+                      Print all marker definitions of group <GROUP> or of
+                      category <CATEGORY> from group <GROUP>.
+      --defs-only     Print only marker definitions.
+      --add-def <GROUP> <CATEGORY> <SEVERITY>
+                      Add a new marker definition.
+      --add <GROUP> <CATEGORY> <TIME> <SCOPE> <TEXT>
+                      Add a marker to an existing definition.
+      --remove-def <GROUP> [<CATEGORY>]
+                      Remove all marker classes of group <GROUP> or only the
+                      category <CATEGORY> of group <GROUP>; and all according
+                      markers.
+      --clear-def <GROUP> [<CATEGORY>]
+                      Remove all markers of group <GROUP> or only of category
+                      <CATEGORY> of group <GROUP>.
+      --reset         Reset all marker.
+  -V, --version       Print version information.
+  -h, --help          Print this help information.
+
+Argument descriptions:
+  <GROUP>, <CATEGORY>, <TEXT>
+                      Arbitrary strings.
+  <SEVERITY>          One of:
+                       * NONE
+                       * LOW
+                       * MEDIUM
+                       * HIGH
+  <TIME>              One of the following formats:
+                       * <TIMESTAMP>
+                         A valid timestamp inside the trace range
+                         'global offset' and 'global offset' + 'trace
+                         length'.
+                       * <TIMESTAMP>+<DURATION>
+                         <TIMESTAMP> and <TIMESTAMP> + <DURATION> must be valid
+                         timestamps inside the trace range 'global
+                         offset' and 'global offset' + 'trace length'.
+                       * <TIMESTAMP-START>-<TIMESTAMP-END>
+                         Two valid timestamps inside the trace range 'global
+                         offset' and 'global offset' + 'trace length', with
+                         <TIMESTAMP-START> <= <TIMESTAMP-END>.
+                      See the CLOCK_PROPERTIES definition with the help
+                      of the 'otf2-print -G' tool.
+  <SCOPE>[:<SCOPE-REF>]
+                       The <SCOPE> must be one of:
+                       * GLOBAL
+                       * LOCATION:<LOCATION-REF>
+                       * LOCATION_GROUP:<LOCATION-GROUP-REF>
+                       * SYSTEM_TREE_NODE:<SYSTEM-TREE-NODE-REF>
+                       * GROUP:<GROUP-REF>
+                       * COMM:<COMMUNICATOR-REF>
+                      <SCOPE-REF> must be a valid definition reference of
+                      the specified scope. Use 'otf2-print -G' for a list of
+                      defined references.
+                      There is no <SCOPE-REF> for <SCOPE> 'GLOBAL'.
+                      For a scope 'GROUP' the type of the referenced
+                      group must be 'OTF2_GROUP_TYPE_LOCATIONS' or
+                      'OTF2_GROUP_TYPE_COMM_LOCATIONS'.

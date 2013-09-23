@@ -1,0 +1,49 @@
+## -*- mode: makefile -*-
+
+bin_PROGRAMS += otf2-print
+
+otf2_print_SOURCES = \
+    $(SRC_ROOT)src/tools/otf2_print/otf2_print.c \
+    $(SRC_ROOT)src/tools/otf2_print/otf2_print_types.h \
+    $(SRC_ROOT)src/tools/otf2_print/otf2_vector.c \
+    $(SRC_ROOT)src/tools/otf2_print/otf2_vector.h \
+    $(SRC_ROOT)src/tools/otf2_print/otf2_hash_table.c \
+    $(SRC_ROOT)src/tools/otf2_print/otf2_hash_table.h
+otf2_print_CPPFLAGS = $(AM_CPPFLAGS) $(UTILS_CPPFLAGS)
+otf2_print_LDADD = libotf2.la
+
+EXTRA_DIST += \
+    $(SRC_ROOT)src/tools/otf2_print/otf2_print_inc.c
+
+if HAVE_SION_SERIAL
+otf2_print_LDFLAGS  = $(SCOREP_SION_SERIAL_LDFLAGS)
+otf2_print_LDADD   += $(SCOREP_SION_SERIAL_LIBS)
+endif
+
+
+noinst_PROGRAMS += otf2-trace-gen
+otf2_trace_gen_SOURCES = \
+    $(SRC_ROOT)src/tools/otf2_trace_gen/otf2_trace_gen.c
+otf2_trace_gen_CPPFLAGS = $(AM_CPPFLAGS) $(UTILS_CPPFLAGS)
+otf2_trace_gen_LDADD = libotf2.la
+
+bin_PROGRAMS += otf2-marker
+otf2_marker_SOURCES = \
+    $(SRC_ROOT)src/tools/otf2_marker/otf2_marker.cpp
+otf2_marker_CPPFLAGS = $(AM_CPPFLAGS) $(UTILS_CPPFLAGS)
+otf2_marker_LDADD = libotf2.la
+
+if HAVE_SION_SERIAL
+otf2_trace_gen_LDFLAGS  = $(SCOREP_SION_SERIAL_LDFLAGS)
+otf2_trace_gen_LDADD    += $(SCOREP_SION_SERIAL_LIBS)
+#otf2_trace_gen_LDADD    += -L/home/weiler/opt/sionlib/lib -lsionser -lsion
+endif
+
+#bin_PROGRAMS += otf2_speed_test
+#
+#otf2_speed_test_SOURCES = \
+#    $(SRC_ROOT)src/tools/otf2_speed_test/otf2_speed_test.c
+#
+#otf2_speed_test_CPPFLAGS = $(AM_CPPFLAGS) $(UTILS_CPPFLAGS) $(OTF2_CPPFLAGS) -lmpi
+#
+#otf2_speed_test_LDADD = libotf2.la

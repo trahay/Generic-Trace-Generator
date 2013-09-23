@@ -1,0 +1,70 @@
+## -*- mode: makefile -*-
+
+## 
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2013,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       Makefile.inc.am
+## author     Christian Roessel <c.roessel@fz-juelich.de>
+## maintainer Christian Roessel <c.roessel@fz-juelich.de>
+
+nobase_include_HEADERS +=                                    \
+    $(PUBLIC_INC_SRC)otf2.h                                  \
+\
+    $(BUILD_PUBLIC_INC_DIR)/otf2/OTF2_ErrorCodes.h           \
+\
+    $(PUBLIC_INC_SRC)OTF2_GeneralDefinitions.h               \
+    $(PUBLIC_INC_SRC)OTF2_Events.h                           \
+    $(PUBLIC_INC_SRC)OTF2_Definitions.h                      \
+\
+    $(PUBLIC_INC_SRC)OTF2_AttributeList.h                    \
+    $(PUBLIC_INC_SRC)OTF2_IdMap.h                            \
+\
+    $(PUBLIC_INC_SRC)OTF2_Archive.h                          \
+    $(PUBLIC_INC_SRC)OTF2_Callbacks.h                        \
+\
+    $(PUBLIC_INC_SRC)OTF2_Reader.h                           \
+\
+    $(PUBLIC_INC_SRC)OTF2_EvtWriter.h                        \
+\
+    $(PUBLIC_INC_SRC)OTF2_GlobalDefWriter.h                  \
+\
+    $(PUBLIC_INC_SRC)OTF2_DefWriter.h                        \
+\
+    $(PUBLIC_INC_SRC)OTF2_GlobalEvtReader.h                  \
+    $(PUBLIC_INC_SRC)OTF2_GlobalEvtReaderCallbacks.h         \
+\
+    $(PUBLIC_INC_SRC)OTF2_EvtReader.h                        \
+    $(PUBLIC_INC_SRC)OTF2_EvtReaderCallbacks.h               \
+\
+    $(PUBLIC_INC_SRC)OTF2_GlobalDefReader.h                  \
+    $(PUBLIC_INC_SRC)OTF2_GlobalDefReaderCallbacks.h         \
+\
+    $(PUBLIC_INC_SRC)OTF2_DefReader.h                        \
+    $(PUBLIC_INC_SRC)OTF2_DefReaderCallbacks.h               \
+\
+    $(PUBLIC_INC_SRC)OTF2_SnapWriter.h                       \
+\
+    $(PUBLIC_INC_SRC)OTF2_SnapReader.h                       \
+    $(PUBLIC_INC_SRC)OTF2_SnapReaderCallbacks.h              \
+\
+    $(PUBLIC_INC_SRC)OTF2_GlobalSnapReader.h                 \
+    $(PUBLIC_INC_SRC)OTF2_GlobalSnapReaderCallbacks.h        \
+\
+    $(PUBLIC_INC_SRC)OTF2_Thumbnail.h                        \
+\
+    $(PUBLIC_INC_SRC)OTF2_Marker.h                           \
+    $(PUBLIC_INC_SRC)OTF2_MarkerReader.h                     \
+    $(PUBLIC_INC_SRC)OTF2_MarkerReaderCallbacks.h            \
+    $(PUBLIC_INC_SRC)OTF2_MarkerWriter.h

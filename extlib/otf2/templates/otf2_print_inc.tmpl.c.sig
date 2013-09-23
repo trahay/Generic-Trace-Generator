@@ -1,0 +1,9 @@
+7458fa2c75b335dc09f9dd6c8eadda6b
+2f1b6373294b09ab206cec3d9e837022
+../src/tools/otf2_print/otf2_print_inc.c
+otf2_print_inc.tmpl.c
+../share/otf2/otf2.types
+../share/otf2/otf2.enums
+../share/otf2/otf2.defs
+../share/otf2/otf2.events
+../share/otf2/otf2.snaps

@@ -1,0 +1,12 @@
+otf2pythonpkgdatadir = $(pkgdatadir)/python/otf2
+otf2pythonpkgdata_DATA = $(srcdir)/share/otf2/otf2.types \
+                         $(srcdir)/share/otf2/otf2.enums \
+                         $(srcdir)/share/otf2/otf2.defs \
+                         $(srcdir)/share/otf2/otf2.events \
+                         $(srcdir)/share/otf2/otf2.snaps
+otf2pythonpkgdata_PYTHON = $(srcdir)/share/otf2/__init__.py \
+                           $(builddir)/share/otf2/__version__.py
+
+EXTRA_DIST += $(otf2pythonpkgdata_DATA) \
+              $(otf2pythonpkgdata_PYTHON) \
+              $(srcdir)/share/otf2/otf2.errors

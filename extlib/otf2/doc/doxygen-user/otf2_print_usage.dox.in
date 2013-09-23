@@ -1,0 +1,20 @@
+Usage: otf2-print [OPTION]... [--] ANCHORFILE
+Print selected content of the OTF2 archive specified by ANCHORFILE.
+
+Options:
+  -A, --show-all          print all output including definitions and anchor
+                          file
+  -G, --show-global-defs  print all global definitions
+  -I, --show-info         print information from the anchor file
+  -T, --show-thumbnails   print the headers from all thumbnails
+  -M, --show-mappings     print mappings to global definitions
+  -C, --show-clock-offsets
+                          print clock offsets to global timer
+  -L, --location <LID>    limit output to location <LID>
+  -s, --step <N>          step through output by steps of <N> events
+      --time <MIN> <MAX>  limit output to events within time interval
+      --system-tree       output system tree to dot-file
+      --silent            only validate trace and do not print any events
+  -d, --debug             turn on debug mode
+  -V, --version           print version information
+  -h, --help              print this help information

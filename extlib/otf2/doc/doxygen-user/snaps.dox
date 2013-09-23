@@ -1,0 +1,3294 @@
+/**
+ *  @page snap_records List of all snapshot records
+ *
+ *  @anchor SnapshotStart
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[SnapshotStart]{%
+ *  @endlatexonly
+ *      SnapshotStart
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record marks the start of a snapshot.
+ *
+ *  A snapshot consists of an timestamp and a set of snapshot records. All
+ *  these snapshot records have the same snapshot time. A snapshot
+ *  starts with one @eref{SnapshotStart} record and closes with one
+ *  @eref{SnapshotEnd} record. All snapshot records inbetween are
+ *  ordered by the @a origEventTime, which are also less than the
+ *  snapshot timestamp. Ie. The timestamp of the next event read from
+ *  the event stream is greater or equal to the snapshot time.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SnapshotStart_numberOfRecords
+ *        numberOfRecords @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Number of snapshot event records in this snapshot. Excluding the
+   @eref{SnapshotEnd} record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_SnapWriter_SnapshotStart()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor SnapshotEnd
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[SnapshotEnd]{%
+ *  @endlatexonly
+ *      SnapshotEnd
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record marks the end of a snapshot. It contains the position to
+ *  continue reading in the event trace for this location. Use @ref
+ *  OTF2_EvtReader_Seek with @a contReadPos as the position.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor SnapshotEnd_contReadPos
+ *        contReadPos @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Position to continue reading in the event trace. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_SnapWriter_SnapshotEnd()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MeasurementOnOffSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MeasurementOnOffSnap]{%
+ *  @endlatexonly
+ *      MeasurementOnOffSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  The last occurrence of an @eref{MeasurementOnOff} event of this
+ *  location, if any.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MeasurementOnOffSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MeasurementMode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MeasurementOnOffSnap_measurementMode
+ *        measurementMode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Is the measurement turned on (@eref{OTF2_MEASUREMENT_ON}) or off
+   (@eref{OTF2_MEASUREMENT_OFF})? @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MeasurementOnOff } event
+ *  @see OTF2_SnapWriter_MeasurementOnOff()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor EnterSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[EnterSnap]{%
+ *  @endlatexonly
+ *      EnterSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{Enter} event where the corresponding
+ *  @eref{Leave} event did not occur before the snapshot.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor EnterSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor EnterSnap_region
+ *        region @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Needs to be defined in a definition record
+   References a @ref Region definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_REGION is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ Enter } event
+ *  @see OTF2_SnapWriter_Enter()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiSendSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiSendSnap]{%
+ *  @endlatexonly
+ *      MpiSendSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{MpiSend} event where the matching
+ *  receive message event did not occur on the remote location before
+ *  the snapshot. This could either be an @eref{MpiRecv} or an
+ *  @eref{MpiIrecv} event. Note that it may so, that a previous
+ *  @eref{MpiIsend} with the same envelope than this one is neither
+ *  completed not canceled yet, thus the matching receive may already
+ *  occurred, but the matching couldn't be done yet.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSendSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSendSnap_receiver
+ *        receiver @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of receiver in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSendSnap_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID.
+   References a @ref Comm definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSendSnap_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSendSnap_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiSend } event
+ *  @see OTF2_SnapWriter_MpiSend()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIsendSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIsendSnap]{%
+ *  @endlatexonly
+ *      MpiIsendSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{MpiIsend} event where an
+ *  corresponding @eref{MpiIsendComplete} or
+ *  @eref{MpiRequestCancelled} event did not occur on this location
+ *  before the snapshot. Or the corresponding @eref{MpiIsendComplete}
+ *  did occurred (the @eref{MpiIsendCompleteSnap} record exists in the
+ *  snapshot) but the matching receive message event did not occur on
+ *  the remote location before the snapshot. (This could either be
+ *  an@eref{MpiRecv} or an @eref{MpiIrecv} event.)
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendSnap_receiver
+ *        receiver @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of receiver in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendSnap_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID.
+   References a @ref Comm definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendSnap_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendSnap_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendSnap_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiIsend } event
+ *  @see OTF2_SnapWriter_MpiIsend()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIsendCompleteSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIsendCompleteSnap]{%
+ *  @endlatexonly
+ *      MpiIsendCompleteSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{MpiIsend} event where the
+ *  corresponding @eref{MpiIsendComplete} event occurred, but where
+ *  the matching receive message event did not occur on the remote
+ *  location before the snapshot. (This could either be an
+ *  @eref{MpiRecv} or an @eref{MpiIrecv} event.) .
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendCompleteSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendCompleteSnap_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiIsendComplete } event
+ *  @see OTF2_SnapWriter_MpiIsendComplete()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiRecvSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiRecvSnap]{%
+ *  @endlatexonly
+ *      MpiRecvSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{MpiRecv} event where the matching
+ *  send message event did not occur on the remote location before the
+ *  snapshot. This could either be an @eref{MpiSend} or an
+ *  @eref{MpiIsendComplete} event. Or an @eref{MpiIrecvRequest}
+ *  occurred before this event but the corresponding @eref{MpiIrecv}
+ *  event did not occurred before this snapshot. In this case the
+ *  message matching couldn't performed yet, because the envelope of
+ *  the ongoing @eref{MpiIrecvRequest} is not yet known.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecvSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecvSnap_sender
+ *        sender @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of sender in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecvSnap_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID.
+   References a @ref Comm definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecvSnap_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecvSnap_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiRecv } event
+ *  @see OTF2_SnapWriter_MpiRecv()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIrecvRequestSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIrecvRequestSnap]{%
+ *  @endlatexonly
+ *      MpiIrecvRequestSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{MpiIrecvRequest} event where an
+ *  corresponding @eref{MpiIrecv} or @eref{MpiRequestCancelled} event
+ *  did not occur on this location before the snapshot. Or the
+ *  corresponding @eref{MpiIrecv} did occurred (the
+ *  @eref{MpiIrecvSnap} record exists in the snapshot) but the
+ *  matching receive message event did not occur on the remote
+ *  location before the snapshot. This could either be an
+ *  @eref{MpiRecv} or an @eref{MpiIrecv} event.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvRequestSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvRequestSnap_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the requested receive @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiIrecvRequest } event
+ *  @see OTF2_SnapWriter_MpiIrecvRequest()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIrecvSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIrecvSnap]{%
+ *  @endlatexonly
+ *      MpiIrecvSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{MpiIrecv} event where the matching
+ *  send message event did not occur on the remote location before the
+ *  snapshot. This could either be an @eref{MpiSend} or an
+ *  @eref{MpiIsendComplete} event. Or an @eref{MpiIrecvRequest}
+ *  occurred before this event but the corresponding @eref{MpiIrecv}
+ *  event did not occurred before this snapshot. In this case the
+ *  message matching couldn't performed yet, because the envelope of
+ *  the ongoing @eref{MpiIrecvRequest} is not yet known.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvSnap_sender
+ *        sender @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of sender in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvSnap_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID.
+   References a @ref Comm definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvSnap_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvSnap_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvSnap_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiIrecv } event
+ *  @see OTF2_SnapWriter_MpiIrecv()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiCollectiveBeginSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiCollectiveBeginSnap]{%
+ *  @endlatexonly
+ *      MpiCollectiveBeginSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  Indicates that this location started a collective operation but not
+ *  all of the participating locations completed the operation yet,
+ *  including this location.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveBeginSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiCollectiveBegin } event
+ *  @see OTF2_SnapWriter_MpiCollectiveBegin()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiCollectiveEndSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiCollectiveEndSnap]{%
+ *  @endlatexonly
+ *      MpiCollectiveEndSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  Indicates that this location completed a collective operation localy
+ *  but not all of the participating locations completed the operation
+ *  yet. The corresponding @eref{MpiCollectiveBeginSnaps} record is
+ *  still in the snapshot though.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEndSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CollectiveOp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEndSnap_collectiveOp
+ *        collectiveOp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Determines which collective operation it is. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEndSnap_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator
+   References a @ref Comm definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEndSnap_root
+ *        root @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of root in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEndSnap_sizeSent
+ *        sizeSent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Size of the sent message. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEndSnap_sizeReceived
+ *        sizeReceived @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Size of the received message. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ MpiCollectiveEnd } event
+ *  @see OTF2_SnapWriter_MpiCollectiveEnd()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpForkSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpForkSnap]{%
+ *  @endlatexonly
+ *      OmpForkSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{OmpFork} event where the
+ *  corresponding @eref{OmpJoin} did not occurred before this
+ *  snapshot.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpForkSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpForkSnap_numberOfRequestedThreads
+ *        numberOfRequestedThreads @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Requested size of the team. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ OmpFork } event
+ *  @see OTF2_SnapWriter_OmpFork()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpAcquireLockSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpAcquireLockSnap]{%
+ *  @endlatexonly
+ *      OmpAcquireLockSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{OmpAcquireLock} event where the
+ *  corresponding @eref{OmpReleaseLock} did not occurred before this
+ *  snapshot yet.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpAcquireLockSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpAcquireLockSnap_lockID
+ *        lockID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpAcquireLockSnap_acquisitionOrder
+ *        acquisitionOrder @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A monotonically increasing number to determine the order of lock
+   acquisitions (with unsynchronized clocks this is otherwise not
+   possible). Corresponding acquire-release events have same number. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ OmpAcquireLock } event
+ *  @see OTF2_SnapWriter_OmpAcquireLock()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpTaskCreateSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpTaskCreateSnap]{%
+ *  @endlatexonly
+ *      OmpTaskCreateSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{OmpTaskCreate} event where the
+ *  corresponding @eref{OmpTaskComplete} event did not occurred before
+ *  this snapshot. Neither on this location nor on any other location
+ *  in the current thread team.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpTaskCreateSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpTaskCreateSnap_taskID
+ *        taskID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Identifier of the newly created task instance. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ OmpTaskCreate } event
+ *  @see OTF2_SnapWriter_OmpTaskCreate()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpTaskSwitchSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpTaskSwitchSnap]{%
+ *  @endlatexonly
+ *      OmpTaskSwitchSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each @eref{OmpTaskSwitch} event where the
+ *  corresponding @eref{OmpTaskComplete} event did not occurred before
+ *  this snapshot. Neither on this location nor on any other location
+ *  in the current thread team.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpTaskSwitchSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpTaskSwitchSnap_taskID
+ *        taskID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Identifier of the now active task instance. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ OmpTaskSwitch } event
+ *  @see OTF2_SnapWriter_OmpTaskSwitch()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MetricSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MetricSnap]{%
+ *  @endlatexonly
+ *      MetricSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record exists for each referenced metric class or metric instance
+ *  event this location recorded metrics before and provides the last
+ *  known recorded metric values.
+ *
+ *  As an exception for metric classes where the metric mode detontes an
+ *  @eref{OTF2_METRIC_VALUE_RELATIVE} mode the value indicates the
+ *  accumulation of all previous metric values recorded.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricSnap_metric
+ *        metric @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Could be a metric class or a metric instance.
+   References a @ref MetricClass, or a @ref MetricInstance definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_METRIC is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint8_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricSnap_numberOfMetrics
+ *        numberOfMetrics @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Number of metrics with in the set. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Type @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricSnap_typeIDs
+ *        typeIDs @hblack{[} numberOfMetrics @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      List of metric types. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricValue @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MetricSnap_metricValues
+ *        metricValues @hblack{[} numberOfMetrics @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      List of metric values. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ Metric } event
+ *  @see OTF2_SnapWriter_Metric()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ParameterStringSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ParameterStringSnap]{%
+ *  @endlatexonly
+ *      ParameterStringSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record must be included in the snapshot until the leave event for
+ *  the enter event occurs which has the greates timestamp less or
+ *  equal the timestamp of this record.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterStringSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_ParameterRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterStringSnap_parameter
+ *        parameter @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parameter ID.
+   References a @ref Parameter definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_PARAMETER is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterStringSnap_string
+ *        string @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Value: Handle of a string definition
+   References a @ref String definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_STRING is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ ParameterString } event
+ *  @see OTF2_SnapWriter_ParameterString()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ParameterIntSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ParameterIntSnap]{%
+ *  @endlatexonly
+ *      ParameterIntSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record must be included in the snapshot until the leave event for
+ *  the enter event occurs which has the greates timestamp less or
+ *  equal the timestamp of this record.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterIntSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_ParameterRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterIntSnap_parameter
+ *        parameter @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parameter ID.
+   References a @ref Parameter definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_PARAMETER is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref int64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterIntSnap_value
+ *        value @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Value of the recorded parameter. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ ParameterInt } event
+ *  @see OTF2_SnapWriter_ParameterInt()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ParameterUnsignedIntSnap
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ParameterUnsignedIntSnap]{%
+ *  @endlatexonly
+ *      ParameterUnsignedIntSnap
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This record must be included in the snapshot until the leave event for
+ *  the enter event occurs which has the greates timestamp less or
+ *  equal the timestamp of this record.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterUnsignedIntSnap_origEventTime
+ *        origEventTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The original time this event happended. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_ParameterRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterUnsignedIntSnap_parameter
+ *        parameter @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parameter ID.
+   References a @ref Parameter definition and will be mapped to the global definition if a mapping table of type @ref OTF2_MAPPING_PARAMETER is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterUnsignedIntSnap_value
+ *        value @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Value of the recorded parameter. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see @eref{ ParameterUnsignedInt } event
+ *  @see OTF2_SnapWriter_ParameterUnsignedInt()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ */

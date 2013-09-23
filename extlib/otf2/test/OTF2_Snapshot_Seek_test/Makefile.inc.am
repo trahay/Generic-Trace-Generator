@@ -1,0 +1,24 @@
+## -*- mode: makefile -*-
+
+##
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2013,
+## Technische Universitaet Dresden, Germany
+##
+## This software may be modified and distributed under the terms of
+## a BSD-style license.  See the COPYING file in the package base
+## directory for details.
+##
+
+## file       test/OTF2_Snapshot_Seek_test/Makefile.inc.am
+
+check_PROGRAMS               += OTF2_Snapshot_Seek_test
+OTF2_Snapshot_Seek_test_SOURCES  = $(SRC_ROOT)test/OTF2_Snapshot_Seek_test/OTF2_Snapshot_Seek_test.c
+OTF2_Snapshot_Seek_test_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    $(UTILS_CPPFLAGS)
+OTF2_Snapshot_Seek_test_LDADD    = $(LIB_ROOT)libotf2.la
+
+SCOREP_TESTS += $(srcdir)/../test/OTF2_Snapshot_Seek_test/run_otf2_snapshot_seek_test.sh
+EXTRA_DIST   += $(SRC_ROOT)test/OTF2_Snapshot_Seek_test/run_otf2_snapshot_seek_test.sh

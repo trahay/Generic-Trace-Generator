@@ -1,0 +1,135 @@
+EXTRA_DIST += $(srcdir)/templates/Makefile.inc.tmpl.am \
+              $(srcdir)/templates/sig.py \
+              $(srcdir)/templates/remake.py \
+              $(srcdir)/templates/templates.py
+
+if HAVE_PYTHON
+
+$(srcdir)/templates/Makefile.inc.am: $(srcdir)/templates/Makefile.inc.tmpl.am $(srcdir)/templates/templates.py
+	$(AM_V_GEN)$(PYTHON) $(srcdir)/templates/remake.py $< $@
+
+endif
+
+template_sources =
+EXTRA_DIST += $(srcdir)/templates/example.cc
+
+#tmpl for rule in templates:
+template_sources += $(srcdir)/##rule[0]##
+EXTRA_DIST += $(srcdir)/templates/##rule[1]## \
+              $(srcdir)/templates/##rule[1]##.sig
+#tmpl endfor
+
+BUILT_SOURCES += $(template_sources)
+
+# from automake/lib/am/check.am
+# need magenta color for warnings, but still recognizes $AM_COLOR_TESTS
+#
+# If stdout is a non-dumb tty, use colors.  If test -t is not supported,
+# then this fails; a conservative approach.  Of course do not redirect
+# stdout here, just stderr.
+otf2__tty_colors = \
+red=; mag=; blu=; std=; \
+test "X$(AM_COLOR_TESTS)" != Xno \
+&& test "X$$TERM" != Xdumb \
+&& { test "X$(AM_COLOR_TESTS)" = Xalways || test -t 1 2>/dev/null; } \
+&& { \
+  red='[0;31m'; \
+  mag='[1;35m'; \
+  blu='[1;34m'; \
+  std='[m'; \
+}
+
+generate:
+	@$(MAKE) generate=true $(AM_MAKEFLAGS) $(template_sources)
+
+generate-force:
+	@$(MAKE) generate=force $(AM_MAKEFLAGS) $(template_sources)
+
+GEN.force:
+
+if HAVE_PYTHON
+
+GEN.sig = $(PYTHON) sig.py
+GEN.tmpl.cmd = $(PYTHON) $(srcdir)/src/tools/otf2_template/otf2_template.py
+
+#tmpl for rule in templates:
+$(srcdir)/##rule[0]##: $(srcdir)/templates/##rule[1]####common_template_deps|prefix_path(' $(srcdir)/')####rule[2:]|prefix_path(' $(srcdir)/')## $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check ##rule[1]##.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check ##rule[1]##.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../##rule[0]## ##rule[1]####common_template_deps|prefix_path(' ../')####rule[2:]|prefix_path(' ../')##) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+#tmpl endfor
+# special build dep rule, to trigger update
+$(srcdir)/include/otf2/OTF2_GeneralDefinitions.h: share/otf2/__version__.py
+
+else
+
+#tmpl for rule in templates:
+$(srcdir)/##rule[0]##: $(srcdir)/templates/##rule[1]####common_template_deps|prefix_path(' $(srcdir)/')####rule[2:]|prefix_path(' $(srcdir)/')## $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $<##common_template_deps|prefix_path(' "*|*" $(srcdir)/')## "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+#tmpl endfor
+endif
+
+dist-touch-template-outputs:
+	@touch \
+#tmpl for rule in templates:
+	    $(distdir)/##rule[0]## \
+#tmpl endfor
+	    .

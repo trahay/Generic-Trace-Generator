@@ -1,0 +1,31 @@
+## -*- mode: makefile -*-
+
+##
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2011,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       test/OTF2_File_test/Makefile.inc.am
+## maintainer Bert Wesarg <bert.wesarg@tu-dresden.de>
+
+check_PROGRAMS += OTF2_File_test
+
+OTF2_File_test_SOURCES = \
+    $(SRC_ROOT)test/OTF2_File_test/OTF2_File_test.c
+
+OTF2_File_test_CPPFLAGS = $(AM_CPPFLAGS) -I$(INC_ROOT)src $(UTILS_CPPFLAGS)
+
+OTF2_File_test_LDADD = libotf2.la
+
+SCOREP_TESTS += $(srcdir)/../test/OTF2_File_test/run_otf2_file_test.sh
+EXTRA_DIST   += $(SRC_ROOT)test/OTF2_File_test/run_otf2_file_test.sh

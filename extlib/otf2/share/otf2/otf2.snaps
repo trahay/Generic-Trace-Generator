@@ -1,0 +1,225 @@
+SnapshotRecord(
+    """\
+    This record marks the start of a snapshot.
+    
+    A snapshot consists of an timestamp and a set of snapshot records.
+    All these snapshot records have the same snapshot time. A snapshot starts
+    with one @eref{SnapshotStart} record and closes with one @eref{SnapshotEnd}
+    record. All snapshot records inbetween are ordered by the @a origEventTime,
+    which are also less than the snapshot timestamp. Ie. The timestamp
+    of the next event read from the event stream is greater or equal to the
+    snapshot time.
+    """,
+    10,
+    'SnapshotStart',
+    Attribute(
+        """\
+        Number of snapshot event records in this snapshot. Excluding the
+        @eref{SnapshotEnd} record.
+        """,
+        uint64_t,
+        'numberOfRecords'
+    ))
+
+SnapshotRecord(
+    """\
+    This record marks the end of a snapshot. It contains the
+    position to continue reading in the event trace for this location.
+    Use @ref OTF2_EvtReader_Seek with @a contReadPos as the position.
+    """,
+    11,
+    'SnapshotEnd',
+    Attribute(
+        """\
+        Position to continue reading in the event trace.
+        """,
+        uint64_t,
+        'contReadPos'
+    ))
+
+SnapshotRecord(
+    """\
+    The last occurrence of an @eref{MeasurementOnOff} event of this location,
+    if any.
+    """,
+    12,
+    MeasurementOnOffRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{Enter} event where the corresponding
+    @eref{Leave} event did not occur before the snapshot.
+    """,
+    13,
+    EnterRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{MpiSend} event where the matching
+    receive message event did not occur on the remote location before the
+    snapshot. This could either be an @eref{MpiRecv} or an @eref{MpiIrecv}
+    event. Note that it may so, that a previous @eref{MpiIsend} with the same
+    envelope than this one is neither completed not canceled yet, thus the
+    matching receive may already occurred, but the matching couldn't be done
+    yet.
+    """,
+    14,
+    MpiSendRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{MpiIsend} event where an corresponding
+    @eref{MpiIsendComplete} or @eref{MpiRequestCancelled} event did not occur
+    on this location before the snapshot. Or the corresponding
+    @eref{MpiIsendComplete} did occurred (the @eref{MpiIsendCompleteSnap}
+    record exists in the snapshot) but the matching receive message event did
+    not occur on the remote location before the snapshot. (This could either
+    be an@eref{MpiRecv} or an @eref{MpiIrecv} event.)
+    """,
+    15,
+    MpiIsendRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{MpiIsend} event where the corresponding
+    @eref{MpiIsendComplete} event occurred, but where the matching receive
+    message event did not occur on the remote location before the snapshot.
+    (This could either be an @eref{MpiRecv} or an @eref{MpiIrecv} event.)
+    .
+    """,
+    16,
+    MpiIsendCompleteRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{MpiRecv} event where the matching send
+    message event did not occur on the remote location before the snapshot.
+    This could either be an @eref{MpiSend} or an @eref{MpiIsendComplete} event.
+    Or an @eref{MpiIrecvRequest} occurred before this event but the
+    corresponding @eref{MpiIrecv} event did not occurred before this snapshot.
+    In this case the message matching couldn't performed yet, because the
+    envelope of the ongoing @eref{MpiIrecvRequest} is not yet known.
+    """,
+    17,
+    MpiRecvRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{MpiIrecvRequest} event where an
+    corresponding @eref{MpiIrecv} or @eref{MpiRequestCancelled} event did not
+    occur on this location before the snapshot. Or the corresponding
+    @eref{MpiIrecv} did occurred (the @eref{MpiIrecvSnap} record
+    exists in the snapshot) but the matching receive message event did not
+    occur on the remote location before the snapshot. This could either be an
+    @eref{MpiRecv} or an @eref{MpiIrecv} event.
+    """,
+    18,
+    MpiIrecvRequestRecord)
+    
+SnapshotRecord(
+    """\
+    This record exists for each @eref{MpiIrecv} event where the matching send
+    message event did not occur on the remote location before the snapshot.
+    This could either be an @eref{MpiSend} or an @eref{MpiIsendComplete} event.
+    Or an @eref{MpiIrecvRequest} occurred before this event but the
+    corresponding @eref{MpiIrecv} event did not occurred before this snapshot.
+    In this case the message matching couldn't performed yet, because the
+    envelope of the ongoing @eref{MpiIrecvRequest} is not yet known.
+    """,
+    19,
+    MpiIrecvRecord)    
+
+SnapshotRecord(
+    """\
+    Indicates that this location started a collective operation but not all
+    of the participating locations completed the operation yet, including this location.
+    """,
+    20,
+    MpiCollectiveBeginRecord)
+
+SnapshotRecord(
+    """\
+    Indicates that this location completed a collective operation localy but not all
+    of the participating locations completed the operation yet. The
+    corresponding @eref{MpiCollectiveBeginSnaps} record is still in the snapshot
+    though.
+    """,
+    21,
+    MpiCollectiveEndRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{OmpFork} event where the corresponding
+    @eref{OmpJoin} did not occurred before this snapshot.
+    """,
+    22,
+    OmpForkRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{OmpAcquireLock} event where the
+    corresponding @eref{OmpReleaseLock} did not occurred before this snapshot
+    yet.
+    """,
+    23,
+    OmpAcquireLockRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{OmpTaskCreate} event where the
+    corresponding @eref{OmpTaskComplete} event did not occurred before this
+    snapshot. Neither on this location nor on any other location in the
+    current thread team.
+    """,
+    24,
+    OmpTaskCreateRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each @eref{OmpTaskSwitch} event where the
+    corresponding @eref{OmpTaskComplete} event did not occurred before this
+    snapshot. Neither on this location nor on any other location in the
+    current thread team.
+    """,
+    25,
+    OmpTaskSwitchRecord)
+
+SnapshotRecord(
+    """\
+    This record exists for each referenced metric class or metric instance
+    event this location recorded metrics before and provides the last known
+    recorded metric values.
+    
+    As an exception for metric classes where the metric mode detontes an
+    @eref{OTF2_METRIC_VALUE_RELATIVE} mode the value indicates the accumulation
+    of all previous metric values recorded.
+    """,
+    26,
+    MetricRecord)
+
+SnapshotRecord(
+    """\
+    This record must be included in the snapshot until the leave event for
+    the enter event occurs which has the greates timestamp less or equal the
+    timestamp of this record.
+    """,
+    27,
+    ParameterStringRecord)
+
+SnapshotRecord(
+    """\
+    This record must be included in the snapshot until the leave event for
+    the enter event occurs which has the greates timestamp less or equal the
+    timestamp of this record.
+    """,
+    28,
+    ParameterIntRecord)
+
+SnapshotRecord(
+    """\
+    This record must be included in the snapshot until the leave event for
+    the enter event occurs which has the greates timestamp less or equal the
+    timestamp of this record.
+    """,
+    29,
+    ParameterUnsignedIntRecord)

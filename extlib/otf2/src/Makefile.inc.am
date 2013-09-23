@@ -1,0 +1,164 @@
+## -*- mode: makefile -*-
+
+lib_LTLIBRARIES += libotf2.la
+libotf2_la_LDFLAGS = -version-info @LIBRARY_INTERFACE_VERSION@
+libotf2_la_SOURCES = \
+    $(PUBLIC_INC_SRC)otf2.h \
+\
+    $(PUBLIC_INC_SRC)OTF2_GeneralDefinitions.h \
+    $(SRC_ROOT)src/otf2_internal.h \
+\
+    $(PUBLIC_INC_SRC)OTF2_Events.h \
+    $(SRC_ROOT)src/otf2_events.c \
+    $(SRC_ROOT)src/otf2_events_int.h \
+\
+    $(PUBLIC_INC_SRC)OTF2_Definitions.h \
+    $(SRC_ROOT)src/otf2_global_definitions.h \
+    $(SRC_ROOT)src/otf2_local_definitions.h \
+\
+    $(SRC_ROOT)src/otf2_snaps.h \
+\
+    $(PUBLIC_INC_SRC)OTF2_Callbacks.h \
+\
+    $(SRC_ROOT)src/OTF2_Reader.c \
+    $(SRC_ROOT)src/otf2_reader.h \
+    $(PUBLIC_INC_SRC)OTF2_Reader.h \
+\
+    $(SRC_ROOT)src/OTF2_AttributeList.c \
+    $(PUBLIC_INC_SRC)OTF2_AttributeList.h \
+    $(SRC_ROOT)src/otf2_attribute_list.h \
+\
+    $(SRC_ROOT)src/OTF2_IdMap.c \
+    $(PUBLIC_INC_SRC)OTF2_IdMap.h \
+    $(SRC_ROOT)src/otf2_id_map.c \
+    $(SRC_ROOT)src/otf2_id_map.h \
+\
+    $(SRC_ROOT)src/OTF2_EvtWriter.c \
+    $(PUBLIC_INC_SRC)OTF2_EvtWriter.h \
+    $(SRC_ROOT)src/otf2_evt_writer.h \
+\
+    $(SRC_ROOT)src/OTF2_GlobalDefWriter.c \
+    $(PUBLIC_INC_SRC)OTF2_GlobalDefWriter.h \
+    $(SRC_ROOT)src/otf2_global_def_writer.h \
+\
+    $(SRC_ROOT)src/OTF2_DefWriter.c \
+    $(PUBLIC_INC_SRC)OTF2_DefWriter.h \
+    $(SRC_ROOT)src/otf2_def_writer.h \
+\
+    $(SRC_ROOT)src/OTF2_SnapWriter.c \
+    $(PUBLIC_INC_SRC)OTF2_SnapWriter.h \
+    $(SRC_ROOT)src/otf2_snap_writer.h \
+\
+    $(PUBLIC_INC_SRC)OTF2_Marker.h \
+    $(SRC_ROOT)src/otf2_marker_int.h \
+\
+    $(SRC_ROOT)src/OTF2_MarkerWriter.c \
+    $(PUBLIC_INC_SRC)OTF2_MarkerWriter.h \
+\
+    $(SRC_ROOT)src/OTF2_MarkerReader.c \
+    $(PUBLIC_INC_SRC)OTF2_MarkerReader.h \
+\
+    $(SRC_ROOT)src/OTF2_Archive.c \
+    $(PUBLIC_INC_SRC)OTF2_Archive.h \
+    $(SRC_ROOT)src/otf2_archive.h \
+    $(SRC_ROOT)src/otf2_archive_int.c \
+\
+    $(SRC_ROOT)src/OTF2_Buffer.c \
+    $(SRC_ROOT)src/OTF2_Buffer.h \
+\
+    $(SRC_ROOT)src/OTF2_AnchorFile.c \
+    $(SRC_ROOT)src/OTF2_AnchorFile.h \
+\
+    $(SRC_ROOT)src/OTF2_File.c \
+    $(SRC_ROOT)src/OTF2_File.h \
+    $(SRC_ROOT)src/otf2_file_substrates.h \
+    $(SRC_ROOT)src/OTF2_File_Posix.c \
+    $(SRC_ROOT)src/OTF2_File_None.c \
+\
+    $(SRC_ROOT)src/OTF2_GlobalEvtReader.c \
+    $(PUBLIC_INC_SRC)OTF2_GlobalEvtReader.h \
+    $(PUBLIC_INC_SRC)OTF2_GlobalEvtReaderCallbacks.h \
+    $(SRC_ROOT)src/otf2_global_evt_reader.h \
+\
+    $(SRC_ROOT)src/OTF2_EvtReader.c \
+    $(PUBLIC_INC_SRC)OTF2_EvtReader.h \
+    $(PUBLIC_INC_SRC)OTF2_EvtReaderCallbacks.h \
+    $(SRC_ROOT)src/otf2_evt_reader.h \
+\
+    $(SRC_ROOT)src/OTF2_GlobalDefReader.c \
+    $(PUBLIC_INC_SRC)OTF2_GlobalDefReader.h \
+    $(PUBLIC_INC_SRC)OTF2_GlobalDefReaderCallbacks.h \
+    $(SRC_ROOT)src/otf2_global_def_reader.h \
+\
+    $(SRC_ROOT)src/OTF2_DefReader.c \
+    $(PUBLIC_INC_SRC)OTF2_DefReader.h \
+    $(PUBLIC_INC_SRC)OTF2_DefReaderCallbacks.h \
+    $(SRC_ROOT)src/otf2_def_reader.h \
+\
+    $(SRC_ROOT)src/OTF2_GlobalSnapReader.c \
+    $(PUBLIC_INC_SRC)OTF2_GlobalSnapReader.h \
+    $(PUBLIC_INC_SRC)OTF2_GlobalSnapReaderCallbacks.h \
+    $(SRC_ROOT)src/otf2_global_snap_reader.h \
+\
+    $(SRC_ROOT)src/OTF2_SnapReader.c \
+    $(PUBLIC_INC_SRC)OTF2_SnapReader.h \
+    $(PUBLIC_INC_SRC)OTF2_SnapReaderCallbacks.h \
+    $(SRC_ROOT)src/otf2_snap_reader.h \
+\
+    $(SRC_ROOT)src/OTF2_Thumbnail.c \
+    $(PUBLIC_INC_SRC)OTF2_Thumbnail.h \
+    $(SRC_ROOT)src/otf2_thumbnail.h \
+\
+    $(SRC_ROOT)src/otf2_attic.c \
+    $(SRC_ROOT)src/otf2_attic.h \
+    $(SRC_ROOT)src/otf2_attic_types.h
+
+EXTRA_DIST += \
+    $(SRC_ROOT)src/otf2_attribute_list_inc.c \
+\
+    $(SRC_ROOT)src/OTF2_EvtWriter_inc.c \
+    $(SRC_ROOT)src/OTF2_DefWriter_inc.c \
+    $(SRC_ROOT)src/OTF2_GlobalDefWriter_inc.c \
+    $(SRC_ROOT)src/OTF2_SnapWriter_inc.c \
+\
+    $(SRC_ROOT)src/OTF2_EvtReader_inc.c \
+    $(SRC_ROOT)src/OTF2_DefReader_inc.c \
+    $(SRC_ROOT)src/OTF2_GlobalDefReader_inc.c \
+    $(SRC_ROOT)src/OTF2_GlobalEvtReader_inc.c \
+    $(SRC_ROOT)src/OTF2_SnapReader_inc.c \
+    $(SRC_ROOT)src/OTF2_GlobalSnapReader_inc.c
+
+libotf2_la_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    $(UTILS_CPPFLAGS) \
+    -I$(INC_DIR_COMMON_HASH)
+libotf2_la_LIBADD = \
+    libutils.la \
+    libjenkins_hash.la \
+    @TIMER_LIB@
+
+if HAVE_ZLIB
+libotf2_la_SOURCES += \
+    $(SRC_ROOT)src/OTF2_Compression_Zlib.c \
+    $(SRC_ROOT)src/OTF2_Compression_Zlib.h
+libotf2_la_LDFLAGS  += $(ZLIB_LDFLAGS)
+libotf2_la_LIBADD   += $(ZLIB_LIBS)
+else
+libotf2_la_SOURCES += \
+    $(SRC_ROOT)src/otf2_compression_no_zlib.c
+endif
+
+
+if HAVE_SION_SERIAL
+libotf2_la_SOURCES += \
+    $(SRC_ROOT)src/OTF2_File_Sion.c
+libotf2_la_CPPFLAGS += $(SCOREP_SION_SERIAL_CPPFLAGS)
+libotf2_la_LDFLAGS  += $(SCOREP_SION_SERIAL_LDFLAGS)
+libotf2_la_LIBADD   += $(SCOREP_SION_SERIAL_LIBS)
+else
+if SVN_CONTROLLED
+noinst_LTLIBRARIES += libotf2_no_sion.la
+libotf2_no_sion_la_SOURCES = $(SRC_ROOT)src/OTF2_File_Sion.c
+libotf2_no_sion_la_CPPFLAGS = $(AM_CPPFLAGS) $(UTILS_CPPFLAGS)
+endif
+endif

@@ -1,0 +1,32 @@
+## -*- mode: makefile -*-
+
+##
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2012,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       test/OTF2_AttributeList_test/Makefile.inc.am
+## maintainer Bert Wesarg <bert.wesarg@tu-dresden.de>
+
+check_PROGRAMS += OTF2_AttributeList_test
+OTF2_AttributeList_test_SOURCES = \
+    $(SRC_ROOT)test/OTF2_AttributeList_test/OTF2_AttributeList_test.c \
+    $(SRC_ROOT)vendor/common/cutest/CuTest.c \
+    $(SRC_ROOT)vendor/common/cutest/CuTest.h
+OTF2_AttributeList_test_LDADD = libotf2.la
+OTF2_AttributeList_test_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    $(UTILS_CPPFLAGS) \
+    -I$(INC_DIR_COMMON_CUTEST)
+
+SCOREP_TESTS += OTF2_AttributeList_test

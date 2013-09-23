@@ -63,12 +63,21 @@ endif
 
 if USE_OTF2
 
-OTF2INCLUDE = $(OTF2_CFLAGS)
-OTF2LIBADD = $(OTF2_LIBS)
+
+if DONT_USE_INTERNAL_OTF2
+OTF2INCLUDE =
+OTF2LIBADD = -lotf2
+OTF2DEPENDENCIES =
+else
+OTF2INCLUDE = -I$(top_srcdir)/extlib/otf2/src -I$(top_builddir)/extlib/otf2/include -I$(top_srcdir)/extlib/otf2/include
+OTF2LIBADD = $(top_builddir)/extlib/otf2/build-backend/libotf2.la
+OTF2DEPENDENCIES = $(OTF2LIBADD)
+endif
 
 libgtg_la_CFLAGS += -DBUILD_OTF2 $(OTF2INCLUDE)
 libgtg_la_SOURCES += C/gtg_otf2.c
 libgtg_la_LIBADD += $(OTF2LIBADD)
+libgtg_la_DEPENDENCIES = $(OTF2DEPENDENCIES)
 endif
 
 if HAVE_LIBZ

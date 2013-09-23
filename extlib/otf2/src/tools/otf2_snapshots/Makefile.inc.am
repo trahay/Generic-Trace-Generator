@@ -1,0 +1,21 @@
+## -*- mode: makefile -*-
+
+bin_PROGRAMS += otf2-snapshots
+
+otf2_snapshots_SOURCES = \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_parameters.cpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_parameters.hpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_events.cpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_events.hpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_callbacks.cpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_callbacks.hpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots.cpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots.hpp
+otf2_snapshots_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    -I$(PUBLIC_INC_DIR) \
+    $(UTILS_CPPFLAGS)
+otf2_snapshots_LDADD = libotf2.la
+EXTRA_DIST += \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_events_inc.cpp \
+    $(SRC_ROOT)src/tools/otf2_snapshots/otf2_snapshots_callbacks_inc.cpp

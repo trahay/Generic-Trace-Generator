@@ -1,0 +1,7652 @@
+/**
+ *  @page event_records List of all event records
+ *
+ *  @anchor BufferFlush
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[BufferFlush]{%
+ *  @endlatexonly
+ *      BufferFlush
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This event signals that the internal buffer was flushed at the given
+ *  time.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor BufferFlush_stopTime
+ *        stopTime @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      The time the buffer flush finished. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_BufferFlush()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MeasurementOnOff
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MeasurementOnOff]{%
+ *  @endlatexonly
+ *      MeasurementOnOff
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This event signals where the measurement system turned measurement on
+ *  or off.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MeasurementMode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MeasurementOnOff_measurementMode
+ *        measurementMode @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Is the measurement turned on (@eref{OTF2_MEASUREMENT_ON}) or off
+ *      (@eref{OTF2_MEASUREMENT_OFF})? @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MeasurementOnOff()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor Enter
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[Enter]{%
+ *  @endlatexonly
+ *      Enter
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An enter record indicates that the program enters a code region.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Enter_region
+ *        region @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Needs to be defined in a definition record References a @ref Region
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_REGION is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_Enter()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor Leave
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[Leave]{%
+ *  @endlatexonly
+ *      Leave
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A leave record indicates that the program leaves a code region.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RegionRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Leave_region
+ *        region @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Needs to be defined in a definition record References a @ref Region
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_REGION is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_Leave()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiSend
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiSend]{%
+ *  @endlatexonly
+ *      MpiSend
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A MpiSend record indicates that a MPI message send process was
+ *  initiated (MPI_SEND). It keeps the necessary information for this
+ *  event: receiver of the message, communicator, and the message tag.
+ *  You can optionally add further information like the message length
+ *  (size of the send buffer).
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSend_receiver
+ *        receiver @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of receiver in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSend_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID. References a @ref Comm definition and will be mapped
+ *      to the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSend_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiSend_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiSend()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIsend
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIsend]{%
+ *  @endlatexonly
+ *      MpiIsend
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A MpiIsend record indicates that a MPI message send process was
+ *  initiated (MPI_ISEND). It keeps the necessary information for this
+ *  event: receiver of the message, communicator, and the message tag.
+ *  You can optionally add further information like the message length
+ *  (size of the send buffer).
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsend_receiver
+ *        receiver @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of receiver in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsend_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID. References a @ref Comm definition and will be mapped
+ *      to the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsend_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsend_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsend_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiIsend()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIsendComplete
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIsendComplete]{%
+ *  @endlatexonly
+ *      MpiIsendComplete
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  Signals the completion of non-blocking send request.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIsendComplete_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiIsendComplete()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIrecvRequest
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIrecvRequest]{%
+ *  @endlatexonly
+ *      MpiIrecvRequest
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  Signals the request of an receive, which can be completed later.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecvRequest_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the requested receive @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiIrecvRequest()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiRecv
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiRecv]{%
+ *  @endlatexonly
+ *      MpiRecv
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A MpiRecv record indicates that a MPI message was received (MPI_RECV).
+ *  It keeps the necessary information for this event: sender of the
+ *  message, communicator, and the message tag. You can optionally add
+ *  further information like the message length (size of the receive
+ *  buffer).
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecv_sender
+ *        sender @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of sender in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecv_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID. References a @ref Comm definition and will be mapped
+ *      to the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecv_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRecv_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiRecv()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiIrecv
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiIrecv]{%
+ *  @endlatexonly
+ *      MpiIrecv
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A MpiIrecv record indicates that a MPI message was received
+ *  (MPI_IRECV). It keeps the necessary information for this event:
+ *  sender of the message, communicator, and the message tag. You can
+ *  optionally add further information like the message length (size
+ *  of the receive buffer).
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecv_sender
+ *        sender @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of sender in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecv_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator ID. References a @ref Comm definition and will be mapped
+ *      to the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecv_msgTag
+ *        msgTag @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message tag @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecv_msgLength
+ *        msgLength @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Message length @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiIrecv_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiIrecv()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiRequestTest
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiRequestTest]{%
+ *  @endlatexonly
+ *      MpiRequestTest
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This events appears if the program tests if a request has already
+ *  completed but the test failed.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRequestTest_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiRequestTest()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiRequestCancelled
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiRequestCancelled]{%
+ *  @endlatexonly
+ *      MpiRequestCancelled
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  This events appears if the program canceled a request.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiRequestCancelled_requestID
+ *        requestID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the related request @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiRequestCancelled()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiCollectiveBegin
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiCollectiveBegin]{%
+ *  @endlatexonly
+ *      MpiCollectiveBegin
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A MpiCollectiveBegin record marks the begin of an MPI collective
+ *  operation (MPI_GATHER, MPI_SCATTER etc.).
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiCollectiveBegin()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor MpiCollectiveEnd
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[MpiCollectiveEnd]{%
+ *  @endlatexonly
+ *      MpiCollectiveEnd
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A MpiCollectiveEnd record marks the end of an MPI collective operation
+ *  (MPI_GATHER, MPI_SCATTER etc.). It keeps the necessary information
+ *  for this event: type of collective operation, communicator, the
+ *  root of this collective operation. You can optionally add further
+ *  information like sent and received bytes.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CollectiveOp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEnd_collectiveOp
+ *        collectiveOp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Determines which collective operation it is. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEnd_communicator
+ *        communicator @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Communicator References a @ref Comm definition and will be mapped to
+ *      the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEnd_root
+ *        root @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      MPI rank of root in @a communicator. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEnd_sizeSent
+ *        sizeSent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Size of the sent message. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor MpiCollectiveEnd_sizeReceived
+ *        sizeReceived @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Size of the received message. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_MpiCollectiveEnd()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpFork
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpFork]{%
+ *  @endlatexonly
+ *      OmpFork
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An OmpFork record marks that an OpenMP Thread forks a thread team.
+ *
+ *  This event record is superseded by the @eref{ThreadFork} event record
+ *  and should not be used when the @eref{ThreadFork} event record is
+ *  in use.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpFork_numberOfRequestedThreads
+ *        numberOfRequestedThreads @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Requested size of the team. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_OmpFork()
+ *
+ *  @since Version 1.0
+ *
+ *  @deprecated In version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpJoin
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpJoin]{%
+ *  @endlatexonly
+ *      OmpJoin
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An OmpJoin record marks that a team of threads is joint and only the
+ *  master thread continues execution.
+ *
+ *  This event record is superseded by the @eref{ThreadJoin} event record
+ *  and should not be used when the @eref{ThreadJoin} event record is
+ *  in use.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_OmpJoin()
+ *
+ *  @since Version 1.0
+ *
+ *  @deprecated In version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpAcquireLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpAcquireLock]{%
+ *  @endlatexonly
+ *      OmpAcquireLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An OmpAcquireLock record marks that a thread acquires an OpenMP lock.
+ *
+ *  This event record is superseded by the @eref{ThreadAcquireLock} event
+ *  record and should not be used when the @eref{ThreadAcquireLock}
+ *  event record is in use record.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpAcquireLock_lockID
+ *        lockID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpAcquireLock_acquisitionOrder
+ *        acquisitionOrder @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A monotonically increasing number to determine the order of lock
+ *      acquisitions (with unsynchronized clocks this is otherwise not
+ *      possible). Corresponding acquire-release events have same
+ *      number. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_OmpAcquireLock()
+ *
+ *  @since Version 1.0
+ *
+ *  @deprecated In version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpReleaseLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpReleaseLock]{%
+ *  @endlatexonly
+ *      OmpReleaseLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An OmpReleaseLock record marks that a thread releases an OpenMP lock.
+ *
+ *  This event record is superseded by the @eref{ThreadReleaseLock} event
+ *  record and should not be used when the @eref{ThreadReleaseLock}
+ *  event record is in use.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpReleaseLock_lockID
+ *        lockID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpReleaseLock_acquisitionOrder
+ *        acquisitionOrder @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A monotonically increasing number to determine the order of lock
+ *      acquisitions (with unsynchronized clocks this is otherwise not
+ *      possible). Corresponding acquire-release events have same
+ *      number. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_OmpReleaseLock()
+ *
+ *  @since Version 1.0
+ *
+ *  @deprecated In version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpTaskCreate
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpTaskCreate]{%
+ *  @endlatexonly
+ *      OmpTaskCreate
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An OmpTaskCreate record marks that an OpenMP Task was/will be created
+ *  in the current region.
+ *
+ *  This event record is superseded by the @eref{ThreadTaskCreate} event
+ *  record and should not be used when the @eref{ThreadTaskCreate}
+ *  event record is in use.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpTaskCreate_taskID
+ *        taskID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Identifier of the newly created task instance. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_OmpTaskCreate()
+ *
+ *  @since Version 1.0
+ *
+ *  @deprecated In version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpTaskSwitch
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpTaskSwitch]{%
+ *  @endlatexonly
+ *      OmpTaskSwitch
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An OmpTaskSwitch record indicates that the execution of the current
+ *  task will be suspended and another task starts/restarts its
+ *  execution. Please note that this may change the current call stack
+ *  of the executing location.
+ *
+ *  This event record is superseded by the @eref{ThreadTaskSwitch} event
+ *  record and should not be used when the @eref{ThreadTaskSwitch}
+ *  event record is in use.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpTaskSwitch_taskID
+ *        taskID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Identifier of the now active task instance. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_OmpTaskSwitch()
+ *
+ *  @since Version 1.0
+ *
+ *  @deprecated In version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor OmpTaskComplete
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[OmpTaskComplete]{%
+ *  @endlatexonly
+ *      OmpTaskComplete
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An OmpTaskComplete record indicates that the execution of an OpenMP
+ *  task has finished.
+ *
+ *  This event record is superseded by the @eref{ThreadTaskComplete} event
+ *  record and should not be used when the @eref{ThreadTaskComplete}
+ *  event record is in use.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor OmpTaskComplete_taskID
+ *        taskID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Identifier of the completed task instance. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_OmpTaskComplete()
+ *
+ *  @since Version 1.0
+ *
+ *  @deprecated In version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor Metric
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[Metric]{%
+ *  @endlatexonly
+ *      Metric
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A metric event is always stored at the location that recorded the
+ *  metric. A metric event can reference a metric class or metric
+ *  instance. Therefore, metric classes and instances share same ID
+ *  space. Synchronous metrics are always located right before the
+ *  according enter and leave event.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_MetricRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Metric_metric
+ *        metric @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Could be a metric class or a metric instance. References a @ref
+ *      MetricClass, or a @ref MetricInstance definition and will be
+ *      mapped to the global definition if a mapping table of type
+ *      @ref OTF2_MAPPING_METRIC is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint8_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Metric_numberOfMetrics
+ *        numberOfMetrics @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Number of metrics with in the set. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Type @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Metric_typeIDs
+ *        typeIDs @hblack{[} numberOfMetrics @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      List of metric types. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        OTF2_MetricValue @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor Metric_metricValues
+ *        metricValues @hblack{[} numberOfMetrics @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      List of metric values. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_Metric()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ParameterString
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ParameterString]{%
+ *  @endlatexonly
+ *      ParameterString
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A ParameterString record marks that in the current region, the
+ *  specified string parameter has the specified value.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_ParameterRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterString_parameter
+ *        parameter @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parameter ID. References a @ref Parameter definition and will be
+ *      mapped to the global definition if a mapping table of type
+ *      @ref OTF2_MAPPING_PARAMETER is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_StringRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterString_string
+ *        string @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Value: Handle of a string definition References a @ref String
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_STRING is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ParameterString()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ParameterInt
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ParameterInt]{%
+ *  @endlatexonly
+ *      ParameterInt
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A ParameterInt record marks that in the current region, the specified
+ *  integer parameter has the specified value.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_ParameterRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterInt_parameter
+ *        parameter @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parameter ID. References a @ref Parameter definition and will be
+ *      mapped to the global definition if a mapping table of type
+ *      @ref OTF2_MAPPING_PARAMETER is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        int64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterInt_value
+ *        value @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Value of the recorded parameter. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ParameterInt()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ParameterUnsignedInt
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ParameterUnsignedInt]{%
+ *  @endlatexonly
+ *      ParameterUnsignedInt
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  A ParameterUnsignedInt record marks that in the current region, the
+ *  specified unsigned integer parameter has the specified value.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_ParameterRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterUnsignedInt_parameter
+ *        parameter @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Parameter ID. References a @ref Parameter definition and will be
+ *      mapped to the global definition if a mapping table of type
+ *      @ref OTF2_MAPPING_PARAMETER is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ParameterUnsignedInt_value
+ *        value @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Value of the recorded parameter. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ParameterUnsignedInt()
+ *
+ *  @since Version 1.0
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaWinCreate
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaWinCreate]{%
+ *  @endlatexonly
+ *      RmaWinCreate
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaWinCreate record denotes the creation of an RMA window.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaWinCreate_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window created. References a @ref RmaWin definition and will
+ *      be mapped to the global definition if a mapping table of type
+ *      @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaWinCreate()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaWinDestroy
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaWinDestroy]{%
+ *  @endlatexonly
+ *      RmaWinDestroy
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaWinDestroy record denotes the destruction of an RMA window.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaWinDestroy_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window destructed. References a @ref RmaWin definition and
+ *      will be mapped to the global definition if a mapping table of
+ *      type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaWinDestroy()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaCollectiveBegin
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaCollectiveBegin]{%
+ *  @endlatexonly
+ *      RmaCollectiveBegin
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaCollectiveBegin record denotes the beginnig of a collective RMA
+ *  operation.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaCollectiveBegin()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaCollectiveEnd
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaCollectiveEnd]{%
+ *  @endlatexonly
+ *      RmaCollectiveEnd
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  "An RmaCollectiveEnd record denotes the end of a collective RMA
+ *  operation.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CollectiveOp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaCollectiveEnd_collectiveOp
+ *        collectiveOp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Determines which collective operation it is. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaSyncLevel @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaCollectiveEnd_syncLevel
+ *        syncLevel @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Synchronization level of this collective operation. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaCollectiveEnd_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaCollectiveEnd_root
+ *        root @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Root process for this operation. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaCollectiveEnd_bytesSent
+ *        bytesSent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Bytes sent in operation. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaCollectiveEnd_bytesReceived
+ *        bytesReceived @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Bytes receives in operation. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaCollectiveEnd()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaGroupSync
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaGroupSync]{%
+ *  @endlatexonly
+ *      RmaGroupSync
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaGroupSync record denotes the synchronization with a subgroup of
+ *  processes on a window.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaSyncLevel @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaGroupSync_syncLevel
+ *        syncLevel @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Synchronization level of this collective operation. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaGroupSync_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_GroupRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaGroupSync_group
+ *        group @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Group of remote processes involved in synchronization. References a
+ *      @ref Group definition and will be mapped to the global
+ *      definition if a mapping table of type @ref OTF2_MAPPING_GROUP
+ *      is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaGroupSync()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaRequestLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaRequestLock]{%
+ *  @endlatexonly
+ *      RmaRequestLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaRequestLock record denotes the time a lock was requested and
+ *  with it the earliest time it could have been granted.  It is used
+ *  to mark (possibly) non-blocking lock request, as defined by the
+ *  MPI standard.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaRequestLock_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaRequestLock_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the locked remote process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaRequestLock_lockId
+ *        lockId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock aquired, if multiple locks are defined on a window. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LockType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaRequestLock_lockType
+ *        lockType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of lock aquired. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaRequestLock()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaAcquireLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaAcquireLock]{%
+ *  @endlatexonly
+ *      RmaAcquireLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaAcquireLock record denotes the time a lock was aquired by the
+ *  process.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAcquireLock_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAcquireLock_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the locked remote process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAcquireLock_lockId
+ *        lockId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock aquired, if multiple locks are defined on a window. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LockType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAcquireLock_lockType
+ *        lockType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of lock aquired. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaAcquireLock()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaTryLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaTryLock]{%
+ *  @endlatexonly
+ *      RmaTryLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaTryLock record denotes the time of an unsuccessful attempt to
+ *  acquire the lock.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaTryLock_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaTryLock_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the locked remote process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaTryLock_lockId
+ *        lockId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock aquired, if multiple locks are defined on a window. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LockType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaTryLock_lockType
+ *        lockType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of lock aquired. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaTryLock()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaReleaseLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaReleaseLock]{%
+ *  @endlatexonly
+ *      RmaReleaseLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaReleaseLock record denotes the time the lock was released.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaReleaseLock_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaReleaseLock_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the locked remote process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaReleaseLock_lockId
+ *        lockId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock released, if multiple locks are defined on a window. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaReleaseLock()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaSync
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaSync]{%
+ *  @endlatexonly
+ *      RmaSync
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaSync record denotes the direct synchronization with a possibly
+ *  remote process.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaSync_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaSync_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the locked remote process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaSyncType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaSync_syncType
+ *        syncType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of synchronization. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaSync()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaWaitChange
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaWaitChange]{%
+ *  @endlatexonly
+ *      RmaWaitChange
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaWaitChange record denotes the change of a window that was waited
+ *  for.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaWaitChange_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaWaitChange()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaPut
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaPut]{%
+ *  @endlatexonly
+ *      RmaPut
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaPut record denotes the time a put operation was issued.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaPut_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaPut_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the target process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaPut_bytes
+ *        bytes @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Bytes sent to target. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaPut_matchingId
+ *        matchingId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID used for matching the appropriate completion record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaPut()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaGet
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaGet]{%
+ *  @endlatexonly
+ *      RmaGet
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaGet record denotes the time a put operation was issued.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaGet_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaGet_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the target process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaGet_bytes
+ *        bytes @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Bytes received from target. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaGet_matchingId
+ *        matchingId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID used for matching the appropriate completion record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaGet()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaAtomic
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaAtomic]{%
+ *  @endlatexonly
+ *      RmaAtomic
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaAtomic record denotes the time a atomic operation was issued.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAtomic_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAtomic_remote
+ *        remote @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Rank of the target process. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaAtomicType @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAtomic_type
+ *        type @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Type of atomic operation. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAtomic_bytesSent
+ *        bytesSent @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Bytes sent to target. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAtomic_bytesReceived
+ *        bytesReceived @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Bytes received from target. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaAtomic_matchingId
+ *        matchingId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID used for matching the appropriate completion record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaAtomic()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaOpCompleteBlocking
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaOpCompleteBlocking]{%
+ *  @endlatexonly
+ *      RmaOpCompleteBlocking
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaOpCompleteBlocking record denotes the local completion of a
+ *  blocking RMA operation.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpCompleteBlocking_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpCompleteBlocking_matchingId
+ *        matchingId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID used for matching the appropriate completion record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaOpCompleteBlocking()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaOpCompleteNonBlocking
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaOpCompleteNonBlocking]{%
+ *  @endlatexonly
+ *      RmaOpCompleteNonBlocking
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaOpCompleteNonBlocking record denotes the local completion of a
+ *  non-blocking RMA operation.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpCompleteNonBlocking_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpCompleteNonBlocking_matchingId
+ *        matchingId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID used for matching the appropriate completion record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaOpCompleteNonBlocking()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaOpTest
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaOpTest]{%
+ *  @endlatexonly
+ *      RmaOpTest
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaOpTest record denotes that a non-blocking RMA operation has been
+ *  tested for completion unsuccessfully.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpTest_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpTest_matchingId
+ *        matchingId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID used for matching the appropriate completion record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaOpTest()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor RmaOpCompleteRemote
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[RmaOpCompleteRemote]{%
+ *  @endlatexonly
+ *      RmaOpCompleteRemote
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An RmaOpCompleteRemote record denotes the local completion of an RMA
+ *  operation.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_RmaWinRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpCompleteRemote_win
+ *        win @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the window used for this operation. References a @ref RmaWin
+ *      definition and will be mapped to the global definition if a
+ *      mapping table of type @ref OTF2_MAPPING_RMA_WIN is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint64_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor RmaOpCompleteRemote_matchingId
+ *        matchingId @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID used for matching the appropriate completion record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_RmaOpCompleteRemote()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadFork
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadFork]{%
+ *  @endlatexonly
+ *      ThreadFork
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An ThreadFork record marks that an thread forks a thread team.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadFork_model
+ *        model @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *       @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadFork_numberOfRequestedThreads
+ *        numberOfRequestedThreads @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Requested size of the team. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadFork()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadJoin
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadJoin]{%
+ *  @endlatexonly
+ *      ThreadJoin
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An ThreadJoin record marks that a team of threads is joint and only
+ *  the master thread continues execution.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadJoin_model
+ *        model @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *       @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadJoin()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadTeamBegin
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadTeamBegin]{%
+ *  @endlatexonly
+ *      ThreadTeamBegin
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTeamBegin_threadTeam
+ *        threadTeam @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread team References a @ref Comm definition and will be mapped to
+ *      the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadTeamBegin()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadTeamEnd
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadTeamEnd]{%
+ *  @endlatexonly
+ *      ThreadTeamEnd
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTeamEnd_threadTeam
+ *        threadTeam @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread team References a @ref Comm definition and will be mapped to
+ *      the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadTeamEnd()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadAcquireLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadAcquireLock]{%
+ *  @endlatexonly
+ *      ThreadAcquireLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An ThreadAcquireLock record marks that a thread acquires an lock.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadAcquireLock_model
+ *        model @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *       @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadAcquireLock_lockID
+ *        lockID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadAcquireLock_acquisitionOrder
+ *        acquisitionOrder @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A monotonically increasing number to determine the order of lock
+ *      acquisitions (with unsynchronized clocks this is otherwise not
+ *      possible). Corresponding acquire-release events have same
+ *      number. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadAcquireLock()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadReleaseLock
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadReleaseLock]{%
+ *  @endlatexonly
+ *      ThreadReleaseLock
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An ThreadReleaseLock record marks that a thread releases an lock.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_Paradigm @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadReleaseLock_model
+ *        model @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *       @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadReleaseLock_lockID
+ *        lockID @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      ID of the lock. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadReleaseLock_acquisitionOrder
+ *        acquisitionOrder @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      A monotonically increasing number to determine the order of lock
+ *      acquisitions (with unsynchronized clocks this is otherwise not
+ *      possible). Corresponding acquire-release events have same
+ *      number. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadReleaseLock()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadTaskCreate
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadTaskCreate]{%
+ *  @endlatexonly
+ *      ThreadTaskCreate
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An ThreadTaskCreate record marks that an task in was/will be created
+ *  and will be processed by the specified thread team.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskCreate_threadTeam
+ *        threadTeam @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread team References a @ref Comm definition and will be mapped to
+ *      the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskCreate_creatingThread
+ *        creatingThread @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Creating thread of this task. (This is redundant, remove?) @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskCreate_generationNumber
+ *        generationNumber @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread-private generation number of task's creating thread. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadTaskCreate()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadTaskSwitch
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadTaskSwitch]{%
+ *  @endlatexonly
+ *      ThreadTaskSwitch
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An ThreadTaskSwitch record indicates that the execution of the current
+ *  task will be suspended and another task starts/restarts its
+ *  execution. Please note that this may change the current call stack
+ *  of the executing location.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskSwitch_threadTeam
+ *        threadTeam @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread team References a @ref Comm definition and will be mapped to
+ *      the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskSwitch_creatingThread
+ *        creatingThread @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Creating thread of this task. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskSwitch_generationNumber
+ *        generationNumber @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread-private generation number of task's creating thread. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadTaskSwitch()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ *  @anchor ThreadTaskComplete
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[ThreadTaskComplete]{%
+ *  @endlatexonly
+ *      ThreadTaskComplete
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  An ThreadTaskComplete record indicates that the execution of an OpenMP
+ *  task has finished.
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location where this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The time when this event happened. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_CommRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskComplete_threadTeam
+ *        threadTeam @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread team References a @ref Comm definition and will be mapped to
+ *      the global definition if a mapping table of type @ref
+ *      OTF2_MAPPING_COMM is available. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskComplete_creatingThread
+ *        creatingThread @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Creating thread of this task. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        uint32_t @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor ThreadTaskComplete_generationNumber
+ *        generationNumber @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      Thread-private generation number of task's creating thread. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+ *  @see OTF2_EvtWriter_ThreadTaskComplete()
+ *
+ *  @since Version 1.2
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+ */

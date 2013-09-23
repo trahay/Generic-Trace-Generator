@@ -1,0 +1,47 @@
+## -*- mode: makefile -*-
+
+## 
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2011, 
+##    RWTH Aachen, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file  build-includes/common.am 
+##       Intended to be included by the components
+##       build-(front|back)end/Makefile.am. Defines "common" entities
+##       that all build-* Makefiles rely on.
+## maintainer Christian Roessel <c.roessel@fz-juelich.de>
+
+
+include ../vendor/common/build-config/common.am
+
+AM_CPPFLAGS += \
+    -I../src \
+    -I$(BUILD_PUBLIC_INC_DIR) \
+    -I$(PUBLIC_INC_DIR)
+
+## Convenience variable for referencing public headers that will be
+## installed. Use e.g. with the primary nobase_include_HEADERS
+PUBLIC_INC_SRC = $(SRC_ROOT)include/otf2/
+BUILD_PUBLIC_INC_DIR = ../include
+
+## Include flags for the public headers of the utils component.
+UTILS_CPPFLAGS = \
+    -I$(INC_DIR_COMMON_UTILS)
+
+SCOREP_TESTS = 
+SCOREP_XFAIL_TESTS = 
+
+$(srcdir)/../include/otf2/OTF2_GeneralDefinitions.h: ../share/otf2/__version__.py
+
+../share/otf2/__version__.py: $(srcdir)/../share/otf2/__version__.py.in $(srcdir)/../build-config/VERSION
+	@$(am__cd) .. && $(MAKE) $(AM_MAKEFLAGS) share/otf2/__version__.py

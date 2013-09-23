@@ -1,0 +1,32 @@
+#!/bin/sh
+
+##
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2011,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       test/OTF2_Integrity_test/run_otf2_integrity_test.sh
+## maintainer Michael Wagner <michael.wagner@zih.tu-dresden.de>
+
+cleanup()
+{
+    rm -rf OTF2_Integrity_trace
+}
+trap cleanup EXIT
+
+cleanup
+./OTF2_Integrity_test
+
+# we should also be able to read trace format version 1
+echo "Read trace format version 1"
+./OTF2_Integrity_test @srcdir@/../test/OTF2_Integrity_test/OTF2_Integrity_trace_1/TestTrace.otf2

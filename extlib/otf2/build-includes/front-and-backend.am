@@ -1,0 +1,27 @@
+## -*- mode: makefile -*-
+
+include ../src/Makefile.inc.am
+include ../include/otf2/Makefile.inc.am
+include ../vendor/common/hash/Makefile.inc.am
+include ../vendor/common/src/utils/cstr/Makefile.inc.am
+include ../vendor/common/src/utils/io/Makefile.inc.am
+include ../vendor/common/src/utils/exception/Makefile.inc.am
+include ../vendor/common/src/utils/Makefile.inc.am
+
+## include tests
+include ../test/public_headers/Makefile.inc.am
+include ../test/OTF2_AnchorFile_test/Makefile.inc.am
+include ../test/OTF2_AttributeList_test/Makefile.inc.am
+include ../test/OTF2_Buffer_test/Makefile.inc.am
+include ../test/OTF2_File_test/Makefile.inc.am
+include ../test/OTF2_Integrity_test/Makefile.inc.am
+include ../test/OTF2_Timer_sync_test/Makefile.inc.am
+include ../test/OTF2_UnknownRecord_test/Makefile.inc.am
+include ../test/OTF2_IdMap_test/Makefile.inc.am
+include ../test/OTF2_Event_Seek_test/Makefile.inc.am
+include ../test/OTF2_Snapshot_Seek_test/Makefile.inc.am
+include ../test/OTF2_Old_Chunk_List_test/Makefile.inc.am
+include ../test/OTF2_CallbackInterrupt_test/Makefile.inc.am
+include ../test/misc/Makefile.inc.am
+include ../vendor/common/test/utils/io/Makefile.inc.am
+include ../vendor/common/test/utils/exception/Makefile.inc.am

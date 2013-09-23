@@ -1,0 +1,9 @@
+## -*- mode: makefile -*-
+
+include ../src/tools/otf2_config/Makefile.backend-only.inc.am
+
+#include $(ROOT)src/...
+
+## include tests
+#include ../test/bar/Makefile.am.inc
+

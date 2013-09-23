@@ -1,0 +1,156 @@
+/**
+ *  @page snap_records List of all snapshot records
+ *
+@otf2 for snap in snaps:
+ *  @anchor @@snap.snap_name@@
+ *  @htmlonly
+ *  <div class="memitem">
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+ *  @latexonly
+ *  \section[@@snap.snap_name@@]{%
+ *  @endlatexonly
+ *      @@snap.snap_name@@
+ *  @latexonly
+ *  }
+ *  @endlatexonly
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  @@snap.doxygendoc()@@
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_LocationRef @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        location @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The location of the snapshot. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref OTF2_TimeStamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        timestamp @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *        The snapshot time of this record. @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+    @otf2 for attr in snap.attributes:
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref @@attr.type@@ @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor @@snap.snap_name@@_@@attr.name@@
+ *        @@attr.name@@ @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      @@attr.doc@@ @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+    @otf2  if attr is array_attr:
+    @otf2   for array_attr in attr.array_attributes:
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+ *        @ref @@array_attr.type@@ @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor @@snap.snap_name@@_@@array_attr.name@@
+ *        @@array_attr.name@@ @hblack{[} @@attr.name@@ @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      @@array_attr.doc@@ @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+    @otf2   endfor
+    @otf2  endif
+    @otf2 endfor
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+    @otf2 if snap is derived_snap:
+ *  @see @eref{ @@snap.name@@ } event
+    @otf2 endif
+ *  @see OTF2_SnapWriter_@@snap.name@@()
+ *
+ *  @since Version @@snap.since@@
+@otf2  if snap.deprecated:
+ *
+ *  @deprecated In version @@snap.deprecated@@
+@otf2  endif
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+@otf2 endfor
+ */

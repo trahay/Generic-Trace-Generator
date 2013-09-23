@@ -1,0 +1,29 @@
+## -*- mode: makefile -*-
+
+##
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2011,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       test/OTF2_Timer_sync_test/Makefile.inc.am
+## maintainer Bert Wesarg <bert.wesarg@tu-dresden.de>
+
+check_PROGRAMS               += OTF2_Timer_sync_test
+OTF2_Timer_sync_test_SOURCES  = $(SRC_ROOT)test/OTF2_Timer_sync_test/OTF2_Timer_sync_test.c
+OTF2_Timer_sync_test_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    $(UTILS_CPPFLAGS)
+OTF2_Timer_sync_test_LDADD    = $(LIB_ROOT)libotf2.la
+
+SCOREP_TESTS += $(srcdir)/../test/OTF2_Timer_sync_test/run_otf2_timer_sync_test.sh
+EXTRA_DIST   += $(SRC_ROOT)test/OTF2_Timer_sync_test/run_otf2_timer_sync_test.sh

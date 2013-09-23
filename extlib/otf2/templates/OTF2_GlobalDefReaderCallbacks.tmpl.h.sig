@@ -1,0 +1,9 @@
+8ca4b3cde0c51ab26ca6e88e523d78b8
+5654f777ba956deeaaf07fad63e2169c
+../include/otf2/OTF2_GlobalDefReaderCallbacks.h
+OTF2_GlobalDefReaderCallbacks.tmpl.h
+../share/otf2/otf2.types
+../share/otf2/otf2.enums
+../share/otf2/otf2.defs
+../share/otf2/otf2.events
+../share/otf2/otf2.snaps

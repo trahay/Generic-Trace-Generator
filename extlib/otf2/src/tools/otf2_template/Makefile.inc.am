@@ -1,0 +1,2 @@
+dist_bin_SCRIPTS += $(SRC_ROOT)src/tools/otf2_template/otf2-template
+EXTRA_DIST += $(SRC_ROOT)src/tools/otf2_template/otf2_template.py

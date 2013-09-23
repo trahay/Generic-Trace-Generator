@@ -1,0 +1,34 @@
+## -*- mode: makefile -*-
+
+## 
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2012,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       hash/Makefile.inc.am
+## maintainer Bert Wesarg <Bert.Wesarg@tu-dresden.de>
+
+
+noinst_LTLIBRARIES += libjenkins_hash.la
+libjenkins_hash_la_SOURCES = \
+    $(SRC_ROOT)vendor/common/hash/jenkins_hash.c \
+    $(SRC_ROOT)vendor/common/hash/jenkins_hash.h
+libjenkins_hash_la_CPPFLAGS = \
+    $(AM_CPPFLAGS)
+
+check_PROGRAMS += test_jenkins_hash
+test_jenkins_hash_SOURCES = \
+    $(SRC_ROOT)vendor/common/hash/jenkins_hash.c
+test_jenkins_hash_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    -DSELF_TEST

@@ -1,0 +1,11 @@
+## -*- mode: makefile -*-
+
+noinst_LTLIBRARIES += libutils_io.la
+libutils_io_la_SOURCES = \
+    $(SRC_ROOT)vendor/common/src/utils/io/UTILS_IO_GetExe.c \
+    $(SRC_ROOT)vendor/common/src/utils/io/UTILS_IO_Tools.c  \
+    $(SRC_ROOT)vendor/common/src/utils/include/UTILS_IO.h
+libutils_io_la_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    -I$(PACKAGE_ERROR_CODES_INCDIR) \
+    -I$(INC_DIR_COMMON_UTILS)

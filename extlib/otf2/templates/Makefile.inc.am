@@ -1,0 +1,2711 @@
+EXTRA_DIST += $(srcdir)/templates/Makefile.inc.tmpl.am \
+              $(srcdir)/templates/sig.py \
+              $(srcdir)/templates/remake.py \
+              $(srcdir)/templates/templates.py
+
+if HAVE_PYTHON
+
+$(srcdir)/templates/Makefile.inc.am: $(srcdir)/templates/Makefile.inc.tmpl.am $(srcdir)/templates/templates.py
+	$(AM_V_GEN)$(PYTHON) $(srcdir)/templates/remake.py $< $@
+
+endif
+
+template_sources =
+EXTRA_DIST += $(srcdir)/templates/example.cc
+
+template_sources += $(srcdir)/include/otf2/OTF2_GeneralDefinitions.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_GeneralDefinitions.tmpl.h \
+              $(srcdir)/templates/OTF2_GeneralDefinitions.tmpl.h.sig
+template_sources += $(srcdir)/include/otf2/OTF2_Definitions.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_Definitions.tmpl.h \
+              $(srcdir)/templates/OTF2_Definitions.tmpl.h.sig
+template_sources += $(srcdir)/include/otf2/OTF2_Events.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_Events.tmpl.h \
+              $(srcdir)/templates/OTF2_Events.tmpl.h.sig
+template_sources += $(srcdir)/src/otf2_events_int.h
+EXTRA_DIST += $(srcdir)/templates/otf2_events_int.tmpl.h \
+              $(srcdir)/templates/otf2_events_int.tmpl.h.sig
+template_sources += $(srcdir)/include/otf2/OTF2_EvtReaderCallbacks.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_EvtReaderCallbacks.tmpl.h \
+              $(srcdir)/templates/OTF2_EvtReaderCallbacks.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_EvtReader_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_EvtReader_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_EvtReader_inc.tmpl.c.sig
+template_sources += $(srcdir)/include/otf2/OTF2_EvtWriter.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_EvtWriter.tmpl.h \
+              $(srcdir)/templates/OTF2_EvtWriter.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_EvtWriter_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_EvtWriter_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_EvtWriter_inc.tmpl.c.sig
+template_sources += $(srcdir)/include/otf2/OTF2_GlobalEvtReaderCallbacks.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalEvtReaderCallbacks.tmpl.h \
+              $(srcdir)/templates/OTF2_GlobalEvtReaderCallbacks.tmpl.h.sig
+template_sources += $(srcdir)/include/otf2/OTF2_GlobalSnapReaderCallbacks.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalSnapReaderCallbacks.tmpl.h \
+              $(srcdir)/templates/OTF2_GlobalSnapReaderCallbacks.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_GlobalEvtReader_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalEvtReader_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_GlobalEvtReader_inc.tmpl.c.sig
+template_sources += $(srcdir)/src/OTF2_GlobalSnapReader_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalSnapReader_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_GlobalSnapReader_inc.tmpl.c.sig
+template_sources += $(srcdir)/src/otf2_local_definitions.h
+EXTRA_DIST += $(srcdir)/templates/otf2_local_definitions.tmpl.h \
+              $(srcdir)/templates/otf2_local_definitions.tmpl.h.sig
+template_sources += $(srcdir)/include/otf2/OTF2_DefReaderCallbacks.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_DefReaderCallbacks.tmpl.h \
+              $(srcdir)/templates/OTF2_DefReaderCallbacks.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_DefReader_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_DefReader_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_DefReader_inc.tmpl.c.sig
+template_sources += $(srcdir)/include/otf2/OTF2_DefWriter.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_DefWriter.tmpl.h \
+              $(srcdir)/templates/OTF2_DefWriter.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_DefWriter_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_DefWriter_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_DefWriter_inc.tmpl.c.sig
+template_sources += $(srcdir)/src/otf2_global_definitions.h
+EXTRA_DIST += $(srcdir)/templates/otf2_global_definitions.tmpl.h \
+              $(srcdir)/templates/otf2_global_definitions.tmpl.h.sig
+template_sources += $(srcdir)/include/otf2/OTF2_GlobalDefReaderCallbacks.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalDefReaderCallbacks.tmpl.h \
+              $(srcdir)/templates/OTF2_GlobalDefReaderCallbacks.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_GlobalDefReader_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalDefReader_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_GlobalDefReader_inc.tmpl.c.sig
+template_sources += $(srcdir)/include/otf2/OTF2_GlobalDefWriter.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalDefWriter.tmpl.h \
+              $(srcdir)/templates/OTF2_GlobalDefWriter.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_GlobalDefWriter_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_GlobalDefWriter_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_GlobalDefWriter_inc.tmpl.c.sig
+template_sources += $(srcdir)/src/otf2_snaps.h
+EXTRA_DIST += $(srcdir)/templates/otf2_snaps.tmpl.h \
+              $(srcdir)/templates/otf2_snaps.tmpl.h.sig
+template_sources += $(srcdir)/include/otf2/OTF2_SnapReaderCallbacks.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_SnapReaderCallbacks.tmpl.h \
+              $(srcdir)/templates/OTF2_SnapReaderCallbacks.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_SnapReader_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_SnapReader_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_SnapReader_inc.tmpl.c.sig
+template_sources += $(srcdir)/include/otf2/OTF2_SnapWriter.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_SnapWriter.tmpl.h \
+              $(srcdir)/templates/OTF2_SnapWriter.tmpl.h.sig
+template_sources += $(srcdir)/src/OTF2_SnapWriter_inc.c
+EXTRA_DIST += $(srcdir)/templates/OTF2_SnapWriter_inc.tmpl.c \
+              $(srcdir)/templates/OTF2_SnapWriter_inc.tmpl.c.sig
+template_sources += $(srcdir)/src/tools/otf2_print/otf2_print_inc.c
+EXTRA_DIST += $(srcdir)/templates/otf2_print_inc.tmpl.c \
+              $(srcdir)/templates/otf2_print_inc.tmpl.c.sig
+template_sources += $(srcdir)/src/tools/otf2_print/otf2_print_types.h
+EXTRA_DIST += $(srcdir)/templates/otf2_print_types.tmpl.h \
+              $(srcdir)/templates/otf2_print_types.tmpl.h.sig
+template_sources += $(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_events.hpp
+EXTRA_DIST += $(srcdir)/templates/otf2_snapshots_events.tmpl.hpp \
+              $(srcdir)/templates/otf2_snapshots_events.tmpl.hpp.sig
+template_sources += $(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_events_inc.cpp
+EXTRA_DIST += $(srcdir)/templates/otf2_snapshots_events_inc.tmpl.cpp \
+              $(srcdir)/templates/otf2_snapshots_events_inc.tmpl.cpp.sig
+template_sources += $(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_callbacks_inc.cpp
+EXTRA_DIST += $(srcdir)/templates/otf2_snapshots_callbacks_inc.tmpl.cpp \
+              $(srcdir)/templates/otf2_snapshots_callbacks_inc.tmpl.cpp.sig
+template_sources += $(srcdir)/src/otf2_attribute_list_inc.c
+EXTRA_DIST += $(srcdir)/templates/otf2_attribute_list_inc.tmpl.c \
+              $(srcdir)/templates/otf2_attribute_list_inc.tmpl.c.sig
+template_sources += $(srcdir)/include/otf2/OTF2_AttributeList.h
+EXTRA_DIST += $(srcdir)/templates/OTF2_AttributeList.tmpl.h \
+              $(srcdir)/templates/OTF2_AttributeList.tmpl.h.sig
+template_sources += $(srcdir)/src/otf2_attic_types.h
+EXTRA_DIST += $(srcdir)/templates/otf2_attic_types.tmpl.h \
+              $(srcdir)/templates/otf2_attic_types.tmpl.h.sig
+template_sources += $(srcdir)/doc/doxygen-user/definitions.dox
+EXTRA_DIST += $(srcdir)/templates/definitions.tmpl.dox \
+              $(srcdir)/templates/definitions.tmpl.dox.sig
+template_sources += $(srcdir)/doc/doxygen-user/events.dox
+EXTRA_DIST += $(srcdir)/templates/events.tmpl.dox \
+              $(srcdir)/templates/events.tmpl.dox.sig
+template_sources += $(srcdir)/doc/doxygen-user/snaps.dox
+EXTRA_DIST += $(srcdir)/templates/snaps.tmpl.dox \
+              $(srcdir)/templates/snaps.tmpl.dox.sig
+template_sources += $(srcdir)/templates/example.cc
+EXTRA_DIST += $(srcdir)/templates/example.tmpl.cc \
+              $(srcdir)/templates/example.tmpl.cc.sig
+
+BUILT_SOURCES += $(template_sources)
+
+# from automake/lib/am/check.am
+# need magenta color for warnings, but still recognizes $AM_COLOR_TESTS
+#
+# If stdout is a non-dumb tty, use colors.  If test -t is not supported,
+# then this fails; a conservative approach.  Of course do not redirect
+# stdout here, just stderr.
+otf2__tty_colors = \
+red=; mag=; blu=; std=; \
+test "X$(AM_COLOR_TESTS)" != Xno \
+&& test "X$$TERM" != Xdumb \
+&& { test "X$(AM_COLOR_TESTS)" = Xalways || test -t 1 2>/dev/null; } \
+&& { \
+  red='[0;31m'; \
+  mag='[1;35m'; \
+  blu='[1;34m'; \
+  std='[m'; \
+}
+
+generate:
+	@$(MAKE) generate=true $(AM_MAKEFLAGS) $(template_sources)
+
+generate-force:
+	@$(MAKE) generate=force $(AM_MAKEFLAGS) $(template_sources)
+
+GEN.force:
+
+if HAVE_PYTHON
+
+GEN.sig = $(PYTHON) sig.py
+GEN.tmpl.cmd = $(PYTHON) $(srcdir)/src/tools/otf2_template/otf2_template.py
+
+$(srcdir)/include/otf2/OTF2_GeneralDefinitions.h: $(srcdir)/templates/OTF2_GeneralDefinitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/build-config/VERSION $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GeneralDefinitions.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GeneralDefinitions.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_GeneralDefinitions.h OTF2_GeneralDefinitions.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps ../build-config/VERSION) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_Definitions.h: $(srcdir)/templates/OTF2_Definitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_Definitions.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_Definitions.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_Definitions.h OTF2_Definitions.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_Events.h: $(srcdir)/templates/OTF2_Events.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_Events.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_Events.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_Events.h OTF2_Events.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/otf2_events_int.h: $(srcdir)/templates/otf2_events_int.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_events_int.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_events_int.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/otf2_events_int.h otf2_events_int.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_EvtReaderCallbacks.h: $(srcdir)/templates/OTF2_EvtReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtReaderCallbacks.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtReaderCallbacks.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_EvtReaderCallbacks.h OTF2_EvtReaderCallbacks.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_EvtReader_inc.c: $(srcdir)/templates/OTF2_EvtReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtReader_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtReader_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_EvtReader_inc.c OTF2_EvtReader_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_EvtWriter.h: $(srcdir)/templates/OTF2_EvtWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtWriter.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtWriter.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_EvtWriter.h OTF2_EvtWriter.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_EvtWriter_inc.c: $(srcdir)/templates/OTF2_EvtWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtWriter_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_EvtWriter_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_EvtWriter_inc.c OTF2_EvtWriter_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalEvtReaderCallbacks.h: $(srcdir)/templates/OTF2_GlobalEvtReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalEvtReaderCallbacks.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalEvtReaderCallbacks.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_GlobalEvtReaderCallbacks.h OTF2_GlobalEvtReaderCallbacks.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalSnapReaderCallbacks.h: $(srcdir)/templates/OTF2_GlobalSnapReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalSnapReaderCallbacks.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalSnapReaderCallbacks.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_GlobalSnapReaderCallbacks.h OTF2_GlobalSnapReaderCallbacks.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalEvtReader_inc.c: $(srcdir)/templates/OTF2_GlobalEvtReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalEvtReader_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalEvtReader_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_GlobalEvtReader_inc.c OTF2_GlobalEvtReader_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalSnapReader_inc.c: $(srcdir)/templates/OTF2_GlobalSnapReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalSnapReader_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalSnapReader_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_GlobalSnapReader_inc.c OTF2_GlobalSnapReader_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/otf2_local_definitions.h: $(srcdir)/templates/otf2_local_definitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_local_definitions.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_local_definitions.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/otf2_local_definitions.h otf2_local_definitions.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_DefReaderCallbacks.h: $(srcdir)/templates/OTF2_DefReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefReaderCallbacks.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefReaderCallbacks.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_DefReaderCallbacks.h OTF2_DefReaderCallbacks.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_DefReader_inc.c: $(srcdir)/templates/OTF2_DefReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefReader_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefReader_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_DefReader_inc.c OTF2_DefReader_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_DefWriter.h: $(srcdir)/templates/OTF2_DefWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefWriter.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefWriter.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_DefWriter.h OTF2_DefWriter.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_DefWriter_inc.c: $(srcdir)/templates/OTF2_DefWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefWriter_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_DefWriter_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_DefWriter_inc.c OTF2_DefWriter_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/otf2_global_definitions.h: $(srcdir)/templates/otf2_global_definitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_global_definitions.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_global_definitions.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/otf2_global_definitions.h otf2_global_definitions.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalDefReaderCallbacks.h: $(srcdir)/templates/OTF2_GlobalDefReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefReaderCallbacks.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefReaderCallbacks.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_GlobalDefReaderCallbacks.h OTF2_GlobalDefReaderCallbacks.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalDefReader_inc.c: $(srcdir)/templates/OTF2_GlobalDefReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefReader_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefReader_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_GlobalDefReader_inc.c OTF2_GlobalDefReader_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalDefWriter.h: $(srcdir)/templates/OTF2_GlobalDefWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefWriter.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefWriter.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_GlobalDefWriter.h OTF2_GlobalDefWriter.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalDefWriter_inc.c: $(srcdir)/templates/OTF2_GlobalDefWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefWriter_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_GlobalDefWriter_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_GlobalDefWriter_inc.c OTF2_GlobalDefWriter_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/otf2_snaps.h: $(srcdir)/templates/otf2_snaps.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snaps.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snaps.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/otf2_snaps.h otf2_snaps.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_SnapReaderCallbacks.h: $(srcdir)/templates/OTF2_SnapReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapReaderCallbacks.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapReaderCallbacks.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_SnapReaderCallbacks.h OTF2_SnapReaderCallbacks.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_SnapReader_inc.c: $(srcdir)/templates/OTF2_SnapReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapReader_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapReader_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_SnapReader_inc.c OTF2_SnapReader_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_SnapWriter.h: $(srcdir)/templates/OTF2_SnapWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapWriter.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapWriter.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_SnapWriter.h OTF2_SnapWriter.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/OTF2_SnapWriter_inc.c: $(srcdir)/templates/OTF2_SnapWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapWriter_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_SnapWriter_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/OTF2_SnapWriter_inc.c OTF2_SnapWriter_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/tools/otf2_print/otf2_print_inc.c: $(srcdir)/templates/otf2_print_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_print_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_print_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/tools/otf2_print/otf2_print_inc.c otf2_print_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/tools/otf2_print/otf2_print_types.h: $(srcdir)/templates/otf2_print_types.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_print_types.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_print_types.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/tools/otf2_print/otf2_print_types.h otf2_print_types.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_events.hpp: $(srcdir)/templates/otf2_snapshots_events.tmpl.hpp $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snapshots_events.tmpl.hpp.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snapshots_events.tmpl.hpp.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/tools/otf2_snapshots/otf2_snapshots_events.hpp otf2_snapshots_events.tmpl.hpp ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_events_inc.cpp: $(srcdir)/templates/otf2_snapshots_events_inc.tmpl.cpp $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snapshots_events_inc.tmpl.cpp.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snapshots_events_inc.tmpl.cpp.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/tools/otf2_snapshots/otf2_snapshots_events_inc.cpp otf2_snapshots_events_inc.tmpl.cpp ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_callbacks_inc.cpp: $(srcdir)/templates/otf2_snapshots_callbacks_inc.tmpl.cpp $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snapshots_callbacks_inc.tmpl.cpp.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_snapshots_callbacks_inc.tmpl.cpp.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/tools/otf2_snapshots/otf2_snapshots_callbacks_inc.cpp otf2_snapshots_callbacks_inc.tmpl.cpp ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/otf2_attribute_list_inc.c: $(srcdir)/templates/otf2_attribute_list_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_attribute_list_inc.tmpl.c.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_attribute_list_inc.tmpl.c.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/otf2_attribute_list_inc.c otf2_attribute_list_inc.tmpl.c ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_AttributeList.h: $(srcdir)/templates/OTF2_AttributeList.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_AttributeList.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check OTF2_AttributeList.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../include/otf2/OTF2_AttributeList.h OTF2_AttributeList.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/src/otf2_attic_types.h: $(srcdir)/templates/otf2_attic_types.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_attic_types.tmpl.h.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check otf2_attic_types.tmpl.h.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../src/otf2_attic_types.h otf2_attic_types.tmpl.h ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/doc/doxygen-user/definitions.dox: $(srcdir)/templates/definitions.tmpl.dox $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check definitions.tmpl.dox.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check definitions.tmpl.dox.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../doc/doxygen-user/definitions.dox definitions.tmpl.dox ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/doc/doxygen-user/events.dox: $(srcdir)/templates/events.tmpl.dox $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check events.tmpl.dox.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check events.tmpl.dox.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../doc/doxygen-user/events.dox events.tmpl.dox ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/doc/doxygen-user/snaps.dox: $(srcdir)/templates/snaps.tmpl.dox $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check snaps.tmpl.dox.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check snaps.tmpl.dox.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../doc/doxygen-user/snaps.dox snaps.tmpl.dox ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+$(srcdir)/templates/example.cc: $(srcdir)/templates/example.tmpl.cc $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py GEN.force
+	@$(otf2__tty_colors); \
+	for f in x $$MAKEFLAGS; do \
+	  case $$f in \
+	    *=* | --[!B]*);; \
+	    *B*) generate=force;; \
+	  esac; \
+	done; \
+	case "$${generate}" in \
+	(true|force|false|'') : accept ;; \
+	(*) \
+	    echo >&2 "$${red}error: Invalid value for 'generate': '$$generate'$${std}"; \
+	    exit 1; \
+	;; \
+	esac; \
+	if test $${generate:-false} = false; then \
+	    if ! test -e $@; then \
+	        echo >&2 "$@: $${red}error: target does not exists$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to create$${std}"; \
+	        exit 1; \
+	    elif ! test -e $<.sig; then \
+	        echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	        echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	    else \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check example.tmpl.cc.sig); \
+	        res=$$?; \
+	        if test $$res -eq 1; then \
+	            echo >&2 "$@: $${mag}warning: target modified since last creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: please modify only the source file: $<"; \
+	        elif test $$res -eq 2; then \
+	            echo >&2 "$@: $${mag}warning: target needs re-creation$${std}"; \
+	            echo >&2 "$@: $${blu}note: run '$(MAKE) generate=true $@' to re-create$${std}"; \
+	        fi; \
+	    fi; \
+	elif test $${generate:-false} = force || \
+	   test ! -e $@ || \
+	   test ! -e $<.sig || \
+	   ! ($(am__cd) $(srcdir)/templates && $(GEN.sig) --check example.tmpl.cc.sig); then \
+	    if test $${V-0} = 0; then echo "  GEN   " $@; \
+	    else                      echo $(GEN.tmpl.cmd) $<; fi; \
+	    rm -f $@ $<.sig; \
+	    trap 'rm -f $@-t $<.sig-t' EXIT; \
+	    $(GEN.tmpl.cmd) $< >$@-t && \
+	        mv $@-t $@ && \
+	        ( test -e $(srcdir)/vendor/common/beautifier/beautify.cfg && \
+	            uncrustify -c $(srcdir)/vendor/common/beautifier/beautify.cfg --mtime --no-backup -q $@ || true ) && \
+	        ($(am__cd) $(srcdir)/templates && $(GEN.sig) ../templates/example.cc example.tmpl.cc ../share/otf2/otf2.types ../share/otf2/otf2.enums ../share/otf2/otf2.defs ../share/otf2/otf2.events ../share/otf2/otf2.snaps) >$<.sig-t && \
+	        mv $<.sig-t $<.sig; \
+	fi
+
+# special build dep rule, to trigger update
+$(srcdir)/include/otf2/OTF2_GeneralDefinitions.h: share/otf2/__version__.py
+
+else
+
+$(srcdir)/include/otf2/OTF2_GeneralDefinitions.h: $(srcdir)/templates/OTF2_GeneralDefinitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/build-config/VERSION $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_Definitions.h: $(srcdir)/templates/OTF2_Definitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_Events.h: $(srcdir)/templates/OTF2_Events.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/otf2_events_int.h: $(srcdir)/templates/otf2_events_int.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_EvtReaderCallbacks.h: $(srcdir)/templates/OTF2_EvtReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_EvtReader_inc.c: $(srcdir)/templates/OTF2_EvtReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_EvtWriter.h: $(srcdir)/templates/OTF2_EvtWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_EvtWriter_inc.c: $(srcdir)/templates/OTF2_EvtWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalEvtReaderCallbacks.h: $(srcdir)/templates/OTF2_GlobalEvtReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalSnapReaderCallbacks.h: $(srcdir)/templates/OTF2_GlobalSnapReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalEvtReader_inc.c: $(srcdir)/templates/OTF2_GlobalEvtReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalSnapReader_inc.c: $(srcdir)/templates/OTF2_GlobalSnapReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/otf2_local_definitions.h: $(srcdir)/templates/otf2_local_definitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_DefReaderCallbacks.h: $(srcdir)/templates/OTF2_DefReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_DefReader_inc.c: $(srcdir)/templates/OTF2_DefReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_DefWriter.h: $(srcdir)/templates/OTF2_DefWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_DefWriter_inc.c: $(srcdir)/templates/OTF2_DefWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/otf2_global_definitions.h: $(srcdir)/templates/otf2_global_definitions.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalDefReaderCallbacks.h: $(srcdir)/templates/OTF2_GlobalDefReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalDefReader_inc.c: $(srcdir)/templates/OTF2_GlobalDefReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_GlobalDefWriter.h: $(srcdir)/templates/OTF2_GlobalDefWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_GlobalDefWriter_inc.c: $(srcdir)/templates/OTF2_GlobalDefWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/otf2_snaps.h: $(srcdir)/templates/otf2_snaps.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_SnapReaderCallbacks.h: $(srcdir)/templates/OTF2_SnapReaderCallbacks.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_SnapReader_inc.c: $(srcdir)/templates/OTF2_SnapReader_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_SnapWriter.h: $(srcdir)/templates/OTF2_SnapWriter.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/OTF2_SnapWriter_inc.c: $(srcdir)/templates/OTF2_SnapWriter_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/tools/otf2_print/otf2_print_inc.c: $(srcdir)/templates/otf2_print_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/tools/otf2_print/otf2_print_types.h: $(srcdir)/templates/otf2_print_types.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_events.hpp: $(srcdir)/templates/otf2_snapshots_events.tmpl.hpp $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_events_inc.cpp: $(srcdir)/templates/otf2_snapshots_events_inc.tmpl.cpp $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/tools/otf2_snapshots/otf2_snapshots_callbacks_inc.cpp: $(srcdir)/templates/otf2_snapshots_callbacks_inc.tmpl.cpp $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/otf2_attribute_list_inc.c: $(srcdir)/templates/otf2_attribute_list_inc.tmpl.c $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/include/otf2/OTF2_AttributeList.h: $(srcdir)/templates/OTF2_AttributeList.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/src/otf2_attic_types.h: $(srcdir)/templates/otf2_attic_types.tmpl.h $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/doc/doxygen-user/definitions.dox: $(srcdir)/templates/definitions.tmpl.dox $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/doc/doxygen-user/events.dox: $(srcdir)/templates/events.tmpl.dox $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/doc/doxygen-user/snaps.dox: $(srcdir)/templates/snaps.tmpl.dox $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+$(srcdir)/templates/example.cc: $(srcdir)/templates/example.tmpl.cc $(srcdir)/share/otf2/otf2.types $(srcdir)/share/otf2/otf2.enums $(srcdir)/share/otf2/otf2.defs $(srcdir)/share/otf2/otf2.events $(srcdir)/share/otf2/otf2.snaps $(srcdir)/src/tools/otf2_template/otf2_template.py
+	@$(otf2__tty_colors); \
+	if ! test -e $@; then \
+	    echo >&2 "$@: $${red}error: target does not exists, but no python available$${std}"; \
+	    exit 1; \
+	elif ! test -e $<.sig; then \
+	    echo >&2 "$@: $${red}warning: no signature for target$${std}"; \
+	else \
+	    case " $? " in \
+	    (*" $< "*|*" $(srcdir)/share/otf2/otf2.types "*|*" $(srcdir)/share/otf2/otf2.enums "*|*" $(srcdir)/share/otf2/otf2.defs "*|*" $(srcdir)/share/otf2/otf2.events "*|*" $(srcdir)/share/otf2/otf2.snaps "*) \
+	        echo >&2 "$@: $${red}warning: target out of date, but no python available to re-create: $?$${std}";; \
+	    esac; \
+	fi
+
+endif
+
+dist-touch-template-outputs:
+	@touch \
+	    $(distdir)/include/otf2/OTF2_GeneralDefinitions.h \
+	    $(distdir)/include/otf2/OTF2_Definitions.h \
+	    $(distdir)/include/otf2/OTF2_Events.h \
+	    $(distdir)/src/otf2_events_int.h \
+	    $(distdir)/include/otf2/OTF2_EvtReaderCallbacks.h \
+	    $(distdir)/src/OTF2_EvtReader_inc.c \
+	    $(distdir)/include/otf2/OTF2_EvtWriter.h \
+	    $(distdir)/src/OTF2_EvtWriter_inc.c \
+	    $(distdir)/include/otf2/OTF2_GlobalEvtReaderCallbacks.h \
+	    $(distdir)/include/otf2/OTF2_GlobalSnapReaderCallbacks.h \
+	    $(distdir)/src/OTF2_GlobalEvtReader_inc.c \
+	    $(distdir)/src/OTF2_GlobalSnapReader_inc.c \
+	    $(distdir)/src/otf2_local_definitions.h \
+	    $(distdir)/include/otf2/OTF2_DefReaderCallbacks.h \
+	    $(distdir)/src/OTF2_DefReader_inc.c \
+	    $(distdir)/include/otf2/OTF2_DefWriter.h \
+	    $(distdir)/src/OTF2_DefWriter_inc.c \
+	    $(distdir)/src/otf2_global_definitions.h \
+	    $(distdir)/include/otf2/OTF2_GlobalDefReaderCallbacks.h \
+	    $(distdir)/src/OTF2_GlobalDefReader_inc.c \
+	    $(distdir)/include/otf2/OTF2_GlobalDefWriter.h \
+	    $(distdir)/src/OTF2_GlobalDefWriter_inc.c \
+	    $(distdir)/src/otf2_snaps.h \
+	    $(distdir)/include/otf2/OTF2_SnapReaderCallbacks.h \
+	    $(distdir)/src/OTF2_SnapReader_inc.c \
+	    $(distdir)/include/otf2/OTF2_SnapWriter.h \
+	    $(distdir)/src/OTF2_SnapWriter_inc.c \
+	    $(distdir)/src/tools/otf2_print/otf2_print_inc.c \
+	    $(distdir)/src/tools/otf2_print/otf2_print_types.h \
+	    $(distdir)/src/tools/otf2_snapshots/otf2_snapshots_events.hpp \
+	    $(distdir)/src/tools/otf2_snapshots/otf2_snapshots_events_inc.cpp \
+	    $(distdir)/src/tools/otf2_snapshots/otf2_snapshots_callbacks_inc.cpp \
+	    $(distdir)/src/otf2_attribute_list_inc.c \
+	    $(distdir)/include/otf2/OTF2_AttributeList.h \
+	    $(distdir)/src/otf2_attic_types.h \
+	    $(distdir)/doc/doxygen-user/definitions.dox \
+	    $(distdir)/doc/doxygen-user/events.dox \
+	    $(distdir)/doc/doxygen-user/snaps.dox \
+	    $(distdir)/templates/example.cc \
+	    .

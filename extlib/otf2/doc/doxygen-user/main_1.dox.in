@@ -1,0 +1,38 @@
+/**
+@mainpage Open Trace Format 2
+
+@section introduction Introduction
+
+The OTF2 library provides an interface to write and read trace data.
+
+OTF2 is developed within the @scorep project. The @scorep project is funded by
+the German Federal Ministry of Education and Research.  OTF2 is available
+under the BSD open source license that allows free usage for academic and
+commercial applications.
+
+@section get_started Get started
+
+\ref usage_writing_page "Usage in writing mode"
+
+\ref usage_reading_page "Usage in reading mode"
+
+\ref definition_records "Definition records"
+
+\ref event_records "Event records"
+
+\ref snap_records "Snapshot records"
+
+\ref usage_tools "Usage of OTF2 tools"
+
+@latexonly
+\appendices
+\renewcommand\chaptername{Appendix}
+@endlatexonly
+
+
+@page tools_documentation OTF2 Tools
+@section usage_tools Usage of OTF2 tools
+@subsection otf2_config_tool OTF2 config tool
+
+A call to otf2-config has the following syntax:
+\verbatim

@@ -6,7 +6,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT([GTG], [0.2], [gtg-devel@lists.gforge.inria.fr])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([subdir-objects])
 
 # Checks for programs.
 AC_PROG_CC
@@ -216,7 +216,7 @@ if test $use_otf = yes ; then
                 esac
 
                 otf_conf_cmd="$otf_srcdir/configure"
-   otf_conf_args="$otf_conf_args --prefix=\"$prefix\" --exec-prefix=\"$exec_prefix\" --bindir=\"$bindir\" --libdir=\"$libdir\" --includedir=\"$includedir\" --docdir=\"$docdir/otf\" $OTFFLAGS --cache-file=\"/dev/null\" --srcdir=\"$otf_srcdir\""
+   otf_conf_args="$otf_conf_args --prefix=\"$prefix\" --exec-prefix=\"$exec_prefix\" --bindir=\"$bindir\" --libdir=\"$libdir\" --includedir=\"$includedir\" --docdir=\"$docdir/otf\" $OTFFLAGS --cache-file=\"/dev/null\" --srcdir=\"$otf_srcdir\" --enable-shared=yes"
                 AC_MSG_NOTICE([running $SHELL $otf_conf_cmd $otf_conf_args])
                 eval "$SHELL '$otf_conf_cmd' $otf_conf_args"
                 AS_IF([test $? != "0"], [AC_MSG_ERROR([$otf_conf_cmd failed for $otf_dir])])
@@ -238,34 +238,159 @@ AC_MSG_WARN([use otf = $use_internal_otf])
 AM_CONDITIONAL(DONT_USE_INTERNAL_OTF, test x"$use_internal_otf" != "xyes")
 
 
-
 # OTF2 stuff
-use_otf2=no
+use_internal_otf2=yes
+otf2_asked=no
+use_otf2=yes
+otf2_cflags="-I${srcdir}/extlib/otf2/include -I${top_srcdir}/extlib/otf2/include"
+otf2_libs=""
 AC_ARG_WITH(otf2, [AS_HELP_STRING([--with-otf2[=<dir>]], [Use a specific OTF2 installation])],
         [
                 if test x$withval != xno; then
-		   	use_otf2=yes
+		   	otf2_asked=yes
                         if test x$withval = xyes; then
                                 AC_MSG_RESULT(yes)
+				use_internal_otf2=yes
                         else
                                 # use specified path
+				use_internal_otf2=no
                                 otf2dir=$withval
                                 AC_MSG_RESULT(yes using $otf2dir)
-                                AC_SUBST(OTF2DIR, $otf2dir)
-
-#				AC_CHECK_PROG (OTF2_CONFIG, otf2-config, yes, no, [$otf2dir/bin])
-				otf2_cflags=`$otf2dir/bin/otf2-config --cflags`
-				otf2_libs="-L$otf2dir/lib -Wl,-rpath,$otf2dir/lib -lotf2"
+                                AC_SUBST(OTFDIR, $otf2dir)
+				otf2_cflags="-I${otf2dir}/include"
+				otf2_libs="-L$otf2dir/lib"
                         fi
+                else
+			# either --without-otf or --with-otf=no is set
+			use_internal_otf2=no
+                        use_otf2=no
                 fi
         ])
 
+AC_ARG_WITH(otf2-include, [AS_HELP_STRING([--with-otf2-include[=<dir>]], [Use a specific OTF2 header directory])],
+        [
+                if test x$withval != xno; then
+		   	otf2_asked=yes
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+				use_internal_otf2=yes
+                        else
+                                # use specified path
+				use_internal_otf2=no
+                                otf2_inc_dir=$withval
+                                AC_MSG_RESULT(yes using $otf2_inc_dir)
+				otf2_cflags="-I$otf2_inc_dir"
+                        fi
+  		fi
+        ])
+
+AC_ARG_WITH(otf2-lib, [AS_HELP_STRING([--with-otf2-lib[=<dir>]], [Use a specific libotf2.a directory])],
+        [
+                if test x$withval != xno; then
+		   	otf2_asked=yes
+                        if test x$withval = xyes; then
+                                AC_MSG_RESULT(yes)
+				use_internal_otf2=yes
+                        else
+                                # use specified path
+				use_internal_otf2=no
+                                otf2_lib_dir=$withval
+                                AC_MSG_RESULT(yes using $otf2_lib_dir)
+				otf2_libs="-L$otf2_lib_dir"
+                        fi
+  		fi
+        ])
+
+if test $use_otf2 = yes ; then
+   enable_otf2=yes
+   if test x$use_internal_otf2 = xno; then
+      CPPFLAGS="${CPPFLAGS} ${otf2_cflags}"
+      LDFLAGS="${LDFLAGS} ${otf2_libs}"
+
+   # Check for OTF header
+      AC_CHECK_HEADER([otf2.h],[enable_otf2=yes], AC_MSG_WARN([Cannot find libOTF2.]))
+      if test $enable_otf2 = no && test $otf2_asked = yes ; then
+         AC_MSG_ERROR(Cannot find libOTF2.)
+      fi
+
+   else
+
+  dnl configure otf from extlib
+    otf2_parent_dir=`pwd`
+    otf2_dir="extlib/otf2"
+    AC_MSG_NOTICE([configuring in otf2_dir ($otf2_parent_dir/$otf2_dir)])
+    AS_IF([test "$srcdir" != "."],
+                [
+                        test -d "$otf2_dir" ||
+                        mkdir -p "$otf2_dir" ||
+                        AC_MSG_ERROR([cannot create $otf2_dir])
+                ])
+
+                cd $otf2_dir
+
+                case $srcdir in
+                        .)
+                                otf2_srcdir="$srcdir"
+                                ;;
+                        /*)
+                                otf2_srcdir="$srcdir/$otf2_dir"
+                                ;;
+                        *)
+                                otf2_srcdir="../../$srcdir/$otf2_dir"
+                                ;;
+                esac
+
+                otf2_conf_cmd="$otf2_srcdir/configure"
+
+                otf2_conf_args="--enable-shared=yes --prefix=\"$prefix\" --exec-prefix=\"${exec_prefix}\" --includedir=\"${includedir}\" $OTF2FLAGS --cache-file=\"/dev/null\" --srcdir=\"${otf2_srcdir}\" --enable-shared=yes"
+                AC_MSG_NOTICE([running "$SHELL $otf2_conf_cmd $otf2_conf_args"])
+                eval "$SHELL '$otf2_conf_cmd' $otf2_conf_args"
+                AS_IF([test $? != "0"], [AC_MSG_ERROR([$otf2_conf_cmd failed for $otf2_dir])])
+
+                cd $otf2_parent_dir
+                AS_IF([test x"$OTF2LIB" = x], [OTF2_LDFLAGS="-lotf2"])
+
+#		OTF2_CPPFLAGS="$OTF2_CPPFLAGS -I${prefix}/include/otf2"
+#		CPPFLAGS="${CPPFLAGS} -I${prefix}/include/otf2"
+   fi
+else
+  enable_otf2=no
+fi
+
+AM_CONDITIONAL([USE_OTF2], [test "x$enable_otf2" = xyes])
+
+AC_MSG_WARN([use otf2 = $use_internal_otf2])
+
+AM_CONDITIONAL(DONT_USE_INTERNAL_OTF2, test x"$use_internal_otf2" != "xyes")
+
+# # OTF2 stuff
+# use_otf2=no
+# AC_ARG_WITH(otf2, [AS_HELP_STRING([--with-otf2[=<dir>]], [Use a specific OTF2 installation])],
+#         [
+#                 if test x$withval != xno; then
+# 		   	use_otf2=yes
+#                         if test x$withval = xyes; then
+#                                 AC_MSG_RESULT(yes)
+#                         else
+#                                 # use specified path
+#                                 otf2dir=$withval
+#                                 AC_MSG_RESULT(yes using $otf2dir)
+#                                 AC_SUBST(OTF2DIR, $otf2dir)
+# 
+# #				AC_CHECK_PROG (OTF2_CONFIG, otf2-config, yes, no, [$otf2dir/bin])
+# 				otf2_cflags=`$otf2dir/bin/otf2-config --cflags`
+# 				otf2_libs="-L$otf2dir/lib -Wl,-rpath,$otf2dir/lib -lotf2"
+#                         fi
+#                 fi
+#         ])
+# 
+# 
+# AM_CONDITIONAL([USE_OTF2], [test "x$use_otf2" = xyes])
+# 
+# AC_MSG_WARN([use otf2 = $use_otf2])
+
 AC_SUBST(OTF2_LIBS, $otf2_libs)
 AC_SUBST(OTF2_CFLAGS, $otf2_cflags)
-
-AM_CONDITIONAL([USE_OTF2], [test "x$use_otf2" = xyes])
-
-AC_MSG_WARN([use otf2 = $use_otf2])
 
 
 
@@ -284,12 +409,16 @@ AC_PATH_TOOL([PDFLATEX], [pdflatex], no)
 AM_CONDITIONAL([USE_PDFLATEX], [test "x$PDFLATEX" != xno])
 AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
 
-AC_CONFIG_SUBDIRS([extlib/otf])
+#AC_CONFIG_SUBDIRS([extlib/otf extlib/otf2])
 
-AC_OUTPUT([Makefile \
-	   gtg.pc \
-           extlib/Makefile \
-           inc/Makefile \
-	   src/Makefile \
-	   doc/Makefile \
-	   doc/Doxyfile])
+AC_CONFIG_FILES([Makefile \
+		gtg.pc   \
+           	extlib/Makefile \
+           	inc/Makefile \
+	   	src/Makefile \
+	   	doc/Makefile \
+	   	doc/Doxyfile])
+
+#AC_CONFIG_SUBDIRS([extlib/otf extlib/otf2])
+
+AC_OUTPUT

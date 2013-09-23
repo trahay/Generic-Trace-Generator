@@ -1,0 +1,23 @@
+## -*- mode: makefile -*-
+
+## 
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2013,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       src/tools/otf2_config/Makefile.backend-only.inc.am
+## maintainer Bert Wesarg <bert.wesarg@tu-dresden.de>
+
+../src/otf2_config_library_dependencies_backend_inc.hpp: $(lib_LTLIBRARIES)
+	$(AM_V_GEN)$(srcdir)/../vendor/common/build-config/generate-library-dependencies.sh $^ >$@ || \
+            ($(RM) $@; exit 1)

@@ -1,0 +1,49 @@
+## -*- mode: makefile -*-
+
+## 
+## This file is part of the Score-P software (http://www.score-p.org)
+##
+## Copyright (c) 2009-2013,
+##    RWTH Aachen University, Germany
+##    Gesellschaft fuer numerische Simulation mbH Braunschweig, Germany
+##    Technische Universitaet Dresden, Germany
+##    University of Oregon, Eugene, USA
+##    Forschungszentrum Juelich GmbH, Germany
+##    German Research School for Simulation Sciences GmbH, Juelich/Aachen, Germany
+##    Technische Universitaet Muenchen, Germany
+##
+## See the COPYING file in the package base directory for details.
+##
+
+## file       src/tools/otf2_config/Makefile.inc.am
+## maintainer Bert Wesarg <bert.wesarg@tu-dresden.de>
+
+bin_PROGRAMS += otf2-config
+otf2_config_SOURCES = \
+	$(SRC_ROOT)src/tools/otf2_config/otf2_config.cpp \
+	$(SRC_ROOT)src/tools/otf2_config/otf2_config_library_dependencies.cpp \
+	$(SRC_ROOT)src/tools/otf2_config/otf2_config_library_dependencies.hpp
+otf2_config_CXXFLAGS = -DCXX=\""$(CXX)"\"
+otf2_config_CPPFLAGS = $(AM_CPPFLAGS) \
+                       $(UTILS_CPPFLAGS)
+otf2_config_LDADD = $(LIB_ROOT)libutils.la
+
+BUILT_SOURCES += ../src/otf2_config_library_dependencies_backend_inc.hpp \
+                 ../src/otf2_config_library_dependencies_frontend_inc.hpp
+
+CLEANFILES += ../src/otf2_config_library_dependencies_backend_inc.hpp \
+              ../src/otf2_config_library_dependencies_frontend_inc.hpp
+
+if CROSS_BUILD
+
+# The library dependencies are needed for the frontend tool. However, the
+# backend information is in the backend Makefile. Thus, invoke the backend
+# Makefile.
+../src/otf2_config_library_dependencies_backend_inc.hpp:
+	@$(am__cd) ../build-backend && $(MAKE) $(AM_MAKEFLAGS) $@
+
+endif
+
+../src/otf2_config_library_dependencies_frontend_inc.hpp: $(lib_LTLIBRARIES)
+	$(AM_V_GEN)$(srcdir)/../vendor/common/build-config/generate-library-dependencies.sh $^ >$@ || \
+            ($(RM) $@; exit 1)

@@ -1,0 +1,20 @@
+OTF2
+----
+The Open Trace Format 2 (OTF2) is a highly scalable, memory efficient
+event trace data format plus support library.
+
+To build OTF2 you usually just need to do 
+
+  ./configure
+  make
+  make install
+
+Please have a look at INSTALL for further configure and build options.
+
+After make install you will find html and pdf documentation as well as
+usage examples under $(prefix)/share/doc/otf2.
+
+Have fun!
+
+Please report bugs to <support@score-p.org>.
+

@@ -1,0 +1,15 @@
+Usage: otf2-snapshots [OPTION]... ANCHORFILE
+Append snapshots to existing otf2 traces at given 'break' timestamps.
+
+Options:
+  -n, --number <BREAKS> Number of breaks (distributed regularly)
+                        if -p and -t are not set, the default for -n is 10
+                        breaks.
+  -p <TICK_RATE>        Create break every <TICK_RATE> ticks
+                        if both, -n and -p are specified the one producing
+                        more breaks wins.
+      --progress        Brief mode, print progress information.
+      --verbose         Verbose mode, print break timestamps, i.e. snapshot
+                        informations to stdout.
+  -V, --version         Print version information.
+  -h, --help            Print this help information.

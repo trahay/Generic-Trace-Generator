@@ -1,0 +1,7 @@
+## -*- mode: makefile -*-
+
+include ../src/tools/Makefile.inc.am
+include ../src/tools/otf2_config/Makefile.inc.am
+include ../src/tools/otf2_snapshots/Makefile.inc.am
+
+#include ../test/...

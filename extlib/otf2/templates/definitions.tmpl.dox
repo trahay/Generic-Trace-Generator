@@ -1,0 +1,220 @@
+/**
+ *  @page definition_records List of all definition records
+ *
+ *
+ *  @dot
+ *  digraph otf2_definitions {
+ *      rankdir = BT;
+ *      bgcolor = "transparent";
+ *      edge [arrowhead="open", style="dashed", fontname=FreeSans, fontsize=8]
+ *      node [shape=record, fontname=FreeSans, fontsize=10];
+@otf2 for def in defs|referable_defs:
+ *      @@def.name@@ [
+ *          label="@@def.name@@",
+ *          href="@ref @@def.name@@"
+ *      ];
+    @otf2 for attr in def.all_attributes[1:]:
+    @otf2  if attr is def_ref_attr:
+ *      @@def.name@@ -> @@attr.def_ref.name@@ [
+ *          label="@@attr.name@@",
+ *          href="@ref @@def.name@@_@@attr.name@@"
+ *      ];
+    @otf2  endif
+    @otf2 endfor
+    @otf2 if def == MetricInstance:
+ *      MetricInstance -> Location [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_LOCATION",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+ *      MetricInstance -> LocationGroup [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_LOCATION_GROUP",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+ *      MetricInstance -> SystemTreeNode [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_SYSTEM_TREE_NODE",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+ *      MetricInstance -> Group [
+ *          label="scope",
+ *          tooltip="iff metricScope == OTF2_SCOPE_GROUP",
+ *          href="@ref MetricInstance_scope"
+ *      ];
+    @otf2 elif def == Group:
+ *      Group -> Location [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_LOCATIONS or groupType == OTF2_GROUP_TYPE_MPI_LOCATIONS",
+ *          href="@ref Group_members"
+ *      ];
+ *      Group -> Region [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_REGIONS",
+ *          href="@ref Group_members"
+ *      ];
+ *      Group -> MetricClass [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_METRIC",
+ *          href="@ref Group_members"
+ *      ];
+ *      Group -> MetricInstance [
+ *          label="members",
+ *          tooltip="iff groupType == OTF2_GROUP_TYPE_METRIC",
+ *          href="@ref Group_members"
+ *      ];
+    @otf2 endif
+@otf2 endfor
+ *  }
+ *  @enddot
+ *
+@otf2 for def in defs:
+ *  @htmlonly
+ *  <div class="memitem">
+ *  @endhtmlonly
+ *  @anchor @@def.name@@
+ *  @htmlonly
+ *  <div class="memproto">
+ *    <table class="memname"><tbody>
+ *      <tr><td class="memname">
+ *  @endhtmlonly
+    @otf2 if def is referable_def:
+ *   @latexonly
+ *   \section[@@def.name@@]{%
+ *   @endlatexonly
+ *      @ref @@def.self_attr.type@@ @@def.name@@
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+    @otf2 else:
+ *   @latexonly
+ *   \section[@@def.name@@]{%
+ *   @endlatexonly
+ *      @@def.name@@
+ *   @latexonly
+ *   }
+ *   @endlatexonly
+ * @endif
+    @otf2 endif
+ *  @htmlonly
+ *      </td></tr>
+ *    </tbody></table>
+ *  </div>
+ *  <div class="memdoc">
+ *  @endhtmlonly
+ *  @@def.doxygendoc()@@
+ *
+    @otf2 if def is not local_def:
+ *  This definition is only valid as a global definition.
+    @otf2 elif def is not global_def:
+ *  This definition is only valid as a local definition.
+    @otf2 endif
+ *
+ * @ifnot LATEX
+ *  @par Attributes:
+ * @endif
+ *  @htmlonly
+ *  <table class="params"><tbody>
+ *  @endhtmlonly
+ *  @latexonly
+ *  \begin{DoxyDesc}{Attributes}%
+ *    \begin{description}%
+ *      \item[] \hspace{\fill} \vspace{-25pt}%
+ *      \definecolor{tableShade}{HTML}{F8F8F8}%
+ *      \rowcolors{1}{white}{tableShade}%
+ *      \arrayrulecolor{gray}%
+ *      \setlength{\tabcolsep}{0.01\textwidth}%
+ *      \begin{longtable}{|>{\raggedleft\hspace{0pt}}p{0.25\textwidth}|%
+ *                         >{\raggedleft\hspace{0pt}}p{0.15\textwidth}|%
+ *                         p{0.50\textwidth}|}%
+ *        \hline%
+ *  @endlatexonly
+    @otf2 for attr in def.attributes:
+    @otf2  if not loop.first or def is not referable_def:
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+        @otf2 if attr is def_ref_attr:
+ *        @ref @@attr.type@@ @ltab
+        @otf2 elif attr is enum_attr:
+ *        @ref @@attr.type@@ @ltab
+        @otf2 else:
+ *        @@attr.type@@ @ltab
+        @otf2 endif
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor @@def.name@@_@@attr.name@@
+ *        @@attr.name@@ @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      @@attr.doxygendoc(prefix=' *      ')@@ @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+    @otf2   if attr is array_attr:
+    @otf2    for array_attr in attr.array_attributes:
+ *  @htmlonly
+ *    <tr>
+ *      <td class="paramtype">
+ *  @endhtmlonly
+        @otf2 if array_attr is def_ref_attr:
+ *        @ref @@array_attr.type@@ @ltab
+        @otf2 elif array_attr is enum_attr:
+ *        @ref @@array_attr.type@@ @ltab
+        @otf2 else:
+ *        @@array_attr.type@@ @ltab
+        @otf2 endif
+ *  @htmlonly
+ *      </td>
+ *      <td class="paramname">
+ *  @endhtmlonly
+ *        @anchor @@def.name@@_@@array_attr.name@@
+ *        @@array_attr.name@@ @hblack{[} @@attr.name@@ @hblack{]} @ltab
+ *  @htmlonly
+ *      </td>
+ *      <td>
+ *  @endhtmlonly
+ *      @@array_attr.doxygendoc(prefix=' *      ')@@ @lrowend
+ *  @htmlonly
+ *      </td>
+ *    </tr>
+ *  @endhtmlonly
+    @otf2    endfor
+    @otf2   endif
+    @otf2  endif
+    @otf2 endfor
+ *  @htmlonly
+ *  </tbody></table>
+ *  @endhtmlonly
+ *  @latexonly
+ *      \end{longtable}%
+ *    \end{description}%
+ *  \end{DoxyDesc}%
+ *  @endlatexonly
+ *
+    @otf2 if def is global_def:
+ *  @see OTF2_GlobalDefWriter_Write@@def.name@@()
+    @otf2 endif
+    @otf2 if def is local_def:
+ *  @see OTF2_DefWriter_Write@@def.name@@()
+    @otf2 endif
+ *
+ *  @since Version @@def.since@@
+@otf2  if def.deprecated:
+ *
+ *  @deprecated In version @@def.deprecated@@
+@otf2  endif
+ *
+ *  @htmlonly
+ *  </div>
+ *  </div>
+ *  @endhtmlonly
+ *
+@otf2 endfor
+ */
