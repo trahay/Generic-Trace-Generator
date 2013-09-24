@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
  also: patches by Rainer Keller, thanks a lot!
 */
@@ -44,7 +44,7 @@ int OTF_RStream_init( OTF_RStream* rstream ) {
 	rstream->buffersizes= 1024*1024;
 	
 #ifdef HAVE_ZLIB
-	rstream->zbuffersizes= 1024*10;
+	rstream->zbuffersizes= OTF_ZBUFFER_DEFAULTSIZE;
 #endif /* HAVE_ZLIB */
 
 	rstream->manager= NULL;
@@ -72,7 +72,7 @@ int OTF_RStream_finish( OTF_RStream* rstream ) {
 		ret &= tmpret;
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"cannot close defbuffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 		}
@@ -85,7 +85,7 @@ int OTF_RStream_finish( OTF_RStream* rstream ) {
 		ret &= tmpret;
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"cannot close event buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 	
@@ -99,7 +99,7 @@ int OTF_RStream_finish( OTF_RStream* rstream ) {
 		ret &= tmpret;
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"cannot close snapshots buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -113,7 +113,7 @@ int OTF_RStream_finish( OTF_RStream* rstream ) {
 		ret &= tmpret;
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"cannot close statistics buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -127,7 +127,7 @@ int OTF_RStream_finish( OTF_RStream* rstream ) {
 		ret &= tmpret;
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"cannot close defbuffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -147,7 +147,7 @@ OTF_RStream* OTF_RStream_open( const char* namestub, uint32_t id, OTF_FileManage
 	/* Check the input parameters */
 	if( NULL == manager ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"manager has not been specified.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -157,7 +157,7 @@ OTF_RStream* OTF_RStream_open( const char* namestub, uint32_t id, OTF_FileManage
 	ret= (OTF_RStream*) malloc( sizeof(OTF_RStream) );
 	if( NULL == ret ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"no memory left.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -184,7 +184,7 @@ int OTF_RStream_close( OTF_RStream* rstream ) {
 	
 	if( NULL == rstream ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"rstream has not been specified.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -212,7 +212,7 @@ OTF_RBuffer* OTF_RStream_getDefBuffer( OTF_RStream* rstream ) {
 			rstream->id, OTF_FILETYPE_DEF, 0, NULL );
 		if( NULL == filename ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"OTF_getFilename() failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -266,7 +266,7 @@ int OTF_RStream_closeDefBuffer( OTF_RStream* rstream ) {
 		ret&= OTF_RBuffer_close( rstream->defBuffer );
 		if( 0 == ret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"closing defbuffer failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -291,7 +291,7 @@ OTF_RBuffer* OTF_RStream_getEventBuffer( OTF_RStream* rstream ) {
 			rstream->id, OTF_FILETYPE_EVENT, 0, NULL );
 		if( NULL == filename ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"OTF_getFilename() failed for event file with name stub '%s' and ID %u.\n",
 					__FUNCTION__, __FILE__, __LINE__, rstream->namestub, rstream->id );
 
@@ -299,20 +299,19 @@ OTF_RBuffer* OTF_RStream_getEventBuffer( OTF_RStream* rstream ) {
 		}
 
 		rstream->eventBuffer= OTF_RBuffer_open( filename, rstream->manager );
-		if ( NULL == rstream->eventBuffer ) {
-
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
-					"OTF_RBuffer_open() failed for filename '%s'.\n",
-					__FUNCTION__, __FILE__, __LINE__, filename );
-
-			free( filename );
-			filename = NULL;
-			return NULL;
-		}
-
 		free( filename );
 		filename = NULL;
 
+		if ( NULL == rstream->eventBuffer ) {
+
+/* *** commented because it can happen when file not exists
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
+					"OTF_RBuffer_open() failed for filename '%s'.\n",
+					__FUNCTION__, __FILE__, __LINE__, filename );
+*/
+
+			return NULL;
+		}
 
 		OTF_RBuffer_setSize( rstream->eventBuffer, rstream->buffersizes );
 #ifdef HAVE_ZLIB
@@ -334,7 +333,7 @@ int OTF_RStream_closeEventBuffer( OTF_RStream* rstream ) {
 		ret&= OTF_RBuffer_close( rstream->eventBuffer );
 		if( 0 == ret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"closing event buffer failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -358,7 +357,7 @@ OTF_RBuffer* OTF_RStream_getSnapsBuffer( OTF_RStream* rstream ) {
 			rstream->id, OTF_FILETYPE_SNAPS, 0, NULL );
 		if( NULL == filename ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"OTF_getFilename() failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -394,7 +393,7 @@ int OTF_RStream_closeSnapsBuffer( OTF_RStream* rstream ) {
 		ret&= OTF_RBuffer_close( rstream->snapsBuffer );
 		if( 0 == ret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"closing snapshots buffer failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -418,7 +417,7 @@ OTF_RBuffer* OTF_RStream_getStatsBuffer( OTF_RStream* rstream ) {
 			rstream->id, OTF_FILETYPE_STATS, 0, NULL );
 		if( NULL == filename ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"OTF_getFilename() failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -431,12 +430,6 @@ OTF_RBuffer* OTF_RStream_getStatsBuffer( OTF_RStream* rstream ) {
 		filename = NULL;
 
 		if ( NULL == rstream->statsBuffer ) {
-
-/* *** commented because it can happen when file not exists
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
-					"OTF_RBuffer_open() failed.\n",
-					__FUNCTION__, __FILE__, __LINE__ );
-*/
 
 			return NULL;
 		}
@@ -461,7 +454,7 @@ int OTF_RStream_closeStatsBuffer( OTF_RStream* rstream ) {
 		ret&= OTF_RBuffer_close( rstream->statsBuffer );
 		if( 0 == ret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"closing statistics buffer failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -485,7 +478,7 @@ OTF_RBuffer* OTF_RStream_getMarkerBuffer( OTF_RStream* rstream ) {
 			rstream->id, OTF_FILETYPE_MARKER, 0, NULL );
 		if( NULL == filename ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"OTF_getFilename() failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -521,7 +514,7 @@ int OTF_RStream_closeMarkerBuffer( OTF_RStream* rstream ) {
 		ret&= OTF_RBuffer_close( rstream->markerBuffer );
 		if( 0 == ret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"closing defbuffer failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 
@@ -539,7 +532,7 @@ void OTF_RStream_setBufferSizes( OTF_RStream* rstream, uint32_t size ) {
 
 	if ( 50 > size ) {
 	
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"intended buffer size %u is too small, rejected.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 		
@@ -547,13 +540,13 @@ void OTF_RStream_setBufferSizes( OTF_RStream* rstream, uint32_t size ) {
 
 	} else if ( 500 > size ) {
 	
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Warning( "WARNING in function %s, file: %s, line: %i:\n "
 				"buffer size %u is very small, accepted though.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 
 	} else if ( 10 * 1024 *1024 < size ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Warning( "WARNING in function %s, file: %s, line: %i:\n "
 				"buffer size %u is rather big, accepted though.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 
@@ -577,7 +570,7 @@ void OTF_RStream_setZBufferSizes( OTF_RStream* rstream, uint32_t size ) {
 	
 	if ( 32 > size ) {
 	
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"intended zbuffer size %u is too small, rejected.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 		
@@ -585,13 +578,13 @@ void OTF_RStream_setZBufferSizes( OTF_RStream* rstream, uint32_t size ) {
 
 	} else if ( 512 > size ) {
 	
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Warning( "WARNING in function %s, file: %s, line: %i:\n "
 				"zbuffer size %u is very small, accepted though.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 
 	} else if ( 10 * 1024 *1024 < size ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Warning( "WARNING in function %s, file: %s, line: %i:\n "
 				"zbuffer size %u is rather big, accepted though.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 
@@ -619,7 +612,7 @@ void OTF_RStream_setRecordLimit( OTF_RStream* rstream, uint64_t limit ) {
 
 	if( limit == OTF_READ_ERROR ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"limit cannot be set to %llu. Reset to OTF_READ_MAXRECORDS.\n",
 				__FUNCTION__, __FILE__, __LINE__,
 				(long long unsigned) limit );
@@ -658,7 +651,7 @@ uint64_t OTF_RStream_readDefinitions( OTF_RStream* rstream, OTF_HandlerArray* ha
 
 		if ( NULL == rstream->defBuffer ) {
 		
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"the stream has no def buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 			
@@ -723,7 +716,7 @@ uint64_t OTF_RStream_readEvents( OTF_RStream* rstream, OTF_HandlerArray* handler
 		rstream->eventBuffer= OTF_RStream_getEventBuffer( rstream );
 		if( NULL == rstream->eventBuffer ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"the stream has no event buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 			
@@ -752,7 +745,7 @@ uint64_t OTF_RStream_readEvents( OTF_RStream* rstream, OTF_HandlerArray* handler
 			
 			if ( oldtime > currenttime ) {
 		
-				OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+				OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"Time does decrease!!! %llu < %llu.\n",
 					__FUNCTION__, __FILE__, __LINE__,
 					(unsigned long long) currenttime,
@@ -809,7 +802,7 @@ uint64_t OTF_RStream_readSnapshots( OTF_RStream* rstream, OTF_HandlerArray* hand
 		rstream->snapsBuffer= OTF_RStream_getSnapsBuffer( rstream );
 		if( NULL == rstream->snapsBuffer ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"the stream has no snapshots buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 			
@@ -838,7 +831,7 @@ uint64_t OTF_RStream_readSnapshots( OTF_RStream* rstream, OTF_HandlerArray* hand
 			
 			if ( oldtime > currenttime ) {
 		
-				OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+				OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"Time does decrease!!! %llu < %llu.\n",
 					__FUNCTION__, __FILE__, __LINE__,
 					(unsigned long long) currenttime,
@@ -895,7 +888,7 @@ uint64_t OTF_RStream_readStatistics( OTF_RStream* rstream, OTF_HandlerArray* han
 		rstream->statsBuffer= OTF_RStream_getStatsBuffer( rstream );
 		if( NULL == rstream->statsBuffer ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"the stream has no statistics buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 			
@@ -924,7 +917,7 @@ uint64_t OTF_RStream_readStatistics( OTF_RStream* rstream, OTF_HandlerArray* han
 
 			if ( oldtime > currenttime ) {
 		
-				OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+				OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"Time does decrease!!! %llu < %llu.\n",
 					__FUNCTION__, __FILE__, __LINE__,
 					(unsigned long long) currenttime,
@@ -979,8 +972,8 @@ uint64_t OTF_RStream_readMarker( OTF_RStream* rstream, OTF_HandlerArray* handler
 
 		if ( NULL == rstream->markerBuffer ) {
 		
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
-					"the stream has no def buffer.\n",
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
+					"the stream has no marker buffer.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 			
 			/* there is no def buffer available for this stream */

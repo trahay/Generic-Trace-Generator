@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -138,6 +138,12 @@ uint32_t OTF_WBuffer_writeNewline( OTF_WBuffer* wbuffer );
 	the write buffer. Buffer flush is done if necessary. The return value
 	is the number of written characters. */
 uint32_t OTF_WBuffer_writeBytes( OTF_WBuffer* wbuffer, const uint8_t *value, uint32_t len);
+
+/**     Append a KeyValuePair to the buffer (short format). Return the number of bytes written. */
+uint32_t OTF_WBuffer_writeKeyValuePair_short(OTF_WBuffer* buffer, OTF_KeyValuePair* pair);
+
+/**     Append a KeyValuePair to the buffer (long format). Return the number of bytes written. */
+uint32_t OTF_WBuffer_writeKeyValuePair_long(OTF_WBuffer* buffer, OTF_KeyValuePair* pair);
 
 /**	Append a KeyValueList to the buffer (short format). Return the number of bytes written. */
 uint32_t OTF_WBuffer_writeKeyValueList_short(OTF_WBuffer* buffer, OTF_KeyValueList *list );

@@ -1,807 +1,1233 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
- Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
+ Authors: Johannes Spazier
 */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
-#include <assert.h>
-
-#include "otf.h"
 
 #include "handler.h"
-#include "hash.h"
+#include "otfaux.h"
+
+#define fprintf_root \
+    if( my_rank == 0 ) fprintf
+
+#define FINISH_EVERYTHING(ret) \
+    finish_everything( infile, outfile, info, &rank_data, ret )
+
+#define SHOW_HELPTEXT if( my_rank == 0 ) { \
+    int l = 0; \
+    while( helptext[l] ) { fprintf( stdout, "%s", helptext[l++] ); } \
+}
+
+/* name of program executable */
+#ifdef OTFMERGE_MPI
+#   define EXENAME "otfmerge-mpi"
+#else /* OTFMERGE_MPI */
+#   define EXENAME "otfmerge"
+#endif /* OTFMERGE_MPI */
 
 
-#define OTFMERGE_STRING "otfmerge"
-
-#define FINISH_EVERYTHING	hash_delete( fcb.hash); fcb.hash= NULL; \
-							OTF_Reader_close( reader ); \
-							OTF_Writer_close( fcb.writer ); \
-							OTF_FileManager_close( manager ); \
-							OTF_HandlerArray_close( handlers ); \
-
-#define SHOW_HELPTEXT { \
-	int l = 0; while( Helptext[l] ) { printf( "%s", Helptext[l++] ); } }
-
-static const char* Helptext[] = {
+static const char* helptext[] = {
 "                                                                  \n",
-" otfmerge - converter program of OTF library.                     \n",
+" "EXENAME" - Change the number of streams for an existing OTF trace.       \n",
 "                                                                  \n",
-" otfmerge [Options] <input file name>                             \n",
+" Syntax: "EXENAME" [options] <input file name>                             \n",
 "                                                                  \n",
 "   options:                                                       \n",
 "      -h, --help    show this help message                        \n",
 "      -V            show OTF version                              \n",
+"      -p            show progress                                          \n",
 "      -n <n>        set number of streams for output              \n",
-"                    set this to 0 for using one stream per process\n",
-"                    standard is 1                                 \n",
-"      -f <n>        set max number of filehandles available       \n",
-"      -o <name>     namestub of the output file (default 'out')   \n",
-"      -rb <size>    set buffersize of the reader                  \n",
-"      -wb <size>    set buffersize of the writer                  \n",
-"      -stats        cover statistics too                          \n",
-"      -snaps        cover snaphots too                            \n",
+"                    set this to 0 for using one stream per process         \n",
+"                    (default: 1)                                           \n",
+"      -f <n>        max. number of filehandles available per rank          \n",
+"      -o <name>     namestub of the output file                            \n",
+"                    (default: out)                                         \n",
+"      -rb <size>    set buffersize of the reader (for each rank)           \n",
+"      -wb <size>    set buffersize of the writer (for each rank)           \n",
 "      -z <zlevel>   write compressed output                       \n",
 "                    zlevel reaches from 0 to 9 where 0 is no      \n",
 "                    compression and 9 is the highest level        \n",
-"      -l            write long OTF format                         \n",
-"      -p            show progress                                 \n",
+"      --stats       cover statistics too                                   \n",
+"      --snaps       cover snapshots too                                    \n",
+"      --long        write long OTF format                                  \n",
 "                                                                  \n",
-"                                                                  \n", NULL };
-
-void initProgressDisplay( void );
-void finishProgressDisplay( void );
-void updateProgressDisplay( uint32_t i, uint64_t max, uint64_t cur );
-
-int main ( int argc, char** argv ) {
+NULL };
 
 
+int main(int argc, char **argv) {
+
+    /* for all processes */
+    int i, j;
+    int my_rank = 0;
+    int num_ranks = 1;
+    uint64_t ret_read;
+    int show_progress = 0;
+    int max_fhandles = 100;
+    char *outfile = NULL;
+    char *infile = NULL;
+    int rbufsize = 1024 * 1024;
+    int wbufsize = 1024 * 1024;
+    int format = OTF_WSTREAM_FORMAT_SHORT | OTF_WSTREAM_FORMAT_INLINE_SNAPSHOTS;
+    int read_stats = 0;
+    int read_snaps = 0;
+    OTF_FileCompression compression= 0;
+    RankData rank_data = { 0 ,NULL };
+    ProgressInfo *info = NULL;
+    GlobalData global_data;
+
+    /* only for root process (0) */
+    int num_cpus; /* number of cpus in input otf-file */
+    int *cpus;    /* global array that contains all cpu-ids */
+    int offset;
+    int *p;
+    int num_ostreams = 1;
+    char *outfile_otf = NULL;
+    FILE *master_file = NULL;
+    OutStream *ostreams = NULL;
+
+    /* progress related */
+    uint64_t total_bytes = 0;
+    uint64_t cur_bytes = 0;
+    uint64_t cur_bytes_ges = 0;
+    uint64_t min, max, cur;
+    struct timeval tv;
+
+    /* OTF related */
 	OTF_Reader* reader = NULL;
-	OTF_HandlerArray* handlers;
-	OTF_FileManager* manager;
-	OTF_MasterControl* mc;
-	OTF_MapEntry* mapentry;
+    OTF_WStream* wstream = NULL;
+    OTF_HandlerArray* handlers = NULL;
+    OTF_MasterControl* master = NULL;
+    OTF_FileManager* read_manager = NULL;
+    OTF_FileManager* write_manager = NULL;
+    OTF_MapEntry* entry = NULL;
+
+#ifdef OTFMERGE_MPI
+    /* MPI related */
+    MPI_Status status;
+
+    int array_of_blocklengths[2];
+    MPI_Aint array_of_displacements[2];
+    MPI_Datatype array_of_types[2];
+
+    MPI_Aint first_var_address;
+    MPI_Aint second_var_address;
 	
-	int read_stats= 0;
-	int read_snaps= 0;
-	int nstreams = 1;
-	int nfiles = 200;
-	int longformat = 0;
-	int showprogress= 0;
-	int i;
-
-	int readerbuffersize = 1024 * 1024;
-	int writerbuffersize = 1024 * 1024;
-	OTF_FileCompression compression= 0;
 	
-	fcbT fcb;
-	
-	char* infile= NULL;
-	char* outfile= NULL;
+    /* start MPI */
+    MPI_Init( &argc, &argv );
 
-	uint64_t minbytes;
-	uint64_t maxbytes;
-	uint64_t curbytes;
-	uint64_t minbytestmp;
-	uint64_t maxbytestmp;
-	uint64_t curbytestmp;
-	uint64_t recordsperupdate;
-	uint64_t totalbytes;
-	uint32_t progress_counter= 0;
+    MPI_Comm_rank( MPI_COMM_WORLD, &my_rank );
+    MPI_Comm_size( MPI_COMM_WORLD, &num_ranks );
+#endif /* OTFMERGE_MPI */
 
-	uint64_t retde;
-	uint64_t retma;
-	uint64_t retev;
-	uint64_t retst;
-	uint64_t retsn;
+    /* store some important things in a global structure */
+    global_data.my_rank = my_rank;
+    global_data.num_ranks = num_ranks;
+    global_data.ranks_alive = num_ranks - 1;
 
-	fcb.error= 0;
+    /* argument handling */
+    if( 1 >= argc ) {
 
-	if ( 1 >= argc ) {
+        SHOW_HELPTEXT
 
-			SHOW_HELPTEXT;
+#ifdef OTFMERGE_MPI
+        MPI_Finalize();
+#endif /* OTFMERGE_MPI */
+
 			return 0;
 	}
 
 	for ( i = 1; i < argc; i++ ) {
 
+        if( ( 0 == strcmp( "-o", argv[i] ) ) && ( i+1 < argc ) ) {
 
-		if ( ( 0 == strcmp( "-i", argv[i] ) ) && ( i+1 < argc ) ) {
-
-			infile= argv[i+1];
+            /* must be free'd at the end */
+            outfile = OTF_stripFilename( argv[i+1] );
 			++i;
 
-		} else if ( ( 0 == strcmp( "-n", argv[i] ) ) && ( i+1 < argc ) ) {
+        } else if( ( 0 == strcmp( "-n", argv[i] ) ) && ( i+1 < argc ) ) {
 
-			nstreams = atoi( argv[i+1] );
+            num_ostreams = atoi( argv[i+1] );
 			++i;
 
-		} else if ( ( 0 == strcmp( "-rb", argv[i] ) ) && ( i+1 < argc ) ) {
+        } else if( 0 == strcmp( "-h", argv[i] ) ||
+                   0 == strcmp( "--help", argv[i] ) ) {
 
-			readerbuffersize = atoi( argv[i+1] );
+            SHOW_HELPTEXT
+
+            return FINISH_EVERYTHING(0);
+
+        } else if( 0 == strcmp( "-V", argv[i] ) ) {
+
+            fprintf_root( stdout, "%u.%u.%u \"%s\"\n",
+                          OTF_VERSION_MAJOR, OTF_VERSION_MINOR,
+                          OTF_VERSION_SUB, OTF_VERSION_STRING );
+
+            return FINISH_EVERYTHING(0);
+
+        } else if( 0 == strcmp( "-p", argv[i] ) ) {
+
+            show_progress = 1;
+
+        } else if( ( 0 == strcmp( "-f", argv[i] ) ) && ( i+1 < argc ) ) {
+
+            max_fhandles = atoi( argv[i+1] );
 			++i;
 
-		} else if ( ( 0 == strcmp( "-wb", argv[i] ) ) && ( i+1 < argc ) ) {
+        } else if( ( 0 == strcmp( "-rb", argv[i] ) ) && ( i+1 < argc ) ) {
 
-			writerbuffersize = atoi( argv[i+1] );
+            rbufsize = atoi( argv[i+1] );
 			++i;
 
-		} else if ( ( 0 == strcmp( "-f", argv[i] ) ) && ( i+1 < argc ) ) {
+        } else if( ( 0 == strcmp( "-wb", argv[i] ) ) && ( i+1 < argc ) ) {
 
-			nfiles = atoi( argv[i+1] );
+            wbufsize = atoi( argv[i+1] );
 			++i;
 
-		} else if ( ( 0 == strcmp( "-o", argv[i] ) ) && ( i+1 < argc ) ) {
+        } else if( ( 0 == strcmp( "-z", argv[i] ) ) && ( i+1 < argc ) ) {
 
-			outfile= argv[i+1];
+            compression = atoi( argv[i+1] );
 			++i;
 
-		} else if ( 0 == strcmp( "-stats", argv[i] ) ) {
+        } else if( 0 == strcmp( "--long", argv[i] ) ) {
 
-			read_stats= 1;
+            format &= ~1;
+            format |= OTF_WSTREAM_FORMAT_LONG;
 
-		} else if ( 0 == strcmp( "-snaps", argv[i] ) ) {
+        } else if( 0 == strcmp( "--snaps", argv[i] ) ) {
 
-			read_snaps= 1;
+            read_snaps = 1;
 
-		} else if ( ( 0 == strcmp( "-z", argv[i] ) ) && ( i+1 < argc ) ) {
+        } else if( 0 == strcmp( "--stats", argv[i] ) ) {
 
-			compression= atoi( argv[i+1] );
+            read_stats = 1;
 
-			++i;
+        } else {
 
-		} else if ( 0 == strcmp( "-l", argv[i] ) ) {
+            if( '-' != argv[i][0] ) {
 
-			longformat = 1;
+                /* must be free'd at the end */
+                infile = OTF_stripFilename( argv[i] );
 
-		} else if ( 0 == strcmp( "-p", argv[i] ) ) {
+            } else {
 
-			showprogress= 1;
+                fprintf_root( stderr, "Error: unknown option: '%s'\n",
+                              argv[i] );
 
-		} else if ( 0 == strcmp( "--help", argv[i] ) || 
-				0 == strcmp( "-h", argv[i] ) ) {
+                return FINISH_EVERYTHING(1);
 
-			SHOW_HELPTEXT;
-			return 0;
+            }
 
-		} else if ( 0 == strcmp( "-V", argv[i] ) ) {
+        }
+
+    }
 		
-			printf( "%u.%u.%u \"%s\"\n", OTF_VERSION_MAJOR, OTF_VERSION_MINOR,
-				OTF_VERSION_SUB, OTF_VERSION_STRING);
-			exit( 0 );
+    if( ! outfile ) {
 
-		} else {
+        outfile = strdup("out");
 
-			if ( '-' != argv[i][0] ) {
+    } else if( outfile[ strlen(outfile) -1 ] == '/' ) {
 
-				infile= argv[i];
+        strncat( outfile, "out", 3 );
 
-			} else{
+    }
 
-				fprintf( stderr, "ERROR: Unknown option: '%s'\n", argv[i] );
-				exit(1);
+    /* must be free'd at the end */
+    outfile_otf = OTF_getFilename( outfile, 0, OTF_FILETYPE_MASTER, 0, NULL);
+
+    /* check for neccessary options */
+    if( infile == NULL ) {
+
+        fprintf_root( stderr, "Error: no input file given.\n");
+
+        return FINISH_EVERYTHING(1);
+
+    }
+
+    if( max_fhandles < 1 ) {
+
+       fprintf_root( stderr,
+                     "Error: less than 1 filehandle is not permitted.\n" );
+
+       return FINISH_EVERYTHING(1);
+
+    }
+
+    if( num_ostreams < 0 ) {
+
+        fprintf_root( stderr,
+                      "Error: the number of streams must not be negative.\n" );
+
+        return FINISH_EVERYTHING(1);
+
+    }
+
+    if( wbufsize < 0 || rbufsize < 0 ) {
+
+        fprintf_root( stderr,
+                      "Error: buffersize must be greater or equal 0.\n" );
+
+        return FINISH_EVERYTHING(1);
+
+    }
+
+    if( my_rank == 0 ) {
+
+        /* read master of input file */
+        read_manager = OTF_FileManager_open( max_fhandles );
+
+        if( NULL == read_manager ) {
+
+            fprintf( stderr, "Error: unable to initialize file manager.\n" );
+
+            return FINISH_EVERYTHING(1);
+
+        }
+
+        master = OTF_MasterControl_new( read_manager );
+        OTF_MasterControl_read( master, infile );
+
+        /* get the total number of processes in the otf master file */
+        num_cpus = OTF_MasterControl_getrCount( master );
+
+        /* set one stream per process */
+        if( num_ostreams == 0 || num_ostreams > num_cpus ) {
+
+            num_ostreams = num_cpus; 
+
+        }
+
+        /* allocate memory */
+        ostreams = (OutStream*) malloc( num_ostreams * sizeof(OutStream) );
+        cpus = (int*) malloc( num_cpus * sizeof(int) );
+        p = cpus;
+
+        /* allocate memory for the info array */
+        info = (ProgressInfo*) malloc( num_ranks * sizeof(ProgressInfo) );
+
+        /* fill the global cpus-array */
+        i = 0;
+        while( 1 ) {
+
+            entry = OTF_MasterControl_getEntryByIndex( master, i );
+
+            if( entry == NULL ) {
+
+                break;
+            }
+
+            for( j = 0; (uint32_t)j < entry->n; j++ ) {
+
+                *p++ = entry->values[j];
+
+            }
+
+            i++;
+
+        }
+
+        /* open new master file for output */
+        master_file = fopen( outfile_otf, "w");
+
+        if( NULL == master_file ) {
+
+            fprintf( stderr, "Error: unable to open file \"%s\".\n",
+                     outfile_otf);
+
+            free( cpus );
+            free( ostreams );
+
+            OTF_MasterControl_close( master );
+            OTF_FileManager_close( read_manager );
+
+            return FINISH_EVERYTHING(1);
+
+        }
+
+        /* fill all ostreams with data and write the new master file */
+        offset = 0;
+        for( i = 0; i < num_ostreams; i++ ) {
+
+            ostreams[i].id = i + 1;
+            ostreams[i].num_cpus = ( num_cpus / num_ostreams ) +
+                                   ( i < ( num_cpus % num_ostreams) ? 1 : 0 );
+
+            ostreams[i].cpus =
+                (int*) malloc( ostreams[i].num_cpus * sizeof(int) );
+
+            /* append stream-id to new otf master file */
+            fprintf( master_file, "%x:", ostreams[i].id);
+
+            for( j = 0; j < ostreams[i].num_cpus; j++ ) {
+
+                ostreams[i].cpus[j] = cpus[offset + j];
+
+                /* append cpu-id to master file */
+                fprintf( master_file, "%x", ostreams[i].cpus[j]);
+
+                if( (j + 1) < ostreams[i].num_cpus ) {
+
+                    fprintf( master_file, ",");
+
+                }
+
+            }
+
+            fprintf( master_file, "\n" );
+            offset += ostreams[i].num_cpus;
+
+        }
+
+        /* close new master file */
+        fclose( master_file );
+
+        /* free global cpus-array, because it is not needed anymore */
+        if( cpus ) {
+
+            free(cpus);
+            cpus = NULL;
+
 			}
-		}
-	}
-	
-	if ( nfiles < 1 ) {
-	
-		fprintf( stderr, "ERROR: less than 1 filehandle is not permitted\n" );
-		exit(1);
-	}
-	if ( nstreams < 0 ) {
-	
-		fprintf( stderr, "ERROR: less than 0 stream is not permitted\n" );
-		exit(1);
-	}
-	if ( NULL == infile ) {
-	
-		fprintf( stderr, "ERROR: no input file specified\n" );
-		exit(1);
-	}
-	if ( NULL == outfile ) {
 
-		/*
-		fprintf( stderr, "ERROR: no output file has been specified\n" );
-		exit(1);
+        offset = 0;
+        /* send needed data to all ranks */
+        for( i = (num_ranks - 1); i >= 0; i-- ) {
+
+            /* get number of output-streams, rank i has to handle */
+            rank_data.num_ostreams =
+                ( num_ostreams / num_ranks) +
+                ( i < ( num_ostreams % num_ranks) ? 1 : 0 );
+
+#ifdef OTFMERGE_MPI
+            if( i > 0) {
+
+                /* send number of output-streams to rank i */
+                MPI_Ssend( &(rank_data.num_ostreams), 1, MPI_INT, i, 0,
+                           MPI_COMM_WORLD);
+
+            } else
+#endif /* OTFMERGE_MPI */
+            {
+
+                /* save number of output-streams for rank 0 in rank_data */
+                rank_data.ostreams =
+                    (OutStream*) malloc( rank_data.num_ostreams *
+                        sizeof(OutStream) );
+
+		}
+
+            info[i].num_cpus = 0;
+            /* go through all output-streams of rank i */
+            for( j = 0; j < rank_data.num_ostreams; j++ ) {
+
+#ifdef OTFMERGE_MPI
+                if( i > 0 ) {
+
+                    /* send data to rank */
+                    MPI_Ssend( &(ostreams[offset + j].id), 1, MPI_INT, i, 0,
+                               MPI_COMM_WORLD);
+                    MPI_Ssend( &(ostreams[offset + j].num_cpus), 1, MPI_INT, i, 0,
+                               MPI_COMM_WORLD);
+                    MPI_Ssend( ostreams[offset + j].cpus,
+                               ostreams[offset + j].num_cpus, MPI_INT, i, 0,
+                               MPI_COMM_WORLD);
+
+                } else
+#endif /* OTFMERGE_MPI */
+                {
+
+                    /* save data for rank 0 */
+                    rank_data.ostreams[j].id = ostreams[offset + j].id;
+                    rank_data.ostreams[j].num_cpus =
+                        ostreams[offset + j].num_cpus;
+                    rank_data.ostreams[j].cpus =
+                        (int*) malloc( rank_data.ostreams[j].num_cpus *
+                            sizeof(int));
+                    memcpy(rank_data.ostreams[j].cpus, ostreams[offset + j].cpus,
+                    rank_data.ostreams[j].num_cpus * (sizeof(int)));
+
+                }
+
+                info[i].num_cpus += ostreams[offset + j].num_cpus;
+
+            }
+
+            offset += rank_data.num_ostreams;
+
+        }
+
+        /* can be free'd here because all MPI_Ssends are finished --> they are synchron */
+        for( i = 0; i < num_ostreams; i++ ) {
+
+            if( ostreams[i].cpus ) {
+
+                free( ostreams[i].cpus );
+                ostreams[i].cpus = NULL;
+
+            }
+
+        }
+
+        if( ostreams ) {
+
+            free( ostreams );
+            ostreams = NULL;
+
+        }
+
+        /* initialize the info array */
+        for( i = 0; i < num_ranks; i++ ) {
+
+            info[i].percent = (double) info[i].num_cpus / (double) num_cpus;
+#ifdef OTFMERGE_MPI
+            info[i].request = MPI_REQUEST_NULL;
+#endif /* OTFMERGE_MPI */
+            info[i].value.progress = 0.0;
+            info[i].value.is_alive = 1;
+
+	}
+	
+        /* close master */
+        OTF_MasterControl_close( master );
+        OTF_FileManager_close( read_manager );
+	
+	}
+#ifdef OTFMERGE_MPI
+    else { /* my_rank != 0 */
+
+        info = (ProgressInfo*) malloc( 1 * sizeof(ProgressInfo) );
+
+        info[0].request = MPI_REQUEST_NULL;
+        info[0].value.progress = 0.0;
+        info[0].value.is_alive = 1;
+
+        /* receive number of output-streams for this rank */
+        MPI_Recv( &(rank_data.num_ostreams), 1, MPI_INT, 0, 0, MPI_COMM_WORLD,
+                  &status);
+
+        /* allocate memory for output-streams */
+        rank_data.ostreams =
+            (OutStream*) malloc( rank_data.num_ostreams * sizeof(OutStream) );
+
+        /* go through all output streams */
+        for( i = 0; i < rank_data.num_ostreams; i++ ) {
+
+            /* receive id of output-stream and number of cpus in this stream */
+            MPI_Recv( &(rank_data.ostreams[i].id), 1, MPI_INT, 0, 0,
+                      MPI_COMM_WORLD, &status);
+            MPI_Recv( &(rank_data.ostreams[i].num_cpus), 1, MPI_INT, 0, 0,
+                      MPI_COMM_WORLD, &status);
+
+            /* allocate memory for cpus in stream */
+            rank_data.ostreams[i].cpus =
+                (int*) malloc( rank_data.ostreams[i].num_cpus * sizeof(int) );
+
+            /* receive all cpu-ids */
+            MPI_Recv( rank_data.ostreams[i].cpus,
+                      rank_data.ostreams[i].num_cpus, MPI_INT, 0, 0,
+                      MPI_COMM_WORLD, &status );
+	
+	}
+	
+	}
+
+    if( show_progress ) {
+
+        /* create new mpi datatype to transfer the progress */
+        /* struct {
+            double progress;
+            uint8_t is_alive;
+        };
 		*/
 
-		outfile= "out.otf";
+        array_of_blocklengths[0] = 1;
+        array_of_blocklengths[1] = 1;
+
+        MPI_Address( &(info[0].value.progress), &first_var_address );
+        MPI_Address( &(info[0].value.is_alive), &second_var_address );
+
+        array_of_displacements[0] = (MPI_Aint) 0;
+        array_of_displacements[1] = second_var_address - first_var_address;
+
+        array_of_types[0] = MPI_DOUBLE;
+        array_of_types[1] = MPI_BYTE;
+
+        MPI_Type_struct( 2, array_of_blocklengths, array_of_displacements,
+                         array_of_types, &(global_data.buftype) );
+
+        MPI_Type_commit( &(global_data.buftype) );
+
+    }
+#endif /* OTFMERGE_MPI */
+
+    write_manager = OTF_FileManager_open( max_fhandles );
+    if( NULL == write_manager ) {
+
+        fprintf( stderr, "Error: unable to initialize write file manager.\n" );
+
+        return FINISH_EVERYTHING(1);
+
 	}
+
+    /* the root process should read the definitions and markers now */
+    if( my_rank == 0 ) {
+	read_manager = OTF_FileManager_open( max_fhandles );
+	if( NULL == read_manager ) {
+
+	    fprintf( stderr, "Error: unable to initialize read file manager.\n" );
+
+	    return FINISH_EVERYTHING(1);
+
+	}
+
+        wstream = OTF_WStream_open( outfile, 0, write_manager );
+
+        OTF_WStream_setBufferSizes( wstream, wbufsize );
+        OTF_WStream_setCompression( wstream, compression );
+        OTF_WStream_setFormat( wstream, format );
 
 	handlers = OTF_HandlerArray_open();
 
-	manager= OTF_FileManager_open( nfiles );
-	if( NULL == manager) {
-		fprintf( stderr, "Error: Unable to initialize File Manager. aborting\n" );
-		exit(1);
+        setDefinitionHandlerArray( handlers, wstream );
+
+        reader = OTF_Reader_open( infile, read_manager);
+	
+        if( reader == NULL) {
+	
+            fprintf( stderr, "Error: unable to open file %s.\n", infile );
+
+            OTF_HandlerArray_close( handlers );
+            OTF_WStream_close( wstream );
+            OTF_FileManager_close( read_manager );
+            OTF_FileManager_close( write_manager );
+
+            return FINISH_EVERYTHING(1);
 	}
 	
-	reader = OTF_Reader_open( infile, manager );
-
-	if ( NULL == reader ) {
-
-		fprintf( stderr, "Error: Unable to open '%s'. aborting\n", infile );
-		OTF_FileManager_close( manager );
-		OTF_HandlerArray_close( handlers );
-		exit(1);
-	}
-
-	OTF_Reader_setBufferSizes( reader, readerbuffersize );
+        OTF_Reader_setBufferSizes( reader, rbufsize );
 	
-	fcb.writer = OTF_Writer_open( outfile, nstreams, manager );
-	OTF_Writer_setBufferSizes( fcb.writer, writerbuffersize );
-	OTF_Writer_setCompression( fcb.writer, compression );
-	if( longformat )
-		OTF_Writer_setFormat( fcb.writer, OTF_WSTREAM_FORMAT_LONG );
-	else
-                OTF_Writer_setFormat( fcb.writer, OTF_WSTREAM_FORMAT_SHORT );
-
-	mc = OTF_Reader_getMasterControl( reader );
-
-	/* set your own handler functions */
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefinitionComment,
-		OTF_DEFINITIONCOMMENT_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFINITIONCOMMENT_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefTimerResolution,
-		OTF_DEFTIMERRESOLUTION_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFTIMERRESOLUTION_RECORD);
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefProcess,
-		OTF_DEFPROCESS_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFPROCESS_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefProcessGroup,
-		OTF_DEFPROCESSGROUP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFPROCESSGROUP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefAttributeList,
-		OTF_DEFATTRLIST_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFATTRLIST_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefProcessOrGroupAttributes,
-		OTF_DEFPROCESSORGROUPATTR_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFPROCESSORGROUPATTR_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefFunction,
-		OTF_DEFFUNCTION_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFFUNCTION_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefFunctionGroup,
-		OTF_DEFFUNCTIONGROUP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFFUNCTIONGROUP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefCollectiveOperation,
-		OTF_DEFCOLLOP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFCOLLOP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefCounter,
-		OTF_DEFCOUNTER_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFCOUNTER_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefCounterGroup,
-		OTF_DEFCOUNTERGROUP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFCOUNTERGROUP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefScl,
-		OTF_DEFSCL_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFSCL_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefSclFile,
-		OTF_DEFSCLFILE_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFSCLFILE_RECORD );
-
-/*	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefversion,
-		OTF_DEFVERSION_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFVERSION_RECORD );
-*/
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefCreator,
-		OTF_DEFCREATOR_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFCREATOR_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefFile,
-		OTF_DEFFILE_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFFILE_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefFileGroup,
-		OTF_DEFFILEGROUP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFFILEGROUP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleDefKeyValue,
-		OTF_DEFKEYVALUE_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_DEFKEYVALUE_RECORD );
-
+        if( OTF_READ_ERROR ==
+            OTF_Reader_readDefinitions( reader, handlers ) ) {
 	
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleNoOp,
-		OTF_NOOP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_NOOP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleEventComment,
-		OTF_EVENTCOMMENT_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_EVENTCOMMENT_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleCounter,
-		OTF_COUNTER_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_COUNTER_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleEnter,
-		OTF_ENTER_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_ENTER_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleCollectiveOperation,
-		OTF_COLLOP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_COLLOP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleBeginCollectiveOperation,
-		OTF_BEGINCOLLOP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_BEGINCOLLOP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleEndCollectiveOperation,
-		OTF_ENDCOLLOP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_ENDCOLLOP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleRecvMsg,
-		OTF_RECEIVE_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_RECEIVE_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleSendMsg,
-		OTF_SEND_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_SEND_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleLeave,
-		OTF_LEAVE_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_LEAVE_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleBeginProcess,
-		OTF_BEGINPROCESS_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_BEGINPROCESS_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleEndProcess,
-		OTF_ENDPROCESS_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_ENDPROCESS_RECORD );
-			
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleFileOperation,
-		OTF_FILEOPERATION_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_FILEOPERATION_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleBeginFileOperation,
-		OTF_BEGINFILEOP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_BEGINFILEOP_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleEndFileOperation,
-		OTF_ENDFILEOP_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_ENDFILEOP_RECORD );
-
-        OTF_HandlerArray_setHandler( handlers, 
-                (OTF_FunctionPointer*) handleRMAPut,
-                OTF_RMAPUT_RECORD );
-        OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb,
-                OTF_RMAPUT_RECORD );
-
-        OTF_HandlerArray_setHandler( handlers, 
-                (OTF_FunctionPointer*) handleRMAPutRemoteEnd,
-                OTF_RMAPUTRE_RECORD );
-        OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb,
-                OTF_RMAPUTRE_RECORD );
-
-        OTF_HandlerArray_setHandler( handlers, 
-                (OTF_FunctionPointer*) handleRMAGet,
-                OTF_RMAGET_RECORD );
-        OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb,
-                OTF_RMAGET_RECORD );
-
-        OTF_HandlerArray_setHandler( handlers, 
-                (OTF_FunctionPointer*) handleRMAEnd,
-                OTF_RMAEND_RECORD );
-        OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb,
-                OTF_RMAEND_RECORD );
-
-
-	/* snapshot records */
-
-	OTF_HandlerArray_setHandler( handlers,
-		(OTF_FunctionPointer*) handleSnapshotComment,
-		OTF_SNAPSHOTCOMMENT_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb,
-		OTF_SNAPSHOTCOMMENT_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleEnterSnapshot,
-		OTF_ENTERSNAPSHOT_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_ENTERSNAPSHOT_RECORD );
+            fprintf( stderr, "Error: while reading definitions from file %s\n",
+                     infile );
 	
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleSendSnapshot,
-		OTF_SENDSNAPSHOT_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_SENDSNAPSHOT_RECORD );	
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleOpenFileSnapshot,
-		OTF_OPENFILESNAPSHOT_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-		OTF_OPENFILESNAPSHOT_RECORD );
-        
-    OTF_HandlerArray_setHandler( handlers, 
-        (OTF_FunctionPointer*) handleBeginCollopSnapshot,
-        OTF_BEGINCOLLOPSNAPSHOT_RECORD );
-    OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-        OTF_BEGINCOLLOPSNAPSHOT_RECORD );
-
-    OTF_HandlerArray_setHandler( handlers, 
-        (OTF_FunctionPointer*) handleBeginFileOpSnapshot,
-        OTF_BEGINFILEOPSNAPSHOT_RECORD );
-    OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, 
-        OTF_BEGINFILEOPSNAPSHOT_RECORD );
-
-	/* summary records */
-
-	OTF_HandlerArray_setHandler( handlers,
-		(OTF_FunctionPointer*) handleSummaryComment,
-		OTF_SUMMARYCOMMENT_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers,
-	&fcb, OTF_SUMMARYCOMMENT_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleFunctionSummary,
-		OTF_FUNCTIONSUMMARY_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_FUNCTIONSUMMARY_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleFunctionGroupSummary,
-		OTF_FUNCTIONGROUPSUMMARY_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_FUNCTIONGROUPSUMMARY_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleMessageSummary,
-		OTF_MESSAGESUMMARY_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_MESSAGESUMMARY_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleCollopSummary,
-		OTF_COLLOPSUMMARY_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_COLLOPSUMMARY_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleFileOperationSummary,
-		OTF_FILEOPERATIONSUMMARY_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_FILEOPERATIONSUMMARY_RECORD );
-
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleFileGroupOperationSummary,
-		OTF_FILEGROUPOPERATIONSUMMARY_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-		&fcb, OTF_FILEGROUPOPERATIONSUMMARY_RECORD );
-
-	/* marker record types */
-
-	OTF_HandlerArray_setHandler( handlers, (OTF_FunctionPointer*) handleDefMarker, OTF_DEFMARKER_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, OTF_DEFMARKER_RECORD );
-	
-	OTF_HandlerArray_setHandler( handlers, (OTF_FunctionPointer*) handleMarker, OTF_MARKER_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, &fcb, OTF_MARKER_RECORD );	
-
-	/* misc records */
-	
-	OTF_HandlerArray_setHandler( handlers, 
-		(OTF_FunctionPointer*) handleUnknown,
-		OTF_UNKNOWN_RECORD );
-	OTF_HandlerArray_setFirstHandlerArg( handlers, 
-        &fcb, OTF_UNKNOWN_RECORD );
-
-	/* ask the mastercontrol for the number of streams and create the
-	 * streaminfos array
-	 */
-	fcb.nstreaminfos = 0;
-	
-	while ( 0 !=  OTF_MasterControl_getEntryByIndex( mc, fcb.nstreaminfos )) {
-	
-		fcb.nstreaminfos++;
-	}
-	
-	fcb.hash = hash_new ();
-	
-	/* global stream yourself, because he isnt in the mapping */
-	hash_add( fcb.hash, 0 );
-	
-	/* add all streams to the hash */
-	for( i = 0; i < fcb.nstreaminfos; i++ ) {
-	
-		mapentry = OTF_MasterControl_getEntryByIndex( mc, i );
+            OTF_Reader_close( reader );
+            OTF_HandlerArray_close( handlers );
+            OTF_WStream_close( wstream );
+            OTF_FileManager_close( read_manager );
+            OTF_FileManager_close( write_manager );
 		
-		hash_add( fcb.hash, mapentry->argument );
+            return FINISH_EVERYTHING(1);
 	}
 	
-	/* read definitions */
-	retde= OTF_Reader_readDefinitions( reader, handlers );
-	if( OTF_READ_ERROR == retde || 1 == fcb.error ) {
-		fprintf( stderr, "Error while reading definitions. aborting\n" );
-		FINISH_EVERYTHING;
-		exit(1);
+        if( OTF_READ_ERROR == OTF_Reader_readMarkers( reader, handlers ) ) {
+
+            fprintf( stderr, "Error: while reading markers from file %s\n", infile );
+
+            OTF_Reader_close( reader );
+            OTF_HandlerArray_close( handlers );
+            OTF_WStream_close( wstream );
+            OTF_FileManager_close( read_manager );
+            OTF_FileManager_close( write_manager );
+
+            return FINISH_EVERYTHING(1);
 	}
 
-	/* read markers */
-	retma= OTF_Reader_readMarkers( reader, handlers );
-	if( OTF_READ_ERROR == retma || 1 == fcb.error ) {
-		fprintf( stderr, "Error while reading marker records. aborting\n" );
-		FINISH_EVERYTHING;
-		exit(1);
+        /* close everything */
+        OTF_HandlerArray_close( handlers );
+        OTF_Reader_close( reader );
+        OTF_WStream_close( wstream );
+        OTF_FileManager_close( read_manager );
 	}
 
+    read_manager = OTF_FileManager_open( max_fhandles );
+    if( NULL == read_manager ) {
 	
-	if ( 0 == showprogress ) {
+        fprintf( stderr, "Error: unable to initialize read file manager.\n" );
 
-		/* do not show the progress */
+        return FINISH_EVERYTHING(1);
 		
-		/* read events */
-		retev= OTF_Reader_readEvents( reader, handlers );
-		if( OTF_READ_ERROR == retev ) {
-			fprintf( stderr, "Error while reading events. aborting\n" );
-			FINISH_EVERYTHING;
-			exit(1);
 		}
 		
-		/* read stats */
-		if ( 1 == read_stats ) {
 		
-			retst= OTF_Reader_readStatistics( reader, handlers );
-			if( OTF_READ_ERROR == retst ) {
-				fprintf( stderr, "Error while reading statistics. aborting\n" );
-				FINISH_EVERYTHING;
-				exit(1);
+    for( i = 0; i < rank_data.num_ostreams; i++ ) {
+
+        total_bytes = 0;
+        cur_bytes = 0;
+        cur_bytes_ges = 0;
+
+        wstream =
+            OTF_WStream_open( outfile, rank_data.ostreams[i].id, write_manager );
+
+        OTF_WStream_setBufferSizes( wstream, wbufsize );
+        OTF_WStream_setCompression( wstream, compression );
+        OTF_WStream_setFormat( wstream, format );
+
+        handlers = OTF_HandlerArray_open();
+
+        setEventHandlerArray( handlers, wstream );
+
+        reader = OTF_Reader_open( infile, read_manager);
+        if( reader == NULL) {
+
+            fprintf_root( stderr, "Error: unable to open file %s.\n", infile );
+
+            OTF_HandlerArray_close( handlers );
+            OTF_WStream_close( wstream );
+            OTF_FileManager_close( read_manager );
+            OTF_FileManager_close( write_manager );
+
+            return FINISH_EVERYTHING(1);
 			}
 
+        OTF_Reader_setBufferSizes( reader, rbufsize );
+
+        OTF_Reader_setProcessStatusAll ( reader, 0 );
+
+        for( j = 0; j < rank_data.ostreams[i].num_cpus; j++ ) {
+
+            OTF_Reader_setProcessStatus( reader, rank_data.ostreams[i].cpus[j],
+                                         1 );
+
 		}
 		
-		/* read snaps */
-		if ( 1 == read_snaps ) {
+        if( show_progress ) {
+
+            OTF_Reader_setRecordLimit( reader, 0 );
+
+            if( OTF_READ_ERROR == OTF_Reader_readEvents( reader, handlers ) ) {
+
+                fprintf( stderr, "Error: while reading events from file %s\n",
+                         infile );
+
+                OTF_Reader_close( reader );
+                OTF_HandlerArray_close( handlers );
+                OTF_WStream_close( wstream );
+                OTF_FileManager_close( read_manager );
+                OTF_FileManager_close( write_manager );
+
+                return FINISH_EVERYTHING(1);
 		
-			retsn= OTF_Reader_readSnapshots( reader, handlers );
-			if( OTF_READ_ERROR == retsn ) {
-				fprintf( stderr, "Error while reading snapshots. aborting\n" );
-				FINISH_EVERYTHING;
-				exit(1);
 			}
 			
+            if( read_snaps ) {
+
+                if( OTF_READ_ERROR ==
+                    OTF_Reader_readSnapshots( reader, handlers ) ) {
+
+                    fprintf( stderr,
+                             "Error: while reading snaphots from file %s\n",
+                             infile );
+
+                    OTF_Reader_close( reader );
+                    OTF_HandlerArray_close( handlers );
+                    OTF_WStream_close( wstream );
+                    OTF_FileManager_close( read_manager );
+                    OTF_FileManager_close( write_manager );
+
+                    return FINISH_EVERYTHING(1);
+
 		}
 		
-	} else {
+            }
 
-		/* show progress */
+            if( read_stats ) {
 
-		initProgressDisplay();
+                if( OTF_READ_ERROR ==
+                    OTF_Reader_readStatistics( reader, handlers ) ) {
 
-		/* calculate how many records will be read */
-		minbytes= 0;
-		curbytes= 0;
-		maxbytes= 0;
+                    fprintf( stderr,
+                             "Error: while reading statistics from file %s\n",
+                             infile );
 		
-		OTF_Reader_setRecordLimit( reader, 0 );
+                    OTF_Reader_close( reader );
+                    OTF_HandlerArray_close( handlers );
+                    OTF_WStream_close( wstream );
+                    OTF_FileManager_close( read_manager );
+                    OTF_FileManager_close( write_manager );
+
+                    return FINISH_EVERYTHING(1);
+
+                }
 		
-		retev= OTF_Reader_readEvents( reader, handlers );
-		if( OTF_READ_ERROR == retev ) {
-			fprintf( stderr, "Error while reading events. aborting\n" );
-			FINISH_EVERYTHING;
-			exit(1);
 		}
 		
-		if ( 1 == read_stats ) {
-			retst= OTF_Reader_readStatistics( reader, handlers );
-			if( OTF_READ_ERROR == retst ) {
-				fprintf( stderr, "Error while reading statistics. aborting\n" );
-				FINISH_EVERYTHING;
-				exit(1);
+            OTF_Reader_eventBytesProgress( reader, &min, &cur, &max );
+            /* (min - max) is erroneous because with small traces min == max
+            --> division by zero */
+            total_bytes += max; /* max - min */
+
+            if( read_snaps ) {
+
+                OTF_Reader_snapshotBytesProgress( reader, &min, &cur, &max );
+                total_bytes += max; /* max - min */
+
 			}
+
+            if( read_stats ) {
+
+                OTF_Reader_statisticBytesProgress( reader, &min, &cur, &max );
+                total_bytes += max; /* max - min */
+
 		}
-		if ( 1 == read_snaps ) {
-			retsn= OTF_Reader_readSnapshots( reader, handlers );
-			if( OTF_READ_ERROR == retsn ) {
-				fprintf( stderr, "Error while reading snapshots. aborting\n" );
-				FINISH_EVERYTHING;
-				exit(1);
+
+            OTF_Reader_setRecordLimit( reader, 100000 );
+
+        }
+
+        while( 0 != ( ret_read = OTF_Reader_readEvents( reader, handlers ) ) ) {
+
+            if( ret_read == OTF_READ_ERROR) {
+
+                fprintf( stderr, "Error: while reading events from file %s\n",
+                         infile );
+
+                OTF_Reader_close( reader );
+                OTF_HandlerArray_close( handlers );
+                OTF_WStream_close( wstream );
+                OTF_FileManager_close( read_manager );
+                OTF_FileManager_close( write_manager );
+
+                return FINISH_EVERYTHING(1);
+
+            }
+
+            if( show_progress ) {
+
+                OTF_Reader_eventBytesProgress( reader, &min, &cur, &max );
+
+                cur_bytes = cur; /* cur - min */
+
+                /* calculate rank specific progress for the current stream */
+                global_data.tmp_progress =
+                    (double) ( (double) cur_bytes / (double) total_bytes );
+
+                update_progress( info, &global_data, i, rank_data.num_ostreams );
+
 			}
+
 		}
 
-		OTF_Reader_eventBytesProgress( reader, &minbytestmp, &curbytestmp, &maxbytestmp );
+        cur_bytes_ges = cur_bytes;
 
-		minbytes+= minbytestmp;
-		maxbytes+= maxbytestmp;
+        /* read snapshots */
+        if( read_snaps ) {
+            char* thumbnail_filename;
+
+            /* keep external snapshots external */
+            format &= ~2;
+            OTF_WStream_setFormat( wstream, format );
 		
-		if ( 1 == read_stats ) {
+            while( 0 != ( ret_read =
+                          OTF_Reader_readSnapshots( reader, handlers ) ) ) {
+
+                if( ret_read == OTF_READ_ERROR) {
+
+                    fprintf( stderr,
+                             "Error: while reading snapshots from file %s\n",
+                             infile );
+
+                    OTF_Reader_close( reader );
+                    OTF_HandlerArray_close( handlers );
+                    OTF_WStream_close( wstream );
+                    OTF_FileManager_close( read_manager );
+                    OTF_FileManager_close( write_manager );
+
+                    return FINISH_EVERYTHING(1);
 		
-			OTF_Reader_statisticBytesProgress( reader, &minbytestmp, &curbytestmp, &maxbytestmp );
-			minbytes+= minbytestmp;
-			maxbytes+= maxbytestmp;
 		}
 		
-		/* read snaps */
-		if ( 1 == read_snaps ) {
+                if( show_progress ) {
+
+                    OTF_Reader_snapshotBytesProgress( reader, &min, &cur, &max );
 		
-			OTF_Reader_snapshotBytesProgress( reader, &minbytestmp, &curbytestmp, &maxbytestmp );
-			minbytes+= minbytestmp;
-			maxbytes+= maxbytestmp;
+                    cur_bytes = cur; /* cur - min */
+
+                    /* calculate rank specific progress for the
+                    current stream */
+                    global_data.tmp_progress =
+                        (double) ( (double) (cur_bytes + cur_bytes_ges) /
+                        (double) total_bytes );
+
+                    update_progress( info, &global_data, i, rank_data.num_ostreams );
 		}
 
-		curbytes= 0;
-		totalbytes= maxbytes - minbytes;
+            }
 
+            thumbnail_filename = OTFAUX_Thumbnail_getFilename( infile );
+            if ( OTF_fileExists( thumbnail_filename ) && my_rank == 0 ) {
+                char* thumbnail_outname;
+                size_t bytes_read;
+                char buffer[ 1024 ];
+                FILE* instream;
+                FILE* outstream;
 
-		/* fixed number of records per update in order to provide
-		frequent update */
-		recordsperupdate= 100000;
-		OTF_Reader_setRecordLimit( reader, recordsperupdate );
+                thumbnail_outname = OTFAUX_Thumbnail_getFilename( outfile );
+                if ( !thumbnail_outname ) {
+                    fprintf( stderr, "Error: out of memory.\n");
 		
-		while ( 0 != ( retev= OTF_Reader_readEvents( reader, handlers ) ) ) {
+                    free( thumbnail_filename );
+                    OTF_Reader_close( reader );
+                    OTF_HandlerArray_close( handlers );
+                    OTF_WStream_close( wstream );
+                    OTF_FileManager_close( read_manager );
+                    OTF_FileManager_close( write_manager );
 
-			if( OTF_READ_ERROR == retev ) {
-				fprintf( stderr, "Error while reading events. aborting\n" );
-				FINISH_EVERYTHING;
-				exit(1);
+                    return FINISH_EVERYTHING(1);
 			}
 			
-			OTF_Reader_eventBytesProgress( reader, 
-				&minbytestmp, &curbytestmp, &maxbytestmp );
+                /* open files */
+                instream = fopen( thumbnail_filename, "rb" );
+                if ( !instream ) {
+                    fprintf( stderr, "Error: Can't open existing thumbnail file for reading.\n");
 
-			curbytes += curbytestmp - minbytestmp - curbytes;
+                    free( thumbnail_filename );
+                    free( thumbnail_outname );
+                    OTF_Reader_close( reader );
+                    OTF_HandlerArray_close( handlers );
+                    OTF_WStream_close( wstream );
+                    OTF_FileManager_close( read_manager );
+                    OTF_FileManager_close( write_manager );
 
-			updateProgressDisplay( progress_counter++, totalbytes, curbytes );
+                    return FINISH_EVERYTHING(1);
 		}
 
-		/* read stats */
-		while ( ( 1 == read_stats ) && 
-				( 0 != ( retst= OTF_Reader_readStatistics( reader, handlers ) ) ) ) {
+                outstream = fopen( thumbnail_outname, "wb" );
+                if ( !outstream ) {
+                    fprintf( stderr, "Error: Can't open thumbnail file for writing.\n");
+
+                    fclose( instream );
+                    free( thumbnail_outname );
+                    OTF_Reader_close( reader );
+                    OTF_HandlerArray_close( handlers );
+                    OTF_WStream_close( wstream );
+                    OTF_FileManager_close( read_manager );
+                    OTF_FileManager_close( write_manager );
 					
-			if( OTF_READ_ERROR == retst ) {
-				fprintf( stderr, "Error while reading statistics. aborting\n" );
-				FINISH_EVERYTHING;
-				exit(1);
+                    return FINISH_EVERYTHING(1);
 			}
-			
-			OTF_Reader_statisticBytesProgress( reader, 
-				&minbytestmp, &curbytestmp, &maxbytestmp );
-	
-			curbytes += curbytestmp - minbytestmp - curbytes;
+                free( thumbnail_outname );
 
-			updateProgressDisplay( progress_counter++, totalbytes, curbytes );
+                /* copy file */
+                while ( ( bytes_read = fread( buffer, 1, sizeof( 1024 ), instream ) ) ) {
+
+                    if ( bytes_read > fwrite( buffer, 1, bytes_read, outstream ) ) {
+			
+                        fprintf( stderr, "Error: Can't write thumbnail file.\n");
+	
+                        fclose( instream );
+                        fclose( outstream );
+                        OTF_Reader_close( reader );
+                        OTF_HandlerArray_close( handlers );
+                        OTF_WStream_close( wstream );
+                        OTF_FileManager_close( read_manager );
+                        OTF_FileManager_close( write_manager );
+
+                        return FINISH_EVERYTHING(1);
+                    }
 		}
 		
-		/* read snaps */
-		while ( ( 1 == read_snaps ) && 
-				( 0 != ( retsn= OTF_Reader_readSnapshots( reader, handlers ) ) ) ) {
+                /* close files */
+                fclose( instream );
+                fclose( outstream );
 					
-			if( OTF_READ_ERROR == retsn ) {
-				fprintf( stderr, "Error while reading snapshots. aborting\n" );
-				FINISH_EVERYTHING;
-				exit(1);
 			}
+            free( thumbnail_filename );
 			
-			OTF_Reader_snapshotBytesProgress( reader, 
-					&minbytestmp, &curbytestmp, &maxbytestmp );
+        }
 	
-			curbytes += curbytestmp - minbytestmp - curbytes;
+        cur_bytes_ges += cur_bytes;
 
-			updateProgressDisplay( progress_counter++, totalbytes, curbytes );
+        /* read statistics */
+        if( read_stats ) {
+
+            while( 0 != ( ret_read =
+                          OTF_Reader_readStatistics( reader, handlers ) ) ) {
+
+                if( ret_read == OTF_READ_ERROR) {
+
+                    fprintf( stderr,
+                             "Error: while reading statistics from file %s\n",
+                             infile );
+
+                    OTF_Reader_close( reader );
+                    OTF_HandlerArray_close( handlers );
+                    OTF_WStream_close( wstream );
+                    OTF_FileManager_close( read_manager );
+                    OTF_FileManager_close( write_manager );
+
+                    return FINISH_EVERYTHING(1);
+
 		}
 
-		finishProgressDisplay();
+                if( show_progress ) {
+
+                    OTF_Reader_statisticBytesProgress( reader, &min, &cur,
+                                                       &max );
+
+                    cur_bytes = cur; /* cur - min */
+
+                    /* calculate rank specific progress for the
+                    current stream */
+                    global_data.tmp_progress =
+                        (double) ( (double) (cur_bytes + cur_bytes_ges) /
+                        (double) total_bytes );
+
+                    update_progress( info, &global_data, i, rank_data.num_ostreams );
 	}
 
-	FINISH_EVERYTHING;
+            }
 	
-	return 0;
-}
+        }
 
+        /* close everything */
+        OTF_HandlerArray_close( handlers );
+        OTF_Reader_close( reader );
+        OTF_WStream_close( wstream );
 
-void initProgressDisplay() {
+    }
 
+    if( show_progress ) {
 
-	printf( " %7.2f %%\r", 0.0 );
+        /* wait for other processes to finish */
+        if( my_rank == 0 ) {
+
+            /* set own progress to 100 % */
+            global_data.tmp_progress = 1.0;
+
+            /* check every 0.2 sec for new progress until all ranks
+            have finished */
+            while( 1 ) {
+
+                /* update_progress() returns 0 if all ranks finished */
+                if( ! update_progress( info, &global_data, 0, 1) ) {
+
+                    break;
+
+                }
+
+                /* sleep 0.2 s --> select is used because of portability */
+                tv.tv_sec = 0;
+                tv.tv_usec = 200000;
+                select(0, NULL, NULL, NULL, &tv);
+
+            }
+
+            printf("%7.2f %% done\n", 100.0);
 	fflush( stdout );
+
+#ifdef OTFMERGE_MPI
+            /* clear all open requests in info array */
+            for( i = 1; i < num_ranks; i++ ) {
+
+                if( info[i].request != MPI_REQUEST_NULL ) {
+
+                    MPI_Cancel( &(info[i].request) );
+
+                }
+
+            }
+#endif /* OTFMERGE_MPI */
+
+        }
+
+#ifdef OTFMERGE_MPI
+        if( my_rank != 0 ) {
+
+            /* rank != 0 has finished and sends a last message to ranks 0 */
+
+            /* first wait until the previous msg was received by rank 0 */
+            MPI_Wait( &(info[0].request), &status );
+            /* fill buffer with valid values */
+            info[0].value.progress = 100.0;
+            info[0].value.is_alive = 0;
+            /* send message and wait until the buffer is free for reuse */
+            MPI_Isend( &(info[0].value.progress), 1, global_data.buftype, 0, 0,
+                       MPI_COMM_WORLD, &(info[0].request));
+            MPI_Wait( &(info[0].request), &status );
+
+        }
+#endif /* OTFMERGE_MPI */
+
+    }
+
+    OTF_FileManager_close( read_manager );
+    OTF_FileManager_close( write_manager );
+
+    /* clear everything and exit */
+    return FINISH_EVERYTHING(0);
 }
 
 
-void finishProgressDisplay() {
+double update_progress( ProgressInfo* info, GlobalData *data, int cur_ostream,
+           int num_ostreams) {
 
+    static double progress = 0.0;
+    static int tmp = 0;
+    char signs[2] = {' ','.'};
 
-	printf( " %7.2f %%  done\n", 100.0 );
-	fflush( stdout );
+#ifdef OTFMERGE_MPI
+    MPI_Status status;
+    int flag = 0;
+    int j;
+
+    if( data->my_rank != 0 ) {
+
+        /* check if previous msg was received by rank 0 already
+        --> if not, do nothing in this function;
+        else calculate new progress and send the result to root later on */
+        MPI_Test( &(info[0].request), &flag, &status );
+
+    }
+
+    /* calculate progress if necessary */
+    if( data->my_rank == 0 || flag )
+#endif /* OTFMERGE_MPI */
+    {
+
+        info[0].value.progress =
+            data->tmp_progress / (double)num_ostreams + (double)cur_ostream *
+            ( 1.0 / (double)num_ostreams );
+        info[0].value.progress *= 100.0;
+
+    }
+
+    /* show progress */
+    if( data->my_rank == 0) {
+
+        /* set the roots progress as the global progress first
+        (in the rigth proportion) */
+        progress = info[0].value.progress * info[0].percent;
+
+#ifdef OTFMERGE_MPI
+        /* listen to all ranks for new messages */
+        for( j = 1; j < data->num_ranks; j++ ) {
+
+            /* check if a new MPI_Irecv is necessary/if the previous msg
+            was received */
+            if( MPI_REQUEST_NULL == info[j].request ) {
+
+                /* irecv with derived datatype --> double progress,
+                uint8_t is_alive */
+                MPI_Irecv( &(info[j].buf.progress), 1, data->buftype, j, 0,
+                           MPI_COMM_WORLD, &(info[j].request) );
+
+            }
+
+            /* test if current msg was received */
+            MPI_Test( &(info[j].request), &flag, &status );
+
+            if( flag ) {
+
+                /* got new values */
+
+                /* MPI_REQUEST_NULL indicates that a new MPI_Irecv
+                is necessary */
+                info[j].request = MPI_REQUEST_NULL;
+                /* the receive-buffer must be copied because its value is
+                needed later on and the buffer itself is locked by MPI_Irecv */
+                info[j].value.progress = info[j].buf.progress;
+
+                /* check if it was the last msg from rank j 
+                --> the second field of the buffer (is_alive) would be 0 */
+                if( ! info[j].buf.is_alive ) {
+
+                    /* decrease the number of still living ranks */
+                    data->ranks_alive--;
+
+                }
+
+            }
+
+            /* add the progress of rank j proportionally to the
+            global progress */
+            progress += info[j].value.progress * info[j].percent;
+
+        }
+#endif /* OTFMERGE_MPI */
+
+        /* print progress */
+        printf("%7.2f %% %c\r", progress, signs[tmp]);
+        fflush(stdout);
+
+        tmp ^= 1;
+
+    }
+#ifdef OTFMERGE_MPI
+    else { /* data->my_rank != 0 */
+
+        /* flag is only set if the send-buffer can be used again and a msg is
+        necessary therefore */
+        if( flag ) {
+
+            /* send in synchronous mode --> this is because with MPI_Test we
+            want to know if the root has started a matching receive operation
+            already and not only if we can reuse the send-buffer */
+            MPI_Issend( &(info[0].value.progress), 1, data->buftype, 0, 0,
+                        MPI_COMM_WORLD, &(info[0].request));
+
+        }
+
+    }
+#endif /* OTFMERGE_MPI */
+
+    /* returns 0 if all ranks have finished */
+    return data->ranks_alive;
 }
 
 
-void updateProgressDisplay( uint32_t i, uint64_t max, uint64_t cur ) {
+int finish_everything( char *infile, char* outfile, ProgressInfo* info,
+        RankData* data, int ret ) {
 
+    int i;
 
-/*	static char animation[]= {"-", "\\", "|", "/" }; */
-	static char* animation[]= { "", "." };
+    if( infile ) {
 
+        free( infile );
 
-/*	printf( "%llu / %llu \n", cur, max ); */
+    }
 
-	printf( " %7.2f %%  %s \r", 
-		( ((double) cur) * 100.0 / ((double) max) ),
-		animation[ i % ( sizeof(animation) / sizeof(animation[0]) ) ] );
-	fflush( stdout );
+    if( outfile ) {
+
+        free( outfile );
+
+    }
+
+    if( info ) {
+
+        free( info );
+
+    }
+
+    if( data->ostreams ) {
+
+        for( i = 0; i < data->num_ostreams; i++ ) {
+
+            if( data->ostreams[i].cpus ) {
+
+                free( data->ostreams[i].cpus );
+
+            }
+
+        }
+
+        free( data->ostreams );
+
+    }
+
+#ifdef OTFMERGE_MPI
+    if( ret == 0 ) {
+
+        MPI_Finalize();
+
+    } else {
+
+        MPI_Abort( MPI_COMM_WORLD, ret ); 
+
+    }
+#endif /* OTFMERGE_MPI */
+
+    return ret;
 }
-

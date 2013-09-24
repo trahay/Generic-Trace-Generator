@@ -6,8 +6,8 @@
 # <major>.<minor>.<sub>. If sub is zero, then it is omitted.
 
 major=1
-minor=8
-sub=1
+minor=12
+sub=4
 
 # string is used for alpha, beta, or release tags. If it is non-empty, it will
 # be appended to the version number.
@@ -22,12 +22,16 @@ sub=1
 # 1.6.*        stingray
 # 1.7.*        catfish
 # 1.8.*        sturgeon
+# 1.9.*        sawfish
+# 1.10.*       coelacanth
+# 1.11.*       goldfish
+# 1.12.*       salmon
 #
 
-string=sturgeon
+string=salmon
 
 # library is used for the library versioning. These three numbers will be added
-# to the name of the library (e.g. libotf.so.1.2.3).
+# to the name of the library (e.g. libopen-trace-format.so.1.2.3).
 # The meaning of these numbers is as follows (from left to right):
 #
 #   current            The number of the current API exported by the library.
@@ -46,5 +50,5 @@ string=sturgeon
 #                      release, age must be incremented. Otherwise, reset age
 #                      to '0'.
 
-library=2:1:1
+library=2:0:1
 

@@ -3,7 +3,7 @@
 srcfile=$1
 option=$2
 
-if test -z "$srcfile"; then
+if test -z "$srcfile" -o "$srcfile" = "-h" -o "$srcfile" = "--help"; then
 	option="--help"
 else
 	if ! test -f $srcfile; then
@@ -54,9 +54,10 @@ $0 <srcfile> <option>
     --full    - Full version number
     --major   - Major version number
     --minor   - Minor version number
+    --sub      - Sub version number
     --string  - Version string (alpha, beta, etc)
     --library - Library version number
-    --help    - This message
+    -h, --help - This message
 EOF
 		;;
 	*)

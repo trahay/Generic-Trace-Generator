@@ -5,6 +5,10 @@ AC_DEFUN([CHECK_MPI],
     force_mpi="no"
     have_mpi="no"
 
+    AC_ARG_VAR([MPICFLAGS], [MPI C compiler flags])
+    AC_ARG_VAR([MPICXXFLAGS], [MPI CXX compiler flags])
+    MPICXXFLAGS="$MPICXXFLAGS -DMPICH_SKIP_MPICXX -DOMPI_SKIP_MPICXX -DMPI_NO_CPPBIND"
+
     AC_ARG_WITH([mpi],
         AC_HELP_STRING([--with-mpi],
             [use MPI for some OTF tools, default: yes if found by configure]),
@@ -33,10 +37,6 @@ AC_DEFUN([CHECK_MPI],
         [mpi_lib="$withval"])
 
     if test "$check_mpi" = "yes"; then
-        sav_CPPFLAGS=$CPPFLAGS
-        AS_IF([test x"$mpi_inc_dir" != x],
-        [CPPFLAGS="$CPPFLAGS -I$mpi_inc_dir"])
-
         sav_LDFLAGS=$LDFLAGS
         AS_IF([test x"$mpi_lib_dir" != x],
         [LDFLAGS="$LDFLAGS -L$mpi_lib_dir"])
@@ -44,6 +44,17 @@ AC_DEFUN([CHECK_MPI],
         AS_IF([test x"$mpi_lib" != x],
         [MPILIBS="$mpi_lib"])
 
+        sav_CPPFLAGS=$CPPFLAGS
+        AS_IF([test x"$mpi_inc_dir" != x],
+        [CPPFLAGS="$CPPFLAGS -I$mpi_inc_dir"])
+        CPPFLAGS="$CPPFLAGS $MPICFLAGS"
+
+        AX_MPI(
+        [
+            CPPFLAGS="$CPPFLAGS $MPICXXFLAGS"
+
+            AC_LANG_SAVE
+            AC_LANG_CPLUSPLUS
         AX_MPI(
         [
             mpi_lib=$MPILIBS
@@ -52,9 +63,28 @@ AC_DEFUN([CHECK_MPI],
         [
             mpi_error="yes"
         ])
+            AC_LANG_RESTORE
+        ],
+        [
+            mpi_error="yes"
+        ])
 
         CPPFLAGS=$sav_CPPFLAGS
         LDFLAGS=$sav_LDFLAGS
+
+        if test "$mpi_error" = "no" -a "$inside_openmpi" = "no"; then
+
+            sav_CC=$CC
+            sav_LIBS=$LIBS
+            CC=$MPICC
+            LIBS="$LIBS $MPILIBS"
+
+            AC_CHECK_FUNCS([MPI_Get_address])
+            AC_CHECK_FUNCS([MPI_Type_create_struct])
+
+            CC=$sav_CC
+            LIBC=$sav_LIBS
+        fi
     fi
 
     MPI_LIB_DIR=$mpi_lib_dir
@@ -69,6 +99,8 @@ AC_DEFUN([CHECK_MPI],
         MPI_INCLUDE_LINE="-I$mpi_inc_dir"
     fi
 
+    AC_SUBST(MPICFLAGS)
+    AC_SUBST(MPICXXFLAGS)
     AC_SUBST(MPI_LIB_DIR)
     AC_SUBST(MPI_LIB_LINE)
     AC_SUBST(MPI_INCLUDE_DIR)

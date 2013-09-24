@@ -1,3 +1,176 @@
+1.12.4salmon
+	- fixed build issues when using the Oracle compiler with the stdcxx4
+	  C++ library
+	- added IsCUDAThread and IsMasterThread to OTF_ATTR_TYPEs
+	- otfprofile-mpi:
+		- added function table to LaTeX output, sorted by invocations
+		- fixed invalid profiling values in LaTeX output that produced
+		  when using more than one rank for analyzing the input trace
+		- fixed a deadlock that occurred when reading events fails
+
+1.12.3salmon
+	- fixed conflicts with OpenType Fonts:
+		- install header files to INCLUDEDIR/open-trace-format
+		- renamed OTF library to libopen-trace-format
+		- renamed otfdump to otfprint
+	- otfprofile, LaTeX output:
+		- swapped x & y axis of the Message Data Rate Matrix
+		- adapted labels to Vampir
+	- otfinfo:
+		- fixed counting of collective operations and markers
+
+1.12.2salmon
+	- OTF library:
+		- replaced temporary workaround for handling bogus zlib
+		  sync. points by a more elaborated solution
+	- otfprofile:
+		- fixed build error when using the IBM XL C++ compiler
+		- removed unnecessary '-k' option from otfshrink command
+
+1.12.1salmon
+	- implemented workaround to avoid setting otf_errno when a false
+	  error happens during OTF_RBuffer_Jump to a bogus zlib sync point
+
+1.12salmon
+	- OTF library:
+		- fixed potential segmentation fault when appending a new
+		  key-value pair to a list after removing another one
+	- OTFAUX library:
+		- 'OTFAUX_ThumbnailReader_read()' now correctly return success
+		  after reading the thumbnail
+	- otfprofile:
+		- create VampirTrace filter file from irregularity analysis
+	- otfaux:
+		- fixed build errors on Solaris and NetBSD
+		- fixed "time not increasing" error when generating inline
+		  snapshots
+
+1.11.2goldfish
+	- lib OTFAUX:
+		- speed-up messages matching, if no snapshots should
+		  be generated
+
+1.11.1goldfish
+	- new 'OTF_MasterControl_clone()' function to simplify making a copy
+	  of a master control object
+	- otfaux:
+		- keep the stream assignments of the input trace,
+		  when using the '-o' option
+	- otfmerge[-mpi]:
+		- keep inline snapshots
+
+1.11goldfish
+	- added support for highly parallel trace writing using the
+	  I/O Forwarding Scalability Layer (IOFSL) with atomic append
+	  aggregation
+	- added unique id record
+	- added new snapshot records which complete them by now
+	- added new definition record to indicates at which
+	  timestamps are snapshots or statistics available
+	- new 'OTF_KeyValueList_clone()' function to simplify making a copy
+	  of a key-value list
+	- updated python interface
+	- lib OTFAUX:
+		- learned to generate and read a thumbnail
+		- learned to generate snapshots
+	- otfaux:
+		- uses the new snapshot and thumbnail generating features
+		  from lib OTFAUX
+		- does not generate statistics by default now (use the new
+		  '--all' option to get the old behavior)
+		- new '-o' option to make a copy of the trace
+		- can attach message matching information suitable for Vampir
+		  (requires the '-o' option)
+		- can produce the new inline snapshots
+		  (requires the '-o' option)
+	- otfcompress:
+		- fixed link error using the GNU gold linker
+	- otfdump:
+		- fixed '-o' option
+	- otfmerge[-mpi]:
+		- fixed merging markers
+	- otfshrink:
+		- do not remove definitions of replaced processes
+		- keep original name of representing process
+        - otfprofile:
+                - added support for detecting irregularities and to present
+		  them as markers
+
+1.10.2coelacanth
+	- otfdump:
+		- don't abort when reading events fails - the input tracefile
+		  might only have statistics
+	- otfinfo:
+		- fixed file size calculation
+	- otfprofile:
+		- removed leading '=' from CSV lines to make it loadable into
+		  spreadsheets (e.g. Open Office) 
+		- fixed process naming in CSV output of collective operation
+		  statistics
+
+1.10.1coelacanth
+	- fixed build issues in otfprofile[-mpi]:
+		- added missing header includes for WEXITSTATUS
+		- moved 'using namespace std' under the header includes to solve
+		  compile error with PGI compiler
+
+1.10coelacanth
+	- added process substitute record
+	- added process group attribute 'OTF_ATTR_IsCommunicator'
+	- renamed OTF_fprintf to OTF_Error which sets the error variables
+	  otf_errno and otf_strerr
+	- added OTF_Warning which prints warning messages if verbosity
+	  (--with-verbose) is enabled
+	- fixed detection of C compiler flags for compiling the python interface
+	- corrected return value of OTF_WStream_write* functions
+	- fixed parsing of process[group] attributes record
+	- otfmerge-mpi:
+		- build sequential version; replaces the old otfmerge
+	- otfprofile-mpi:
+		- added process clustering based on feature vectors from every
+		  process trace
+		  (see docu/tools/otfprofile_clustering.pdf for more details)
+		- added CSV output
+		- changeable number of process groups for LaTeX output
+		- build sequential version; replaces the old otfprofile
+		- fixed problem with pgfplots 1.5
+		- improved y axis labeling for message length charts
+	- otfshrink:
+		- added mapping mode where all but one members per group are
+		  removed with multiple groups
+		- reworked parameter parsing, <from>-<to> ranges no longer
+		  supported
+		- fixed creation of symbolic links when non-contiguous
+		  stream IDs are used
+		- disable 'parent' in a remaining process definition in case
+		  the parent is removed
+
+1.9.2sawfish
+	- otfprofile-mpi:
+		- ignore "backward-running" P2P-messages when calculating
+		  durations
+		- removed '0' in message length charts and added '1' as
+		  extra label
+		- added thousands separator for large integer numbers in
+		  latex output
+
+1.9.1sawfish
+	- improved zlib compression
+	- added progress display to otfprofile-mpi
+	- use pdf[la]tex instead of latex/dvipdf to convert otfprofile-mpi's
+	  TeX output to PDF
+	- fixed function invocation statistics in otfprofile-mpi generated
+	  from summarized information (--stat)
+
+1.9sawfish
+	- added MPI-parallel version of otfprofile (otfprofile-mpi)
+	- added library 'libotfaux' for matching message events
+	- added time range record
+	- added counter process assignment record
+	- minor extensions on API for handling key-value lists
+	- define PATH_MAX under Windows if it is not defined yet
+	- fixed incorrect execution mode when using otfdecompress under Windows
+
 1.8.1sturgeon
 	- added option to 'otfdump' for specifying the maximum number of files
 	  that are allowed to be open simultaneously

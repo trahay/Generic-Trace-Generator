@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -11,7 +11,6 @@
 #include "OTF_Platform.h"
 #include "OTF_MasterControl.h"
 #include "OTF_Errno.h"
-
 
 /**	constructor - internal use only */
 int OTF_MasterControl_init( OTF_MasterControl* mc );
@@ -111,8 +110,10 @@ void OTF_MasterControl_finish( OTF_MasterControl* mc ) {
 
 	OTF_MasterControl_close( mc );
 
-	OTF_fprintf( stderr, "OTF_MasterControl_finish() deprecated, "
-			"use OTF_MasterControl_close() instead\n" );
+	OTF_Warning( "WARNING in function %s, file: %s, line: %i:\n "
+			"OTF_MasterControl_finish() is deprecated, "
+			"use OTF_MasterControl_close() instead.\n",
+			__FUNCTION__, __FILE__, __LINE__ );
 }
 
 
@@ -137,12 +138,9 @@ int OTF_MasterControl_read( OTF_MasterControl* mc, const char* namestub ) {
 
 	int r;
 
-
-	/* OTF_fprintf( stderr, "OTF_MasterControl_read()\n" ); */
-
 	if( NULL == mc ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"master control has not been specified.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 	
@@ -159,7 +157,7 @@ int OTF_MasterControl_read( OTF_MasterControl* mc, const char* namestub ) {
 
 	if ( NULL == filename ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_getFilename() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 		
@@ -169,7 +167,7 @@ int OTF_MasterControl_read( OTF_MasterControl* mc, const char* namestub ) {
 /*
 	if ( ! OTF_fileExists( filename ) ) {
 
-		OTF_fprintf( stderr, "ERROR in '%s'.c: "
+		OTF_Error( "ERROR in '%s'.c: "
 			"Invalid input file '%s'\n", __FUNCTION__, filename );
 		return 0;
 	}
@@ -178,7 +176,7 @@ int OTF_MasterControl_read( OTF_MasterControl* mc, const char* namestub ) {
 	buffer = OTF_RBuffer_open( filename, mc->manager );
 	if( NULL == buffer ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"could not open file \"%s\" for reading.\n",
 				__FUNCTION__, __FILE__, __LINE__, filename );
 		
@@ -190,8 +188,6 @@ int OTF_MasterControl_read( OTF_MasterControl* mc, const char* namestub ) {
 	
 	OTF_RBuffer_setSize( buffer, 1024 );
 
-	/* OTF_fprintf( stderr, "filename=%s\n", filename ); */
-
 	free( filename );
 	filename = NULL;
 
@@ -202,6 +198,42 @@ int OTF_MasterControl_read( OTF_MasterControl* mc, const char* namestub ) {
 		OTF_RBuffer_printRecord( buffer );
 		*/
 
+		/* IOFSL config line */
+		if ( OTF_RBuffer_testChar( buffer, 'i' ) ) {
+			uint32_t server_num;
+			OTF_IofslMode mode;
+			uint32_t streamid_bits;
+			server_num = OTF_RBuffer_readUint32( buffer );
+			if ( ! OTF_RBuffer_testChar( buffer, ':') ) {
+				OTF_Error( "OTF_MasterControl_read() "
+					"ERROR: missing expected character ':'" );
+				free( buffer );
+				return 0;
+			}
+			mode = (OTF_IofslMode)OTF_RBuffer_readUint32( buffer );
+			if ( mode != OTF_IOFSL_MULTIFILE_SPLIT
+				&& mode != OTF_IOFSL_MULTIFILE ) {
+				OTF_Error( "OTF_MasterControl_read() "
+					"ERROR: invalid IofslMode." );
+				free( buffer );
+				return 0;
+			}
+
+			if ( ! OTF_RBuffer_testChar( buffer, ':') ) {
+				OTF_Error( "OTF_MasterControl_read() "
+					"ERROR: missing expected character ':'" );
+				free( buffer );
+				return 0;
+			}
+			streamid_bits = OTF_RBuffer_readUint32( buffer );
+			OTF_RBuffer_readNewline( buffer );
+
+			OTF_FileManager_setIofsl( mc->manager,
+					server_num, NULL, mode,
+					0, 0, streamid_bits );
+			continue;
+		}
+
 		/* read argument */
 		argument= OTF_RBuffer_readUint32( buffer );
 		if ( ! OTF_RBuffer_testChar( buffer, ':' ) ) {
@@ -210,18 +242,14 @@ int OTF_MasterControl_read( OTF_MasterControl* mc, const char* namestub ) {
 			continue;
 		}
 
-		/* OTF_fprintf( stderr ,"arg= %x\n", argument ); */
-
 		do {
 
 			value= OTF_RBuffer_readUint32( buffer );
 
-			/* OTF_fprintf( stderr ,"  v= %x\n", value ); */
-
 			r= OTF_MasterControl_append( mc, argument, value );
 			if ( 0 == r ) {
 			
-				OTF_fprintf( stderr ,"OTF_MasterControl_read() "
+				OTF_Error( "OTF_MasterControl_read() "
 					"ERROR: appending (%u,%u)\n",
 					argument, value );
 			}
@@ -247,7 +275,7 @@ OTF_MasterControl* OTF_MasterControl_new( OTF_FileManager* manager ) {
 	ret= (OTF_MasterControl*) malloc( sizeof(OTF_MasterControl) );
 	if( NULL == ret ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"no memory left.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 		
@@ -258,7 +286,7 @@ OTF_MasterControl* OTF_MasterControl_new( OTF_FileManager* manager ) {
 
 	if( NULL == manager ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"manager has not been specified.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -288,7 +316,7 @@ OTF_MapEntry* OTF_MasterControl_insertMapEntry( OTF_MasterControl* mc,
 			mc->s * sizeof(OTF_MapEntry) );
 		if( NULL == mc->map ) {
 		
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"no memory left.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 		
@@ -410,7 +438,7 @@ int OTF_MapEntry_insertValue( OTF_MapEntry* mc, uint32_t value ) {
 			mc->s * sizeof(uint32_t) );
 		if( NULL == mc->values ) {
 		
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"no memory left.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 		
@@ -484,7 +512,7 @@ int OTF_MasterControl_insertRMapEntry( OTF_MasterControl* mc,
 			mc->rs * sizeof(OTF_Pair) );
 		if( NULL == mc->rmap ) {
 		
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"no memory left.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 		
@@ -542,7 +570,7 @@ int OTF_MasterControl_append( OTF_MasterControl* mc,
 
 	if ( 0 == argument || ((uint32_t) -1) == argument ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"invalid argument value %x.\n",
 				__FUNCTION__, __FILE__, __LINE__, argument );
 
@@ -555,7 +583,7 @@ int OTF_MasterControl_append( OTF_MasterControl* mc,
 
 	if ( 0 == ret ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_MasterControl_insertRMapEntry() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 		
@@ -566,7 +594,7 @@ int OTF_MasterControl_append( OTF_MasterControl* mc,
 	entry = OTF_MasterControl_getMapEntry( mc, argument );
 	if( NULL == entry ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_MasterControl_getMapEntry() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -606,16 +634,6 @@ uint32_t OTF_MasterControl_mapReverse( OTF_MasterControl* mc,
 
 	a= 0;
 	b= mc->rn;
-
-	/*
-	OTF_fprintf( stderr, "OTF_MasterControl_mapReverse\n" );
-	for ( c= a; c < b; ++c  ) {
-
-		OTF_fprintf( stderr, "   %u: %u\n", 
-			mc->rmap[c].argument, 
-			mc->rmap[c].value );
-	}
-	*/
 
 	if ( 0 >= mc->rn ) {
 	
@@ -675,7 +693,7 @@ int OTF_MasterControl_write( OTF_MasterControl* mc, const char* namestub ) {
 		0, NULL );
 	if( NULL == filename ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_getFilename() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -685,10 +703,12 @@ int OTF_MasterControl_write( OTF_MasterControl* mc, const char* namestub ) {
 	buffer = OTF_WBuffer_open( filename, mc->manager );
 	if ( NULL == buffer ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_open( %s ) failed.\n",
 				__FUNCTION__, __FILE__, __LINE__, filename );
 		
+		free( filename );
+
 		return  0;
 	}
 	
@@ -719,6 +739,25 @@ int OTF_MasterControl_write( OTF_MasterControl* mc, const char* namestub ) {
 		OTF_WBuffer_writeNewline( buffer );
 	}
 
+	if ( OTF_FileManager_isIofsl( mc->manager ) ) {
+		uint32_t server_num;
+		char ** server_list;
+		OTF_IofslMode mode;
+		uint32_t flags;
+		uint32_t index_buffer_length;
+		uint32_t streamid_bits;
+		OTF_FileManager_getIofsl( mc->manager,
+				&server_num, &server_list, &mode,
+				&flags, &index_buffer_length, &streamid_bits );
+		OTF_WBuffer_writeChar( buffer, 'i' );
+		OTF_WBuffer_writeUint32( buffer, server_num );
+		OTF_WBuffer_writeChar( buffer, ':' );
+		OTF_WBuffer_writeUint32( buffer, (uint32_t)mode );
+		OTF_WBuffer_writeChar( buffer, ':' );
+		OTF_WBuffer_writeUint32( buffer, streamid_bits );
+		OTF_WBuffer_writeNewline( buffer );
+	}
+
 	OTF_WBuffer_close( buffer );
 
 	return 1;
@@ -740,7 +779,7 @@ int OTF_MasterControl_check( OTF_MasterControl* mc ) {
 
 		if ( mc->map[i].argument <= mc->map[i-1].argument ) {
 
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"map not sorted at %u.\n",
 					__FUNCTION__, __FILE__, __LINE__, i );
 			
@@ -758,7 +797,7 @@ int OTF_MasterControl_check( OTF_MasterControl* mc ) {
 
 			if ( e->values[j] <= e->values[j-1] ) {
 		
-				OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+				OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 						"map[%u] not sorted at %u.\n",
 						__FUNCTION__, __FILE__, __LINE__, i, j );
 
@@ -772,7 +811,7 @@ int OTF_MasterControl_check( OTF_MasterControl* mc ) {
 
 		if ( mc->rmap[i].argument <= mc->rmap[i-1].argument ) {
 	
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"rmap not sorted at %u.\n",
 					__FUNCTION__, __FILE__, __LINE__, i );
 			
@@ -792,25 +831,25 @@ void OTF_MasterControl_print( OTF_MasterControl* mc ) {
 	OTF_MapEntry* e; 
 
 
-	OTF_fprintf( stderr, "map:\n" );
+	fprintf( stderr, "map:\n" );
 	for ( i= 0; i < mc->n; i++ ) {
 
 		e= &(mc->map[i]);
 
-		OTF_fprintf( stderr, "%x: ", e->argument );
+		fprintf( stderr, "%x: ", e->argument );
 
 		for ( j= 0; j < e->n; j++ ) {
 
-			OTF_fprintf( stderr, "%x ", e->values[j] );
+			fprintf( stderr, "%x ", e->values[j] );
 		}
 
-		OTF_fprintf( stderr, "\n" );
+		fprintf( stderr, "\n" );
 	}
 
-	OTF_fprintf( stderr, "rmap:\n" );
+	fprintf( stderr, "rmap:\n" );
 	for ( i= 0; i < mc->rn; i++ ) {
 
-		OTF_fprintf( stderr, "%x: %x\n", 
+		fprintf( stderr, "%x: %x\n", 
 			mc->rmap[i].argument, mc->rmap[i].value );
 	}
 }
@@ -982,3 +1021,28 @@ uint32_t OTF_MasterControl_getNewStreamId( OTF_MasterControl* mc ) {
 }
 
 
+OTF_MasterControl* OTF_MasterControl_clone( OTF_MasterControl* mc,
+		OTF_FileManager* manager ) {
+
+
+	int ret= 1;
+	uint32_t i;
+	OTF_MasterControl* mc_clone;
+
+	mc_clone= OTF_MasterControl_new( manager );
+	if ( !mc_clone )
+		return NULL;
+
+	for ( i= 0; i < mc->n; i++ ) {
+		OTF_MapEntry* entry= &mc->map[i];
+		ret = ret && OTF_MasterControl_appendList( mc_clone,
+				entry->argument, entry->n, entry->values );
+	}
+
+	if ( !ret ) {
+		OTF_MasterControl_close( mc_clone );
+		return NULL;
+	}
+
+	return mc_clone;
+}

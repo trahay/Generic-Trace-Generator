@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -222,6 +222,12 @@ typedef int (OTF_Handler_DefCreator) ( void* userData,
                                        const char* creator,
                                        OTF_KeyValueList *list );
 
+/* # OTF_DEFUNIQUEID_RECORD */
+typedef int (OTF_Handler_DefUniqueId) ( void* userData,
+                                        uint32_t stream,
+                                        uint64_t uid,
+                                        OTF_KeyValueList *list );
+
 /* # OTF_DEFVERSION_RECORD */
 typedef int (OTF_Handler_DefVersion) ( void* userData,
                                        uint32_t stream,
@@ -254,6 +260,36 @@ typedef int (OTF_Handler_DefKeyValue) (  void* userData,
                                          const char *name,
 					                     const char *description,
 				  	                     OTF_KeyValueList *list );
+
+/* # OTF_DEFTIMERANGE_RECORD */
+typedef int (OTF_Handler_DefTimeRange) ( void* userData,
+                                         uint32_t stream,
+                                         uint64_t minTime,
+                                         uint64_t maxTime,
+                                         OTF_KeyValueList* list );
+
+/* # OTF_DEFCOUNTERASSIGNMENTS_RECORD */
+typedef int (OTF_Handler_DefCounterAssignments) ( void* userData,
+                                                  uint32_t stream,
+                                                  uint32_t counter,
+                                                  uint32_t number_of_members,
+                                                  const uint32_t* procs_or_groups,
+                                                  OTF_KeyValueList* list );
+
+/* # OTF_DEFPROCESSSUBSTITUTES_RECORD */
+typedef int (OTF_Handler_DefProcessSubstitutes) ( void* userData,
+                                                  uint32_t stream,
+                                                  uint32_t representative,
+                                                  uint32_t numberOfProcs,
+                                                  const uint32_t* procs,
+                                                  OTF_KeyValueList* list );
+
+/* # OTF_DEFAUXSAMPLEPOINT_RECORD */
+typedef int (OTF_Handler_DefAuxSamplePoint) ( void* userData,
+                                              uint32_t stream,
+                                              uint64_t time,
+                                              OTF_AuxSamplePointType type,
+                                              OTF_KeyValueList* list );
 
 /* typedefs for OTF event records ****************************************** */
 
@@ -440,7 +476,6 @@ typedef int (OTF_Handler_RMAEnd) ( void* userData,
                                    uint32_t source,
 				                   OTF_KeyValueList *list );
 
-
 /* typedefs for OTF snapshot records *************************************** */
 
 
@@ -504,6 +539,23 @@ typedef int (OTF_Handler_BeginFileOpSnapshot) ( void* userData,
                                                uint64_t matchingId,
                                                uint32_t scltoken,
 				  	                           OTF_KeyValueList *list );
+
+/* # OTF_COLLOPCOUNTSNAPSHOT_RECORD */
+typedef int (OTF_Handler_CollopCountSnapshot) ( void* userData,
+                                                uint64_t time,
+                                                uint32_t process,
+                                                uint32_t communicator,
+                                                uint64_t count,
+                                                OTF_KeyValueList *list );
+
+/* # OTF_COUNTERSNAPSHOT_RECORD */
+typedef int (OTF_Handler_CounterSnapshot) ( void* userData,
+                                            uint64_t time,
+                                            uint64_t originaltime,
+                                            uint32_t process,
+                                            uint32_t counter,
+                                            uint64_t value,
+                                            OTF_KeyValueList *list );
 
 
 /* typedefs for OTF summary records **************************************** */
@@ -622,4 +674,3 @@ typedef int (OTF_Handler_Marker) ( void *userData,
 #endif /* __cplusplus */
 
 #endif /* OTF_HANDLERARRAY_H */
-

@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -43,13 +43,14 @@
 
 static const char* Helptext[] = {
 "                                                                           \n",
-" otf(de)compress - compression program for single OTF files.               \n",
+" otf(de)compress - Compression program for single OTF files.                \n",
 "                                                                           \n",
-"    Usage: otf(de)compress [OPTIONS] <FILES>                               \n",
+" Syntax: otf(de)compress [options] <file(s)>                                \n",
 "                                                                           \n",
+"   options:                                                                 \n",
 "      -h, --help   show this help message                                  \n",
 "      -V           show OTF version                                        \n",
-"      -c           compress (default action when called as 'otfcompress')  \n",
+"      -c            compress (default action if called as 'otfcompress')    \n",
 "      -d           decompress (default action if called as 'otfdecompress')\n",
 "      -k           keep original file (compressed resp. uncompressed)      \n",
 "      -o <dir>     output directory (implicitly sets -k)                   \n",
@@ -172,7 +173,7 @@ int main ( int argc, char** argv ) {
 		p= strrchr( argv[0], '/' );
 		command = NULL != p ? p+1 : argv[0];
 
-		if ( 0 == strcmp( "otfdecompress", command ) ) {
+		if ( 0 == strcmp( "otfdecompress", command ) || 0 == strcmp( "otfdecompress.exe", command ) ) {
 
 			mode= MODE_DECOMPRESS;
 
@@ -458,7 +459,7 @@ int compressFile( const char* filename, const char* outfilename,
 		level, blocksize, 
 		(unsigned long long) totalout, 
 		(unsigned long long) totalin, 
-		100.0 * ((double) totalout) / ((double) totalin), 
+		100.0 * ((double) totalout) / (double)((0 < totalin) ? totalin : 1),
 		time );
 
 	deflateEnd( &z );
@@ -581,7 +582,7 @@ int decompressFile( const char* infilename, const char* outfilename, uint32_t bl
 		blocksize, 
 		(unsigned long long) totalin, 
 		(unsigned long long) totalout, 
-		100.0 * ((double) totalin) / ((double) totalout), 
+		100.0 * ((double) totalin) / (double)((0 < totalout) ? totalout : 1), 
 		time );
 
 	/* finalize everything */

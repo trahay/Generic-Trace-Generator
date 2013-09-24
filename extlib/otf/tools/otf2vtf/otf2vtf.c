@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -31,18 +31,19 @@
 
 static const char* Helptext[] = {
 "                                                                          \n",
-" otf2vtf - Convert OTF trace files to VTF format.                         \n",
+" otf2vtf - Convert OTF trace files to VTF3 format.                          \n",
 "                                                                          \n",
-" otf2vtf [Options] <input file name>                                      \n",
+" Syntax: otf2vtf [Options] <input file name>                               \n",
 "                                                                          \n",
-" Options:                                                                 \n",
+"   options:                                                                \n",
 "     -h, --help     show this help message                                \n",
 "     -V             show OTF version                                      \n",
 "     -o <file>      output file                                           \n",
 "     -b <n>         size of the reader buffer                             \n",
 "     -A             write VTF3 ASCII sub-format (default)                 \n",
 "     -B             write VTF3 binary sub-format                          \n",
-"                                                                          \n", NULL };
+"                                                                           \n",
+NULL };
 
 void writenames_recursive ( void* firsthandlerarg, nodeT *p_node );
 

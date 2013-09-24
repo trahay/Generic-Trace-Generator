@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Michael Heyde
 */
 
@@ -57,20 +57,20 @@ int main(int argc, char **argv)
 
   static const char* Helptext[] = {
     "                                                                  \n",
-    " otfinfo - program to get basic information of a trace.           \n",
+    " otfinfo - Program to get basic information of an OTF trace.      \n",
     "                                                                  \n",
-    " otfinfo [Options] <input file name>                              \n",
+    " Syntax: otfinfo [options] <input file name>                      \n",
     "                                                                  \n",
     "   options:                                                       \n",
     "      -h, --help    show this help message                        \n",
     "      -V            show OTF version                              \n",
     "      -f <n>        set max number of filehandles available       \n",
     "      -l <ilevel>   set the information level for the output      \n",
-    "                    (0 - 4) the default level is 1                \n",
+    "                    (0 - 4, default: 1)                           \n",
     "      -a            set the information level to 4                \n",
     "      -p            show progress bar for reading event files     \n",
     "                                                                  \n",
-    "                                                                  \n", NULL };
+    NULL };
 
   info.infoLevel = 1; /*level of information for the handles*/
 
@@ -188,9 +188,10 @@ int main(int argc, char **argv)
     static char filename[1024];
     static uint32_t filecomp = OTF_FILECOMPRESSION_COMPRESSED;
     static struct stat filestat;
+    OTF_MapEntry* entry = OTF_MasterControl_getEntryByIndex( master, i );
 
     /*get event file name of stream*/
-    OTF_getFilename( fileLocation, i+1, OTF_FILETYPE_EVENT | filecomp,
+    OTF_getFilename( fileLocation, entry->argument, OTF_FILETYPE_EVENT | filecomp,
                      sizeof(filename), filename );
 
     /*if stat succeeds, compute total file size*/
@@ -251,7 +252,7 @@ int main(int argc, char **argv)
     checkVal = OTF_Reader_readDefinitions( reader, handles );
     otfinfo_assert( checkVal != OTF_READ_ERROR );
 
-    if( info.counterDefinitionMarker != 0 )
+    if( info.counterMarkerDefinition != 0 )
     {
       /*read markers*/
       checkVal = OTF_Reader_readMarkers( reader, handles );
@@ -278,7 +279,8 @@ int main(int argc, char **argv)
         OTF_Reader_eventBytesProgress( reader, &minRead, &currRead, &size );
         current = ( PROGRESSBARLEN * currRead ) / size;
         for( ; i < current; i++ )
-          printf( "#" ); fflush( stdout );
+          printf( "#" );
+        fflush( stdout );
       }
       otfinfo_assert( checkVal != OTF_READ_ERROR )
       for( ; i < PROGRESSBARLEN; i++ )
@@ -322,6 +324,12 @@ static void set_handles_level_1( OTF_HandlerArray *handles,
   OTF_HandlerArray_setHandler( handles, (OTF_FunctionPointer*)handleDefCreator,
                                OTF_DEFCREATOR_RECORD );
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFCREATOR_RECORD );
+
+  /*handler and inits for getting trace's unique id*/
+  info->traceUniqueId = 0;
+  OTF_HandlerArray_setHandler( handles, (OTF_FunctionPointer*)handleDefUniqueId,
+                               OTF_DEFUNIQUEID_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFUNIQUEID_RECORD );
 
   /*handler and inits for getting the otf version*/
   info->otfVersionString = NULL;
@@ -400,6 +408,7 @@ static void show_info_level_1( definitionInfoT *info )
   printf( "+----------------------+--------------------------------------------------------\n" );
   printf( "| tracefile name       | %s\n", info->filePrefix );
   printf( "| creator of the trace | %s\n", info->creatorName );
+  printf( "| trace unique id      | %lli\n", (unsigned long long int)info->traceUniqueId );
   printf( "| used OTF version     | %i.%i.%i %s\n", info->otfVersionMajor,
           info->otfVersionMinor, info->otfVersionSub, info->otfVersionString );
   printf( "| event files size     | %.2f %s\n", fileSize,unitFileSize );
@@ -441,19 +450,19 @@ static void set_handles_level_2( OTF_HandlerArray *handles, definitionInfoT *inf
                                OTF_DEFFUNCTION_RECORD );
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFFUNCTION_RECORD );
 
+  /*handler and inits for getting the count of collop. definitions*/
+  info->counterCollectiveOperationDefinition = 0;
+  OTF_HandlerArray_setHandler( handles,
+                               (OTF_FunctionPointer*)handleDefCollectiveOperation,
+                               OTF_DEFCOLLOP_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFCOLLOP_RECORD );
+
   /*handler and inits for getting the count of counter definitions*/
   info->counterCounterDefinition = 0;
   OTF_HandlerArray_setHandler( handles,
                                (OTF_FunctionPointer*)handleDefCounter,
                                OTF_DEFCOUNTER_RECORD);
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFCOUNTER_RECORD );
-
-  /*handler and inits for getting the count of marker definitions*/
-  info->counterDefinitionMarker = 0;
-  OTF_HandlerArray_setHandler( handles,
-                               (OTF_FunctionPointer*)handleDefMarker,
-                               OTF_DEFMARKER_RECORD );
-  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFMARKER_RECORD  );
 
   /*handler and inits for getting the count of process group definitions*/
   info->counterProcessGroupDefinition = 0;
@@ -483,6 +492,13 @@ static void set_handles_level_2( OTF_HandlerArray *handles, definitionInfoT *inf
                                (OTF_FunctionPointer*)handleDefSclFile,
                                OTF_DEFSCLFILE_RECORD );
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFSCLFILE_RECORD );
+
+  /*handler and inits for getting the count of marker definitions*/
+  info->counterMarkerDefinition = 0;
+  OTF_HandlerArray_setHandler( handles,
+                               (OTF_FunctionPointer*)handleDefMarker,
+                               OTF_DEFMARKER_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFMARKER_RECORD  );
 }
 
 static void show_info_level_2( definitionInfoT *info )
@@ -499,8 +515,8 @@ static void show_info_level_2( definitionInfoT *info )
           (unsigned long long)info->counterFunctionDefinition );
   printf( "| counter definitions        | %llu\n",
           (unsigned long long)info->counterCounterDefinition );
-  printf( "| marker definitions         | %llu\n",
-          (unsigned long long)info->counterDefinitionMarker );
+  printf( "| collective op. definitions | %llu\n",
+          (unsigned long long)info->counterCollectiveOperationDefinition );
   printf( "|                            |\n" );
   printf( "| process group definitions  | %llu\n",
           (unsigned long long)info->counterProcessGroupDefinition );
@@ -508,6 +524,9 @@ static void show_info_level_2( definitionInfoT *info )
           (unsigned long long)info->counterFunctionGroupDefinition );
   printf( "| counter group definitions  | %llu\n",
           (unsigned long long)info->counterCounterGroupDefinition );
+  printf( "|                            |\n" );
+  printf( "| marker definitions         | %llu\n",
+          (unsigned long long)info->counterMarkerDefinition );
   printf( "+----------------------------+--------------------------------------------------\n" );
 
   index = info->counterSourceFileName;
@@ -601,9 +620,14 @@ static void set_handles_level_3( OTF_HandlerArray *handles,
   /*handler and inits for getting the count of collective operations*/
   info->counterCollectiveOperation = 0;
   OTF_HandlerArray_setHandler( handles,
-                               (OTF_FunctionPointer*)handleDefCollectiveOperation,
-                               OTF_DEFCOLLOP_RECORD );
-  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFCOLLOP_RECORD  );
+                               (OTF_FunctionPointer*)handleCollectiveOperation,
+                               OTF_COLLOP_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_COLLOP_RECORD  );
+
+  OTF_HandlerArray_setHandler( handles,
+                               (OTF_FunctionPointer*)handleEndCollectiveOperation,
+                               OTF_ENDCOLLOP_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_ENDCOLLOP_RECORD  );
 
   /*handler and inits for getting the count of file operations*/
   info->counterFileOperation = 0;
@@ -617,6 +641,13 @@ static void set_handles_level_3( OTF_HandlerArray *handles,
                                OTF_ENDFILEOP_RECORD );
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_ENDFILEOP_RECORD  );
 
+  /*handler and inits for getting the count of markers*/
+  info->counterMarker = 0;
+  OTF_HandlerArray_setHandler( handles,
+                               (OTF_FunctionPointer*)handleMarker,
+                               OTF_MARKER_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_MARKER_RECORD  );
+
   /*handler and inits for getting the count of snapshots*/
   info->counterSnapshot = 0;
   OTF_HandlerArray_setHandler( handles,
@@ -626,6 +657,7 @@ static void set_handles_level_3( OTF_HandlerArray *handles,
 
   (info->counters) = (counterT*)malloc( info->counterCounterDefinition *
                                         sizeof(counterT) );
+
   for( i = 0; i < info->counterCounterDefinition; i++ )
   {
     (info->counters)[i].name = NULL;
@@ -673,6 +705,8 @@ static void show_info_level_3( definitionInfoT *info )
           (unsigned long long)info->counterCollectiveOperation );
   printf( "| file operations       | %llu\n",
           (unsigned long long)info->counterFileOperation );
+  printf( "| markers               | %llu\n",
+          (unsigned long long)info->counterMarker );
   printf( "| snapshots             | %llu\n",
           (unsigned long long)info->counterSnapshot );
   printf( "+-----------------------+-------------------------------------------------------\n" );
@@ -740,14 +774,14 @@ static void set_handles_level_4( OTF_HandlerArray *handles,
                                OTF_DEFFUNCTION_RECORD);
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFFUNCTION_RECORD );
 
-  /*handler and inits for getting the names of markers*/
-  info->markerNames = NULL;
-  info->markerNames = (char**)calloc( info->counterDefinitionMarker,
+  /*handler and inits for getting the names of collective operations*/
+  info->collectiveOperationNames = NULL;
+  info->collectiveOperationNames = (char**)calloc( info->counterCollectiveOperationDefinition,
                                       sizeof(char*) );
   OTF_HandlerArray_setHandler( handles,
-                               (OTF_FunctionPointer*)handleDefMarker,
-                               OTF_DEFMARKER_RECORD );
-  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFMARKER_RECORD  );
+                               (OTF_FunctionPointer*)handleDefCollectiveOperation,
+                               OTF_DEFCOLLOP_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFCOLLOP_RECORD );
 
   /*handler and inits for getting the names of processe groups*/
   info->processGroupNames = NULL;
@@ -758,8 +792,6 @@ static void set_handles_level_4( OTF_HandlerArray *handles,
                                OTF_DEFPROCESSGROUP_RECORD);
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFPROCESSGROUP_RECORD );
 
-  info->collectiveOperationNames = NULL;
-
   /*handler and inits for getting the names of function groups*/
   info->functionGroupNames = NULL;
   info->functionGroupNames = (char**)calloc( info->counterFunctionGroupDefinition,
@@ -769,7 +801,7 @@ static void set_handles_level_4( OTF_HandlerArray *handles,
                                OTF_DEFFUNCTIONGROUP_RECORD);
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFFUNCTIONGROUP_RECORD );
 
-  /*handler and inits for getting the names of counter groupss*/
+  /*handler and inits for getting the names of counter groups*/
   info->counterGroupNames = NULL;
   info->counterGroupNames = (char**)calloc( info->counterCounterGroupDefinition,
                                             sizeof(char*) );
@@ -777,6 +809,15 @@ static void set_handles_level_4( OTF_HandlerArray *handles,
                                (OTF_FunctionPointer*)handleDefCounterGroup,
                                OTF_DEFCOUNTERGROUP_RECORD);
   OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFCOUNTERGROUP_RECORD );
+
+  /*handler and inits for getting the names of markers*/
+  info->markerNames = NULL;
+  info->markerNames = (char**)calloc( info->counterMarkerDefinition,
+                                      sizeof(char*) );
+  OTF_HandlerArray_setHandler( handles,
+                               (OTF_FunctionPointer*)handleDefMarker,
+                               OTF_DEFMARKER_RECORD );
+  OTF_HandlerArray_setFirstHandlerArg( handles, info, OTF_DEFMARKER_RECORD  );
 }
 
 static void show_info_level_4( definitionInfoT *info )
@@ -808,9 +849,9 @@ static void show_info_level_4( definitionInfoT *info )
   printf( "\n" );
   printf( "+-------------------------------------------------------------------------------\n" );
   printf( "| marker definitions[%llu]\n",
-          (unsigned long long)info->counterDefinitionMarker );
+          (unsigned long long)info->counterMarkerDefinition );
   printf( "+-------------------------------------------------------------------------------\n" );
-  for( i = 0; i < info->counterDefinitionMarker; i++ )
+  for( i = 0; i < info->counterMarkerDefinition; i++ )
   {
      printf( "| %s\n", info->markerNames[i] );
   }
@@ -818,9 +859,9 @@ static void show_info_level_4( definitionInfoT *info )
   printf( "\n" );
   printf( "+-------------------------------------------------------------------------------\n" );
   printf( "| collective operation definitions[%llu]\n",
-          (unsigned long long)info->counterCollectiveOperation );
+          (unsigned long long)info->counterCollectiveOperationDefinition );
   printf( "+-------------------------------------------------------------------------------\n" );
-  for( i = 0; i < info->counterCollectiveOperation; i++ )
+  for( i = 0; i < info->counterCollectiveOperationDefinition; i++ )
   {
     printf( "| %s\n", info->collectiveOperationNames[i] );
   }
@@ -897,7 +938,7 @@ static void free_data_level_4( definitionInfoT *info )
     free( info->functionGroupNames );
   }
 
-  for(i = 0; i < info->counterCollectiveOperation; i++ )
+  for(i = 0; i < info->counterCollectiveOperationDefinition; i++ )
   {
     free( (info->collectiveOperationNames)[i] );
   }
@@ -909,7 +950,7 @@ static void free_data_level_4( definitionInfoT *info )
   }
   free( info->counterGroupNames );
 
-  for( i = 0; i < info->counterDefinitionMarker; i++ )
+  for( i = 0; i < info->counterMarkerDefinition; i++ )
   {
     free( (info->markerNames)[i] );
   }

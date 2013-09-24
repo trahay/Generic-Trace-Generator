@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -26,19 +26,23 @@ using namespace std;
 
 static const char* Helptext[] = {
 "                                                                          \n",
-" otfdump - convert otf traces or parts of it into a human readable, long  \n",
-"           version                                                        \n",
+" otfprint - Convert an OTF trace or parts of it into a human readable, long\n",
+"            version.                                                       \n",
 "                                                                          \n",
-" Options:                                                                 \n",
+" Syntax: otfprint [options] <input file name>                              \n",
+"                                                                           \n",
+"   options:                                                                \n",
 "     -h, --help     show this help message                                \n",
 "     -V             show OTF version                                      \n",
-"     -f <n>         set max number of filehandles available (default: 50) \n",
+"      -f <n>        set max number of filehandles available                \n",
+"                    (default: 50)                                          \n",
 "     -o <file>      output file                                           \n",
 "                    if the ouput file is unspecified the stdout will be   \n",
 "                    used                                                  \n",
 "                                                                          \n",
 "     --num <a> <b>  output only records no. [a,b]                         \n",
-"     --time <a> <b> output only records with time stamp in [a,b]          \n",
+"      --time <a> <b>                                                       \n",
+"                    output only records with time stamp in [a,b]           \n",
 "                                                                          \n",
 "     --nodef        omit definition records                               \n",
 "     --noevent      omit event records                                    \n",
@@ -47,7 +51,8 @@ static const char* Helptext[] = {
 "     --nomarker     omit marker records                                   \n",
 "                                                                          \n",
 "     --nokeyvalue   omit key-value pairs                                  \n",
-"     --fullkeyvalue show key-value pairs including the contents           \n",
+"      --fullkeyvalue                                                       \n",
+"                    show key-value pairs including the contents            \n",
 "                    of byte-arrays                                        \n",
 "                                                                          \n",
 "     --procs <a>    show only processes <a>                               \n",
@@ -57,9 +62,10 @@ static const char* Helptext[] = {
 "                    record-type-numbers can be found in OTF_Definitions.h \n",
 "                    (OTF_*_RECORD)                                        \n",
 "                                                                          \n",
-"     -s, --silent   do not display anything except the time otfdump       \n",
+"      -s, --silent  do not display anything except the time otfprint       \n",
 "                    needed to read the tracefile                          \n",
-"                                                                          \n", NULL };
+"                                                                           \n",
+NULL };
 
 int main ( int argc, const char** argv ) {
 
@@ -115,6 +121,22 @@ int main ( int argc, const char** argv ) {
 			buffersize = atoi( argv[i+1] );
 			++i;
 
+		} else if ( ( 0 == strcmp( "-o", argv[i] ) ) && ( i+1 < argc ) ) {
+
+			i++;
+			if ( '-' == argv[i][0] && '\0' == argv[i][1] ) {
+
+					/* someone wants to use stdout? then keep the default */
+					continue;
+			}
+
+			fha.outfile= fopen( argv[i], "w" );
+			if ( NULL == fha.outfile ) {
+
+				fprintf( stderr, "ERROR: cannot open output file '%s'\n", argv[i] );
+				exit(1);
+			}
+
 		} else if ( 0 == strcmp( "--help", argv[i] ) ||	0 == strcmp( "-h", argv[i] ) ) {
 
 			SHOW_HELPTEXT;
@@ -124,7 +146,7 @@ int main ( int argc, const char** argv ) {
 
 			printf( "%u.%u.%u \"%s\"\n", OTF_VERSION_MAJOR, OTF_VERSION_MINOR,
 				OTF_VERSION_SUB, OTF_VERSION_STRING);
-			exit( 0 );
+			exit(0);
 
 		} else if ( ( 0 == strcmp( "-f", argv[i] ) ) && ( i+1 < argc ) ) {
 
@@ -182,7 +204,7 @@ int main ( int argc, const char** argv ) {
 
 			while( i+1 < argc && argv[i+1][0] >= '0' && argv[i+1][0] <= '9' ) {
 
-				enabledRecords.push_back( atol(argv[i+1] ) );
+				enabledRecords.push_back( atoi(argv[i+1] ) );
 
 				++i;
 			}
@@ -252,7 +274,13 @@ int main ( int argc, const char** argv ) {
 
 		for( uint32_t i= 0; i < enabledRecords.size(); ++i ) {
 
-			OTF_Reader_setProcessStatus( reader, enabledRecords[i], 1 );
+			int ret= OTF_Reader_setProcessStatus( reader, enabledRecords[i], 1 );
+
+			if ( 0 == ret ) {
+				printf( "Warning in OTF_Reader_setProcessStatus: cannot enable "
+					"process %u because it is not included in any of the "
+					"streams in the anchor file.\n", enabledRecords[i] );
+			}	
 		}
 	}
 
@@ -342,6 +370,12 @@ int main ( int argc, const char** argv ) {
         &fha, OTF_DEFCREATOR_RECORD );
 
 	OTF_HandlerArray_setHandler( handlers,
+		(OTF_FunctionPointer*) handleDefUniqueId,
+		OTF_DEFUNIQUEID_RECORD );
+	OTF_HandlerArray_setFirstHandlerArg( handlers, 
+        &fha, OTF_DEFUNIQUEID_RECORD );
+
+	OTF_HandlerArray_setHandler( handlers,
 		(OTF_FunctionPointer*) handleDefVersion,
 		OTF_DEFVERSION_RECORD );
 	OTF_HandlerArray_setFirstHandlerArg( handlers, 
@@ -364,6 +398,33 @@ int main ( int argc, const char** argv ) {
 		OTF_DEFCOLLOP_RECORD );
 	OTF_HandlerArray_setFirstHandlerArg( handlers, 
         &fha, OTF_DEFCOLLOP_RECORD );
+
+        OTF_HandlerArray_setHandler( handlers,
+                (OTF_FunctionPointer*) handleDefTimeRange,
+                OTF_DEFTIMERANGE_RECORD );
+        OTF_HandlerArray_setFirstHandlerArg( handlers,
+                &fha,
+                OTF_DEFTIMERANGE_RECORD );
+
+        OTF_HandlerArray_setHandler( handlers,
+                (OTF_FunctionPointer*) handleDefCounterAssignments,
+                OTF_DEFCOUNTERASSIGNMENTS_RECORD );
+        OTF_HandlerArray_setFirstHandlerArg( handlers,
+                &fha,
+                OTF_DEFCOUNTERASSIGNMENTS_RECORD );
+
+        OTF_HandlerArray_setHandler( handlers,
+                (OTF_FunctionPointer*) handleDefProcessSubstitutes,
+                OTF_DEFPROCESSSUBSTITUTES_RECORD );
+        OTF_HandlerArray_setFirstHandlerArg( handlers,
+                &fha,
+                OTF_DEFPROCESSSUBSTITUTES_RECORD );
+
+        OTF_HandlerArray_setHandler( handlers,
+                (OTF_FunctionPointer*) handleDefAuxSamplePoint,
+                OTF_DEFAUXSAMPLEPOINT_RECORD );
+        OTF_HandlerArray_setFirstHandlerArg( handlers, &fha,
+                OTF_DEFAUXSAMPLEPOINT_RECORD );
 
 
 	OTF_HandlerArray_setHandler( handlers, 
@@ -526,6 +587,18 @@ int main ( int argc, const char** argv ) {
     OTF_HandlerArray_setFirstHandlerArg( handlers, &fha,
         OTF_BEGINFILEOPSNAPSHOT_RECORD );      
 
+    OTF_HandlerArray_setHandler( handlers,
+        (OTF_FunctionPointer*) handleCollopCountSnapshot,
+        OTF_COLLOPCOUNTSNAPSHOT_RECORD );
+    OTF_HandlerArray_setFirstHandlerArg( handlers, &fha,
+        OTF_COLLOPCOUNTSNAPSHOT_RECORD );
+
+    OTF_HandlerArray_setHandler( handlers,
+        (OTF_FunctionPointer*) handleCounterSnapshot,
+        OTF_COUNTERSNAPSHOT_RECORD );
+    OTF_HandlerArray_setFirstHandlerArg( handlers, &fha,
+        OTF_COUNTERSNAPSHOT_RECORD );
+
 	
 	/* summary records */
 
@@ -586,12 +659,12 @@ int main ( int argc, const char** argv ) {
 	if ( def && fha.num <= fha.maxNum ) {
 
         if( !fha.silent_mode ) {
-		    fprintf( stdout, "\ndefinitions:\n\n" );
+		    fprintf( fha.outfile, "\ndefinitions:\n\n" );
         }
             
 		read = OTF_Reader_readDefinitions( reader, handlers );
 		if( read == OTF_READ_ERROR ) {
-			fprintf(stderr,"An error occurred while reading the tracefile. It seems to be damaged. Abort.\n");
+			fprintf(stderr,"An error occurred while reading definitions. The tracefile seems to be damaged. Abort.\n");
 			return 1;
 		}
 	}
@@ -599,25 +672,24 @@ int main ( int argc, const char** argv ) {
 	if ( event && fha.num <= fha.maxNum ) {
 
         if( !fha.silent_mode ) {
-		    fprintf( stdout, "\nevents:\n\n" );
+		    fprintf( fha.outfile, "\nevents:\n\n" );
         }
         
 		read = OTF_Reader_readEvents( reader, handlers );
 		if( read == OTF_READ_ERROR ) {
-			fprintf(stderr,"An error occurred while reading the tracefile. It seems to be damaged. Abort.\n");
-			return 1;
+			fprintf(stderr,"An error occurred while reading events. Maybe the tracefile has no events or it is damaged. Continue.\n");
 		}
 	}
 
 	if ( stat && fha.num <= fha.maxNum ) {
 
         if( !fha.silent_mode ) {
-		    fprintf( stdout, "\nstatistics:\n\n" );
+		    fprintf( fha.outfile, "\nstatistics:\n\n" );
         }
         
 		read = OTF_Reader_readStatistics( reader, handlers );
 		if( read == OTF_READ_ERROR ) {
-			fprintf(stderr,"An error occurred while reading the tracefile. It seems to be damaged. Abort.\n");
+			fprintf(stderr,"An error occurred while reading statistics. The tracefile seems to be damaged. Abort.\n");
 			return 1;
 		}
 	}
@@ -625,11 +697,11 @@ int main ( int argc, const char** argv ) {
 	if ( snap && fha.num <= fha.maxNum ) {
 
         if( !fha.silent_mode ) {
-		    fprintf( stdout, "\nsnapshots:\n\n" );
+		    fprintf( fha.outfile, "\nsnapshots:\n\n" );
         }
 		read = OTF_Reader_readSnapshots( reader, handlers );
 		if( read == OTF_READ_ERROR ) {
-			fprintf(stderr,"An error occurred while reading the tracefile. It seems to be damaged. Abort.\n");
+			fprintf(stderr,"An error occurred while reading snapshots. The tracefile seems to be damaged. Abort.\n");
 			return 1;
 		}
 	}
@@ -637,11 +709,11 @@ int main ( int argc, const char** argv ) {
 	if ( marker && fha.num <= fha.maxNum ) {
 
         if( !fha.silent_mode ) {
-		    fprintf( stdout, "\nmarkers:\n\n" );
+		    fprintf( fha.outfile, "\nmarkers:\n\n" );
         }
 		read = OTF_Reader_readMarkers( reader, handlers );
 		if( read == OTF_READ_ERROR ) {
-			fprintf(stderr,"An error occurred while reading the tracefile. It seems to be damaged. Abort.\n");
+			fprintf(stderr,"An error occurred while reading markers. The tracefile seems to be damaged. Abort.\n");
 			return 1;
 		}
 	}
@@ -649,15 +721,19 @@ int main ( int argc, const char** argv ) {
     end_t = time(NULL);
 
     if( !fha.silent_mode ) {
-	    fprintf( stdout, "\ndone\n" );
+	    fprintf( fha.outfile, "\ndone\n" );
     }
 
 	OTF_Reader_close( reader );
 	OTF_HandlerArray_close( handlers );
 	OTF_FileManager_close( manager );
 
-    if( fha.silent_mode ) {
-        fprintf( stdout, "done after %llu s\n", (unsigned long long int)(end_t - start_t) );
+        fprintf( fha.outfile, "processing time: %llu s\n", (unsigned long long int)(end_t - start_t) );
+
+    if ( stdout != fha.outfile ) {
+
+        fclose( fha.outfile );
+        fha.outfile= NULL;
     }
     
 	return 0;

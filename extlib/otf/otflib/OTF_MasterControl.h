@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -239,6 +239,20 @@ void OTF_MasterControl_finish( OTF_MasterControl* mc );
  * \ingroup mc
  */
 void OTF_MasterControl_close( OTF_MasterControl* mc );
+
+/**
+ * Makes a clone of an existing OTF_MasterControl object.
+ *
+ * @param mc        Pointer to an initialized OTF_Mastercontrol object.
+ *                  See also OTF_MasterControl_new().
+ * @param manager   File handle manager.
+ *
+ * @return          Cloned master control object
+ *
+ * \ingroup mc
+ */
+OTF_MasterControl* OTF_MasterControl_clone( OTF_MasterControl* mc,
+	OTF_FileManager* manager );
 
 /**
  * Append the mapping argument -> value to the master control structure,
