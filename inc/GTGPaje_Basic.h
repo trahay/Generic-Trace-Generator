@@ -50,7 +50,7 @@ trace_return_t pajeInitTrace   (const char* filename, int rank, gtg_flag_t flags
  * \fn char* pajeGetName (int rk)
  * \param rk Rank of the proc you want the filename containing it
  * \brief Function to get the name of the file containing all the data for the proc of rank rk
- * \return Name of the file. 
+ * \return Name of the file.
  */
 char* pajeGetName (int rk);
 
@@ -67,7 +67,7 @@ trace_return_t pajeSetCompress(int val);
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddContType   (const char* alias,
- *                             const char* contType, 
+ *                             const char* contType,
  *                             const char* name)
  * \brief Add a Container Type.
  * \param alias Alias on the container
@@ -76,13 +76,13 @@ trace_return_t pajeSetCompress(int val);
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddContType   (const char* alias, const char* contType, 
+trace_return_t pajeAddContType   (const char* alias, const char* contType,
                        const char* name);
 
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddStateType   (const char* alias,
- *                             const char* contType, 
+ *                             const char* contType,
  *                             const char* name)
  * \brief Add a State Type.
  * \param alias Alias on the state type
@@ -91,13 +91,13 @@ trace_return_t pajeAddContType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddStateType   (const char* alias, const char* contType, 
+trace_return_t pajeAddStateType   (const char* alias, const char* contType,
                         const char* name);
 
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddEventType   (const char* alias,
- *                             const char* contType, 
+ *                             const char* contType,
  *                             const char* name)
  * \brief Add an Event Type.
  * \param alias Alias on the event type
@@ -106,14 +106,14 @@ trace_return_t pajeAddStateType   (const char* alias, const char* contType,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddEventType   (const char* alias, const char* contType, 
+trace_return_t pajeAddEventType   (const char* alias, const char* contType,
                         const char* name);
 
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddLinkType   (const char* alias,
  *                            const char* name,
- *                            const char* contType, 
+ *                            const char* contType,
  *                            const char* srcContType,
  *                            const char* destContType);
  * \brief Add a Link Type.
@@ -132,7 +132,7 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddVarType   (const char* alias,
- *                           const char* contType, 
+ *                           const char* contType,
  *                           const char* name)
  * \brief Add a Variable Type.
  * \param alias Alias on the variable type
@@ -142,12 +142,12 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
  *         An error code otherwise
  */
 trace_return_t pajeAddVarType   (const char* alias   , const char* name,
-                      const char* contType); 
+                      const char* contType);
 
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddEntityValue   (const char* alias,
- *                               const char* entType, 
+ *                               const char* entType,
  *                               const char* name,
  *                               const char* color)
  * \brief Add an Entity Value.
@@ -158,14 +158,14 @@ trace_return_t pajeAddVarType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddEntityValue   (const char* alias, const char* entType, 
+trace_return_t pajeAddEntityValue   (const char* alias, const char* entType,
                           const char* name , const char* color);
 
 /**
  * \ingroup cpaje
  * \fn trace_return_t pajeAddContainer (varPrec  time,
  *                           const char  * alias,
- *                           const char  * type, 
+ *                           const char  * type,
  *                           const char  * container,
  *                           const char  * name,
  *                           const char  * file)
@@ -188,7 +188,7 @@ trace_return_t pajeAddContainer (varPrec time, const char* alias    ,
  * \ingroup cpaje
  * \fn trace_return_t pajeSeqAddContainer (varPrec  time,
  *                                         const char  * alias,
- *                                         const char  * type, 
+ *                                         const char  * type,
  *                                         const char  * container,
  *                                         const char  * name)
  * \brief Add a Container (PAJE format).
@@ -419,24 +419,26 @@ enum gtg_paje_evtdef_e {
   GTG_PAJE_EVTDEF_DefineContainerType,
   GTG_PAJE_EVTDEF_DefineStateType,
   GTG_PAJE_EVTDEF_DefineEventType,
+  GTG_PAJE_EVTDEF_DefineVariableType,
+  GTG_PAJE_EVTDEF_DefineLinkType,
   GTG_PAJE_EVTDEF_DefineEntityValue,
+
   GTG_PAJE_EVTDEF_CreateContainer,
   GTG_PAJE_EVTDEF_DestroyContainer,
   GTG_PAJE_EVTDEF_SetState,
   GTG_PAJE_EVTDEF_PushState,
   GTG_PAJE_EVTDEF_PopState,
+  GTG_PAJE_EVTDEF_ResetState,
   GTG_PAJE_EVTDEF_NewEvent,
-  GTG_PAJE_EVTDEF_DefineLinkType,
-  GTG_PAJE_EVTDEF_StartLink,
-  GTG_PAJE_EVTDEF_EndLink,
-  GTG_PAJE_EVTDEF_DefineVariableType,
   GTG_PAJE_EVTDEF_SetVariable,
   GTG_PAJE_EVTDEF_AddVariable,
   GTG_PAJE_EVTDEF_SubVariable,
+  GTG_PAJE_EVTDEF_StartLink,
+  GTG_PAJE_EVTDEF_EndLink,
   GTG_PAJE_EVTDEF_NBR
 };
 
-enum gtg_paje_fieldtype_e { 
+enum gtg_paje_fieldtype_e {
   GTG_PAJE_FIELDTYPE_Int,
   GTG_PAJE_FIELDTYPE_Hex,
   GTG_PAJE_FIELDTYPE_Date,
@@ -446,10 +448,24 @@ enum gtg_paje_fieldtype_e {
   GTG_PAJE_FIELDTYPE_NBR
 };
 
-void pajeEventDefAddParam( enum gtg_paje_evtdef_e event, const char *name, 
+struct gtg_paje_edp_s {
+    struct gtg_paje_edp_s *next;
+    char *name;
+    enum gtg_paje_fieldtype_e type;
+};
+typedef struct gtg_paje_edp_s gtg_paje_edp_t;
+
+struct gtg_paje_eventdef_s {
+    char *name;
+    int id;
+    gtg_paje_edp_t *first;
+    gtg_paje_edp_t *last;
+};
+typedef struct gtg_paje_eventdef_s gtg_paje_eventdef_t;
+
+extern gtg_paje_eventdef_t paje_eventdefs[GTG_PAJE_EVTDEF_NBR];
+
+void pajeEventDefAddParam( enum gtg_paje_evtdef_e event, const char *name,
                            enum gtg_paje_fieldtype_e type );
 
 #endif /* _GTG_PAJE_BASIC_H_ */
-
-
-

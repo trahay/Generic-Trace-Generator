@@ -61,7 +61,7 @@ gtg_memory_t shortcut_memory;
 
 /* insert new_event *after* cur_event */
 static void __event_list_insert_after(struct event_list_t*new_event,
-				      struct event_list_t *cur_event)
+                                      struct event_list_t *cur_event)
 {
   assert(cur_event);
   new_event->prev = cur_event;
@@ -77,7 +77,7 @@ static void __event_list_insert_after(struct event_list_t*new_event,
 
 /* insert new_event *before* cur_event */
 static void __event_list_insert_before(struct event_list_t*new_event,
-				       struct event_list_t *cur_event)
+                                       struct event_list_t *cur_event)
 {
   assert(cur_event);
   new_event->next = cur_event;
@@ -92,7 +92,7 @@ static void __event_list_insert_before(struct event_list_t*new_event,
 
 
 /* for debugging purpose, print the list of recorded events */
-static void __gtg_print_events()
+static inline void __gtg_print_events()
 {
   struct event_list_t* cur_event = __first_event;
   while(cur_event) {
@@ -101,7 +101,7 @@ static void __gtg_print_events()
   }
 }
 
-static void __gtg_print_n_events(int nb_events, struct event_list_t *p_event)
+static inline void __gtg_print_n_events(int nb_events, struct event_list_t *p_event)
 {
   struct event_list_t* cur_event = p_event;
   int i;
@@ -110,7 +110,7 @@ static void __gtg_print_n_events(int nb_events, struct event_list_t *p_event)
       return;
 
     printf("plop[%d] [%p]\t T=%f \t event type=%d\n",
-	   i, cur_event, cur_event->time, cur_event->type);
+           i, (void*)cur_event, cur_event->time, cur_event->type);
 
     cur_event = cur_event->next;
   }
@@ -126,12 +126,12 @@ void gtg_write_events(long nb_events_to_write)
   struct event_list_t* next;
   void* ptr;
   volatile int n = 0;
+  int cpt=0;
 
   /* unset the outoforder flag so that functions can be called for real  */
   gtg_flags ^= GTG_FLAG_OUTOFORDER;
-  int cpt=0;
   while(cur_event &&
-	((nb_events_to_write<0) ||(n < nb_events_to_write))) {
+        ((nb_events_to_write<0) ||(n < nb_events_to_write))) {
 
     /* for each event, call the corresponding function */
     cpt++;
@@ -139,64 +139,64 @@ void gtg_write_events(long nb_events_to_write)
     case event_addContainer:
       /* get the 5 parameters that were recorded and pass them to addContainer */
       addContainer(cur_event->time, (char*)cur_event->data[0],
-		   (char*)cur_event->data[1],
-		   (char*)cur_event->data[2],
-		   (char*)cur_event->data[3],
-		   (char*)cur_event->data[4]);
+                   (char*)cur_event->data[1],
+                   (char*)cur_event->data[2],
+                   (char*)cur_event->data[3],
+                   (char*)cur_event->data[4]);
       break;
     case event_destroyContainer:
       destroyContainer(cur_event->time, (char*)cur_event->data[0],
-		       (char*)cur_event->data[1]);
+                       (char*)cur_event->data[1]);
       break;
     case event_setState:
       setState(cur_event->time, (char*)cur_event->data[0],
-	       (char*)cur_event->data[1],
-	       (char*)cur_event->data[2]);
+               (char*)cur_event->data[1],
+               (char*)cur_event->data[2]);
       break;
     case event_pushState:
       pushState(cur_event->time, (char*)cur_event->data[0],
-		(char*)cur_event->data[1],
-		(char*)cur_event->data[2]);
+                (char*)cur_event->data[1],
+                (char*)cur_event->data[2]);
       break;
     case event_popState:
       popState(cur_event->time, (char*)cur_event->data[0],
-	       (char*)cur_event->data[1]);
+               (char*)cur_event->data[1]);
       break;
     case event_addEvent:
       addEvent(cur_event->time, (char*)cur_event->data[0],
-	       (char*)cur_event->data[1],
-	       (char*)cur_event->data[2]);
+               (char*)cur_event->data[1],
+               (char*)cur_event->data[2]);
       break;
     case event_startLink:
       startLink(cur_event->time, (char*)cur_event->data[0],
-		(char*)cur_event->data[1],
-		(char*)cur_event->data[2],
-		(char*)cur_event->data[3],
-		(char*)cur_event->data[4],
-		(char*)cur_event->data[5]);
+                (char*)cur_event->data[1],
+                (char*)cur_event->data[2],
+                (char*)cur_event->data[3],
+                (char*)cur_event->data[4],
+                (char*)cur_event->data[5]);
       break;
     case event_endLink:
       endLink(cur_event->time, (char*)cur_event->data[0],
-	      (char*)cur_event->data[1],
-	      (char*)cur_event->data[2],
-	      (char*)cur_event->data[3],
-	      (char*)cur_event->data[4],
-	      (char*)cur_event->data[5]);
+              (char*)cur_event->data[1],
+              (char*)cur_event->data[2],
+              (char*)cur_event->data[3],
+              (char*)cur_event->data[4],
+              (char*)cur_event->data[5]);
       break;
     case event_setVar:
       setVar(cur_event->time, (char*)cur_event->data[0],
-	     (char*)cur_event->data[1],
-	     (double)cur_event->data[2]);
+             (char*)cur_event->data[1],
+             (double)cur_event->data[2]);
       break;
     case event_addVar:
       addVar(cur_event->time, (char*)cur_event->data[0],
-	     (char*)cur_event->data[1],
-	     (double)cur_event->data[2]);
+             (char*)cur_event->data[1],
+             (double)cur_event->data[2]);
       break;
     case event_subVar:
       subVar(cur_event->time, (char*)cur_event->data[0],
-	     (char*)cur_event->data[1],
-	     (double)cur_event->data[2]);
+             (char*)cur_event->data[1],
+             (double)cur_event->data[2]);
       break;
     default:
       fprintf(stderr, "Unknown event type: %d\n", cur_event->type);
@@ -219,31 +219,33 @@ void gtg_write_events(long nb_events_to_write)
   __first_event = cur_event;
 
   /* update the shortcut list */
-  struct event_list_shortcut_t *cur_shortcut = __shortcut_first;
-  if(__first_event) {
-    /* the event list is not empty. Remove the shortcut that correspond
-     * to events that were processed.
-     */
-    while(cur_shortcut && cur_shortcut->time < __first_event->time) {
-      struct event_list_shortcut_t * next_shortcut = cur_shortcut->next;
-      next_shortcut->prev = NULL;
-      gtg_block_free(shortcut_memory, cur_shortcut);
-      cur_shortcut = next_shortcut;
+  {
+    struct event_list_shortcut_t *cur_shortcut = __shortcut_first;
+    if(__first_event) {
+      /* the event list is not empty. Remove the shortcut that correspond
+       * to events that were processed.
+       */
+      while(cur_shortcut && cur_shortcut->time < __first_event->time) {
+          struct event_list_shortcut_t * next_shortcut = cur_shortcut->next;
+          next_shortcut->prev = NULL;
+          gtg_block_free(shortcut_memory, cur_shortcut);
+          cur_shortcut = next_shortcut;
+      }
+    } else {
+      /* the event list is empty. Let's empty the shortcut list. */
+      while(cur_shortcut) {
+          struct event_list_shortcut_t * next_shortcut = cur_shortcut->next;
+          cur_shortcut->prev = NULL;
+          gtg_block_free(shortcut_memory, cur_shortcut);
+          cur_shortcut = next_shortcut;
+      }
     }
-  } else {
-    /* the event list is empty. Let's empty the shortcut list. */
-    while(cur_shortcut) {
-      cur_shortcut->prev = NULL;
-      struct event_list_shortcut_t * next_shortcut = cur_shortcut->next;
-      gtg_block_free(shortcut_memory, cur_shortcut);
-      cur_shortcut = next_shortcut;
-    }
+    __shortcut_first = cur_shortcut;
+    if(!__shortcut_first)
+      /* if the shortcut list is empty, update shortcut_last */
+      __shortcut_last = NULL;
   }
 
-  __shortcut_first = cur_shortcut;
-  if(!__shortcut_first)
-    /* if the shortcut list is empty, update shortcut_last */
-    __shortcut_last = NULL;
 
   /* set the outoforder flag so that the next calls to functions can be recorded */
   gtg_flags |= GTG_FLAG_OUTOFORDER;
@@ -252,12 +254,13 @@ void gtg_write_events(long nb_events_to_write)
 /* update the shortcut list */
 static void __gtg_insert_shortcut(struct event_list_t* new_event)
 {
+  struct event_list_shortcut_t *new_shortcut;
   /* create a shortcut (roughly) once every 1000 events */
   if(nb_events % SHORTCUT_RATIO)
-    return;
+  return;
 
   /* allocate and initialize the new shortcut */
-  struct event_list_shortcut_t *new_shortcut = gtg_block_malloc(shortcut_memory);
+  new_shortcut = gtg_block_malloc(shortcut_memory);
   new_shortcut->time = new_event->time;
   new_shortcut->event = new_event;
 
@@ -272,29 +275,31 @@ static void __gtg_insert_shortcut(struct event_list_t* new_event)
   }
 
   /* browse the shortcut list and find where to insert new_shortcut */
-  struct event_list_shortcut_t * cur_shortcut = __shortcut_last;
-  while(cur_shortcut && cur_shortcut->time > new_shortcut->time) {
-    cur_shortcut = cur_shortcut->prev;
-  }
+  {
+    struct event_list_shortcut_t * cur_shortcut = __shortcut_last;
+    while(cur_shortcut && cur_shortcut->time > new_shortcut->time) {
+      cur_shortcut = cur_shortcut->prev;
+    }
 
-  if(!cur_shortcut) {
-    /* we need to insert new_shortcut at the beginning of the list */
-    new_shortcut->next = __shortcut_first;
-    new_shortcut->prev = NULL;
-    new_shortcut->next->prev = new_shortcut;
-    __shortcut_first = new_shortcut;
-    return;
-  }
+    if(!cur_shortcut) {
+      /* we need to insert new_shortcut at the beginning of the list */
+      new_shortcut->next = __shortcut_first;
+      new_shortcut->prev = NULL;
+      new_shortcut->next->prev = new_shortcut;
+      __shortcut_first = new_shortcut;
+      return;
+    }
 
-  /* insert new_shortcut between cur_shortcut and cur_shortcut->next */
-  new_shortcut->next = cur_shortcut->next;
-  new_shortcut->prev = cur_shortcut;
+    /* insert new_shortcut between cur_shortcut and cur_shortcut->next */
+    new_shortcut->next = cur_shortcut->next;
+    new_shortcut->prev = cur_shortcut;
 
-  cur_shortcut->next = new_shortcut;
-  if(new_shortcut->next)
-    new_shortcut->next->prev = new_shortcut;
-  else {
-    __shortcut_last = new_shortcut;
+    cur_shortcut->next = new_shortcut;
+    if(new_shortcut->next)
+      new_shortcut->next->prev = new_shortcut;
+    else {
+      __shortcut_last = new_shortcut;
+    }
   }
 }
 
@@ -326,7 +331,7 @@ static void __gtg_insert(struct event_list_t* new_event) {
     goto out;
   }
 
-  if(new_event->time <= __first_event->time) {
+  if(new_event->time < __first_event->time) {
     /* the event is the first one */
     __first_event->prev = new_event;
     new_event->next = __first_event;
@@ -355,34 +360,35 @@ static void __gtg_insert(struct event_list_t* new_event) {
   /* browse the shortcut list starting from the end (since it is likely that new_event
    * happened not so long before last_event.
    */
-  struct event_list_shortcut_t* cur_shortcut = __shortcut_last;
-  while(cur_shortcut) {
-    if(cur_shortcut->time <= new_event->time) {
-      /* we need to insert new_event between cur_shortcut and cur_shortcut->next */
+  {
+    struct event_list_shortcut_t* cur_shortcut = __shortcut_last;
+    while(cur_shortcut) {
+      if(cur_shortcut->time <= new_event->time) {
+        /* we need to insert new_event between cur_shortcut and cur_shortcut->next */
 
-      /* browse the list, starting from cur_shortcut->event */
-      cur_event = cur_shortcut->event;
-      while(cur_event->time <= new_event->time) {
-	/* We don't need to check for the end of the list.
-	 * This should never happen since this case is handled earlier
-	 */
-	cur_event = cur_event->next;
+        /* browse the list, starting from cur_shortcut->event */
+        cur_event = cur_shortcut->event;
+        while(cur_event->time <= new_event->time) {
+        /* We don't need to check for the end of the list.
+         * This should never happen since this case is handled earlier
+         */
+        cur_event = cur_event->next;
+        }
+
+        assert(cur_event->prev->time <= new_event->time);
+        /* insert new_event between cur_event->prev and cur_event */
+        __event_list_insert_before(new_event, cur_event);
+        goto out;
       }
 
-      assert(cur_event->prev->time <= new_event->time);
-      /* insert new_event between cur_event->prev and cur_event */
-      __event_list_insert_before(new_event, cur_event);
-      goto out;
+      if(cur_shortcut->prev)
+        cur_shortcut = cur_shortcut->prev;
+      else
+        /* we browsed the whole list but didn't find the place where to insert the event.
+         */
+        break;
     }
-
-    if(cur_shortcut->prev)
-      cur_shortcut = cur_shortcut->prev;
-    else
-      /* we browsed the whole list but didn't find the place where to insert the event.
-       */
-      break;
   }
-
   /* cur_shortcut is NULL */
 
   /* browse the list starting from the end (since it is likely that new_event
