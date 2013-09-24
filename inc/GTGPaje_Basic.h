@@ -141,8 +141,8 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
  * \return 0 if success \n
  *         An error code otherwise
  */
-trace_return_t pajeAddVarType   (const char* alias   , const char* name,
-                      const char* contType);
+trace_return_t pajeAddVarType   (const char* alias   , const char* contType,
+                      const char* name);
 
 /**
  * \ingroup cpaje
