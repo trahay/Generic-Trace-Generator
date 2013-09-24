@@ -453,14 +453,14 @@ trace_return_t pajeAddEventType   (const char* alias, const char* contType,
     return TRACE_ERR_WRITE;
 }
 
-trace_return_t pajeAddVarType   (const char* alias   , const char* name,
-                                 const char* contType){
+trace_return_t pajeAddVarType   (const char* alias   , const char* contType,
+                                 const char* name){
     PRINT_PAJE_HEADER();
 
     if(verbose)
         printf("addVarType : alias %s, name %s, contType %s\n", alias, name, contType);
     if (headFile){
-        fprintf (headFile, "%d \"%s\" \"%s\" \"%s\"\n",
+        fprintf (headFile, "%d \"%s\" \"%s\" \"0 0 0\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_DefineVariableType].id, name, contType, alias);
 
         FLUSH(headFile);
