@@ -222,7 +222,7 @@ if test $use_otf = yes ; then
                 AS_IF([test $? != "0"], [AC_MSG_ERROR([$otf_conf_cmd failed for $otf_dir])])
 
                 cd $otf_parent_dir
-                AS_IF([test x"$OTFLIB" = x], [OTF_LDFLAGS="-lotf"])
+                AS_IF([test x"$OTFLIB" = x], [OTF_LDFLAGS="-lopen-trace-format"])
 
 #		OTF_CPPFLAGS="$OTF_CPPFLAGS -I${prefix}/include/otf"
 #		CPPFLAGS="${CPPFLAGS} -I${prefix}/include/otf"

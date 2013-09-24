@@ -15980,7 +15980,7 @@ fi
 if test x = x"$ax_mpi_comp"; then
 
 	if test x = x"$MPILIBS"; then
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpi" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpi" >&5
 $as_echo_n "checking for MPI_Init in -lmpi... " >&6; }
 if ${ac_cv_lib_mpi_MPI_Init+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -16022,7 +16022,7 @@ fi
 
 	fi
 	if test x = x"$MPILIBS"; then
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpich" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpich" >&5
 $as_echo_n "checking for MPI_Init in -lmpich... " >&6; }
 if ${ac_cv_lib_mpich_MPI_Init+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -16065,9 +16065,9 @@ fi
 	fi
 
 			if test x != x"$MPILIBS"; then
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for mpi.h" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for mpi.h" >&5
 $as_echo_n "checking for mpi.h... " >&6; }
-		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <mpi.h>
 int
@@ -16083,7 +16083,7 @@ if ac_fn_c_try_compile "$LINENO"; then :
 $as_echo "yes" >&6; }
 else
   MPILIBS=""
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
@@ -16174,7 +16174,7 @@ fi
 if test x = x"$ax_mpi_comp"; then
 
 	if test x = x"$MPILIBS"; then
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpi" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpi" >&5
 $as_echo_n "checking for MPI_Init in -lmpi... " >&6; }
 if ${ac_cv_lib_mpi_MPI_Init+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -16216,7 +16216,7 @@ fi
 
 	fi
 	if test x = x"$MPILIBS"; then
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpich" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for MPI_Init in -lmpich" >&5
 $as_echo_n "checking for MPI_Init in -lmpich... " >&6; }
 if ${ac_cv_lib_mpich_MPI_Init+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -16259,9 +16259,9 @@ fi
 	fi
 
 			if test x != x"$MPILIBS"; then
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for mpi.h" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for mpi.h" >&5
 $as_echo_n "checking for mpi.h... " >&6; }
-		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #include <mpi.h>
 int
@@ -16277,7 +16277,7 @@ if ac_fn_cxx_try_compile "$LINENO"; then :
 $as_echo "yes" >&6; }
 else
   MPILIBS=""
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
@@ -16293,13 +16293,13 @@ fi
 # Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
 if test x = x"$MPILIBS" -a x = x"$ax_mpi_comp"; then
 
-                mpi_error="yes"
+            mpi_error="yes"
 
         :
 else
 
-                mpi_lib=$MPILIBS
-                have_mpi="yes"
+            mpi_lib=$MPILIBS
+            have_mpi="yes"
 
         :
 fi
