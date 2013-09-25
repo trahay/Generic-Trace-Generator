@@ -6,7 +6,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT([GTG], [0.2-1], [gtg-devel@lists.gforge.inria.fr])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([1.10 subdir-objects])
 
 # Checks for programs.
 AC_PROG_CC
