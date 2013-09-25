@@ -5,7 +5,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([GTG], [0.2], [gtg-devel@lists.gforge.inria.fr])
+AC_INIT([GTG], [0.2-1], [gtg-devel@lists.gforge.inria.fr])
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
