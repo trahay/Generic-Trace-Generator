@@ -109,7 +109,7 @@ static inline void __gtg_print_n_events(int nb_events, struct event_list_t *p_ev
     if(!cur_event)
       return;
 
-    printf("plop[%d] [%p]\t T=%f \t event type=%d\n",
+    printf("[%d] [%p]\t T=%f \t event type=%d\n",
            i, (void*)cur_event, cur_event->time, cur_event->type);
 
     cur_event = cur_event->next;
@@ -408,14 +408,7 @@ static void __gtg_insert(struct event_list_t* new_event) {
   __gtg_insert_shortcut(new_event);
 }
 
-/* parameters are concatenated and separated with the \3 byte */
-#define FORMAT_SIX_STRING "%s\3%s\3%s\3%s\3%s\3%s"
-#define FORMAT_FIVE_STRING "%s\3%s\3%s\3%s\3%s"
-#define FORMAT_THREE_STRING "%s\3%s\3%s"
-#define FORMAT_TWO_STRING_ONE_DOUBLE "%s\3%s\3%e"
-#define FORMAT_TWO_STRING "%s\3%s"
-
-/* copy nb_string string parameters and nb_double double parameters into the data arary of evt
+/* copy nb_string string parameters and nb_double double parameters into the data array of evt
  * warning: actually, the parameters are not copied (in the case of string)
  */
 static void __copy_args(struct event_list_t* evt, int nb_string, int nb_double, va_list args)
@@ -459,18 +452,18 @@ void gtg_record(enum event_type_t type, varPrec time, ...) {
   new_event->type = type;
   new_event->time = time;
 
+  va_start (arguments, time);
+
   /* Depending on the type of event, copy its parameters */
   switch(type) {
   case event_startLink:
   case event_endLink:
     /* 6 parameters */
-    va_start (arguments, FORMAT_SIX_STRING);
     __copy_args(new_event, 6, 0, arguments);
     break;
 
   case event_addContainer:
     /* 5 parameters */
-    va_start (arguments, FORMAT_FIVE_STRING);
     __copy_args(new_event, 5, 0, arguments);
     break;
 
@@ -478,21 +471,18 @@ void gtg_record(enum event_type_t type, varPrec time, ...) {
   case event_pushState:
   case event_addEvent:
     /* 3 parameters */
-    va_start (arguments, FORMAT_THREE_STRING);
     __copy_args(new_event, 3, 0, arguments);
     break;
   case event_setVar:
   case event_addVar:
   case event_subVar:
     /* 2 string parameters + 1 double */
-    va_start (arguments, FORMAT_TWO_STRING_ONE_DOUBLE);
     __copy_args(new_event, 2, 1, arguments);
     break;
 
   case event_destroyContainer:
   case event_popState:
     /* 2 parameters */
-    va_start (arguments, FORMAT_TWO_STRING);
     __copy_args(new_event, 2, 0, arguments);
     break;
   default:
