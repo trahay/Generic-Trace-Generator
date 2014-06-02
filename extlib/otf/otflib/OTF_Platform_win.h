@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -23,9 +23,14 @@ extern "C" {
 
 #	include <limits.h>
 #	include <winsock2.h>
+#	include <process.h>
 
 #	define HAVE_IO_H
 #	define HAVE_ZLIB
+
+#	ifndef PATH_MAX
+#		define PATH_MAX 255
+#	endif
 
 #	define OTF_PATH_MAX PATH_MAX
 
@@ -37,9 +42,24 @@ extern "C" {
 #	undef snprintf
 #	define snprintf _snprintf
 
+#	undef getpid
+#	define getpid() _getpid()
+
 #	pragma warning (disable : 4996) /* disable insecurity/deprication warnings */
 
 	int gettimeofday(struct timeval* tv, void* dummytimezone);
+
+	long int nrand48 (unsigned short int xsubi[3]);
+
+#	include <fcntl.h>
+#	ifndef _S_IREAD
+#		define _S_IREAD 256
+#	endif
+#	ifndef _S_IWRITE
+#		define _S_IWRITE 128
+#	endif
+
+	int mkstemp(char *tmpl);
 
 #else
 

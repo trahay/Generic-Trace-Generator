@@ -46,11 +46,11 @@ if USE_OTF
 
 if DONT_USE_INTERNAL_OTF
 OTFINCLUDE =
-OTFLIBADD = -lotf
+OTFLIBADD = -lopen-trace-format
 OTFDEPENDENCIES =
 else
 OTFINCLUDE = -I$(top_srcdir)/extlib/otf/otflib -I$(top_builddir)/extlib/otf/otflib
-OTFLIBADD = $(top_builddir)/extlib/otf/otflib/libotf.la
+OTFLIBADD = $(top_builddir)/extlib/otf/otflib/libopen-trace-format.la
 OTFDEPENDENCIES = $(OTFLIBADD)
 endif
 

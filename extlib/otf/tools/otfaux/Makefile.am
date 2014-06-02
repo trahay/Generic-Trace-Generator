@@ -1,21 +1,27 @@
-INCLUDES = -I$(top_builddir)/otflib -I$(top_srcdir)/otflib
+AM_CPPFLAGS = \
+	-I$(top_builddir)/otflib \
+	-I$(top_srcdir)/otflib \
+	-I$(top_srcdir)/otfauxlib
 
 if AMBUILDBINARIES
 bin_PROGRAMS = \
 	otfaux
 endif
 
-otfaux_LDADD = $(top_builddir)/otflib/libotf.la
-otfaux_DEPENDENCIES = $(otfaux_LDADD)
+otfaux_DEPENDENCIES = \
+	$(top_builddir)/otfauxlib/libotfaux.la \
+	$(top_builddir)/otflib/libopen-trace-format.la
+otfaux_LDADD = \
+	$(otfaux_DEPENDENCIES) \
+	$(MATHLIB)
 otfaux_SOURCES = \
 	Control.h \
 	Handler.h \
-	State.h \
+	Stats.h \
 	otfaux.cpp \
 	Control.cpp \
 	Handler.cpp \
-	State.cpp
+	Stats.cpp
 
 EXTRA_DIST = \
 	otfaux_vs08.vcproj
-

@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch, Johannes Spazier
 */
 
@@ -215,31 +215,34 @@ typedef union OTF_Value_union {
 	byte_array  otf_byte_array;
 } OTF_Value;
 
-typedef struct OTF_KeyValuePair_struct {
+struct OTF_KeyValuePair_struct {
 	uint32_t key;
 	OTF_Type type;
 	OTF_Value value;
-} OTF_KeyValuePair;
+};
 
 typedef struct OTF_KeyValuePairList_struct {
-	OTF_KeyValuePair kvPair;
+	struct OTF_KeyValuePair_struct kvPair;
 	struct OTF_KeyValuePairList_struct *kvNext;
     struct OTF_KeyValuePairList_struct *kvPrev;
 } OTF_KeyValuePairList;
 
 struct OTF_KeyValueList_struct {
-    uint32_t key_count;             /* number of different keys in list --> user-relevant */
+	uint32_t key_count;             /* number of different keys in list --> user-relevant */
 	uint32_t count;                 /* total number of entries in list (treat byte arrays particular) --> internal use only */
 	uint32_t size;                  /* number of allocated entries --> internal */
-	OTF_KeyValuePairList *kvBegin;
-	OTF_KeyValuePairList *kvEnd;
-	OTF_KeyValuePairList *kvCurrent;
+	OTF_KeyValuePairList *kvBegin;   /* first element of the list */
+	OTF_KeyValuePairList *kvEnd;     /* last allocated element of the list, may be used or not */
+	OTF_KeyValuePairList *kvCurrent; /* first unused element in the list, insert new ones here */
 };
 
 /** @endcond */
 
-/** Object type which holds an OTF KeyValueList.*/
+/** Object type which holds a key-value list.*/
 typedef struct OTF_KeyValueList_struct OTF_KeyValueList;
+
+/** Object type which holds a key-value pair.*/
+typedef struct OTF_KeyValuePair_struct OTF_KeyValuePair;
 
 /**     
  * Create a new OTF_KeyValueList instance.
@@ -263,6 +266,19 @@ OTF_KeyValueList *OTF_KeyValueList_new(void);
  * \ingroup keyvalue
  */
 uint8_t OTF_KeyValueList_close(OTF_KeyValueList* list);
+
+
+/**
+ * Clone an OTF_KeyValueList instance.
+ *
+ * @param list     Pointer to an initialized OTF_KeyValueList object or NULL.
+ *                 See also OTF_KeyValueList_new().
+ * 
+ * @return	   Clone of the instance @a list or NULL.
+ *
+ * \ingroup keyvalue
+ */
+OTF_KeyValueList* OTF_KeyValueList_clone(OTF_KeyValueList* list);
 
 
 /** 
@@ -812,6 +828,21 @@ uint8_t OTF_KeyValueList_hasKey(OTF_KeyValueList *list, uint32_t key);
 
 
 /**
+ * Remove key from the given OTF_KeyValueList instance.
+ *
+ * @param list     Pointer to an initialized OTF_KeyValueList object. See 
+ *                 also OTF_KeyValueList_new().
+ *
+ * @param key      Token that shall be removed from the OTF_KeyValueList.
+ * 
+ * @return         0 on success, 1 if key not found or an error occurred.
+ *
+ * \ingroup keyvalue
+ */
+uint8_t OTF_KeyValueList_removeKey(OTF_KeyValueList *list, uint32_t key);
+
+
+/**
  * Search for a key at the given index position.
  *
  * @param list     Pointer to an initialized OTF_KeyValueList object. See 
@@ -826,6 +857,20 @@ uint8_t OTF_KeyValueList_hasKey(OTF_KeyValueList *list, uint32_t key);
 */
 uint8_t OTF_KeyValueList_getKeyByIndex(OTF_KeyValueList *list, uint32_t index, uint32_t *key);
 
+/**
+ * Search for a key-value pair at the given index position.
+ *
+ * @param list     Pointer to an initialized OTF_KeyValueList object. See 
+ *                 also OTF_KeyValueList_new().
+ * @param index    Index position in the OTF_KeyValueList.
+ *
+ * @param pair     Pointer to the found key-value pair.
+ *
+ * @return         0 on success, 1 if index not in list
+ *
+ * \ingroup keyvalue
+*/
+uint8_t OTF_KeyValueList_getPairByIndex(OTF_KeyValueList *list, uint32_t index, OTF_KeyValuePair **pair);
 
 /**
  * Returns the number of elements in the given OTF_KeyValueList instance.

@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -42,7 +42,7 @@ int OTF_WBuffer_init( OTF_WBuffer* wbuffer ) {
 	wbuffer->time = 0;
 
 #ifdef HAVE_ZLIB
-	wbuffer->zbuffersize= 1024*10;
+	wbuffer->zbuffersize= OTF_ZBUFFER_DEFAULTSIZE;
 #endif /* HAVE_ZLIB */
 	
 	return 1;
@@ -55,7 +55,7 @@ int OTF_WBuffer_finish( OTF_WBuffer* wbuffer ) {
 	/* buffer shall be empty now */
 	if( 0 != wbuffer->pos ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"buffer is not empty (but is supposed to).\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -79,20 +79,41 @@ OTF_WBuffer* OTF_WBuffer_open( const char* filename, OTF_FileManager* manager ) 
 
 int OTF_WBuffer_close( OTF_WBuffer* wbuffer ) {
 
+	int ret;
+
+	/*
+	 * Write a timestamp at the very end of a trace to avoid traces with a huge tail
+	 * of timestamp-less events (e.g. fake-KV-counters) that require
+	 * very inefficient (n^2) backwards search for searching the last timestamp.
+	 */
+	if( (uint32_t) -1 != wbuffer->process ) {
+
+		OTF_WBuffer_writeUint64( wbuffer, wbuffer->time );
+		OTF_WBuffer_writeNewline( wbuffer );
+
+		OTF_WBuffer_writeChar( wbuffer, '*' );
+		OTF_WBuffer_writeUint32( wbuffer, wbuffer->process );
+		OTF_WBuffer_writeNewline( wbuffer );
+	}
 
 #	ifndef OTF_DEBUG
-		int ret= OTF_WBuffer_flush( wbuffer );
+	{
+		ret= OTF_WBuffer_flush( wbuffer );
 		
 		ret&= OTF_File_close( wbuffer->file );
 		
 		ret&= OTF_WBuffer_finish( wbuffer );
-	
+	}
 #	else
-		int ret= 1;
-		int tmpret= OTF_WBuffer_flush( wbuffer );
+	{
+		int tmpret;
+
+		ret= 1;
+
+		tmpret= OTF_WBuffer_flush( wbuffer );
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_flush() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 		}
@@ -101,7 +122,7 @@ int OTF_WBuffer_close( OTF_WBuffer* wbuffer ) {
 		tmpret= OTF_File_close( wbuffer->file );
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_File_close() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 		}
@@ -110,12 +131,12 @@ int OTF_WBuffer_close( OTF_WBuffer* wbuffer ) {
 		tmpret= OTF_WBuffer_finish( wbuffer );
 		if( 0 == tmpret ) {
 			
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 					"OTF_WBuffer_finish() failed.\n",
 					__FUNCTION__, __FILE__, __LINE__ );
 		}
 		ret&= tmpret;
-
+	}
 #	endif
 
 	free( wbuffer );
@@ -130,7 +151,7 @@ int OTF_WBuffer_setSize( OTF_WBuffer* wbuffer, size_t size ) {
 
 	if ( size < wbuffer->size ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"cannot shrink buffer from %u to %u.\n",
 				__FUNCTION__, __FILE__, __LINE__, (uint32_t) wbuffer->size,
 				(uint32_t) size );
@@ -142,7 +163,7 @@ int OTF_WBuffer_setSize( OTF_WBuffer* wbuffer, size_t size ) {
 		size * sizeof(char) );
 	if( NULL == wbuffer->buffer ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"no memory left.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -162,7 +183,7 @@ void OTF_WBuffer_setZBufferSize( OTF_WBuffer* wbuffer, uint32_t size ) {
 	
 	if ( 32 > size ) {
 	
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"intended zbuffer size %u is too small, rejected.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 		
@@ -170,13 +191,13 @@ void OTF_WBuffer_setZBufferSize( OTF_WBuffer* wbuffer, uint32_t size ) {
 
 	} else if ( 512 > size ) {
 	
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Warning( "WARNING in function %s, file: %s, line: %i:\n "
 				"zbuffer size %u is very small, accepted though.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 
 	} else if ( 10 * 1024 *1024 < size ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Warning( "WARNING in function %s, file: %s, line: %i:\n "
 				"zbuffer size %u is rather big, accepted though.\n",
 				__FUNCTION__, __FILE__, __LINE__, size );
 	}
@@ -201,7 +222,7 @@ int OTF_WBuffer_flush( OTF_WBuffer* wbuffer ) {
 	ret= OTF_File_write( wbuffer->file, wbuffer->buffer, wbuffer->pos );
 	if( ret != wbuffer->pos ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_File_write() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 		retval= 0;
@@ -225,7 +246,7 @@ int OTF_WBuffer_guarantee( OTF_WBuffer* wbuffer, size_t space ) {
 
 	if ( space > wbuffer->size ) {
 
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"requested %u bytes > buffer size %u.\n",
 				__FUNCTION__, __FILE__, __LINE__, 
 				(uint32_t) space, wbuffer->size );
@@ -235,7 +256,7 @@ int OTF_WBuffer_guarantee( OTF_WBuffer* wbuffer, size_t space ) {
 
 	if( 0 == OTF_WBuffer_flush( wbuffer ) ) {
 		
-			OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_flush() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 		
@@ -291,7 +312,7 @@ int OTF_WBuffer_setTimeAndProcess( OTF_WBuffer* wbuffer,
 		there should be _no_ way to avoid this error message! */
 		if ( ( (uint64_t) -1 ) != wbuffer->time ) {
 
-			OTF_fprintf( stderr, "OTF ERROR in function %s, file: %s, line: %i:\n "
+			OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"time not increasing. (t= %llu, p= %u)\n",
 				__FUNCTION__, __FILE__, __LINE__, 
 				(unsigned long long int) t, (unsigned int) p );
@@ -320,7 +341,7 @@ uint32_t OTF_WBuffer_writeKeyword( OTF_WBuffer* wbuffer,
 	int ret= OTF_WBuffer_guarantee( wbuffer, l );
 	if( 0 == ret ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -348,7 +369,7 @@ uint32_t OTF_WBuffer_writeString( OTF_WBuffer* wbuffer, const char* string ) {
 	
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, l+2 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -388,7 +409,7 @@ uint32_t OTF_WBuffer_writeChar( OTF_WBuffer* wbuffer, const char character ) {
 
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, 1 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -419,7 +440,7 @@ uint32_t OTF_WBuffer_writeUint8( OTF_WBuffer* wbuffer, uint8_t value ) {
 	/* at max 2 digits will be written */
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, 2 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -467,7 +488,7 @@ uint32_t OTF_WBuffer_writeUint16( OTF_WBuffer* wbuffer, uint16_t value ) {
 	/* at max 4 digits will be written */
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, 4 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -514,7 +535,7 @@ uint32_t OTF_WBuffer_writeUint32( OTF_WBuffer* wbuffer, uint32_t value ) {
 	/* at max 8 digits will be written */
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, 8 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -561,7 +582,7 @@ uint32_t OTF_WBuffer_writeUint64( OTF_WBuffer* wbuffer, uint64_t value ) {
 	/* at max 16 digits will be written */
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, 16 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -599,7 +620,7 @@ uint32_t OTF_WBuffer_writeNewline( OTF_WBuffer* wbuffer ) {
 
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, 1 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -626,7 +647,7 @@ uint32_t OTF_WBuffer_writeBytes( OTF_WBuffer* wbuffer, const uint8_t *value, uin
 	/* at max 2 * len digits will be written */
 	if( 0 == OTF_WBuffer_guarantee( wbuffer, len*2 ) ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_WBuffer_guarantee() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__  );
 
@@ -651,6 +672,161 @@ uint32_t OTF_WBuffer_writeBytes( OTF_WBuffer* wbuffer, const uint8_t *value, uin
 }
 
 
+uint32_t OTF_WBuffer_writeKeyValuePair_short(OTF_WBuffer* buffer, OTF_KeyValuePair* pair) {
+
+	uint32_t written = 0;
+
+	if ( pair == NULL) {
+		return 0;
+	}
+
+	written += OTF_WBuffer_writeKeyword( buffer,
+			OTF_KEYWORD_S_KEYVALUE_PREFIX );
+
+	written += OTF_WBuffer_writeUint32( buffer, pair->key );
+
+	written += OTF_WBuffer_writeKeyword( buffer, OTF_KEYWORD_S_LOCAL_TYPE );
+
+	written += OTF_WBuffer_writeUint32( buffer, pair->type );
+
+	written += OTF_WBuffer_writeKeyword( buffer,
+			OTF_KEYWORD_S_LOCAL_VALUE );
+
+	switch (pair->type) {
+	case OTF_CHAR:
+		written += OTF_WBuffer_writeUint8( buffer, (uint8_t) pair->value.otf_char );
+		break;
+	case OTF_INT8:
+		written += OTF_WBuffer_writeUint8( buffer, pair->value.otf_int8 );
+		break;
+	case OTF_UINT8:
+		written += OTF_WBuffer_writeUint8( buffer, pair->value.otf_uint8 );
+		break;
+	case OTF_INT16:
+		written += OTF_WBuffer_writeUint16( buffer, pair->value.otf_int16 );
+		break;
+	case OTF_UINT16:
+		written += OTF_WBuffer_writeUint16( buffer, pair->value.otf_uint16 );
+		break;
+	case OTF_INT32:
+		written += OTF_WBuffer_writeUint32( buffer, pair->value.otf_int32 );
+		break;
+	case OTF_UINT32:
+		written += OTF_WBuffer_writeUint32( buffer, pair->value.otf_uint32 );
+		break;
+	case OTF_INT64:
+		written += OTF_WBuffer_writeUint64( buffer, pair->value.otf_int64 );
+		break;
+	case OTF_UINT64:
+		written += OTF_WBuffer_writeUint64( buffer, pair->value.otf_uint64 );
+		break;
+	case OTF_DOUBLE:
+		written += OTF_WBuffer_writeUint64( buffer, OTF_DoubleToInt64(pair->value.otf_double) );
+		break;
+	case OTF_FLOAT:
+		written += OTF_WBuffer_writeUint32( buffer, OTF_FloatToInt32(pair->value.otf_float) );
+		break;
+	case OTF_BYTE_ARRAY:
+		written += OTF_WBuffer_writeBytes( buffer,
+				pair->value.otf_byte_array.array,
+				pair->value.otf_byte_array.len > OTF_KEYVALUE_MAX_ARRAY_LEN
+				? OTF_KEYVALUE_MAX_ARRAY_LEN : pair->value.otf_byte_array.len );
+
+		written += OTF_WBuffer_writeKeyword( buffer,
+				OTF_KEYWORD_S_LOCAL_LENGTH );
+
+		written += OTF_WBuffer_writeUint32( buffer, pair->value.otf_byte_array.len );
+		break;
+	default:
+		/* wrong type */
+		written += OTF_WBuffer_writeNewline( buffer );
+		return written;
+	}
+
+	written += OTF_WBuffer_writeNewline( buffer );
+
+	return written;
+}
+
+
+uint32_t OTF_WBuffer_writeKeyValuePair_long(OTF_WBuffer* buffer, OTF_KeyValuePair* pair) {
+
+	uint32_t written = 0;
+
+	if ( pair == NULL) {
+		return 0;
+	}
+
+	written += OTF_WBuffer_writeKeyword( buffer,
+			OTF_KEYWORD_L_KEYVALUE_PREFIX " " );
+
+	written += OTF_WBuffer_writeUint32( buffer, pair->key );
+
+	written += OTF_WBuffer_writeKeyword( buffer,
+			" " OTF_KEYWORD_L_LOCAL_TYPE " " );
+
+	written += OTF_WBuffer_writeUint32( buffer, pair->type );
+
+	written += OTF_WBuffer_writeKeyword( buffer,
+			" " OTF_KEYWORD_L_LOCAL_VALUE " " );
+
+	switch (pair->type) {
+	case OTF_CHAR:
+		written += OTF_WBuffer_writeUint8( buffer, (uint8_t) pair->value.otf_char );
+		break;
+	case OTF_INT8:
+		written += OTF_WBuffer_writeUint8( buffer, pair->value.otf_int8 );
+		break;
+	case OTF_UINT8:
+		written += OTF_WBuffer_writeUint8( buffer, pair->value.otf_uint8 );
+		break;
+	case OTF_INT16:
+		written += OTF_WBuffer_writeUint16( buffer, pair->value.otf_int16 );
+		break;
+	case OTF_UINT16:
+		written += OTF_WBuffer_writeUint16( buffer, pair->value.otf_uint16 );
+		break;
+	case OTF_INT32:
+		written += OTF_WBuffer_writeUint32( buffer, pair->value.otf_int32 );
+		break;
+	case OTF_UINT32:
+		written += OTF_WBuffer_writeUint32( buffer, pair->value.otf_uint32 );
+		break;
+	case OTF_INT64:
+		written += OTF_WBuffer_writeUint64( buffer, pair->value.otf_int64 );
+		break;
+	case OTF_UINT64:
+		written += OTF_WBuffer_writeUint64( buffer, pair->value.otf_uint64 );
+		break;
+	case OTF_DOUBLE:
+		written += OTF_WBuffer_writeUint64( buffer, OTF_DoubleToInt64(pair->value.otf_double) );
+		break;
+	case OTF_FLOAT:
+		written += OTF_WBuffer_writeUint32( buffer, OTF_FloatToInt32(pair->value.otf_float) );
+		break;
+	case OTF_BYTE_ARRAY:
+		written += OTF_WBuffer_writeBytes( buffer,
+				pair->value.otf_byte_array.array,
+				pair->value.otf_byte_array.len > OTF_KEYVALUE_MAX_ARRAY_LEN
+				? OTF_KEYVALUE_MAX_ARRAY_LEN : pair->value.otf_byte_array.len );
+
+		written += OTF_WBuffer_writeKeyword( buffer,
+				OTF_KEYWORD_L_LOCAL_LENGTH );
+
+		written += OTF_WBuffer_writeUint32( buffer, pair->value.otf_byte_array.len );
+		break;
+	default:
+		/* wrong type */
+		written += OTF_WBuffer_writeNewline( buffer );
+		return written;
+	}
+
+	written += OTF_WBuffer_writeNewline( buffer );
+
+	return written;
+}
+
+
 uint32_t OTF_WBuffer_writeKeyValueList_short(OTF_WBuffer* buffer, OTF_KeyValueList *list ) {
 
 	OTF_KeyValuePairList *p;
@@ -666,71 +842,8 @@ uint32_t OTF_WBuffer_writeKeyValueList_short(OTF_WBuffer* buffer, OTF_KeyValueLi
 
 	for( i = 0; i < list->count; i++ ) {
 
-		written += OTF_WBuffer_writeKeyword( buffer, 
-				OTF_KEYWORD_S_KEYVALUE_PREFIX );
-
-		written += OTF_WBuffer_writeUint32( buffer, p->kvPair.key );
-
-		written += OTF_WBuffer_writeKeyword( buffer, 
-				OTF_KEYWORD_S_LOCAL_TYPE );
-
-		written += OTF_WBuffer_writeUint32( buffer, p->kvPair.type );
-        
-		written += OTF_WBuffer_writeKeyword( buffer, 
-				OTF_KEYWORD_S_LOCAL_VALUE );
-
-		switch (p->kvPair.type) {
-		case OTF_CHAR:
-			written += OTF_WBuffer_writeUint8( buffer, (uint8_t) p->kvPair.value.otf_char );
-			break;
-		case OTF_INT8:	
-		  	written += OTF_WBuffer_writeUint8( buffer, p->kvPair.value.otf_int8 );
-			break;
-		case OTF_UINT8:	
-			written += OTF_WBuffer_writeUint8( buffer, p->kvPair.value.otf_uint8 );
-			break;
-		case OTF_INT16:	
-			written += OTF_WBuffer_writeUint16( buffer, p->kvPair.value.otf_int16 );
-			break;
-		case OTF_UINT16:	
-			written += OTF_WBuffer_writeUint16( buffer, p->kvPair.value.otf_uint16 );
-			break;
-		case OTF_INT32:	
-			written += OTF_WBuffer_writeUint32( buffer, p->kvPair.value.otf_int32 );
-			break;
-		case OTF_UINT32:	
-			written += OTF_WBuffer_writeUint32( buffer, p->kvPair.value.otf_uint32 );
-			break;
-		case OTF_INT64:	
-			written += OTF_WBuffer_writeUint64( buffer, p->kvPair.value.otf_int64 );
-			break;
-		case OTF_UINT64:	
-			written += OTF_WBuffer_writeUint64( buffer, p->kvPair.value.otf_uint64 );
-			break;
-		case OTF_DOUBLE:
-			written += OTF_WBuffer_writeUint64( buffer, OTF_DoubleToInt64(p->kvPair.value.otf_double) );
-			break;
-		case OTF_FLOAT:
-			written += OTF_WBuffer_writeUint32( buffer, OTF_FloatToInt32(p->kvPair.value.otf_float) );
-			break;
-		case OTF_BYTE_ARRAY:          
-			written += OTF_WBuffer_writeBytes( buffer,
-                    p->kvPair.value.otf_byte_array.array,
-                    p->kvPair.value.otf_byte_array.len > OTF_KEYVALUE_MAX_ARRAY_LEN
-                    ? OTF_KEYVALUE_MAX_ARRAY_LEN : p->kvPair.value.otf_byte_array.len );
-                    
-            written += OTF_WBuffer_writeKeyword( buffer,
-                    OTF_KEYWORD_S_LOCAL_LENGTH );
-                              
-            written += OTF_WBuffer_writeUint32( buffer, p->kvPair.value.otf_byte_array.len );
-			break;
-		default:
-			/* wrong type */
-			written += OTF_WBuffer_writeNewline( buffer );
-			return written;
-		}
-
-		written += OTF_WBuffer_writeNewline( buffer );
+		written += OTF_WBuffer_writeKeyValuePair_short( buffer,
+				&(p->kvPair) );
 
 		p = p->kvNext;
 	}
@@ -756,71 +869,7 @@ uint32_t OTF_WBuffer_writeKeyValueList_long(OTF_WBuffer* buffer, OTF_KeyValueLis
 
 	for( i = 0; i < list->count; i++ ) {
 
-		written += OTF_WBuffer_writeKeyword( buffer, 
-				OTF_KEYWORD_L_KEYVALUE_PREFIX " " );
-
-		written += OTF_WBuffer_writeUint32( buffer, p->kvPair.key );
-
-		written += OTF_WBuffer_writeKeyword( buffer, 
-				" " OTF_KEYWORD_L_LOCAL_TYPE " " );
-
-		written += OTF_WBuffer_writeUint32( buffer, p->kvPair.type );
-
-		written += OTF_WBuffer_writeKeyword( buffer, 
-				" " OTF_KEYWORD_L_LOCAL_VALUE " " );
-
-		switch (p->kvPair.type) {
-		case OTF_CHAR:
-			written += OTF_WBuffer_writeUint8( buffer, (uint8_t) p->kvPair.value.otf_char );
-			break;
-		case OTF_INT8:
-		  	written += OTF_WBuffer_writeUint8( buffer, p->kvPair.value.otf_int8 );
-			break;
-		case OTF_UINT8:	
-			written += OTF_WBuffer_writeUint8( buffer, p->kvPair.value.otf_uint8 );
-			break;
-		case OTF_INT16:	
-			written += OTF_WBuffer_writeUint16( buffer, p->kvPair.value.otf_int16 );
-			break;
-		case OTF_UINT16:	
-			written += OTF_WBuffer_writeUint16( buffer, p->kvPair.value.otf_uint16 );
-			break;
-		case OTF_INT32:	
-			written += OTF_WBuffer_writeUint32( buffer, p->kvPair.value.otf_int32 );
-			break;
-		case OTF_UINT32:	
-			written += OTF_WBuffer_writeUint32( buffer, p->kvPair.value.otf_uint32 );
-			break;
-		case OTF_INT64:	
-			written += OTF_WBuffer_writeUint64( buffer, p->kvPair.value.otf_int64 );
-			break;
-		case OTF_UINT64:	
-			written += OTF_WBuffer_writeUint64( buffer, p->kvPair.value.otf_uint64 );
-			break;
-		case OTF_DOUBLE:
-			written += OTF_WBuffer_writeUint64( buffer, OTF_DoubleToInt64(p->kvPair.value.otf_double) );
-			break;
-		case OTF_FLOAT:
-			written += OTF_WBuffer_writeUint32( buffer, OTF_FloatToInt32(p->kvPair.value.otf_float) );
-			break;
-		case OTF_BYTE_ARRAY:           
-            written += OTF_WBuffer_writeBytes( buffer,
-                    p->kvPair.value.otf_byte_array.array,
-                    p->kvPair.value.otf_byte_array.len > OTF_KEYVALUE_MAX_ARRAY_LEN
-                    ? OTF_KEYVALUE_MAX_ARRAY_LEN : p->kvPair.value.otf_byte_array.len );
-                    
-            written += OTF_WBuffer_writeKeyword( buffer,
-                    OTF_KEYWORD_L_LOCAL_LENGTH );
-                              
-            written += OTF_WBuffer_writeUint32( buffer, p->kvPair.value.otf_byte_array.len );
-			break;
-		default:
-			/* wrong type */
-			written += OTF_WBuffer_writeNewline( buffer );
-			return written;
-		}
-
-		written += OTF_WBuffer_writeNewline( buffer );
+		written += OTF_WBuffer_writeKeyValuePair_long( buffer, &(p->kvPair) );
 
 		p = p->kvNext;
 	}
@@ -839,7 +888,7 @@ OTF_WBuffer* OTF_WBuffer_open_zlevel( const char* filename,
 	OTF_WBuffer* ret= (OTF_WBuffer*) malloc( sizeof(OTF_WBuffer) );
 	if( NULL == ret ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"no memory left.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -850,7 +899,7 @@ OTF_WBuffer* OTF_WBuffer_open_zlevel( const char* filename,
 
 	if( NULL == manager ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"manager has not been specified.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 
@@ -862,7 +911,7 @@ OTF_WBuffer* OTF_WBuffer_open_zlevel( const char* filename,
 	ret->file= OTF_File_open_zlevel( filename, manager, OTF_FILEMODE_WRITE, compression );
 	if( NULL == ret->file ) {
 		
-		OTF_fprintf( stderr, "ERROR in function %s, file: %s, line: %i:\n "
+		OTF_Error( "ERROR in function %s, file: %s, line: %i:\n "
 				"OTF_File_open() failed.\n",
 				__FUNCTION__, __FILE__, __LINE__ );
 

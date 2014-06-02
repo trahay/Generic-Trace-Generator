@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -10,6 +10,7 @@
 #include "config.h"
 #endif
 
+#include <map>
 
 #include "OTF_inttypes.h"
 
@@ -31,6 +32,8 @@ typedef struct {
     bool silent_mode;
 
 	bool records[OTF_NRECORDS]; /* enabled record types */
+
+	std::map<uint32_t,uint32_t> counter_props;
 
 	FILE* outfile;
 
@@ -87,12 +90,30 @@ int handleDefSclFile( void* userData, uint32_t stream,
 int handleDefCreator( void* userData, uint32_t stream,
 	const char* creator, OTF_KeyValueList* kvlist );
 
+int handleDefUniqueId( void* userData, uint32_t stream, uint64_t uid );
+
 int handleDefVersion( void* userData, uint32_t stream, uint8_t major,
 	uint8_t minor, uint8_t sub, const char* string );
 
 int handleDefKeyValue( void *userData, uint32_t streamid, uint32_t token,
 	OTF_Type type, const char *name, const char *desc, OTF_KeyValueList* kvlist );
 
+int handleDefTimeRange( void* userData, uint32_t streamid, uint64_t minTime,
+	uint64_t maxTime, OTF_KeyValueList* kvlist );
+
+int handleDefCounterAssignments( void* userData, uint32_t streamid,
+	uint32_t counter_token, uint32_t number_of_members,
+	const uint32_t* procs_or_groups, OTF_KeyValueList* kvlist );
+
+int handleDefProcessSubstitutes( void* userData, uint32_t streamid,
+	uint32_t representative, uint32_t numberOfProcs, const uint32_t* procs,
+	OTF_KeyValueList* kvlist );
+
+int handleDefAuxSamplePoint( void*                  userData,
+                             uint32_t               streamid,
+                             uint64_t               time,
+                             OTF_AuxSamplePointType type,
+                             OTF_KeyValueList*      kvlist );
 
 int handleNoOp( void* userData, uint64_t time, uint32_t process,
 	OTF_KeyValueList* kvlist );
@@ -160,6 +181,21 @@ int handleBeginCollopSnapshot( void *userData, uint64_t time, uint64_t originalt
     
 int handleBeginFileOpSnapshot( void *userData, uint64_t time, uint64_t originaltime,
     uint32_t process, uint64_t matchingId, uint32_t scltoken, OTF_KeyValueList *list);
+
+int handleCollopCountSnapshot( void*             userData,
+                               uint64_t          time,
+                               uint32_t          process,
+                               uint32_t          communicator,
+                               uint64_t          count,
+                               OTF_KeyValueList* kvlist );
+
+int handleCounterSnapshot( void*             userData,
+                           uint64_t          time,
+                           uint32_t          process,
+                           uint64_t          originaltime,
+                           uint32_t          counter,
+                           uint64_t          value,
+                           OTF_KeyValueList* kvlist );
 
 
 int handleSummaryComment( void * userData, uint64_t time,

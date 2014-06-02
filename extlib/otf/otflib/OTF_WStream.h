@@ -1,5 +1,5 @@
 /*
- This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2011.
+ This is part of the OTF library. Copyright by ZIH, TU Dresden 2005-2013.
  Authors: Andreas Knuepfer, Holger Brunst, Ronny Brendel, Thomas Kriebitzsch
 */
 
@@ -572,6 +572,18 @@ int OTF_WStream_writeDefCreator( OTF_WStream* wstream, const char* creator );
  */
 int OTF_WStream_writeDefCreatorKV( OTF_WStream* wstream, const char* creator, OTF_KeyValueList* list );
 
+/**
+ * Write a DEFUNIQUEID record to stream 'wstream'.
+ * This record is generated automatically at beginning of tracing in the global
+ * definition stream.
+ *
+ * @param wstream      Initialized OTF_WStream instance.
+ * @return             1 on success, 0 if an error occurs.
+ *
+ * \ingroup wstream
+ */
+int OTF_WStream_writeUniqueId( OTF_WStream* wstream );
+
 /** Write a DEFVERSION record to stream 'wstream'.
  * @see OTF_Writer_writeOtfVersion()
  * \ingroup wstream 
@@ -617,8 +629,46 @@ int OTF_WStream_writeDefKeyValue( OTF_WStream* wstream,	uint32_t key,
  * @see OTF_Writer_writeDefKeyValueKV()
  * \ingroup wstream 
  */
-int OTF_WStream_writeDefKeyValueKV( OTF_WStream* wstream, uint32_t key,	OTF_Type type,
-	const char* name, const char *description, OTF_KeyValueList* list );
+int OTF_WStream_writeDefKeyValueKV( OTF_WStream* wstream, uint32_t key,
+	OTF_Type type, const char* name, const char *description,
+	OTF_KeyValueList* list );
+
+
+/** Write a DEFTIMERANGE record including an OTF_KeyValueList to
+ *  stream 'wstream'.
+ * @see OTF_Writer_writeDefTimeRange()
+ * \ingroup wstream
+ */
+int OTF_WStream_writeDefTimeRange( OTF_WStream* wstream, uint64_t minTime,
+	uint64_t maxTime, OTF_KeyValueList* list );
+
+/** Write a DEFCOUNTERASSIGNMENTS record including an OTF_KeyValueList to
+ *  stream 'wstream'.
+ * @see OTF_Writer_writeDefCounterAssignments()
+ * \ingroup wstream
+ */
+int OTF_WStream_writeDefCounterAssignments( OTF_WStream* wstream,
+	uint32_t counter_token, uint32_t number_of_members,
+	const uint32_t* procs_or_groups, OTF_KeyValueList* list );
+
+/** Write a DEFPROCESSSUBTITUTES record including an OTF_KeyValueList to
+ *  stream 'wstream'.
+ * @see OTF_Writer_writeDefProcessSubsitutes()
+ * \ingroup wstream
+ */
+int OTF_WStream_writeDefProcessSubstitutes( OTF_WStream* wstream,
+	uint32_t representative, uint32_t numberOfProcs, const uint32_t* procs,
+	OTF_KeyValueList* list );
+
+
+/** Write a DEFAUXSAMPLEPOINT record to stream 'wstream'.
+ * @see OTF_Writer_writeDefAuxSamplePoint()
+ * \ingroup wstream
+ */
+int OTF_WStream_writeDefAuxSamplePoint( OTF_WStream*           wstream,
+                                        uint64_t               time,
+                                        OTF_AuxSamplePointType type,
+                                        OTF_KeyValueList*      list );
 
 
 /* *** event record write handlers *** ************************************* */
@@ -1015,7 +1065,31 @@ int OTF_WStream_writeBeginFileOpSnapshotKV( OTF_WStream* wstream, uint64_t time,
      uint32_t scltoken, OTF_KeyValueList *list );
 
 
-		
+/** Write a TCOLLOPCOUNT record to stream 'wstream'.
+ * @see OTF_Writer_writeCollopCountSnapshot()
+ * \ingroup wstream
+ */
+int OTF_WStream_writeCollopCountSnapshot( OTF_WStream* wstream,
+                                          uint64_t time,
+                                          uint32_t process,
+                                          uint32_t communicator,
+                                          uint64_t count,
+                                          OTF_KeyValueList* list );
+
+
+/** Write a TCOUNTER record to stream 'wstream'.
+ * @see OTF_Writer_writeCounterSnapshot()
+ * \ingroup wstream
+ */
+int OTF_WStream_writeCounterSnapshot( OTF_WStream*      wstream,
+                                      uint64_t          time,
+                                      uint64_t          originaltime,
+                                      uint32_t          process,
+                                      uint32_t          counter,
+                                      uint64_t          value,
+                                      OTF_KeyValueList* list );
+
+
 /* *** public statistics record write handlers *** */
 
 
