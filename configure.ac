@@ -32,6 +32,19 @@ if [ test  "x$have_getline" = xyes ]; then
 fi
 
 
+build_doc=no
+AC_ARG_WITH(doc, [AS_HELP_STRING([--with-doc], [Generate documentation])],
+                 [if test x$withval != xno ; then
+                    build_doc=yes
+                 fi],
+                 [build_doc=no])
+
+if test "x$build_doc" = "xyes" ; then
+  AC_MSG_RESULT(Documentation will be generated)
+else
+  AC_MSG_RESULT(Documentation will not be generated)
+fi
+
 use_libz=yes
 AC_ARG_WITH(libz,
             [AS_HELP_STRING([--with-libz[=<bool>]], [Enable libZ])],
@@ -250,6 +263,8 @@ AC_PATH_TOOL([PDFLATEX], [pdflatex], no)
 
 AM_CONDITIONAL([USE_PDFLATEX], [test "x$PDFLATEX" != xno])
 AM_CONDITIONAL([USE_DOXYGEN], [test "x$HAVE_DOXYGEN" = xyes])
+
+AM_CONDITIONAL([WITHDOC], [test "$build_doc" = "yes"])
 
 AC_CONFIG_SUBDIRS([extlib/otf])
 

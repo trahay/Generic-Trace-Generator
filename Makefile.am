@@ -1,4 +1,9 @@
-SUBDIRS = extlib/ inc/ src/ doc/
+SUBDIRS = extlib/ inc/ src/
+
+
+if WITHDOC
+SUBDIRS += doc
+endif #WITHDOC
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gtg.pc
