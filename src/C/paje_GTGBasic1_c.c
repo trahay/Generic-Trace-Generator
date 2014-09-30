@@ -102,10 +102,15 @@ static struct container_file* __paje_compress_create_container_file(const char* 
   res->closed = 0;
   strcpy(res->container_name, cont?cont:"");
 
-  sprintf (res->file_name, "%s_%s.ept", filename, res->container_name);
-  res->file = fopen (res->file_name, "w");
-  if(!res->file)
-    abort();
+  if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
+    sprintf (res->file_name, "%s_%s.ept", filename, res->container_name);
+    res->file = fopen (res->file_name, "w");
+    if(!res->file)
+      abort();
+  } else {
+      sprintf (res->file_name, "%s_root.ept", filename);
+      res->file = headFile;
+  }
 
   return res;
 }
@@ -579,9 +584,13 @@ trace_return_t pajeAddContainer(varPrec time, const char* alias,
       if(container && strcmp(container, "(null)")!=0 ) {
 	fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
 		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias, file);
-	fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
+	if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
+	  fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
+	  FLUSH(footFile);
+	}
+
 	FLUSH(headFile);
-	FLUSH(footFile);
+
       } else {
 	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\" \"%s\"\n",
 		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias, file);
@@ -604,9 +613,11 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
       if(container && strcmp(container, "(null)")!=0 ) {
             fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
                      paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias);
-	    fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
+	    if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
+	      fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
+	      FLUSH(footFile);
+	    }
 	    FLUSH(headFile);
-	    FLUSH(footFile);
       } else {
 	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\"\n",
 		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias);
@@ -829,8 +840,10 @@ trace_return_t pajeEndTrace (){
     fclose(footFile);
 
     /* Wait for all proc to finish writing their trace */
-    for(i=0;i<nb_containers; i++) {
-      __paje_compress_destroy_container(&procFile[i]);
+    if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
+      for(i=0;i<nb_containers; i++) {
+	__paje_compress_destroy_container(&procFile[i]);
+      }
     }
 
 #ifdef USE_MPI
