@@ -46,6 +46,8 @@ static int nb_containers = 0;
 
 /* File where each proc writes the header and the definitions of the data. */
 static FILE*  headFile;
+/* File where each proc writes the footer and the % Include directives. */
+static FILE*  footFile;
 /* Root name */
 static char*  filename;
 /* mpi rank */
@@ -301,11 +303,36 @@ void myGetLine (doubleLinkList_t* li){
 void clean_files (char* fileName, int nbFile){
     int ret;
     char cmd[BUFFSIZE];
-    sprintf (cmd, "rm -f %s_root.ept %s_proc*.ept", filename,filename);
+    sprintf (cmd, "rm -f %s_root.ept %s_foot.ept %s_proc*.ept", filename, filename, filename);
     ret = system(cmd);
     if (ret == -1) {
         perror("cleanfiles");
     }
+}
+
+/* copy the content of filename into dest */
+void append(const char* filename, FILE*dest) {
+  char *buf=NULL;
+  size_t size = BUFFSIZE;
+  FILE *oldF = fopen (filename, "r");
+  if(oldF == NULL)
+    abort();
+
+  if (dest==NULL || oldF==NULL){
+    fprintf (stderr, "Failed to create the trace file. Leaving\n");
+    exit (-1);
+  }
+
+  buf = malloc(size);
+  do{
+    int i = getline (&buf, &size, oldF);
+    if (size==0 || i==-1)
+      break;
+    paje_print (dest, "%s", buf);
+  }while (buf[0] != EOF);
+  free(buf);
+
+  fclose (oldF);
 }
 
 void merge (char* filename, int nbFile){
@@ -313,11 +340,9 @@ void merge (char* filename, int nbFile){
     doubleLinkList_t* list;
     doubleLinkList_t* iter;
     FILE            * res;
-    FILE            * oldF;
-    char            * buf = NULL;
     char              tmp[BUFFSIZE];
     char              tmp2[BUFFSIZE];
-    size_t            size;
+    char              tmp3[BUFFSIZE];
     int               i;
 
     /* Getting the first part of the trace (header+def) */
@@ -326,31 +351,24 @@ void merge (char* filename, int nbFile){
         sprintf (tmp, "%s.trace.z", filename);
     else
 #endif
-        sprintf (tmp, "%s.trace", filename);
+      sprintf (tmp, "%s.trace", filename);
 
     sprintf (tmp2, "%s_root.ept", filename);
+    sprintf (tmp3, "%s_foot.ept", filename);
 
     if(nbFile == 1) {
       int retval= rename(tmp2, tmp);
       if(retval)
 	abort();
+
+      res = fopen (tmp, "a");
+      goto out;
       return;
     }
 
     res = fopen (tmp, "w+");
-    oldF = fopen (tmp2,"a+");
-    if (res==NULL || oldF==NULL){
-        fprintf (stderr, "Failed to create the trace file. Leaving\n");
-        exit (-1);
-    }
-    rewind (oldF);
-    do{
-        i = getline (&buf, &size, oldF);
-        if (size==0 || i==-1)
-            break;
-        paje_print (res, "%s", buf);
-    }while (buf[0] != EOF);
-    fclose (oldF);
+    append(tmp2, res);
+
     /* Initialising the parallel merge */
     list = (doubleLinkList_t *)malloc (sizeof (doubleLinkList_t)*nbFile);
     for (i=0;i<nbFile;i++)
@@ -385,6 +403,11 @@ void merge (char* filename, int nbFile){
         /*     fprintf (stderr, "L1 = %s, st=%d\n", list[i].current.value,list[i].current.status); */
         /* fprintf (stderr, "<---------------------------->\n\n"); */
     }
+
+ out:
+    /* copy the footer */
+    append(tmp3, res);
+
     fclose (res);
     clean_files (filename, nbFile);
 }
@@ -434,8 +457,16 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
             return ret;
         }
 
+        sprintf (file, "%s_foot.ept", filename);
+        footFile = fopen (file, "w");
+        if (!footFile){
+            fprintf (stderr, "Failed to open file %s. \n Leaving\n", file);
+            return ret;
+        }
+
         pajeInitHeaderData( fmt );
         FLUSH(headFile);
+        FLUSH(footFile);
     }
     return TRACE_SUCCESS;
 }
@@ -546,10 +577,11 @@ trace_return_t pajeAddContainer(varPrec time, const char* alias,
       struct container_file* p_cont = __paje_compress_create_container_file(alias);
 
       if(container && strcmp(container, "(null)")!=0 ) {
-	fprintf (p_cont->file, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+	fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
 		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias, file);
-	fprintf (headFile, "%% Include \"%s\"\n", p_cont->file_name);
-	FLUSH(p_cont->file);
+	fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
+	FLUSH(headFile);
+	FLUSH(footFile);
       } else {
 	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\" \"%s\"\n",
 		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias, file);
@@ -570,10 +602,11 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
       struct container_file* p_cont = __paje_compress_create_container_file(alias);
 
       if(container && strcmp(container, "(null)")!=0 ) {
-            fprintf (p_cont->file, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
+            fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
                      paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias);
-	    fprintf (headFile, "%% Include \"%s\"\n", p_cont->file_name);
-	    FLUSH(p_cont->file);
+	    fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
+	    FLUSH(headFile);
+	    FLUSH(footFile);
       } else {
 	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\"\n",
 		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias);
@@ -788,9 +821,14 @@ trace_return_t pajeAddComment   (const char*  comment){
 
 trace_return_t pajeEndTrace (){
     int size = 1;
-    /* Wait for all proc to finish writing their trace */
-
     int i;
+
+    FLUSH(headFile);
+    fclose(headFile);
+    FLUSH(footFile);
+    fclose(footFile);
+
+    /* Wait for all proc to finish writing their trace */
     for(i=0;i<nb_containers; i++) {
       __paje_compress_destroy_container(&procFile[i]);
     }
