@@ -33,8 +33,17 @@ void pajeWriteHeader( FILE *file );
  */
 extern int verbose;
 
+struct container_file{
+  char container_name[1024];
+  char file_name[1024];
+  FILE* file;
+  int closed;
+};
+
 /* File where each proc writes state/event/var/link changes. */
-static FILE*  procFile;
+struct container_file procFile[100]; /* todo: don't harcode the size */
+static int nb_containers = 0;
+
 /* File where each proc writes the header and the definitions of the data. */
 static FILE*  headFile;
 /* Root name */
@@ -74,6 +83,54 @@ typedef struct doubleLinkList_t{
     struct doubleLinkList_t* next; /* Next element     */
     line_t current;                /* Current line     */
 }doubleLinkList_t;
+
+#define GET_FILE_DESCRIPTOR(f, cont)					\
+  do {									\
+    struct container_file* p_cont = __paje_compress_find_container(cont); \
+    if(p_cont) {							\
+      f = p_cont->file;							\
+    }									\
+  } while(0)
+
+static struct container_file* __paje_compress_create_container_file(const char* cont) {
+
+  struct container_file* res = &procFile[nb_containers];
+  nb_containers++;
+
+  res->closed = 0;
+  strcpy(res->container_name, cont?cont:"");
+
+  sprintf (res->file_name, "%s_%s.ept", filename, res->container_name);
+  res->file = fopen (res->file_name, "w");
+  if(!res->file)
+    abort();
+
+  return res;
+}
+
+
+static void __paje_compress_destroy_container(struct container_file* p_cont) {
+  if(p_cont->closed > 0)
+    /* this container is already destroyed */
+    return;
+
+  FLUSH(p_cont->file);
+  fclose (p_cont->file);
+  p_cont->closed = 1;
+}
+
+
+static struct container_file* __paje_compress_find_container(const char* cont) {
+  int i;
+  cont = cont? cont : "";
+  for(i=0; i<nb_containers; i++) {
+    if(!strcmp(cont, procFile[i].container_name))
+      return &procFile[i];
+  }
+
+  return NULL;
+}
+
 
 #if HAVE_LIBZ
 static z_stream z;
@@ -271,8 +328,16 @@ void merge (char* filename, int nbFile){
 #endif
         sprintf (tmp, "%s.trace", filename);
 
-    res = fopen (tmp, "w+");
     sprintf (tmp2, "%s_root.ept", filename);
+
+    if(nbFile == 1) {
+      int retval= rename(tmp2, tmp);
+      if(retval)
+	abort();
+      return;
+    }
+
+    res = fopen (tmp, "w+");
     oldF = fopen (tmp2,"a+");
     if (res==NULL || oldF==NULL){
         fprintf (stderr, "Failed to create the trace file. Leaving\n");
@@ -350,42 +415,13 @@ pajeGetName (int procNb){
     return "0";
 }
 
-trace_return_t my_open (int rk){
-    trace_return_t ret = TRACE_ERR_OPEN;
-    char f[BUFFSIZE];
-
-    if (!procFile){
-        if(!(paje_flags & GTG_FLAG_USE_MPI)) {
-            procFile = headFile;
-        } else {
-            sprintf (f, "%s_proc%d.ept", filename, rk);
-            procFile = fopen (f, "w");
-        }
-        if (!procFile)
-            return ret;
-        ret = TRACE_SUCCESS;
-    }
-    return ret;
-}
-
-trace_return_t my_close (){
-    trace_return_t ret = TRACE_ERR_CLOSE;
-    if (procFile){
-        ret = (trace_return_t) fclose (procFile);
-        procFile = NULL;
-    }
-    return ret;
-}
-
 trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, int fmt) {
     char file[BUFFSIZE];
     trace_return_t ret = TRACE_ERR_OPEN;
 
-    my_close ();
     rank = rk;	/* fixme: why there is need to copy filenam ????*/
     filename = (char *)malloc (sizeof (char)* (strlen (filenam)+1));
     strcpy (filename, filenam);
-    procFile = NULL;
 
     paje_flags = flags;
     if( rank==0 ||
@@ -399,10 +435,9 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
         }
 
         pajeInitHeaderData( fmt );
-
         FLUSH(headFile);
     }
-    return my_open(rank);
+    return TRACE_SUCCESS;
 }
 
 trace_return_t pajeAddContType(const char* alias, const char* contType,
@@ -508,15 +543,20 @@ trace_return_t pajeAddContainer(varPrec time, const char* alias,
     PRINT_PAJE_HEADER();
 
     if (headFile){
-        if(container && strcmp(container, "(null)")!=0 )
-            fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
-                     paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias, file);
-        else
-            fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\" \"%s\"\n",
-                     paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias, file);
+      struct container_file* p_cont = __paje_compress_create_container_file(alias);
 
-        FLUSH(headFile);
-        return TRACE_SUCCESS;
+      if(container && strcmp(container, "(null)")!=0 ) {
+	fprintf (p_cont->file, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias, file);
+	fprintf (headFile, "%% Include \"%s\"\n", p_cont->file_name);
+	FLUSH(p_cont->file);
+      } else {
+	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\" \"%s\"\n",
+		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias, file);
+      }
+      FLUSH(headFile);
+
+      return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
 }
@@ -527,15 +567,20 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
     PRINT_PAJE_HEADER();
 
     if (headFile){
-        if(container && strcmp(container, "(null)")!=0 )
-            fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
-                     paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias);
-        else
-            fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\"\n",
-                     paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias);
+      struct container_file* p_cont = __paje_compress_create_container_file(alias);
 
-        FLUSH(headFile);
-        return TRACE_SUCCESS;
+      if(container && strcmp(container, "(null)")!=0 ) {
+            fprintf (p_cont->file, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
+                     paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias);
+	    fprintf (headFile, "%% Include \"%s\"\n", p_cont->file_name);
+	    FLUSH(p_cont->file);
+      } else {
+	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\"\n",
+		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias);
+      }
+
+      FLUSH(headFile);
+      return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
 }
@@ -545,10 +590,14 @@ trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
     PRINT_PAJE_HEADER();
 
     if (headFile){
-        fprintf (headFile, "%d %.13e \"%s\" \"%s\"\n",
-                 paje_eventdefs[GTG_PAJE_EVTDEF_DestroyContainer].id, time, name, type);
+    struct container_file* p_cont = __paje_compress_find_container(name);
 
-        FLUSH(headFile);
+    fprintf (p_cont->file, "%d %.13e \"%s\" \"%s\"\n",
+	     paje_eventdefs[GTG_PAJE_EVTDEF_DestroyContainer].id, time, name, type);
+
+    FLUSH(p_cont->file);
+    __paje_compress_destroy_container(p_cont);
+
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -556,13 +605,17 @@ trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
 
 trace_return_t pajeSetState   (varPrec time, const char* type,
                                const char*  cont, const char* val){
+    FILE *f=NULL;
     if(verbose)
         printf("SetState : type %s, container %s, val %s\n", type, cont, val);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_SetState].id, time, type, cont, val);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -570,13 +623,17 @@ trace_return_t pajeSetState   (varPrec time, const char* type,
 
 trace_return_t pajePushState   (varPrec time, const char* type,
                                 const char*  cont, const char* val){
+    FILE *f=NULL;
     if(verbose)
         printf("PushState : type %s, container %s, val %s\n", type, cont, val);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_PushState].id, time, type, cont, val);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -584,13 +641,17 @@ trace_return_t pajePushState   (varPrec time, const char* type,
 
 trace_return_t pajePopState   (varPrec time, const char* type,
                                const char*  cont){
+    FILE *f=NULL;
     if(verbose)
         printf("PopState : type %s, container %s\n", type, cont);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\"\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_PopState].id, time, type, cont);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -598,13 +659,18 @@ trace_return_t pajePopState   (varPrec time, const char* type,
 
 trace_return_t pajeAddEvent   (varPrec time, const char* type,
                                const char*  cont, const char* val){
+    FILE *f=NULL;
     if(verbose)
         printf("AddEvent : type %s, cont %s, val %s\n", type, cont, val);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
+
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_NewEvent].id, time, type, cont, val);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -613,14 +679,18 @@ trace_return_t pajeAddEvent   (varPrec time, const char* type,
 trace_return_t pajeStartLink   (varPrec time, const char* type,
                                 const char*   cont, const char* src,
                                 const char*   val , const char* key){
+    FILE *f=NULL;
     if (verbose)
         printf ("Start link: type: %s container: %s src: %s val: %s key %s\n",
                 type, cont, src, val, key);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_StartLink].id, time, type, cont, src, val, key);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -629,14 +699,18 @@ trace_return_t pajeStartLink   (varPrec time, const char* type,
 trace_return_t pajeEndLink   (varPrec time, const char* type,
                               const char*   cont, const char* dest,
                               const char*   val , const char* key){
+    FILE *f=NULL;
     if (verbose)
         printf ("End link type: %s container: %s src: %s val: %s key %s\n",
                 type, cont, dest, val, key);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_EndLink].id, time, type, cont, dest, val, key);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -644,14 +718,18 @@ trace_return_t pajeEndLink   (varPrec time, const char* type,
 
 trace_return_t pajeSetVar   (varPrec time, const char*  type,
                              const char*  cont, varPrec val){
+    FILE *f=NULL;
     if (verbose)
         printf ("SetVar: type: %s container: %s value: %e\n",
                 type, cont, val);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" %e\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" %e\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_SetVariable].id, time, type, cont, val);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -659,14 +737,18 @@ trace_return_t pajeSetVar   (varPrec time, const char*  type,
 
 trace_return_t pajeAddVar   (varPrec time, const char*  type,
                              const char*  cont, varPrec val){
+    FILE *f=NULL;
     if (verbose)
         printf ("AddVar: type: %s container: %s value: %e\n",
                 type, cont, val);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" %e\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" %e\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_AddVariable].id, time, type, cont, val);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -674,14 +756,18 @@ trace_return_t pajeAddVar   (varPrec time, const char*  type,
 
 trace_return_t pajeSubVar   (varPrec time, const char*  type,
                              const char*  cont, varPrec val){
+    FILE *f=NULL;
     if (verbose)
         printf ("SubVar: type: %s container: %s value: %e\n",
                 type, cont, val);
-    if (procFile){
-        fprintf (procFile, "%d %.13e \"%s\" \"%s\" %e\n",
+
+    GET_FILE_DESCRIPTOR(f, cont);
+
+    if (f){
+        fprintf (f, "%d %.13e \"%s\" \"%s\" %e\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_SubVariable].id, time, type, cont, val);
 
-        FLUSH(procFile);
+        FLUSH(f);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -691,9 +777,9 @@ trace_return_t pajeAddComment   (const char*  comment){
     if (verbose)
         printf ("AddComment: %s\n",comment);
 
-    if (procFile){
-        fprintf(procFile,"#%s\r\n",comment);
-        FLUSH(procFile);
+    if (headFile){
+        fprintf(headFile,"#%s\r\n",comment);
+        FLUSH(headFile);
         return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
@@ -702,8 +788,13 @@ trace_return_t pajeAddComment   (const char*  comment){
 
 trace_return_t pajeEndTrace (){
     int size = 1;
-    my_close ();
     /* Wait for all proc to finish writing their trace */
+
+    int i;
+    for(i=0;i<nb_containers; i++) {
+      __paje_compress_destroy_container(&procFile[i]);
+    }
+
 #ifdef USE_MPI
     if(paje_flags & GTG_FLAG_USE_MPI) {
         MPI_Barrier (MPI_COMM_WORLD);
@@ -713,7 +804,8 @@ trace_return_t pajeEndTrace (){
     }
     if (rank==0)
 #endif	/* USE_MPI */
-        merge (filename, size);
+
+      merge (filename, size);
 
     if (nameTmp)
         free (nameTmp);
@@ -725,7 +817,6 @@ trace_return_t pajeEndTrace (){
 }
 
 trace_return_t viteEndTrace (){
-    my_close ();
     if (filename)
         free (filename);
     if (nameTmp)
@@ -734,13 +825,4 @@ trace_return_t viteEndTrace (){
     nameTmp = NULL;
     return TRACE_SUCCESS;
 }
-
-
-/*
- * Hack that will be removed
- */
-FILE *pajeGetProcFile() {
-    return procFile;
-}
-
 #endif
