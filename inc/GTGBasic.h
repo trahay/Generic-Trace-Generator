@@ -49,7 +49,7 @@
  * \brief Tell the Paje driver to write create one file per container (instead
  * writing all the event in a single file)
  */
-#define GTG_FLAG_PAJE_MULTIPLE  5
+#define GTG_FLAG_PAJE_MULTIPLE  8
 
 /**
  * \brief Flags that can be specified to GTG.

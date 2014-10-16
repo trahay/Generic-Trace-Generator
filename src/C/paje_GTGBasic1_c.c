@@ -25,7 +25,7 @@ extern int asprintf(char **ret, const char *format, ...);
 
 
 extern int _is_paje_header_written;
-void pajeInitHeaderData( int fmt );
+void pajeInitHeaderData( int fmt, gtg_flag_t flags );
 void pajeWriteHeader( FILE *file );
 
 /* set in GTGBasic1_c.c
@@ -108,7 +108,7 @@ static struct container_file* __paje_compress_create_container_file(const char* 
     if(!res->file)
       abort();
   } else {
-      sprintf (res->file_name, "%s_root.ept", filename);
+      sprintf (res->file_name, "%s.trace", filename);
       res->file = headFile;
   }
 
@@ -351,12 +351,18 @@ void merge (char* filename, int nbFile){
     int               i;
 
     /* Getting the first part of the trace (header+def) */
+    char suffix[BUFFSIZE];
+    if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
+      sprintf(suffix, "ept");
+    } else {
+      sprintf(suffix, "trace");
+    }
 #if HAVE_LIBZ
     if(compression_ratio)
-        sprintf (tmp, "%s.trace.z", filename);
+      sprintf (tmp, "%s.%s.z", filename, suffix);
     else
 #endif
-      sprintf (tmp, "%s.trace", filename);
+      sprintf (tmp, "%s.%s", filename, suffix);
 
     sprintf (tmp2, "%s_root.ept", filename);
     sprintf (tmp3, "%s_foot.ept", filename);
@@ -469,7 +475,7 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
             return ret;
         }
 
-        pajeInitHeaderData( fmt );
+        pajeInitHeaderData( fmt, flags);
         FLUSH(headFile);
         FLUSH(footFile);
     }
@@ -579,22 +585,22 @@ trace_return_t pajeAddContainer(varPrec time, const char* alias,
     PRINT_PAJE_HEADER();
 
     if (headFile){
-      struct container_file* p_cont = __paje_compress_create_container_file(alias);
+      fprintf (headFile, "%d %.13e \"%s\" \"%s\"",
+	       paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type);
 
       if(container && strcmp(container, "(null)")!=0 ) {
-	fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
-		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias, file);
-	if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
-	  fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
-	  FLUSH(footFile);
-	}
-
-	FLUSH(headFile);
-
-      } else {
-	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\" \"%s\"\n",
-		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias, file);
+	fprintf(headFile, " \"%s\"", container);
+      }else{
+	fprintf(headFile, " 0");
       }
+
+      fprintf(headFile, " \"%s\"", alias);
+
+      if(file && strcmp(file, "(null)")!=0 ) {
+	fprintf(headFile, " \"%s\"", file);
+      }
+
+      fprintf(headFile, "\n");
       FLUSH(headFile);
 
       return TRACE_SUCCESS;
@@ -609,22 +615,12 @@ trace_return_t pajeSeqAddContainer   (varPrec time, const char* alias    ,
 
     if (headFile){
       struct container_file* p_cont = __paje_compress_create_container_file(alias);
-
-      if(container && strcmp(container, "(null)")!=0 ) {
-            fprintf (headFile, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\"\n",
-                     paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, container, alias);
-	    if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
-	      fprintf (footFile, "%% Include \"%s\"\n", p_cont->file_name);
-	      FLUSH(footFile);
-	    }
-	    FLUSH(headFile);
+      if(paje_flags & GTG_FLAG_PAJE_MULTIPLE) {
+	return pajeAddContainer(time, alias, type, container, name, p_cont->file_name);
       } else {
-	fprintf (headFile, "%d %.13e \"%s\" \"%s\" 0 \"%s\"\n",
-		 paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type, alias);
+	return pajeAddContainer(time, alias, type, container, name, NULL);
       }
 
-      FLUSH(headFile);
-      return TRACE_SUCCESS;
     }
     return TRACE_ERR_WRITE;
 }
