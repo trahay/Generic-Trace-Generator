@@ -105,7 +105,7 @@ void pajeEventDefClean()
     }
 }
 
-void pajeInitHeaderData( int fmt )
+void pajeInitHeaderData( int fmt, gtg_flag_t paje_flags)
 {
     pajeEventDefAddParam( GTG_PAJE_EVTDEF_DefineContainerType, "Name",  GTG_PAJE_FIELDTYPE_String );
     pajeEventDefAddParam( GTG_PAJE_EVTDEF_DefineContainerType, "Type",  GTG_PAJE_FIELDTYPE_String );
@@ -140,8 +140,10 @@ void pajeInitHeaderData( int fmt )
     pajeEventDefAddParam( GTG_PAJE_EVTDEF_CreateContainer, "Type",      GTG_PAJE_FIELDTYPE_String );
     pajeEventDefAddParam( GTG_PAJE_EVTDEF_CreateContainer, "Container", GTG_PAJE_FIELDTYPE_String );
     pajeEventDefAddParam( GTG_PAJE_EVTDEF_CreateContainer, "Alias",     GTG_PAJE_FIELDTYPE_String );
-    if ( fmt == FMT_VITE )
-        pajeEventDefAddParam( GTG_PAJE_EVTDEF_CreateContainer, "FileName", GTG_PAJE_FIELDTYPE_String );
+
+    if ( fmt == FMT_VITE || paje_flags & GTG_FLAG_PAJE_MULTIPLE_FILES) {
+      pajeEventDefAddParam( GTG_PAJE_EVTDEF_CreateContainer, "FileName", GTG_PAJE_FIELDTYPE_String );
+    }
 
     pajeEventDefAddParam( GTG_PAJE_EVTDEF_DestroyContainer, "Time", GTG_PAJE_FIELDTYPE_Date );
     pajeEventDefAddParam( GTG_PAJE_EVTDEF_DestroyContainer, "Name", GTG_PAJE_FIELDTYPE_String );

@@ -46,6 +46,11 @@
 #define GTG_FLAG_OUTOFORDER  4
 
 /**
+ * \brief For writing events in separate files (one file per container)
+ */
+#define GTG_FLAG_PAJE_MULTIPLE_FILES  8
+
+/**
  * \brief Flags that can be specified to GTG.
  */
 typedef uint8_t gtg_flag_t;
