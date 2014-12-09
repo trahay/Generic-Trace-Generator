@@ -205,65 +205,6 @@ trace_return_t pajeSetCompress(int val)
 
 #endif
 
-/* Insert a doubleLinkList_t item in the sorted doubleLinkedList starting with first */
-void insert (doubleLinkList_t** first, doubleLinkList_t* item){
-    varPrec time;
-    doubleLinkList_t* iter = *first;
-    if (!first || !item){
-        fprintf (stderr, "Invalid insert parameter. Leaving\n");
-        exit(-1);
-    }
-    time = item->current.time;
-    /* If nil list, item is the first and leaving */
-    if (iter==NULL){
-        *first=item;
-        item->prev = NULL;
-        item->next = NULL;
-        /*  printf (stderr, "Nil list\n"); */
-        return;
-    }
-    /* If to insert in first pos */
-    if (time<=iter->current.time){
-        item->prev = NULL;
-        item->next = *first;
-        if (item->next)
-            (item->next)->prev = item;
-        *first = item;
-        return;
-    }
-    /* Positionning iterator to insert in a sorted list */
-    while (time>iter->current.time && iter->next)
-        iter = iter->next;
-
-    if (time<=iter->current.time){
-        item->prev = iter->prev;
-        item->next = iter;
-        iter->prev = item;
-        if (item->prev)
-            (item->prev)->next = item;
-    }
-    else{
-        iter->next = item;
-        item->prev = iter;
-        item->next=NULL;
-    }
-}
-
-void initMerge (char* file, int rk, doubleLinkList_t* li){
-    char f[BUFFSIZE];
-
-    sprintf (f, "%s_proc%d.ept", file, rk);
-    li->current.file = fopen (f, "a+");
-    if (!li->current.file){
-        fprintf (stderr, "Failed to open generated trace. Leaving\n");
-        exit (-1);
-    }
-    rewind (li->current.file);
-    li->current.value = NULL;
-    li->current.status = 1;
-}
-
-
 #ifndef HAVE_GETLINE
 ssize_t getline(char** buf, size_t* size, FILE* stream)
 {
@@ -321,87 +262,6 @@ void myGetLine (doubleLinkList_t* li){
         sscanf (li->current.value, "%d %lf", &toto, &(li->current.time));
     else
         fprintf (stderr, "failed to read\n");
-}
-
-/* need to run 'rm -f' force because there is no file some time*/
-void clean_files (char* fileName, int nbFile){
-    int ret;
-    char cmd[BUFFSIZE];
-    sprintf (cmd, "rm -f %s_root.ept %s_proc*.ept", filename,filename);
-    ret = system(cmd);
-    if (ret == -1) {
-        perror("cleanfiles");
-    }
-}
-
-void merge (char* filename, int nbFile){
-    doubleLinkList_t* first = NULL;
-    doubleLinkList_t* list;
-    doubleLinkList_t* iter;
-    FILE            * res;
-    FILE            * oldF;
-    char            * buf = NULL;
-    char              tmp[BUFFSIZE];
-    char              tmp2[BUFFSIZE];
-    size_t            size;
-    int               i;
-
-    printf("merge %s, nb_file=%d\n", filename, nbFile);
-    /* Getting the first part of the trace (header+def) */
-#if HAVE_LIBZ
-    if(compression_ratio)
-        sprintf (tmp, "%s.trace.z", filename);
-    else
-#endif
-        sprintf (tmp, "%s.trace", filename);
-
-    res = fopen (tmp, "w+");
-    sprintf (tmp2, "%s_root.ept", filename);
-    oldF = fopen (tmp2,"a+");
-    if (res==NULL || oldF==NULL){
-        fprintf (stderr, "Failed to create the trace file. Leaving\n");
-        exit (-1);
-    }
-    rewind (oldF);
-    do{
-        i = getline (&buf, &size, oldF);
-        if (size==0 || i==-1)
-            break;
-        paje_print (res, "%s", buf);
-    }while (buf[0] != EOF);
-    fclose (oldF);
-    /* Initialising the parallel merge */
-    list = (doubleLinkList_t *)malloc (sizeof (doubleLinkList_t)*nbFile);
-    for (i=0;i<nbFile;i++)
-        initMerge (filename, i, list+i);
-
-    for (i=0;i<nbFile;i++){
-        myGetLine (list+i);
-        insert (&first, list+i);
-    }
-
-    while (first && first->current.status != 0){
-        paje_print (res, "%s", first->current.value);
-        myGetLine (first);
-        if (first->current.status==0){
-            first=first->next;
-            if (first)
-                first->prev = NULL;
-        }
-        else{
-            iter = first;
-            first = first->next;
-            if (first)
-                first->prev = NULL;
-            if (first && iter->current.status != 0)
-                insert (&first, iter);
-        }
-        /* for (i=0;i<nbFile;i++) */
-        /*     fprintf (stderr, "L1 = %s, st=%d\n", list[i].current.value,list[i].current.status); */
-        /* fprintf (stderr, "<---------------------------->\n\n"); */
-    }
-    fclose (res);
-    clean_files (filename, nbFile);
 }
 
 paje_color_t Paje_get_color(gtg_color_t p_color) {
@@ -1038,8 +898,6 @@ static void merge_contrib(const char *base_filename) {
 
 static trace_return_t
 __pajeEndTrace_generic (int should_merge) {
-
-  int size = 1;
   int i;
   my_close ();
   /* Wait for all proc to finish writing their trace */
@@ -1050,16 +908,6 @@ __pajeEndTrace_generic (int should_merge) {
   }
 
   if(should_merge) {
-#ifdef USE_MPI
-    if(paje_flags & GTG_FLAG_USE_MPI) {
-      MPI_Barrier (MPI_COMM_WORLD);
-      MPI_Comm_size (MPI_COMM_WORLD, &size);
-      if(verbose)
-	fprintf (stderr, "USING MPI\n");
-    }
-    if (rank==0)
-#endif	/* USE_MPI */
-      {}//      merge (filename, size);
     merge_contrib(filename);
   }
 
