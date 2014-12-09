@@ -93,8 +93,9 @@ struct container_file{
 };
 
 /* File where each proc writes state/event/var/link changes. */
-static struct container_file procFile[100]; /* TODO: don't hardcode the size */
+static struct container_file *procFile=NULL; /* TODO: don't hardcode the size */
 static int nb_containers = 0;
+static int nb_allocated_containers = 0;
 
 /* returns 1 if str is null (or contains "0" or "(null)") */
 static int null_string(const char*str) {
@@ -128,7 +129,16 @@ static struct container_file* __paje_find_container(const char* cont) {
 /* Create a new container_file structure that corresponds to cont */
 static struct container_file* __paje_create_container_file(const char* cont) {
 
-  struct container_file* res = &procFile[nb_containers];
+  struct container_file* res = NULL;
+  if(nb_containers >= nb_allocated_containers) {
+    nb_allocated_containers *= 2 ;
+    nb_allocated_containers=(nb_allocated_containers?nb_allocated_containers:100);
+    procFile = realloc(procFile, sizeof(struct container_file)*nb_allocated_containers);
+    assert(procFile);
+  }
+  assert(nb_containers<nb_allocated_containers);
+
+  res = &procFile[nb_containers];
   nb_containers++;
   res->closed = 0;
   strcpy(res->container_name, cont?cont:"");
