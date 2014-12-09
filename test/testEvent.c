@@ -52,9 +52,13 @@ int main (int argc, char** argv){
 
     }
 
+    gtg_flag_t flags = GTG_FLAG_NONE;
+    if(getenv("GTG_FLAG_PAJE_MULTIPLE_FILES")) {
+      flags |= GTG_FLAG_PAJE_MULTIPLE_FILES;
+    }
     /* Initialisation */
     setTraceType (traceT);
-    CHECK_RETURN (initTrace ("testEvent", 0, GTG_FLAG_NONE));
+    CHECK_RETURN (initTrace ("testEvent", 0, flags));
     /* Creating types used */
     CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
     CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));

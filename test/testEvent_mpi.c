@@ -1,6 +1,6 @@
 /*
- * Small test of the events generation in parallel (for VITE,Paje and OTF formats)
- * Author Kevin Coulomb, Francois Trahay
+ * Small test of the events generation using MPI (for VITE,Paje and OTF formats)
+ * Author Kevin Coulomb
  */
 
 #include <stdio.h>
@@ -68,52 +68,36 @@ int main (int argc, char** argv){
     /* Initialisation */
     setTraceType (traceT);
     fprintf (stderr, "Rank : %d \n", rank);
-    CHECK_RETURN (initTrace ("testEvent_parallel", rank, GTG_FLAG_PAJE_MULTIPLE_FILES|GTG_FLAG_NOTBUF));
-
+    CHECK_RETURN (initTrace ("testEvent_mpi", rank, GTG_FLAG_USE_MPI|GTG_FLAG_NOTBUF));
     if (rank==0){
-      /* Creating types used */
-      CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
-      CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));
-      CHECK_RETURN (addContType ("CT_PROC", "CT_NODE", "Proc"));
-      CHECK_RETURN (addStateType ("ST_NodeState", "CT_NODE", "Node state"));
-      CHECK_RETURN (addStateType ("ST_ProcState", "CT_PROC", "Procstate"));
-      CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_RED));
-      CHECK_RETURN (addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", GTG_PINK));
-      CHECK_RETURN (addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", GTG_BLACK));
-      CHECK_RETURN (addEntityValue ("SP_3", "ST_ProcState", "Produit", GTG_ORANGE));
-      CHECK_RETURN (addEntityValue ("SP_4", "ST_ProcState", "Somme", GTG_GREEN));
-      CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", GTG_BLUE));
-      CHECK_RETURN (addEntityValue ("SP_6", "ST_ProcState", "Division", GTG_TEAL));
-      CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", GTG_PURPLE));
-      /* Adding event types */
-      CHECK_RETURN (addEventType ("E_0", "CT_PROC", "Rabbit"));
-      CHECK_RETURN (addEventType ("E_1", "CT_PROC", "Chocolate"));
-      /* Building containers tree */
-      CHECK_RETURN (addContainer (0.00000, "C_Net0", "CT_NET", "0", "Ensemble0", ""));
-      CHECK_RETURN (addContainer (0.00000, "C_N0", "CT_NODE", "C_Net0", "Node0", ""));
-      CHECK_RETURN (addContainer (0.00000, "C_N1", "CT_NODE", "C_Net0", "Node1", ""));
+        /* Creating types used */
+        CHECK_RETURN (addContType ("CT_NET", "0", "Network"));
+        CHECK_RETURN (addContType ("CT_NODE", "CT_NET", "Node"));
+        CHECK_RETURN (addContType ("CT_PROC", "CT_NODE", "Proc"));
+        CHECK_RETURN (addStateType ("ST_NodeState", "CT_NODE", "Node state"));
+        CHECK_RETURN (addStateType ("ST_ProcState", "CT_PROC", "Procstate"));
+        CHECK_RETURN (addEntityValue ("SN_0", "ST_NodeState", "Sleep", GTG_RED));
+        CHECK_RETURN (addEntityValue ("SN_1", "ST_NodeState", "WaitLocal", GTG_PINK));
+        CHECK_RETURN (addEntityValue ("SN_2", "ST_NodeState", "WaitDistant", GTG_BLACK));
+        CHECK_RETURN (addEntityValue ("SP_3", "ST_ProcState", "Produit", GTG_ORANGE));
+        CHECK_RETURN (addEntityValue ("SP_4", "ST_ProcState", "Somme", GTG_GREEN));
+        CHECK_RETURN (addEntityValue ("SP_5", "ST_ProcState", "Difference", GTG_BLUE));
+        CHECK_RETURN (addEntityValue ("SP_6", "ST_ProcState", "Division", GTG_TEAL));
+        CHECK_RETURN (addEntityValue ("SP_7", "ST_ProcState", "Modulo", GTG_PURPLE));
+        /* Adding event types */
+        CHECK_RETURN (addEventType ("E_0", "CT_PROC", "Rabbit"));
+        CHECK_RETURN (addEventType ("E_1", "CT_PROC", "Chocolate"));
+        /* Building containers tree */
+        CHECK_RETURN (addContainer (0.00000, "C_Net0", "CT_NET", "0", "Ensemble0", ""));
+        CHECK_RETURN (addContainer (0.00000, "C_N0", "CT_NODE", "C_Net0", "Node0", ""));
+        CHECK_RETURN (addContainer (0.00000, "C_P0", "CT_PROC", "C_N0", "Proc0", getName (0)));
+        CHECK_RETURN (addContainer (0.00000, "C_P1", "CT_PROC", "C_N0", "Proc1", getName (1)));
+        CHECK_RETURN (addContainer (0.00000, "C_P2", "CT_PROC", "C_N0", "Proc2", getName (2)));
+        CHECK_RETURN (addContainer (0.00000, "C_N1", "CT_NODE", "C_Net0", "Node1", ""));
+        CHECK_RETURN (addContainer (0.00000, "C_P3", "CT_PROC", "C_N1", "Proc3", getName (3)));
+        CHECK_RETURN (addContainer (0.00000, "C_P4", "CT_PROC", "C_N1", "Proc4", getName (4)));
+        CHECK_RETURN (addContainer (0.00000, "C_P5", "CT_PROC", "C_N1", "Proc5", getName (5)));
     }
-    switch(rank){
-    case 0:
-      CHECK_RETURN (addContainer (0.00000, "C_P0", "CT_PROC", "C_N0", "Proc0", NULL));
-      break;
-    case 1:
-      CHECK_RETURN (addContainer (0.00000, "C_P1", "CT_PROC", "C_N0", "Proc1", NULL));
-      break;
-    case 2:
-      CHECK_RETURN (addContainer (0.00000, "C_P2", "CT_PROC", "C_N0", "Proc2", NULL));
-      break;
-    case 3:
-      CHECK_RETURN (addContainer (0.00000, "C_P3", "CT_PROC", "C_N1", "Proc3", NULL));
-      break;
-    case 4:
-      CHECK_RETURN (addContainer (0.00000, "C_P4", "CT_PROC", "C_N1", "Proc4", NULL));
-      break;
-    case 5:
-      CHECK_RETURN (addContainer (0.00000, "C_P5", "CT_PROC", "C_N1", "Proc5", NULL));
-      break;
-    }
-
     MPI_Barrier (MPI_COMM_WORLD);
 
     clear (txt, TXTSIZE);
