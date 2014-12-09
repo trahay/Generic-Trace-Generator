@@ -130,7 +130,6 @@ static struct container_file* __paje_create_container_file(const char* cont) {
 
   struct container_file* res = &procFile[nb_containers];
   nb_containers++;
-  printf("create container: %d = %s\n", nb_containers-1, cont);
   res->closed = 0;
   strcpy(res->container_name, cont?cont:"");
 
@@ -437,7 +436,6 @@ trace_return_t my_open (int rk){
     if (!headFile){
       sprintf (headFilename, "%s_proc%d.ept", filename, rk);
       headFile = fopen (headFilename, "w");
-      printf("[%d]headfile=%s\n", rk, headFilename);
     }
     if (!headFile)
       return ret;
@@ -467,7 +465,6 @@ trace_return_t pajeInitTrace   (const char* filenam, int rk, gtg_flag_t flags, i
     if( rank==0 ||
         (! (flags & GTG_FLAG_USE_MPI) && !(flags & GTG_FLAG_PAJE_MULTIPLE_FILES))) {
         sprintf (headFilename, "%s_root.ept", filename);
-	printf("[%d]headfile=%s\n", rk, headFilename);
         headFile = fopen (headFilename, "w");
         if (!headFile){
             fprintf (stderr, "Failed to open file %s. \n Leaving\n", headFilename);
@@ -834,15 +831,15 @@ trace_return_t pajeAddComment   (const char*  comment){
 }
 
 int acquire_lock(const char* lockfile) {
-  int lock_fd;
+  int lock_fd, rc;
   lock_fd = open(lockfile, O_RDWR | O_CREAT, 0666);
   if(lock_fd < 0) {
     printf("open(%s) returned %d (%s)\n", lockfile, errno, strerror(errno));
     abort();
   }
 
-  int rc= flock(lock_fd, LOCK_EX);
-  if(rc !=0){
+  rc = flock(lock_fd, LOCK_EX);
+  if(rc != 0) {
     printf("flock returned %d\n", rc);
     abort();
   }
@@ -858,12 +855,11 @@ void release_lock(const char* lockfile, int lock_fd){
   /* todo: delete the lock file */
 }
 
-/* todo: use a bigger buffer ? */
 #define MAX_LINE_SIZE 1024
 struct paje_line_t{
   char *line;
   int len;			/* length of the line */
-  int size;			/* allocated size of line */
+  size_t size;			/* allocated size of line */
   int code;
   double timestamp;
   int eof;
@@ -879,6 +875,7 @@ static void __init_paje_line(struct paje_line_t*l) {
 }
 
 void read_line(FILE*f, struct paje_line_t *l) {
+  int rc;
   l->len = getline(&l->line, &l->size, f);
   if(l->len<0) {
     if(!feof(f)) {
@@ -889,10 +886,9 @@ void read_line(FILE*f, struct paje_line_t *l) {
     return;
   }
   /* getline managed to read something */
-  int rc = sscanf(l->line, "%d %lf", &l->code, &l->timestamp);
+  rc = sscanf(l->line, "%d %lf", &l->code, &l->timestamp);
   if(rc != 2) {
     /* this is probably because the line starts with % */
-    //    printf("scanf(line='%s') returned %d\n", l->line, rc);
     l->code=-1;
     l->timestamp=-1;
   }
@@ -902,21 +898,116 @@ void write_line(FILE*f, struct paje_line_t*l) {
   fprintf(f, "%s", l->line);
 }
 
+/* check if input1 (resp. input2) is empty and if so, rename input2 (resp.
+ * input1) into output)
+ * return 0 if none of the files were renamed
+ */
+static int __try_to_rename(const char *input1,
+			   const char *input2,
+			   const char *output) {
+  /* check if input1 exists */
+  struct stat st;
+  int rc = stat(input1, &st);
+  if(rc <0 && errno == ENOENT) {
+    /* input1 does not exist. we can simply rename input2 to output */
+    rc = rename(input2, output);
+    assert(rc == 0);
+    return 1;
+  }
+
+  /* check if input2 exists */
+  rc = stat(input2, &st);
+  if(rc <0 && errno == ENOENT) {
+    /* input2 does not exist. we can simply rename input1 to output */
+    rc = rename(input1, output);
+    assert(rc == 0);
+    return 1;
+  }
+
+  /* both files exist */
+  return 0;
+}
+
+/* merge input1 and input2 into output */
+static void __merge_files(const char *input1,
+			  const char *input2,
+			  const char *output) {
+  FILE* input1_file;
+  FILE* input2_file;
+  FILE* output_file;
+  struct paje_line_t line_input, line_merge;
+
+  if(__try_to_rename(input1, input2, output)) {
+    goto out;
+  }
+
+  /* both input1 and input2 exist */
+
+  /* open the merge file */
+  input1_file = fopen(input1, "r");
+  assert(input1_file);
+
+  /* open the input file */
+  input2_file = fopen(input2, "r");
+  assert(input2_file);
+
+  /* open the output file */
+  output_file = fopen(output, "w");
+  assert(output_file);
+
+  /* merge input2_file and input1_file */
+  __init_paje_line(&line_input);
+  __init_paje_line(&line_merge);
+  read_line(input2_file, &line_input);
+  read_line(input1_file, &line_merge);
+
+  /* merge input and merge files */
+  while(!line_input.eof && ! line_merge.eof) {
+    if(line_input.timestamp<line_merge.timestamp) {
+      write_line(output_file, &line_input);
+      read_line(input2_file, &line_input);
+    } else {
+      write_line(output_file, &line_merge);
+      read_line(input1_file, &line_merge);
+    }
+  }
+
+  /* copy the remaining of the files */
+  while(!line_input.eof) {
+    write_line(output_file, &line_input);
+    read_line(input2_file, &line_input);
+  }
+
+  while(!line_merge.eof) {
+    write_line(output_file, &line_merge);
+    read_line(input1_file, &line_merge);
+  }
+
+  /* close files and delete merge and input */
+  fclose(output_file);
+  fclose(input2_file);
+  fclose(input1_file);
+  unlink(input1);
+  unlink(input2);
+
+ out:
+  return;
+}
+
 /* merge headFilename to the other headFile (from other processes) into a file named
  * <base_filename>.trace
  */
 static void merge_contrib(const char *base_filename) {
+  int lock_fd;
+  int rc;
   char merged_filename[BUFFSIZE]; /* the other file to merge */
   char output_filename[BUFFSIZE]; /* the resulting file */
   char lockfile[BUFFSIZE];
 
-  FILE* merged_file;
-  FILE* output_file;
-  FILE* input_file;
-
   /* <filename>.trace will contain the merge of <filename>.ept and <filename>.trace.merged
    */
 
+  /* todo: check if compression still works */
 #if HAVE_LIBZ
   if(compression_ratio)
     sprintf (output_filename, "%s.trace.z", base_filename);
@@ -926,84 +1017,22 @@ static void merge_contrib(const char *base_filename) {
   sprintf (merged_filename, "%s.trace.merged", base_filename);
   sprintf (lockfile, "%s.trace.lock", base_filename);
 
-  /* Now,  use lockfile to make sure we have exclusive access to files */
-  int lock_fd = acquire_lock(lockfile);
+  /* make sure we have exclusive access to files */
+  lock_fd = acquire_lock(lockfile);
   assert(lock_fd>=0);
-  printf("About to merge %s and %s\n", merged_filename, headFilename);
-
-  /* Currently, <filename>.trace contains the merge of the other *.ept files,
-   * let's rename it to <filename>.trace.merge
-   */
-  printf("rename %s into %s\n", output_filename, merged_filename);
-  int ret = rename(output_filename, merged_filename);
-  if(ret != 0) {
-    printf("rename returned %d. errno=%d\n",ret, errno);
-    if(errno != ENOENT) {
-      printf("\t thats a fatal error. aborting...\n");
+  {
+    /* Currently, <filename>.trace contains the merge of the other *.ept files,
+     * let's rename it to <filename>.trace.merge
+     */
+    rc = rename(output_filename, merged_filename);
+    if(rc != 0 && errno != ENOENT) {
+      /* rename failed */
+      fprintf(stderr, "gtg: failed to rename %s into %s\n", output_filename, merged_filename);
       abort();
     }
+
+    __merge_files(merged_filename, headFilename, output_filename);
   }
-
-  /* check if merged_filename exists */
-  struct stat st;
-  int rc = stat(merged_filename, &st);
-  if(rc <0 && errno == ENOENT) {
-    /* merge file does not exist. we can simply rename headfile to outputfile */
-    rc = rename(headFilename, output_filename);
-    assert(rc == 0);
-    goto unlock;
-  }
-
-  /* open the merge file */
-  merged_file = fopen(merged_filename, "r");
-  assert(merged_file);
-
-  /* open the input file */
-  input_file = fopen(headFilename, "r");
-  assert(input_file);
-
-  /* open the output file */
-  output_file = fopen(output_filename, "w");
-  assert(output_file);
-
-  /* merge input_file and merged_file */
-  int finished = 0;
-  struct paje_line_t line_input, line_merge;
-  __init_paje_line(&line_input);
-  __init_paje_line(&line_merge);
-  read_line(input_file, &line_input);
-  read_line(merged_file, &line_merge);
-
-  /* merge input and merge files */
-  while(!line_input.eof && ! line_merge.eof) {
-    if(line_input.timestamp<line_merge.timestamp) {
-      write_line(output_file, &line_input);
-      read_line(input_file, &line_input);
-    } else {
-      write_line(output_file, &line_merge);
-      read_line(merged_file, &line_merge);
-    }
-  }
-
-  /* copy the remaining of the files */
-  while(!line_input.eof) {
-    write_line(output_file, &line_input);
-    read_line(input_file, &line_input);
-  }
-
-  while(!line_merge.eof) {
-    write_line(output_file, &line_merge);
-    read_line(merged_file, &line_merge);
-  }
-
-  /* close files and delete merge and input */
-  fclose(output_file);
-  fclose(input_file);
-  fclose(merged_file);
-  unlink(merged_filename);
-  unlink(headFilename);
-
- unlock:
   release_lock(lockfile, lock_fd);
 }
 
@@ -1044,12 +1073,10 @@ __pajeEndTrace_generic (int should_merge) {
 }
 
 trace_return_t pajeEndTrace (){
-  printf("%s\n", __FUNCTION__);
   return __pajeEndTrace_generic(1);
 }
 
 trace_return_t viteEndTrace (){
-  printf("%s\n", __FUNCTION__);
   return __pajeEndTrace_generic(0);
 }
 
