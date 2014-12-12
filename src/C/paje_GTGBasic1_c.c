@@ -69,21 +69,6 @@ static gtg_flag_t paje_flags;
         FLUSH( headFile );                      \
     }
 
-/* Structure containing the info of a current line */
-typedef struct line_t{
-    FILE*   file;   /* File                               */
-    char*   value;  /* The value of the line              */
-    size_t  size;   /* Size of the value buffer           */
-    varPrec time;   /* Time (second element of the line)  */
-    int     status; /* If EOF reached                     */
-}line_t;
-
-typedef struct doubleLinkList_t{
-    struct doubleLinkList_t* prev; /* Previous element */
-    struct doubleLinkList_t* next; /* Next element     */
-    line_t current;                /* Current line     */
-}doubleLinkList_t;
-
 struct container_file{
   char container_name[1024];
   char file_name[1024];
@@ -93,7 +78,7 @@ struct container_file{
 };
 
 /* File where each proc writes state/event/var/link changes. */
-static struct container_file *procFile=NULL; /* TODO: don't hardcode the size */
+static struct container_file *procFile=NULL;
 static int nb_containers = 0;
 static int nb_allocated_containers = 0;
 
@@ -256,24 +241,6 @@ ssize_t getline(char** buf, size_t* size, FILE* stream)
 }
 #endif	/* HAVE_GETLINE */
 
-void myGetLine (doubleLinkList_t* li){
-    int toto;
-    int ret;
-    if (li->current.value)
-        free (li->current.value);
-    li->current.value = NULL;
-    ret = getline (&(li->current.value), &(li->current.size), li->current.file);
-
-    if (li->current.size==0 || ret ==-1){
-        li->current.status=0;
-    }
-
-    if ((li->current.size)>0)
-        sscanf (li->current.value, "%d %lf", &toto, &(li->current.time));
-    else
-        fprintf (stderr, "failed to read\n");
-}
-
 paje_color_t Paje_get_color(gtg_color_t p_color) {
     /** \todo it is not const*/
     int ret;
@@ -358,7 +325,7 @@ trace_return_t pajeAddContType(const char* alias, const char* contType,
     if(verbose)
         printf("addCtType : name %s, alias %s, contType %s\n", name, alias, contType);
     if (headFile){
-        fprintf (headFile, "%d \"%s\" \"%s\" \"%s\"\n",
+        paje_print (headFile, "%d \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_DefineContainerType].id, name, contType ? contType : "0", alias);
 
         FLUSH(headFile);
@@ -374,7 +341,7 @@ trace_return_t pajeAddStateType   (const char* alias, const char* contType,
     if(verbose)
         printf("addStateType : alias %s, name %s, contType %s\n",  alias, name, contType);
     if (headFile){
-        fprintf (headFile, "%d \"%s\" \"%s\" \"%s\"\n",
+        paje_print (headFile, "%d \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_DefineStateType].id, name, contType, alias);
 
         FLUSH(headFile);
@@ -390,7 +357,7 @@ trace_return_t pajeAddEventType   (const char* alias, const char* contType,
     if(verbose)
         printf("addEventType :  alias %s, name %s, contType %s\n", alias, name, contType);
     if (headFile){
-        fprintf (headFile, "%d \"%s\" \"%s\" \"%s\"\n",
+        paje_print (headFile, "%d \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_DefineEventType].id, name, contType, alias);
 
         FLUSH(headFile);
@@ -406,7 +373,7 @@ trace_return_t pajeAddVarType   (const char* alias   , const char* contType,
     if(verbose)
         printf("addVarType : alias %s, name %s, contType %s\n", alias, name, contType);
     if (headFile){
-        fprintf (headFile, "%d \"%s\" \"%s\" \"0 0 0\" \"%s\"\n",
+        paje_print (headFile, "%d \"%s\" \"%s\" \"0 0 0\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_DefineVariableType].id, name, contType, alias);
 
         FLUSH(headFile);
@@ -423,7 +390,7 @@ trace_return_t pajeAddLinkType   (const char* alias   , const char* name,
     if (verbose)
         printf ("Add link type: alias: %s name: %s contType: %s src: %s des: %s\n", alias, name, contType, srcContType, destContType);
     if (headFile){
-        fprintf (headFile, "%d \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+        paje_print (headFile, "%d \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_DefineLinkType].id, name, contType, srcContType, destContType, alias);
 
         FLUSH(headFile);
@@ -439,7 +406,7 @@ trace_return_t pajeAddEntityValue   (const char* alias, const char* entType,
     if(verbose)
         printf("addEntityValue : color %s, alias %s, name %s, type %s\n", color, alias, name, entType);
     if (headFile){
-        fprintf (headFile, "%d \"%s\" \"%s\" \"%s\" \"%s\"\n",
+        paje_print (headFile, "%d \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_DefineEntityValue].id, entType, name, color, alias);
 
         FLUSH(headFile);
@@ -454,22 +421,22 @@ trace_return_t pajeAddContainer_generic(varPrec time, const char* alias,
     PRINT_PAJE_HEADER();
 
     if (headFile){
-      fprintf (headFile, "%d %.13e \"%s\" \"%s\"",
+      paje_print (headFile, "%d %.13e \"%s\" \"%s\"",
 	       paje_eventdefs[GTG_PAJE_EVTDEF_CreateContainer].id, time, name, type);
 
       if(container && strcmp(container, "(null)")!=0 ) {
-	fprintf(headFile, " \"%s\"", container);
+	paje_print(headFile, " \"%s\"", container);
       }else{
-	fprintf(headFile, " 0");
+	paje_print(headFile, " 0");
       }
 
-      fprintf(headFile, " \"%s\"", alias);
+      paje_print(headFile, " \"%s\"", alias);
 
       if(! null_string(file)) {
-	fprintf(headFile, " \"%s\"", file);
+	paje_print(headFile, " \"%s\"", file);
       }
 
-      fprintf(headFile,"\n");
+      paje_print(headFile,"\n");
       FLUSH(headFile);
       return TRACE_SUCCESS;
     }
@@ -516,7 +483,7 @@ trace_return_t pajeDestroyContainer     (varPrec time, const char*  name,
     if (headFile){
       struct container_file* p_cont = __paje_find_container(name);
 
-      fprintf (p_cont->file, "%d %.13e \"%s\" \"%s\"\n",
+      paje_print (p_cont->file, "%d %.13e \"%s\" \"%s\"\n",
 	       paje_eventdefs[GTG_PAJE_EVTDEF_DestroyContainer].id, time, name, type);
 
       FLUSH(p_cont->file);
@@ -535,7 +502,7 @@ trace_return_t pajeSetState   (varPrec time, const char* type,
 
     GET_FILE_DESCRIPTOR(f, cont);
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_SetState].id, time, type, cont, val);
 
         FLUSH(f);
@@ -552,7 +519,7 @@ trace_return_t pajePushState   (varPrec time, const char* type,
         printf("PushState : type %s, container %s, val %s\n", type, cont, val);
     GET_FILE_DESCRIPTOR(f, cont);
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_PushState].id, time, type, cont, val);
 
         FLUSH(f);
@@ -568,7 +535,7 @@ trace_return_t pajePopState   (varPrec time, const char* type,
         printf("PopState : type %s, container %s\n", type, cont);
     GET_FILE_DESCRIPTOR(f, cont);
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\"\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_PopState].id, time, type, cont);
 
         FLUSH(f);
@@ -584,7 +551,7 @@ trace_return_t pajeAddEvent   (varPrec time, const char* type,
         printf("AddEvent : type %s, cont %s, val %s\n", type, cont, val);
     GET_FILE_DESCRIPTOR(f, cont);
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_NewEvent].id, time, type, cont, val);
 
         FLUSH(f);
@@ -604,7 +571,7 @@ trace_return_t pajeStartLink   (varPrec time, const char* type,
     GET_FILE_DESCRIPTOR(f, cont);
 
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_StartLink].id, time, type, cont, src, val, key);
 
         FLUSH(f);
@@ -624,7 +591,7 @@ trace_return_t pajeEndLink   (varPrec time, const char* type,
     GET_FILE_DESCRIPTOR(f, cont);
 
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_EndLink].id, time, type, cont, dest, val, key);
 
         FLUSH(f);
@@ -643,7 +610,7 @@ trace_return_t pajeSetVar   (varPrec time, const char*  type,
     GET_FILE_DESCRIPTOR(f, cont);
 
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" %e\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" %e\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_SetVariable].id, time, type, cont, val);
 
         FLUSH(f);
@@ -662,7 +629,7 @@ trace_return_t pajeAddVar   (varPrec time, const char*  type,
     GET_FILE_DESCRIPTOR(f, cont);
 
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" %e\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" %e\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_AddVariable].id, time, type, cont, val);
 
         FLUSH(f);
@@ -679,7 +646,7 @@ trace_return_t pajeSubVar   (varPrec time, const char*  type,
                 type, cont, val);
     GET_FILE_DESCRIPTOR(f, cont);
     if (f){
-        fprintf (f, "%d %.13e \"%s\" \"%s\" %e\n",
+        paje_print (f, "%d %.13e \"%s\" \"%s\" %e\n",
                  paje_eventdefs[GTG_PAJE_EVTDEF_SubVariable].id, time, type, cont, val);
 
         FLUSH(f);
@@ -693,7 +660,7 @@ trace_return_t pajeAddComment   (const char*  comment){
         printf ("AddComment: %s\n",comment);
 
     if (headFile){
-        fprintf(headFile,"#%s\r\n",comment);
+        paje_print(headFile,"#%s\r\n",comment);
         FLUSH(headFile);
         return TRACE_SUCCESS;
     }
@@ -702,6 +669,7 @@ trace_return_t pajeAddComment   (const char*  comment){
 
 int acquire_lock(const char* lockfile) {
   int lock_fd, rc;
+  sleep(rank);
   lock_fd = open(lockfile, O_RDWR | O_CREAT, 0666);
   if(lock_fd < 0) {
     printf("open(%s) returned %d (%s)\n", lockfile, errno, strerror(errno));
@@ -713,10 +681,17 @@ int acquire_lock(const char* lockfile) {
     printf("flock returned %d\n", rc);
     abort();
   }
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  printf("[%d] %d:%d J'ai le lock!\n" , rank, tv.sec, tv.usec);
+  fflush(stdout);
   return lock_fd;
 }
 
 void release_lock(const char* lockfile, int lock_fd){
+  printf("[%d]Je relache le lock!\n" , rank);
+  fflush(stdout);
+  sleep(1);
   int rc = flock(lock_fd, LOCK_UN);
   if(rc !=0){
     printf("unlock returned %d\n", rc);
@@ -725,26 +700,99 @@ void release_lock(const char* lockfile, int lock_fd){
   /* todo: delete the lock file */
 }
 
-#define MAX_LINE_SIZE 1024
+#define DEFAULT_LINE_SIZE 1024
 struct paje_line_t{
-  char *line;
+  char buffer[128*1024];
+  char *line;			/* value of the line */
   int len;			/* length of the line */
-  size_t size;			/* allocated size of line */
-  int code;
-  double timestamp;
-  int eof;
+  size_t size;			/* size of the line buffer */
+  int code;			/* code of the event (first elemnt of the line) */
+  varPrec timestamp;		/* timestamp (second element of the line) */
+  int eof;			/* set to 1 if EOF is reached */
+#if HAVE_LIBZ
+  z_stream z;
+  int available_chars;	       /* number of available chars in buffer */
+  int start; 			/* index of the first char in buffer */
+  int end;			/* index of the last char in buffer */
+#endif
 };
 
 static void __init_paje_line(struct paje_line_t*l) {
-  l->size=MAX_LINE_SIZE;
-  l->line=malloc(sizeof(char)*l->size);
-  l->len=0;
-  l->code=-1;
-  l->timestamp=-1;
-  l->eof=0;
+  l->size = DEFAULT_LINE_SIZE;
+  l->line = malloc(sizeof(char)*l->size);
+  l->len = 0;
+  l->code = -1;
+  l->timestamp = -1;
+  l->eof = 0;
+#if HAVE_LIBZ
+  printf("[%d] initialize z_stream %p\n", rank, &l->z);
+  gtg_decompress_init(&l->z);
+  l->available_chars = 0;
+  l->start = 0;
+  l->end = 0;
+#endif
 }
 
+#if HAVE_LIBZ
+static void
+decompress_chunk(FILE*f, struct paje_line_t *l) {
+  assert(l->start == l->end);
+  assert(l->available_chars==0);
+  if(l->eof)
+    return;
+
+  int read_bytes = gtg_decompress_f2m(&l->z,
+				      f,
+				      l->buffer,
+				      128*1024);
+  if(read_bytes == 0) {
+    /* end of file */
+    printf("end of file\n");
+    l->eof = 1;
+  }
+  assert(read_bytes>=0);
+  l->end = read_bytes;
+  l->start = 0;
+  l->available_chars = read_bytes;
+  printf("read bytes returned %d. eof=%d\n", read_bytes, l->eof);
+}
+
+char read_compressed_char(FILE*f, struct paje_line_t *l) {
+  if(l->available_chars == 0) {
+    decompress_chunk(f, l);
+  }
+  //  printf("about to read a char. eof=%d\n", l->eof);
+  char retval='\0';
+  if(! l->eof) {
+    retval = l->buffer[l->start];
+    l->start++;
+    l->available_chars--;
+    assert(l->start <= l->end);
+    assert((l->end - l->start) == l->available_chars);
+  }
+  return retval;
+}
+
+void read_compressed_line(FILE*f, struct paje_line_t *l) {
+
+  int i = 0;
+  do {
+    l->line[i] = read_compressed_char(f, l);
+    i++;
+  } while(l->line[i-1] != '\n' && l->line[i-1] != '\0');
+  l->line[i] = '\0';
+}
+#endif
+
 void read_line(FILE*f, struct paje_line_t *l) {
+#if HAVE_LIBZ
+  if(compression_ratio) {
+    read_compressed_line(f, l);
+    if(l->eof)
+      return;
+    goto out;
+  }
+#endif
   int rc;
   l->len = getline(&l->line, &l->size, f);
   if(l->len<0) {
@@ -755,6 +803,8 @@ void read_line(FILE*f, struct paje_line_t *l) {
     l->eof=1;
     return;
   }
+ out:
+  printf("Line: %s\n", l->line);
   /* getline managed to read something */
   rc = sscanf(l->line, "%d %lf", &l->code, &l->timestamp);
   if(rc != 2) {
@@ -762,10 +812,11 @@ void read_line(FILE*f, struct paje_line_t *l) {
     l->code=-1;
     l->timestamp=-1;
   }
+  printf("\t->code=%d, timestamp=%f\n", l->code, l->timestamp);
 }
 
 void write_line(FILE*f, struct paje_line_t*l) {
-  fprintf(f, "%s", l->line);
+  paje_print(f, "%s", l->line);
 }
 
 /* check if input1 (resp. input2) is empty and if so, rename input2 (resp.
@@ -780,6 +831,7 @@ static int __try_to_rename(const char *input1,
   int rc = stat(input1, &st);
   if(rc <0 && errno == ENOENT) {
     /* input1 does not exist. we can simply rename input2 to output */
+    printf("[%d] %s: rename %s into %s\n", rank, __FUNCTION__, input2, output);
     rc = rename(input2, output);
     assert(rc == 0);
     return 1;
@@ -789,6 +841,7 @@ static int __try_to_rename(const char *input1,
   rc = stat(input2, &st);
   if(rc <0 && errno == ENOENT) {
     /* input2 does not exist. we can simply rename input1 to output */
+    printf("[%d] %s: rename %s into %s\n", rank, __FUNCTION__, input1, output);
     rc = rename(input1, output);
     assert(rc == 0);
     return 1;
@@ -820,7 +873,9 @@ static void __merge_files(const char *input1,
   /* open the input file */
   input2_file = fopen(input2, "r");
   assert(input2_file);
-
+  int plop= fseek(input2_file, 0, SEEK_SET);
+  assert(plop==0);
+  
   /* open the output file */
   output_file = fopen(output, "w");
   assert(output_file);
@@ -828,7 +883,9 @@ static void __merge_files(const char *input1,
   /* merge input2_file and input1_file */
   __init_paje_line(&line_input);
   __init_paje_line(&line_merge);
+  printf("[%d] about to read from %s\n", rank, input2);
   read_line(input2_file, &line_input);
+  printf("[%d] about to read from %s\n", rank, input1);
   read_line(input1_file, &line_merge);
 
   /* merge input and merge files */
@@ -891,9 +948,11 @@ static void merge_contrib(const char *base_filename) {
   lock_fd = acquire_lock(lockfile);
   assert(lock_fd>=0);
   {
+    printf("merge %s and %s into %s\n", merged_filename, headFilename, output_filename);
     /* Currently, <filename>.trace contains the merge of the other *.ept files,
      * let's rename it to <filename>.trace.merge
      */
+    printf("[%d] renaming %s into %s\n", rank, output_filename, merged_filename);
     rc = rename(output_filename, merged_filename);
     if(rc != 0 && errno != ENOENT) {
       /* rename failed */

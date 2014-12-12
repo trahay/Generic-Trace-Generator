@@ -45,12 +45,14 @@ char *FieldType[GTG_PAJE_FIELDTYPE_NBR] = {
   "color"
 };
 
+extern void paje_print(FILE* file, const char*format, ...);
+
 #define printExtra( file, event )                               \
     if ( (paje_eventdefs[event].first) != NULL ) {                   \
         gtg_paje_edp_t *e, *n;                                  \
         for( e = paje_eventdefs[event].first; e != NULL; ) {         \
             n = e->next;                                        \
-            fprintf(file, "%% %s %s\n", e->name, FieldType[e->type]); \
+            paje_print(file, "%% %s %s\n", e->name, FieldType[e->type]); \
             e = n;                                              \
         }                                                       \
     }
@@ -209,10 +211,10 @@ void pajeWriteHeader( FILE *file )
 
     _is_paje_header_written = 1;
     for(i=0; i<GTG_PAJE_EVTDEF_NBR; i++) {
-        fprintf(file, "%%EventDef %s %d\n",
+        paje_print(file, "%%EventDef %s %d\n",
                 paje_eventdefs[i].name, paje_eventdefs[i].id);
         printExtra( file, i );
-        fprintf(file, "%%EndEventDef\n");
+        paje_print(file, "%%EndEventDef\n");
     }
     pajeEventDefClean();
 }

@@ -263,6 +263,15 @@ int gtg_decompress_f2m(z_stream *z, FILE* file_in, void* out_buf, uint32_t out_m
 
   while(! feof(file_in)) {
     in_len = fread(in_buf, sizeof(uint8_t), BLOCK_SIZE, file_in);
+    if(in_len == 0) {
+      if(ferror(file_in)) {
+	/* an error occured while reading */
+	printf("an error occured while reading\n");
+	return -1;
+      }
+      return 0;
+    }
+    printf("%s: in_len=%d. z_stream=%p\n", __FUNCTION__, in_len, z);
 
     z->avail_in = in_len;
     z->next_in = in_buf;
@@ -274,6 +283,7 @@ int gtg_decompress_f2m(z_stream *z, FILE* file_in, void* out_buf, uint32_t out_m
     status = inflate( z, Z_SYNC_FLUSH );
     if ( Z_OK != status ) {
       fprintf( stderr, "error %d while decompressing\n", status);
+      printf("the line was: %s\n", (char*)in_buf);
       return -1;
     }
 
