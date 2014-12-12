@@ -192,7 +192,7 @@ int gtg_decompress_init(z_stream *z)
   if (status != Z_OK) {
     fprintf(stderr, "error at init: %d\n", status);
   }
-    return status;
+  return status;
 }
 
 int gtg_decompress_m2m(z_stream *z, void* in_buf, uint32_t len, void* out_buf, uint32_t out_max_len)
@@ -208,7 +208,7 @@ int gtg_decompress_m2m(z_stream *z, void* in_buf, uint32_t len, void* out_buf, u
   /* decompress */
   status = inflate( z, Z_SYNC_FLUSH );
   if ( Z_OK != status ) {
-    fprintf( stderr, "error %d in compressing\n", status);
+    fprintf( stderr, "error %d while decompressing\n", status);
     return -1;
   }
 
@@ -235,7 +235,7 @@ int gtg_decompress_m2f(z_stream *z, void* in_buf, uint32_t len, FILE* file_out)
     /* decompress */
     status = inflate( z, Z_SYNC_FLUSH );
     if ( Z_OK != status ) {
-      fprintf( stderr, "error %d in compressing\n", status);
+      fprintf( stderr, "error %d while decompressing\n", status);
       return -1;
     }
 
@@ -262,7 +262,7 @@ int gtg_decompress_f2m(z_stream *z, FILE* file_in, void* out_buf, uint32_t out_m
   int offset_out = 0;
 
   while(! feof(file_in)) {
-    in_len = fread(in_buf, BLOCK_SIZE, sizeof(uint8_t), file_in);
+    in_len = fread(in_buf, sizeof(uint8_t), BLOCK_SIZE, file_in);
 
     z->avail_in = in_len;
     z->next_in = in_buf;
@@ -273,7 +273,7 @@ int gtg_decompress_f2m(z_stream *z, FILE* file_in, void* out_buf, uint32_t out_m
     /* decompress */
     status = inflate( z, Z_SYNC_FLUSH );
     if ( Z_OK != status ) {
-      fprintf( stderr, "error %d in compressing\n", status);
+      fprintf( stderr, "error %d while decompressing\n", status);
       return -1;
     }
 
