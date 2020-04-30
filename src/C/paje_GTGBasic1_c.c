@@ -18,11 +18,6 @@
 #include <mpi.h>
 #endif
 
-#ifndef HAVE_ASPRINTF
-extern int asprintf(char **ret, const char *format, ...);
-/* extern int vasprintf(char **ret, const char *format, va_list args); */
-#endif /* HAVE_ASPRINTF */
-
 #include "GTG.h"
 #include "GTGPaje_Basic.h"
 #include "GTGPaje.h"
