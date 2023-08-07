@@ -115,7 +115,7 @@ int main (int argc, char** argv){
             
             /* Adding some communications */
             CHECK_RETURN (startLink (time, name, txt, src, dest, proc, key));
-            CHECK_RETURN (endLink (time+2, name, txt, src, dest, proc, key));
+            CHECK_RETURN (endLink (time+0.1, name, txt, src, dest, proc, key));
         }
     
         time += 0.25;
