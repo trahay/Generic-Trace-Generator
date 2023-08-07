@@ -43,7 +43,7 @@ static char *filename = NULL;
 
 #define CHECK_RESULT(__func__) {				\
     if(__func__ != 1) {						\
-      fprintf(stderr, "Error while writing the OTF trace\n");	\
+      fprintf(stderr, "Error while writing the OTF trace, doing "#__func__"\n");	\
       abort();							\
     }								\
   }
