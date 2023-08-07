@@ -13,28 +13,28 @@ dir	:
 		mkdir -p $(BIN)
 
 testAll		: testAll.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 testState	: testState.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 testState_parall	: testState_parall.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 testEvent_parall	: testEvent_parall.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 testEvent_mpi	: testEvent_mpi.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 testEvent	: testEvent.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 testLink	: testLink.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 testVar		: testVar.c
-		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(INC) $(LIB)
+		$(CC) $^ -o $(BIN)/$@ $(CFLAGS) $(CPPFLAGS) $(INC) $(LIB)
 
 clean	:
 		rm -rf $(BIN) *~
