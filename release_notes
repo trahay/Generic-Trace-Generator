@@ -6,7 +6,7 @@ Paje, etc.) It will be used by EZTrace and ViTE, but it can also be
 used by any application.
 
 GTG is available under the CECILL-C license and it can be downloaded
-from the GTG website: http://gtg.gforge.inria.fr/
+from the GTG website: https://github.com/trahay/Generic-Trace-Generator
 
 gtg 0.1 is the first release of this project. This version includes:
 * Full support for PAJE and VITE formats
