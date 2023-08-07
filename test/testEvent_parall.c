@@ -45,7 +45,7 @@ int main (int argc, char** argv){
     MPI_Comm_size (MPI_COMM_WORLD, &size);
     if (size != 6){
         fprintf (stderr, "Error you need to run this test on 6 procs. Leaving \n");
-        return;
+        return EXIT_FAILURE;
     }
     MPI_Comm_rank (MPI_COMM_WORLD, &rank);
 
