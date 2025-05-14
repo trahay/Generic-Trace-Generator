@@ -22,6 +22,7 @@ $(DOX_TAG): $(docx_inputs)
 	touch $(DOX_TAG)
 
 $(DOX_HTML_DIR): $(DOX_TAG)
+$(DOX_HTML_DIR)/index.html: $(DOX_HTML_DIR)
 
 $(DOX_PDF): $(DOX_TAG)
 	cd $(DOX_LATEX_DIR) &&\
