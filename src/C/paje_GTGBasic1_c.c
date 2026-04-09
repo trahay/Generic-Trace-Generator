@@ -922,6 +922,7 @@ __pajeEndTrace_generic (int should_merge) {
   if (filename)
     free (filename);
   filename = NULL;
+  _is_paje_header_written = 0;
   return TRACE_SUCCESS;
 }
 
